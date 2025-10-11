@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bloquons TouT - Plateforme Citoyenne (Démo Statique)</title>
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="styles.css"> 
+</head>
+<body>
+    
+    <header id="main-header">
+        <nav>
+            <div class="logo">
+                <i class="fas fa-hammer font-yellow" style="font-size: 1.5rem;"></i>
+                <span>PLATEFORME CITOYENNE</span>
+            </div>
+            <button id="theme-toggle" class="theme-btn" title="Changer de thème">🌙</button>
+        </nav>
+    </header>
+
+    <div id="desktop-app-layout">
+        
+        <aside id="desktop-sidebar">
+            <nav id="sidebar-navigation">
+                <ul>
+                    <li><a href="#" data-page="home" class="active"><i class="fas fa-home"></i><span>Accueil</span></a></li>
+                    <li><a href="#" data-page="map"><i class="fas fa-map-marked-alt"></i><span>Carte</span></a></li>
+                    <li><a href="#" data-page="dashboard"><i class="fas fa-chart-line"></i><span>Tableau</span></a></li>
+                    <li><a href="#" data-page="settings"><i class="fas fa-robot"></i><span>Bot/Cmds</span></a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <div id="app-content">
+            
+            <div id="home-page" class="page active">
+                <div class="content" style="padding: 20px;">
+                    <h2>📣 Accueil & Manifeste du Mouvement</h2>
+                    
+                    <div class="alert alert-warning" style="margin-bottom: 30px;">
+                        <p>
+                            Avec au moins <strong class="font-yellow">500 000 personnes</strong> sur tout le territoire, le mouvement du 10 septembre entre dans l’histoire.
+                            Inédit par son ampleur et par sa forme, ce mouvement qui s’est auto-organisé en moins de deux mois s’est répandu partout.
+                        </p>
+                        <p>
+                            Ni les mensonges, ni l’intimidation, ni la répression ne feront ralentir la vague qui s’est levée dans le pays.
+                            Les assemblées locales appellent à poursuivre la lutte sous toutes ses formes.
+                        </p>
+                        <p>
+                            <strong class="font-yellow">Nous avons fait partir Bayrou. Lecornu et Macron attendent leur tour.</strong> D'ici là nous ne rentrerons pas.
+                        </p>
+                        <p class="font-red" style="font-size: 0.9em;">
+                            *: nous avons déjà comptabilisé 428 556 personnes dans 345 communes seulement, et il y a eu au moins 850 actions en France, dont 596 rassemblements et 253 blocages, selon le ministère de l'intérieur.
+                        </p>
+                    </div>
+                    <h3 class="font-red">Les raisons de notre colère</h3>
+                    <div class="alert alert-info" style="transform: none;">
+                        <p>Le plan Bayrou, c’est :</p>
+                        <ul style="color: #1a1a1a;">
+                            <li>Une année blanche sans investissement dans les salaires, les retraites, ni les services publics !</li>
+                            <li>3000 postes supprimés, un fonctionnaire sur trois non remplacé !</li>
+                            <li>5 milliards retirés à la santé, reste à payer doublé pour les malades !</li>
+                            <li>Deux jours fériés supprimés !</li>
+                            <li>Six jours de carence en cas d’arrêt maladie !</li>
+                            <li>Aucune hausse des aides ni des pensions !</li>
+                        </ul>
+                    </div>
+                    <p>Nous disons <strong class="font-red">NON</strong> et appelons toutes les personnes résidant en France métropolitaine et dans les DOM-TOM à se mobiliser contre ce budget !</p>
+                    <p>Nous ne voulons pas subir leur crise. Nous voulons changer de cap, pour de bon, avec et pour le peuple. Pas contre lui.</p>
+                    <div class="alert alert-warning" style="text-align: center; margin-top: 30px;">
+                        <p><strong class="font-yellow">NOUS APPELONS CHAQUE DÉPUTÉ À FAIRE SON DEVOIR :</strong></p>
+                        <p style="font-size: 1.4em;">VOTER LA MOTION DE CENSURE CONTRE CE PLAN INJUSTE ET DANGEREUX.</p>
+                        <p style="font-size: 2em; margin: 10px 0;">⚠️</p>
+                    </div>
+                    </div>
+            </div>
+            
+            <div id="map-page" class="page">
+                <h2>🗺️ Carte Tactique (GEE & Données Live Sim.)</h2>
+                <div id="map-container">
+                    <div id="map"></div>
+                    <div id="realtime-alerts">
+                        📡 Initialisation GEE...
+                    </div>
+                </div>
+            </div>
+            
+            <div id="dashboard-page" class="page">
+                <div class="content" style="padding: 20px;">
+                    <h2>📈 Tableau de Bord Stratégique</h2>
+                    <div id="dashboard-grid">
+                        <p class="font-yellow">Chargement des métriques...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="settings-page" class="page">
+                <div class="content">
+                    <h2>🤖 Centre de Commandes Bot & Réseau</h2>
+                    <div id="telegram-content-container">
+                        <p class="font-yellow">Chargement des commandes du Bot...</p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div> 
+
+    <footer id="mobile-nav-footer">
+        <nav id="bottom-navigation-menu">
+            <ul>
+                <li><a href="#" data-page="home" class="active"><i class="fas fa-home"></i><span>Accueil</span></a></li>
+                <li><a href="#" data-page="map"><i class="fas fa-map-marked-alt"></i><span>Carte</span></a></li>
+                <li><a href="#" data-page="dashboard"><i class="fas fa-chart-line"></i><span>Tableau</span></a></li>
+                <li><a href="#" data-page="settings"><i class="fas fa-robot"></i><span>Bot/Cmds</span></a></li>
+            </ul>
+        </nav>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    <script src="theme.js"></script> 
+    <script src="pagination.js"></script> 
+    
+    <script src="app.js"></script> 
+    <script src="home.js"></script> 
+</body>
+</html>

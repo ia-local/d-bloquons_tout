@@ -1,0 +1,488 @@
+/* Fichier: styles.css (Charte Graphique, Mobile-First et Thème) */
+
+/* ==========================================================================
+   0. VARIABLES GLOBALES (DARK MODE PAR DÉFAUT)
+   ========================================================================== */
+:root {
+    --color-background: #121214; /* Noir Profond */
+    --color-ui-primary: #222;    /* Gris UI pour barres et fonds */
+    --color-ui-content: #2c2c2c; /* Gris légèrement plus clair pour les cartes de contenu */
+    --color-accent-yellow: #f9e25b; /* Jaune Vif / Alerte */
+    --color-accent-red: #f52639;    /* Rouge Vif / Action / Colère */
+    --color-text: #ffffff;
+    --color-text-dark: #1a1a1a;
+     
+    --header-height: 55px;
+    --footer-height-mobile: 65px; 
+    --sidebar-width-desktop: 280px; 
+    --shadow: 0 4px 12px rgba(0,0,0,0.4);
+    --border-style: 2px solid var(--color-accent-yellow);
+}
+
+/* --- LIGHT MODE OVERRIDES --- */
+body[data-theme="light"] {
+    --color-background: #f8f9fa;
+    --color-ui-primary: #ffffff;
+    --color-ui-content: #ffffff;
+    --color-accent-yellow: #f52639; /* Le JAUNE devient ROUGE pour l'accentuation */
+    --color-accent-red: #f9e25b;    /* Le ROUGE devient JAUNE pour l'alerte/accentuation */
+    --color-text: #1a1a1a;
+    --color-text-dark: #ffffff; 
+    --shadow: 0 4px 12px rgba(0,0,0,0.1);
+    --border-style: 2px solid var(--color-accent-yellow);
+}
+
+/* ==========================================================================
+   1. BASE & TYPOGRAPHIE
+   ========================================================================== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+ul { list-style: none; }
+a { text-decoration: none; }
+
+body {
+    font-family: "Gotham", sans-serif, "Roboto", sans-serif;
+    background: var(--color-background);
+    color: var(--color-text);
+    line-height: 1.6;
+    height: 100vh;
+    overflow: hidden; 
+    transition: background 0.3s, color 0.3s;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Fixes pour la typographie héritée */
+h1, h2, h3, h4, h5 {
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    line-height: 1.3;
+    color: var(--color-accent-yellow); /* Titres en Jaune par défaut */
+}
+.font-yellow { color: var(--color-accent-yellow); }
+.font-red { color: var(--color-accent-red); }
+
+/* ==========================================================================
+   2. HEADER & NAVIGATION (MOBILE-FIRST)
+   ========================================================================== */
+
+#main-header {
+    background: var(--color-ui-primary);
+    height: var(--header-height);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    flex-shrink: 0;
+    z-index: 1000;
+    box-shadow: var(--shadow);
+    border-bottom: 2px solid var(--color-accent-yellow);
+}
+.logo { display: flex; align-items: center; gap: 10px; }
+.logo span {
+    color: var(--color-accent-yellow);
+    font-size: 1.2rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+.logo i { color: var(--color-accent-yellow); }
+
+/* Bouton Thème */
+.theme-btn { 
+    background: transparent;
+    border: 2px solid var(--color-accent-yellow);
+    color: var(--color-accent-yellow);
+    padding: 6px 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 800;
+}
+.theme-btn:hover {
+    background: var(--color-accent-yellow);
+    color: var(--color-text-dark);
+}
+body[data-theme="light"] .theme-btn {
+    border-color: var(--color-accent-red);
+    color: var(--color-accent-red);
+}
+
+/* --- FIXE: L'Aside est masqué par défaut (Mobile-First) --- */
+#desktop-sidebar {
+    display: none; 
+}
+
+/* --- FOOTER FIXE (NAVIGATION MOBILE) --- */
+#app-content {
+    flex-grow: 1;
+    position: relative;
+    overflow: hidden; 
+    /* Marge pour le footer mobile */
+    margin-bottom: var(--footer-height-mobile); 
+    
+    /* AJOUT CRITIQUE: Définir la hauteur disponible pour le layout Mobile */
+    height: calc(100vh - var(--header-height));
+}
+
+#mobile-nav-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: var(--footer-height-mobile);
+    background-color: var(--color-ui-primary);
+    border-top: 2px solid var(--color-accent-yellow);
+    z-index: 1000; 
+}
+
+#bottom-navigation-menu ul {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    list-style: none;
+    padding: 0;
+}
+#bottom-navigation-menu ul li {
+    flex-grow: 1; 
+    display: flex;
+    justify-content: center;
+}
+
+#bottom-navigation-menu ul li a {
+    /* CORRECTION: Assure une grande zone tactile et l'alignement */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+    text-decoration: none;
+    color: #ccc;
+    font-size: 0.75em;
+    padding: 5px;
+    transition: color 0.2s ease;
+    
+    min-height: 44px; 
+    height: 100%; 
+    width: 100%; 
+}
+#bottom-navigation-menu ul li a:hover,
+#bottom-navigation-menu ul li a.active {
+    color: var(--color-accent-yellow);
+}
+#bottom-navigation-menu ul li a i {
+    font-size: 1.5em;
+    margin-bottom: 2px;
+}
+
+/* ==========================================================================
+   3. PAGES & CONTENU (GESTION DES VUES)
+   ========================================================================== */
+
+.page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* HAUTEUR CRITIQUE: La hauteur doit être 100% de son parent (#app-content) */
+    height: 100%; 
+    
+    /* Masquer par défaut */
+    display: none; 
+    /* Gère le défilement de la page elle-même */
+    overflow-y: auto; 
+    padding: 10px;
+    
+    /* Utiliser flexbox pour le Mobile-First afin d'avoir une meilleure gestion du contenu */
+    flex-direction: column;
+}
+/* CORRECTION CRITIQUE DE VISIBILITÉ: Garantir que la page active s'affiche */
+.page.active { 
+    display: flex !important; /* Utiliser FLEX pour permettre le défilement et la gestion interne */
+    /* Force l'affichage au-dessus de tout le contenu inactif */
+    z-index: 10; 
+}
+.page:not(.active) {
+    /* Cache les pages inactives pour éviter les conflits */
+    display: none;
+    z-index: 1;
+}
+
+.page h2 { color: var(--color-accent-yellow); font-size: 1.6rem; padding: 10px; margin-bottom: 10px; }
+
+
+/* --- Styles Généraux de Carte --- */
+#map-page { padding: 0; }
+#map-container {
+    height: 100%;
+    position: relative;
+    z-index: 1;
+    /* AJOUT CRITIQUE POUR LA CARTE : Assurer qu'elle prend l'espace restant */
+    flex-grow: 1;
+}
+#map {
+    height: 100%;
+    width: 100%;
+    border: 2px solid var(--color-accent-yellow);
+}
+#realtime-alerts {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--color-accent-red);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 4px;
+    font-weight: bold;
+    z-index: 100; /* Assure que l'alerte est au-dessus de la carte */
+}
+
+/* --- Styles des Cartes/Contenu (Post-it style) --- */
+.content {
+    /* FOND Jaune Vif / Texte Noir pour l'effet Post-it */
+    background: var(--color-accent-yellow); 
+    color: var(--color-text-dark); 
+    
+    padding: 20px;
+    border: 3px solid var(--color-text-dark); /* BORDURE PLUS ÉPAISSE ET CONTRASTÉE */
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+    
+    /* Style Post-it général */
+    transform: rotate(-0.5deg); 
+    transition: transform 0.2s, box-shadow 0.2s;
+    
+    /* Assure que le contenu se contracte dans la colonne flex */
+    flex-shrink: 0;
+}
+/* Adapte le style au mode clair */
+body[data-theme="light"] .content {
+    background: var(--color-accent-red); /* Le jaune du post-it devient rouge */
+    color: var(--color-text-dark); /* Texte toujours foncé */
+    border-color: var(--color-text-dark); 
+}
+.content:hover { 
+    transform: rotate(0deg) scale(1.005); 
+    box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+}
+
+/* Adapte les titres dans le conteneur principal */
+.content h2, .content h3, .content h4 { 
+    color: var(--color-accent-red); /* Titres à l'intérieur en Rouge */
+}
+/* Sauf les liens et les strong, qui redeviennent l'accent jaune/rouge */
+.content a, .content strong { 
+    color: var(--color-accent-red); 
+}
+
+
+/* --- Alertes (Manifeste) --- */
+.alert {
+    padding: 15px;
+    margin: 15px 0;
+    border: 2px solid;
+    font-weight: 600;
+    transform: rotate(0.5deg);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    color: inherit; 
+    background: var(--color-ui-content); 
+}
+.alert-warning {
+    border-color: var(--color-accent-yellow);
+}
+.alert-info {
+    border-color: var(--color-accent-red);
+}
+.alert ul { margin-left: 20px; }
+
+/* --- Grid générique pour Topics/Dashboard --- */
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+.feature-card {
+    /* FOND en Rouge Vif pour l'impact (Action/Topic) */
+    background: var(--color-accent-red); 
+    border: 3px solid var(--color-accent-yellow); /* BORDURE PLUS ÉPAISSE */
+    padding: 15px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    /* Texte blanc pour le contraste sur le rouge */
+    color: var(--color-text); 
+    
+    /* Effet visuel: Légère rotation pour les cartes de la grille */
+    transform: rotate(1deg); 
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.feature-card:hover {
+    transform: rotate(0deg) scale(1.05);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+}
+
+.feature-card h4 { 
+    /* Titres en Jaune pour le contraste/l'accentuation sur le fond rouge */
+    color: var(--color-accent-yellow); 
+    font-size: 1em; 
+    margin-bottom: 5px; 
+}
+.metric-value {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--color-accent-yellow); /* Met en jaune sur fond rouge */
+}
+
+/* --- Styles de Tableau et Pagination --- */
+#telegram-content-container table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background: var(--color-ui-primary);
+    border: 1px solid var(--color-accent-yellow);
+}
+#telegram-content-container th {
+    background: var(--color-accent-yellow);
+    color: var(--color-text-dark);
+    padding: 10px;
+    text-align: left;
+    font-weight: 700;
+}
+#telegram-content-container td {
+    padding: 10px;
+    border-bottom: 1px solid rgba(249, 226, 91, 0.2);
+    color: var(--color-text);
+    vertical-align: top;
+}
+.break-word { word-break: break-word; }
+
+
+/* --- Pagination Buttons (S'appuie sur le style .btn-secondary) --- */
+#commands-pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 0;
+    border-top: 1px solid rgba(249, 226, 91, 0.3);
+    margin-top: 10px;
+}
+
+#commands-pagination-controls button {
+    /* Style de base des boutons (hérité de .btn-secondary) */
+    background: transparent;
+    border: 2px solid var(--color-accent-yellow);
+    color: var(--color-accent-yellow);
+    padding: 8px 12px;
+    font-size: 0.8em;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin: 0 5px;
+    /* Correction de réactivité */
+    min-width: 44px; 
+}
+#commands-pagination-controls button:hover:not(:disabled) {
+    background: var(--color-accent-red);
+    color: white;
+    border-color: var(--color-accent-red);
+}
+#commands-pagination-controls button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    border-color: rgba(249, 226, 91, 0.5);
+    color: rgba(249, 226, 91, 0.5);
+}
+#commands-pagination-controls span {
+    font-size: 1em;
+    font-weight: 600;
+    color: var(--color-accent-yellow); 
+    margin: 0 15px;
+}
+
+
+/* ==========================================================================
+   4. RÈGLES DESKTOP (NAVIGATION LATÉRALE)
+   ========================================================================== */
+@media (min-width: 1025px) {
+    
+    /* Cache le footer mobile */
+    #mobile-nav-footer {
+        display: none !important;
+    }
+    
+    /* Active le layout à deux colonnes */
+    #desktop-app-layout {
+        display: flex; 
+        height: calc(100vh - var(--header-height)); 
+        margin-top: var(--header-height); 
+        overflow: hidden; 
+    }
+
+    /* ASIDE: Menu Latéral */
+    #desktop-sidebar {
+        display: block; 
+        flex-shrink: 0;
+        width: var(--sidebar-width-desktop); 
+        background: var(--color-ui-primary);
+        border-right: 2px solid var(--color-accent-yellow);
+        padding-top: 20px;
+        box-shadow: 4px 0 10px rgba(0,0,0,0.3);
+        overflow-y: auto; 
+    }
+    
+    /* Contenu principal prend le reste de l'espace */
+    #app-content {
+        flex-grow: 1;
+        position: relative;
+        height: 100%;
+        overflow-y: hidden; 
+        margin-bottom: 0; 
+    }
+
+    /* Style des liens dans la barre latérale */
+    #sidebar-navigation ul { padding: 0; }
+    #sidebar-navigation li {
+        margin-bottom: 0;
+        border-left: 5px solid transparent; 
+        transition: background-color 0.2s;
+    }
+    #sidebar-navigation li:hover { background-color: rgba(249, 226, 91, 0.1); }
+
+    #sidebar-navigation a {
+        display: flex;
+        align-items: center;
+        padding: 15px 25px;
+        color: var(--color-text); 
+        font-size: 1.1em;
+        font-weight: 700;
+    }
+
+    #sidebar-navigation a i {
+        font-size: 1.3em;
+        margin-right: 15px;
+        color: var(--color-accent-red); 
+    }
+    
+    /* Style Actif Desktop */
+    #sidebar-navigation a.active {
+        color: var(--color-accent-yellow); 
+        background-color: var(--color-background); 
+    }
+    #sidebar-navigation a.active i {
+        color: var(--color-accent-yellow);
+    }
+    #sidebar-navigation li:has(a.active) {
+        border-left: 5px solid var(--color-accent-yellow); 
+    }
+    
+    /* La carte récupère l'espace total sans le footer */
+    #map-container {
+        position: static; 
+        height: 100%;
+        bottom: 0;
+    }
+}
+
+/* ------------------------------------------------ */
+/* 5. FIXES ET CORRECTIONS POUR LA LISIBILITÉ */
+/* ------------------------------------------------ */
+.content ul { margin-left: 20px; }
