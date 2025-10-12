@@ -7,8 +7,8 @@ const sassMiddleware = require('node-sass-middleware');
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 // Import des fonctions de service pour l'initialisation
-const { initializeDatabase, loadActionsData, readRicsFile, loadBoycottData,loadChatHistoryFile, getDatabase } = require('./services/data');
-const { generateCategoryEmbeddings } = require('./services/ai'); 
+const { initializeDatabase, loadActionsData, readRicsFile, loadBoycottData,loadChatHistoryFile, getDatabase } = require('./services/data.js');
+const { generateCategoryEmbeddings } = require('./services/ai.js'); 
 const dashboardRouter = require('./routes/dashboard.js'); // 👈 NOUVEL IMPORT
 // --- 1. IMPORT DES ROUTEURS MODULAIRES ---
 // Routeurs déjà existants (qui sont déjà modulaires)
@@ -25,7 +25,7 @@ const mediaRouter = require('./routes/mediaRouter.js');
 const revendicationsRouter = require('./routes/revendicationsRouter.js');
 const actionsRouter = require('./routes/actionsRouter.js');
 // Routeurs récemment créés (extraits du monolithique)
-const geeRouter = require('./services/gee').geeRouter;       // 🌍 GEE
+const geeRouter = require('./services/gee.js').geeRouter;       // 🌍 GEE
 const chatRouter = require('./routes/chat.js');               // 💬 Chatbot
 const userRoutes = require('./routes/user-management.js');    // 🧑‍💻 CRUD Utilisateurs (/api/beneficiaries)
 const dataFlowsRouter = require('./routes/data-flows.js');    // 💸 Flux financiers, RICS, Boycotts

@@ -3,7 +3,7 @@
 const express = require('express');
 const { v4: uuidv4 } = require('uuid');
 const { groq, genAI, getGroqChatResponse, categoryEmbeddings, GROQ_MODEL } = require('../services/ai'); 
-const { cosineSimilarity } = require('../services/utils'); // Supposons que cette utilitaire existe
+// const { cosineSimilarity } = require('../services/utils'); // Supposons que cette utilitaire existe
 const { getDatabase, writeDatabaseFile, readJsonFile } = require('../services/data'); // Nécessaire pour journal/posts
 
 const router = express.Router();

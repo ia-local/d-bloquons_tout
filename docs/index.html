@@ -11,21 +11,21 @@
     <link rel="stylesheet" href="styles.css"> 
     <link rel="stylesheet" href="modals.css"> 
     <link rel="stylesheet" href="modalTelegram.css"> 
+    <link rel="stylesheet" href="ric.css"> 
     <link rel="stylesheet" href="missions.css"> 
     <link rel="stylesheet" href="dashboard.css"> 
     <link rel="stylesheet" href="chatbot.css"> 
     <link rel="stylesheet" href="map-style.css"> 
+    <link rel="stylesheet" href="profile.css"> 
 </head>
 <body>
     
     <header id="main-header">
         <nav class="navBar">
             <div class="logo">
-                <!-- 🛑 BOUTON FLOTTANT D'ACCÈS RAPIDE AU CHATBOT -->
                 <button id="chatbot-fab" class="fab-btn" title="Ouvrir l'Assistant IA" onclick="window.handleUserAction('chatbot')">
                     <i class="fas fa-robot"></i>
                 </button>
-                <!-- 🛑 NOUVEAUTÉ : Le logo entier est maintenant cliquable -->
                 <a href="#" onclick="event.preventDefault(); window.handleUserAction('chatbot')" 
                    style="display: flex; align-items: center; gap: 10px; color: inherit; text-decoration: none;">
                     <i class="fas fa-bullhorn font-yellow" style="font-size: 1.5rem;"></i>
@@ -35,13 +35,36 @@
 
             </div>
             <div class="header-controls">
-                
+
                 <div class="user-profile-container">
                     <button id="theme-toggle" class="theme-btn" title="Changer de thème">🌙</button>
                     <button id="user-menu-toggle" class="profile-btn" aria-label="Gestion du compte">
                         <i class="fas fa-user-circle"></i>
                     </button>
                     <div id="user-menu-dropdown" class="dropdown-menu hidden">
+                        
+                        <a href="#" data-action="profile" id="agent-profile-link" class="status-panel">
+                            <i class="fas fa-id"></i> 
+                            <span class="profile-text">PROFILE</span>
+                            
+                            <div class="agent-stats-summary">
+                                <div class="status-item">
+                                    <i class="fas fa-medal"></i> 
+                                    <span id="agent-level">Niv. 1</span>
+                                </div>
+                                <div class="status-item energy-bar-container">
+                                    <i class="fas fa-bolt"></i> 
+                                    <span id="agent-energy-value">100/100 EA</span>
+                                    <div class="energy-bar"><div id="energy-progress"></div></div>
+                                </div>
+                                <div class="status-item">
+                                    <i class="fas fa-coins"></i> 
+                                    <span id="agent-utmi">0 UTMI</span>
+                                </div>
+                            </div>
+                            
+                        </a>
+                        
                         <a href="#" data-action="cvnu"><i class="fas fa-id-card"></i> CV Numérique (CVNU)</a>
                         <a href="#" data-action="rib"><i class="fas fa-credit-card"></i> RIB & Fiscalité</a>
                         <a href="#" data-action="config"><i class="fas fa-cog"></i> Configuration</a>
@@ -117,15 +140,15 @@
                     </div>
             </div>
             
-        <div id="map-page" class="page">
-            <h2>🗺️ Carte Tactique (GEE & Données Live Sim.)</h2>
-            <div id="map-container">
-                <div id="map"></div>
-                <div id="realtime-alerts">
-                    📡 Initialisation GEE...
-                </div>
-            </div>
+<div id="map-page" class="page">
+    <h2>🗺️ Carte Tactique (GEE & Données Live Sim.)</h2>
+    <div id="map-container">
+        <div id="map"></div>
+        <div id="realtime-alerts">
+            📡 Initialisation GEE...
         </div>
+        </div>
+</div>
             
             <div id="dashboard-page" class="page">
                 <div class="content" style="padding: 20px;">
@@ -146,7 +169,6 @@
             </div>
 
             <div id="settings-page" class="page">
-                <!-- 🛑 CONTENU CHARGÉ PAR MISSIONS.JS -->
                 <div class="content">
                     <p class="font-yellow">Chargement des Missions...</p>
                 </div>
@@ -182,27 +204,53 @@
         <button id="road-map" class="fab-btn" title="Ouvrir l'Assistant IA" onclick="window.handleUserAction('chatbot')">
         <i class="fa-solid fa-map"></i>
     </button>
-    <!-- Le CSS pour le FAB est dans styles.css -->
+    <template id="ric-description-template">
+    <div class="ric-details-modal-content">
+        <p id="ric-modal-description" class="font-light" style="margin-bottom: 15px;"></p>
+        <p id="ric-modal-deadline" class="font-yellow" style="font-size: 0.9em;"></p>
+        <p id="ric-modal-status" class="font-yellow" style="font-size: 0.9em;"></p>
+        <p id="ric-modal-votes" class="font-red" style="font-size: 1em; font-weight: bold; margin-top: 10px;"></p>
+        <div id="vote-button-placeholder" style="text-align: center; margin-top: 25px;">
+            </div>
+    </div>
+</template>
 
+<template id="ric-vote-template">
+    <div class="ric-vote-modal-content">
+        <h4 id="ric-vote-question" class="font-yellow" style="margin-bottom: 15px;"></h4>
+        <p id="ric-vote-description" style="font-size: 0.9em; margin-bottom: 25px;"></p>
+        
+        <div class="vote-buttons">
+            <button id="vote-yes-btn" class="btn btn-primary" style="background-color: var(--color-green); border-color: var(--color-green);">
+                <i class="fas fa-check"></i> Pour
+            </button>
+            <button id="vote-no-btn" class="btn btn-danger" style="background-color: var(--color-red); border-color: var(--color-red);">
+                <i class="fas fa-times"></i> Contre
+            </button>
+            <button id="vote-abstention-btn" class="btn btn-secondary" style="background-color: var(--color-yellow); border-color: var(--color-yellow); color: var(--color-bg-dark);">
+                <i class="fas fa-ban"></i> Abstention
+            </button>
+        </div>
+        <p style="text-align: center; margin-top: 20px; font-size: 0.8em; color: var(--color-text-light);">
+            * L'enregistrement du vote simule une mise à jour de vos crédits UTMi.
+        </p>
+    </div>
+</template>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
     
-    <!-- 🛑 SCRIPTS DE BASE ET UTILITAIRES -->
     <script type="module" src="theme.js"></script> 
     <script type="module" src="pagination.js"></script> 
     <script type="module" src="modalChatbot.js"></script> 
     <script type="module" src="modalGestion.js"></script> 
-    <script type="module" src="modalTelegram.js"></script> 
-    <!-- 🛑 NOUVEAU SCRIPT POUR LA PAGE MISSIONS -->
+    <script type="module" src="modalTelegram.js"></script>
+    <script type="module" src="modalProfile.js"></script>  
     <script type="module" src="missions.js"></script> 
-    <!-- 🛑 LE SCRIPT app.js DOIT ÊTRE CHARGÉ AVANT LES PAGES qui l'utilisent -->
     <script type="module" src="app.js"></script> 
-    
-    <!-- 🛑 LOGIQUE DES PAGES (Doivent être chargées APRÈS app.js) -->
+    <script src="map.js"></script> 
     <script type="module" src="home.js"></script> 
     <script type="module" src="ric.js"></script> 
     <script type="module" src="dashboard.js"></script> 
-    
-    <!-- SCRIPTS SPÉCIFIQUES À LA CARTE ET AUX FORMULAIRES -->
+        <script type="module" src="modalRic.js"></script> 
     <script type="module" src="src/js/layerMap.js"></script>
     <script type="module" src="src/js/layerLegend.js"></script>
     <script type="module" src="src/js/layerModal.js"></script>

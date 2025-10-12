@@ -1,18 +1,26 @@
-/* Fichier : docs/src/css/map-styles.css (Ajout de la section Légende) */
+/* Fichier : docs/src/css/map-styles.css */
+
+/* ==========================================================================
+   RÈGLES CRITIQUES POUR L'AFFICHAGE DU CONTENEUR DE CARTE
+   ========================================================================== */
+#map {
+    height: 100vh; /* Assure que le conteneur #map a une hauteur pour Leaflet */
+    min-height: 400px;
+}
 
 /* ==========================================================================
    LÉGENDE DE LA CARTE (Contrôle Leaflet customisé)
    ========================================================================== */
 
-/* Style du conteneur Leaflet par défaut (.leaflet-control-container .leaflet-bottomright) */
+/* Style du conteneur Leaflet par défaut */
 .legend-container {
-    background: var(--color-ui-content); /* Fond de carte léger */
+    background: var(--color-ui-content); 
     padding: 10px;
     border-radius: 5px;
     box-shadow: var(--shadow);
     max-width: 200px;
     font-size: 0.9em;
-    border: 1px solid var(--color-accent-yellow); /* Bordure accentuée */
+    border: 1px solid var(--color-accent-yellow);
     color: var(--color-text);
     opacity: 0.9;
     transition: opacity 0.3s;
@@ -26,7 +34,7 @@
     margin-top: 0;
     margin-bottom: 8px;
     font-size: 1.1em;
-    color: var(--color-accent-red); /* Titre en rouge */
+    color: var(--color-accent-red);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     padding-bottom: 5px;
 }
@@ -35,7 +43,7 @@
     display: flex;
     align-items: center;
     margin-bottom: 4px;
-    cursor: pointer; /* Indique l'interactivité */
+    cursor: pointer;
 }
 
 .legend-item:hover .legend-label {
@@ -55,32 +63,58 @@
     text-overflow: ellipsis;
     color: var(--color-text);
 }
-/* Fichier : docs/src/css/map-styles.css (Section Légende Leaflet) */
 
 /* ==========================================================================
-   LÉGENDE DE LA CARTE (Contrôle Leaflet customisé)
+   STYLES DE VOTRE LÉGENDE PERSONNALISÉE (.leaflet-legend)
    ========================================================================== */
-
 .leaflet-legend {
-    /* Style de la boîte principale */
-    background: var(--color-ui-content); 
+    background: var(--color-ui-content);
     padding: 10px;
     border-radius: 5px;
     box-shadow: var(--shadow);
-    max-width: 250px; /* Augmente la largeur max pour les noms longs */
+    max-width: 250px;
     min-width: 220px;
     font-size: 0.9em;
-    border: 2px solid var(--color-accent-yellow); 
+    border: 2px solid var(--color-accent-yellow);
     color: var(--color-text);
     opacity: 0.95;
     transition: opacity 0.3s;
     cursor: default;
     user-select: none;
 }
-.leaflet-container .leaflet-bottom .leaflet-right {
-    display: flex;
-    height: 255px;
+
+/* ==========================================================================
+   NETTOYAGE DES CLASSES LEAFLET INTERNES (Anti-Conflit)
+   ========================================================================== */
+
+/* Neutralisation des styles agressifs qui cassaient l'affichage de la carte et des contrôles */
+.leaflet-pane, .leaflet-control-container, .leaflet-popup-pane,
+.leaflet-tile-pane, .leaflet-overlay-pane, .leaflet-shadow-pane {
+    min-height: initial !important;
+    min-width: initial !important;
+    height: initial !important;
+    width: initial !important;
+    display: initial !important; 
+    background-color: initial !important;
 }
+
+.leaflet-overlay-pane {
+    display: block !important; /* Doit être visible pour les marqueurs */
+} 
+
+.leaflet-top, .leaflet-left, .leaflet-top .leaflet-right,
+.leaflet-bottom, .leaflet-bottom .leaflet-left, .leaflet-bottom .leaflet-right {
+    height: auto !important;
+    width: auto !important;
+    background-color: transparent !important;
+    display: block !important;
+    justify-content: initial !important;
+}
+
+/* ==========================================================================
+   STYLES DE LA LÉGENDE INTERACTIVE (Détails)
+   ========================================================================== */
+
 .leaflet-legend ul {
     padding: 0;
     margin: 0;
@@ -90,7 +124,7 @@
 .legend-title h4 {
     margin: 0 0 10px 0;
     font-size: 1.1em;
-    color: var(--color-accent-red); 
+    color: var(--color-accent-red);
     border-bottom: 1px solid rgba(249, 226, 91, 0.2);
     padding-bottom: 5px;
 }
@@ -111,7 +145,6 @@
 .legend-category:hover, .legend-item:hover {
     background-color: rgba(249, 226, 91, 0.1);
 }
-/* État ACTIF (Couche affichée) */
 .legend-item.active {
     background-color: rgba(0, 255, 0, 0.1); /* Fond vert pour indiquer l'affichage */
     border-left: 3px solid #00ff00;
@@ -138,7 +171,7 @@
 }
 
 .category-arrow {
-    transform: rotate(0deg); 
+    transform: rotate(0deg);
 }
 
 /* Sous-liste des points */

@@ -1,4 +1,4 @@
-// docs/map.js - VERSION FINALE STABILISÉE ET GAMIFIÉE (CORRIGÉE DE L'ERREUR CRITIQUE D'ORDRE)
+// docs/map.js - VERSION FINALE STABILISÉE ET GAMIFIÉE (CORRIGÉE)
 
 const MAP_CONFIG = {
     DEFAULT_CENTER: [46.603354, 1.888334], 
@@ -9,6 +9,7 @@ const MAP_CONFIG = {
 let map = null; 
 window.globalMap = map;
 
+// --- 1. SIMULATION DES DONNÉES JSON (MOCK DATA) ---
 // --- 1. SIMULATION DES DONNÉES JSON (MOCK DATA) ---
 const MOCK_DATA = {
     // Données de base (pour la compatibilité avec dashboard.js)
@@ -33,17 +34,42 @@ const MOCK_DATA = {
 };
 // --- 1.5. NOUVEAU: COÛT DES ACTIONS (LOGIQUE DE JEU) ---
 const ACTION_COSTS = {
-    ANALYZE_TARGET: 10,
+    ANALYZE_TARGET: 10, // Coût en Énergie d'Action pour analyser un point
     SCAN_SECTOR: 5,     
     RECHARGE_BASE: 50   
 };
 // --- 2. FONCTIONS DE SIMULATION ET UTILITAIRES ---
 
 // Fonction de simulation locale (inchangée)
-async function fetchData(url) { /* ... */ return {}; }
+async function fetchData(url) {
+    // ... (Logique fetchData inchangée) ...
+    if (url.startsWith('/api/gee/tiles/')) {
+        return { mapid: 'mock_map_id', token: 'mock_token', satelliteName: 'Sentinel-2 (MOCK)' };
+    }
+
+    const data = MOCK_DATA[url];
+    if (data) {
+        return data; 
+    } 
+    
+    if (url.includes('/map/data/') || url.includes('/api/')) {
+        return [];
+    }
+    
+    console.error(`[Erreur Statique] Aucune donnée de simulation trouvée pour l'URL: ${url}`);
+    throw new Error("Données de simulation non trouvées.");
+}
 
 // Fonction de normalisation (rendue globale)
-function normalizeManifestationData(data) { /* ... */ return []; }
+function normalizeManifestationData(data) {
+    if (Array.isArray(data)) {
+        return data;
+    }
+    if (typeof data === 'object' && data !== null && Array.isArray(data.manifestation_points)) {
+        return data.manifestation_points;
+    }
+    return [];
+}
 window.normalizeManifestationData = normalizeManifestationData;
 
 
@@ -53,7 +79,7 @@ window.normalizeManifestationData = normalizeManifestationData;
  */
 function analyzeTarget(manifestationData) {
     if (!window.AGENT_PROFILE || typeof window.grantReward !== 'function') {
-        console.error("Erreur: Le profil d'Agent n'est pas chargé.");
+        console.error("Erreur: Le profil d'Agent n'est pas chargé (Dépendances manquantes).");
         return false;
     }
     
@@ -70,7 +96,7 @@ function analyzeTarget(manifestationData) {
     const count = typeof manifestationData.count === 'string' ? parseInt(manifestationData.count.replace(/\D/g, ''), 10) || 10 : manifestationData.count;
     const baseReward = count >= 1000 ? 50 : 10;
     
-    window.grantReward(baseReward, 5); 
+    window.grantReward(baseReward, 5); // Gagne de l'XP/UTMi et 5 EA de retour
     
     console.log(`🌟 RÉCOMPENSE: +${baseReward} UTMI et +5 EA. Niveau actuel: ${window.AGENT_PROFILE.level}.`);
     
@@ -96,11 +122,14 @@ if (typeof L !== 'undefined' && typeof L.Control.CategoryLegend === 'undefined')
         return new L.Control.CategoryLegend(options);
     };
 }
-
 // Fonction Synchrone d'initialisation du DOM et des contrôles de Leaflet
 function _initializeMapCore() {
     const mapElement = document.getElementById('map');
     
+    // 🛑 STABILISATION : Le contrôle de légende est soit le vrai, soit le mock. L'avertissement est désactivé.
+    if (L.control.categoryLegend) {
+         L.control.categoryLegend({ position: 'bottomright' }).addTo(map); 
+    }
     if (!mapElement || typeof L === 'undefined') {
         console.error("Échec de l'initialisation de la carte: #map ou Leaflet (L) est manquant.");
         return; 
@@ -110,7 +139,6 @@ function _initializeMapCore() {
         return;
     }
 
-    // 🛑 1. CRÉATION ET DÉFINITION DE L'OBJET MAP (CORRECTION DE L'ERREUR D'ORDRE)
     map = L.map('map', {
         center: MAP_CONFIG.DEFAULT_CENTER,
         zoom: MAP_CONFIG.DEFAULT_ZOOM,
@@ -118,19 +146,15 @@ function _initializeMapCore() {
     });
     window.globalMap = map; 
 
-    // Ajout de la couche de base OSM
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributeurs'
     }).addTo(map);
 
-    // Ajout du marqueur test
     L.marker([48.8656, 2.3251]).addTo(map) 
         .bindPopup("🎯 <b>Cible Test: Place de la Concorde</b><br>L'interface de scan est validée !").openPopup();
 
-    // 🛑 2. AJOUT DES CONTRÔLES (MAINTENANT QUE 'map' EST DÉFINI)
-    
-    // Stabilisation du contrôle de légende (utilise la version mock si l'autre n'est pas chargée)
-    if (L.control.categoryLegend) {
+    // 🛑 CORRECTION : Stabilisation du contrôle de légende (transforme l'erreur critique en avertissement non bloquant)
+    if (typeof L.control.categoryLegend !== 'undefined' && L.control.categoryLegend) {
          L.control.categoryLegend({ position: 'bottomright' }).addTo(map); 
     } else {
          console.warn("⚠️ Contrôle de légende manquant (L.control.categoryLegend). Vérifiez config/leaflet.js.");
@@ -139,7 +163,7 @@ function _initializeMapCore() {
 
 // 🛑 FONCTION window.initMap (Appelée par app.js)
 window.initMap = async function() {
-    // 1. Exécution synchrone
+    // 1. Exécution synchrone de la création de la carte et des contrôles
     _initializeMapCore();
 
     if (map === null) return;
@@ -147,8 +171,8 @@ window.initMap = async function() {
     // 2. Exécution Asynchrone des appels de données
     setTimeout(async () => {
         try {
-            await loadGeeTiles();
-            await loadManifestationPoints();
+            await loadGeeTiles(); // Charge les tuiles satellite
+            await loadManifestationPoints(); // Charge et dessine les marqueurs
         } catch (e) {
             console.error("Erreur lors de l'appel initial aux données de carte (non bloquant):", e);
         }
@@ -163,10 +187,34 @@ window.initMap = async function() {
 }
 
 
-// Fonction pour ajouter les tuiles satellite (inchangée)
-async function loadGeeTiles() { /* ... */ }
+// Fonction pour ajouter les tuiles satellite
+async function loadGeeTiles() {
+    const alertsElement = document.getElementById('realtime-alerts');
+    if (!alertsElement) return;
+    
+    alertsElement.textContent = "📡 Connexion à Google Earth Engine...";
+    try {
+        const fetcher = window.fetchData || fetchData;
+        const geeData = await fetcher('/api/gee/tiles/COPERNICUS/S2_SR_HARMONIZED?bands=B4,B3,B2&cloud_percentage=5');
+        
+        if (geeData && geeData.mapid && geeData.token && window.globalMap) {
+            L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+                opacity: 0.7, 
+                zIndex: 10,
+                maxNativeZoom: 17
+            }).addTo(window.globalMap);
+            alertsElement.textContent = `✅ Couche Satellite chargée (via Esri World Imagery Mock).`;
+        } else {
+            alertsElement.textContent = "⚠️ GEE : Réponse invalide (MOCK/API).";
+        }
+    } catch (error) {
+        alertsElement.textContent = "❌ Échec de l'initialisation GEE (Réseau).";
+        console.error("Échec de la connexion à l'API GEE:", error);
+    }
+}
 
-// Fonction de chargement des points (inchangée)
+// Fonction de chargement des points
 async function loadManifestationPoints() {
     try {
         const fetcher = window.fetchData || fetchData;
@@ -180,6 +228,7 @@ async function loadManifestationPoints() {
             if (point.lat && point.lon) {
                 const marker = L.marker([point.lat, point.lon]).addTo(window.globalMap);
                 
+                // Attacher la logique de gamification au clic
                 marker.on('click', () => {
                     const success = analyzeTarget(point);
                     if (success) {
@@ -188,7 +237,7 @@ async function loadManifestationPoints() {
                          marker.bindPopup(`**ANALYSE REFUSÉE**: Énergie d'Action Insuffisante. (Coût: ${ACTION_COSTS.ANALYZE_TARGET} EA)`).openPopup();
                     }
                     if (window.updateProfileUI) {
-                        window.updateProfileUI();
+                        window.updateProfileUI(); // Force la mise à jour de l'UI
                     }
                 });
             }

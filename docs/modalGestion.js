@@ -1,11 +1,11 @@
-// docs/modalGestion.js - Logique d'affichage et de contenu des Modales (Mise à jour pour Chatbot)
+// docs/modalGestion.js - Logique d'affichage et de contenu des Modales (FINALISÉ GAMIFICATION)
 
 // 🛑 GARDE-FOU: Définir la fonction handleUserAction à la portée globale immédiatement
-window.handleUserAction = window.handleUserAction || function(action, detailKey = null) {
+window.handleUserAction = window.handleUserAction || function(action, detailKey = null, isObjective = false) {
     console.error(`Modale non initialisée : action ${action} demandée.`);
 };
 
-// 🛑 VARIABLES GLOBALES DE SECOURS (Définies ici si les scripts de page ne sont pas encore chargés)
+// 🛑 VARIABLES GLOBALES DE SECOURS (Elles seront mises à jour par ric.js et home.js au chargement)
 window.RIC_DATA = window.RIC_DATA || { 
     title: "Le RIC", 
     definition: "Données non chargées.", 
@@ -16,9 +16,11 @@ window.RIC_DATA = window.RIC_DATA || {
     separation_of_powers: []
 };
 window.CHRONOLOGY_EVENTS = window.CHRONOLOGY_EVENTS || [];
+window.hasCompletedDailyVeille = window.hasCompletedDailyVeille || false; 
+window.RIC_FORM_TEMPLATE = window.RIC_FORM_TEMPLATE || "<form id=\"ric-form\"><p>Formulaire simulé...</p></form>";
+
 
 window.initializeModalHandling = function() {
-    // Si déjà initialisé, on sort
     if (document.getElementById('global-modal')?.hasInitialized) return;
 
     const modal = document.getElementById('global-modal');
@@ -44,6 +46,11 @@ window.initializeModalHandling = function() {
         } else {
             modalBox.classList.remove('is-chatbot');
         }
+        
+        // Attachement du Formulaire RIC après injection si l'action est 'ric-form'
+        if (title.includes("Proposer un nouveau RIC")) {
+            attachRicFormListener();
+        }
     };
 
     window.closeModal = function() {
@@ -53,52 +60,41 @@ window.initializeModalHandling = function() {
         modalContentContainer.innerHTML = '';
     };
     
-    // --- Contenu de Modale pour les Cartes QG (Inchangé) ---
-    const getHQDetailContent = (key) => {
+    // --- Logique Contenu QG (Inchangée) ---
+    const getHQDetailContent = (key) => { 
         switch(key) {
-            case 'finances':
-                return {
-                    title: "Détail : Trésorerie du Mouvement",
-                    icon: "fas fa-euro-sign",
-                    content: `<p>Aperçu des mouvements de fonds, y compris les allocations UTMi, le solde de la caisse principale et le statut du Smart Contract.</p><p class="font-yellow">**Fonctionnalité complète :** Affichage des transactions récentes et du tableau de ventilation des dépenses (Simulé).</p><div style="text-align: center; margin-top: 20px;"><button class="btn btn-primary" onclick="alert('Module de Trésorerie en cours de développement.')">Accéder au Journal Comptable</button></div>`
-                };
-            case 'revendications':
-                return {
-                    title: "Détail : Moteur de la Démocratie",
-                    icon: "fas fa-balance-scale",
-                    content: `<p>Statut détaillé de chaque initiative citoyenne (RICs et Pétitions), y compris les seuils de validation et les prochaines échéances.</p><p class="font-yellow">**Prochaine étape :** Intégration du système de vote sécurisé par blockchain pour les propositions soumises.</p>`
-                };
-            case 'actions':
-                return {
-                    title: "Détail : Logistique des Actions",
-                    icon: "fas fa-hammer",
-                    content: `<p>Tableau de bord logistique pour le suivi en temps réel des actions sur le terrain (rassemblements, blocages) et l'efficacité des boycotts commerciaux ciblés.</p><p class="font-red">**Alerte :** 3 actions critiques en attente de validation légale.</p>`
-                };
-            case 'users':
-                return {
-                    title: "Détail : Gestion des Utilisateurs (CVNU)",
-                    icon: "fas fa-users",
-                    content: `<p>Analyse de la démographie des bénéficiaires et des militants (CVNU). Permet de cibler les zones à faible engagement et de coordonner les compétences disponibles.</p><p class="font-yellow">**Gamification :** Les 100 meilleurs CVNU sont éligibles pour les postes de coordination locale.</p>`
-                };
-            default:
-                return {
-                    title: "Détail QG Inconnu",
-                    icon: "fas fa-question-circle",
-                    content: `<p class='font-red'>Le détail pour la clé '${key}' est introuvable.</p>`
-                };
+            case 'finances': return { title: "Détail : Trésorerie du Mouvement", icon: "fas fa-euro-sign", content: `<p>Aperçu des mouvements de fonds...</p>` };
+            case 'revendications': return { title: "Détail : Moteur de la Démocratie", icon: "fas fa-balance-scale", content: `<p>Statut détaillé de chaque initiative citoyenne...</p>` };
+            case 'actions': return { title: "Détail : Logistique des Actions", icon: "fas fa-hammer", content: `<p>Tableau de bord logistique pour le suivi...</p>` };
+            case 'users': return { title: "Détail : Gestion des Utilisateurs (CVNU)", icon: "fas fa-users", content: `<p>Analyse de la démographie des bénéficiaires...</p>` };
+            default: return { title: "Détail QG Inconnu", icon: "fas fa-question-circle", content: `<p class='font-red'>Détail pour la clé '${key}' introuvable.</p>` };
         }
     };
 
+    // --- Logique de soumission de formulaire RIC ---
+    function attachRicFormListener() {
+        const ricForm = document.getElementById('ric-form');
+        if (ricForm) {
+            ricForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                console.log("Formulaire RIC soumis ! (Action simulée)");
+                
+                window.closeModal();
+                window.openModal("✅ Initiative soumise", "<p>Votre proposition de RIC a été enregistrée. Elle sera soumise à l'étape de validation juridique citoyenne.</p>");
+            });
+        }
+    }
+
+
     // --- Logique principale de gestion des actions (handleUserAction) ---
     
-    window.handleUserAction = function(action, detailKey = null) {
+    window.handleUserAction = function(action, detailKey = null, isObjective = false) {
         let title = '';
         let content = '';
 
         switch (action) {
             
             case 'chatbot':
-                // 🛑 AJOUT DE L'ÉMOJI
                 title = "🤖 Assistant IA - Conversation";
                 content = `
                     <div id="chatbot-container">
@@ -122,29 +118,38 @@ window.initializeModalHandling = function() {
                 break; 
             
             case 'telegram-commands':
-                // 🛑 APPEL DU NOUVEAU FICHIER MODALTELEGRAM.JS ET AJOUT DE L'ÉMOJI
                 title = "📞 Réseau Telegram - Commandes & Salons";
-                if (window.generateTelegramModalContent) {
-                    content = window.generateTelegramModalContent();
-                } else {
-                    content = "<p class='font-red'>❌ Erreur: Le module modalTelegram.js n'a pas été chargé.</p>";
-                }
+                content = window.generateTelegramModalContent ? window.generateTelegramModalContent() : "<p class='font-red'>❌ Erreur: Module Telegram non chargé.</p>";
                 break;
                 
             case 'chronology-detail':
                 const event = window.CHRONOLOGY_EVENTS.find(e => e.id === detailKey);
+                const isVeilleObjective = isObjective; 
+
+                if (!event) { title = "Erreur de détail Chronologie"; content = "<p class='font-red'>Événement historique introuvable.</p>"; break; }
                 
-                if (!event) {
-                    title = "Erreur de détail Chronologie";
-                    content = "<p class='font-red'>Événement historique introuvable.</p>";
-                    break;
+                title = `Événement : ${event.title} (${event.city})`;
+                let bonusMessage = '';
+                
+                if (isVeilleObjective && event.id === '16' && !window.hasCompletedDailyVeille && typeof window.grantReward === 'function') {
+                    const XP_VEILLE = 30;
+                    const ENERGY_GAIN_VEILLE = 5;
+                    
+                    window.hasCompletedDailyVeille = true;
+                    window.grantReward(XP_VEILLE, ENERGY_GAIN_VEILLE);
+                    
+                    bonusMessage = `<div class="alert alert-success" style="margin-top: 15px;"><i class="fas fa-award"></i> **RÉCOMPENSE DE VEILLE ACTIVE :** +${XP_VEILLE} UTMi et +${ENERGY_GAIN_VEILLE} EA gagnés !</div>`;
+                    setTimeout(window.loadHomePageContent, 50); 
+                } else if (window.hasCompletedDailyVeille && event.id === '16') {
+                    bonusMessage = `<div class="alert alert-success" style="margin-top: 15px;"><i class="fas fa-check-circle"></i> Objectif de Veille Active déjà accompli.</div>`;
                 }
+
                 
-                title = `Événement : ${event.title}`;
                 content = `
-                    <h3 class="font-red">${event.subtitle} (${event.city})</h3>
+                    <h3 class="font-red">${event.subtitle}</h3>
                     <p>Date : ${new Date(event.start_date).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
-                    <p style="margin-top: 15px;">${event.description}</p>
+                    ${bonusMessage}
+                    <p style="margin-top: 15px; padding-top: 15px; border-top: 1px dashed var(--color-border, #444);">${event.description}</p>
                 `;
                 break;
                 
@@ -163,13 +168,16 @@ window.initializeModalHandling = function() {
                 
             case 'ric-detail':
                 const ricDataDetail = window.RIC_DATA;
+                
+                if (!ricDataDetail || !ricDataDetail.types || ricDataDetail.types.length === 0) {
+                     title = "Erreur de chargement des données RIC";
+                     content = "<p class='font-red'>Les données RIC n'ont pas été chargées. Veuillez visiter la page RIC d'abord.</p>";
+                     break;
+                }
+                
                 const ricType = ricDataDetail.types[parseInt(detailKey)]; 
                 
-                if (!ricType) {
-                    title = "Erreur de détail RIC";
-                    content = "<p class='font-red'>Détail de ce type de RIC introuvable.</p>";
-                    break;
-                }
+                if (!ricType) { title = "Erreur de détail RIC"; content = "<p class='font-red'>Détail de ce type de RIC introuvable.</p>"; break; }
                 
                 title = `Détails : ${ricType.name}`;
                 content = `
@@ -188,6 +196,7 @@ window.initializeModalHandling = function() {
                 `;
                 break;
 
+            // 🛑 DÉBUT DES CAS QUI MANQUAIENT :
             case 'ric-types':
                 const ricDataAll = window.RIC_DATA;
                 title = ricDataAll.title || "Le Référendum d'Initiative Citoyenne";
@@ -209,17 +218,87 @@ window.initializeModalHandling = function() {
                     </div>
                 `;
                 break;
-                
+                // 🛑 FIN DU CAS QUI MANQUAIT
+
             case 'ric-form':
                 title = "🗳️ Proposer un nouveau RIC";
-                const formTemplate = window.RIC_FORM_TEMPLATE; 
-                content = formTemplate || "<p class='font-red'>Erreur: Template de formulaire non chargé. Veuillez recharger la page RIC.</p>";
+                // Ceci utilise la variable globale chargée par modalRic.js
+                content = window.RIC_FORM_TEMPLATE; 
                 break;
-                
+            case 'ric-active-detail':
+                // 🛑 ACHEMINEMENT VERS LA LOGIQUE DÉDIÉE DANS modalRic.js
+                if (window.handleRicActiveDetail) {
+                    window.closeModal(); // Ferme si une autre modale est ouverte
+                    window.handleRicActiveDetail(detailKey);
+                    return;
+                }
+                break;
+            
+            case 'ric-vote':
+                // 🛑 ACHEMINEMENT VERS LA LOGIQUE DÉDIÉE DANS modalRic.js
+                if (window.handleRicVote) {
+                    window.closeModal();
+                    window.handleRicVote(detailKey);
+                    return;
+                }
+                break;
+            // ... dans window.handleUserAction (modalGestion.js)
+            case 'profile':
             case 'cvnu':
+                const profile = window.AGENT_PROFILE;
+                
+                // 🛑 UTILISATION DE LA FONCTION STABLE getNextLevelThreshold()
+                // Calcule l'XP nécessaire pour le niveau suivant
+                const nextLevelThresholdXP = window.getNextLevelThreshold ? window.getNextLevelThreshold() : 500; 
+                
+                const engagementScore = profile.experience;
+                const utmiPerLevel = nextLevelThresholdXP; 
+                const progressPercent = Math.min(100, (engagementScore / utmiPerLevel) * 100);
+
+                // Détermination des statuts de mission
+                // NOTE: dashboardVeilleCompleted est FALSE si la mission est disponible (voir dashboard.js)
+                const isDashboardVeilleAvailable = !profile.dashboardVeilleCompleted; 
+                const veilleStatus = isDashboardVeilleAvailable ? 'Veille Économique : Disponible' : 'Veille Économique : Accomplie';
+                const veilleColor = isDashboardVeilleAvailable ? 'var(--color-red)' : 'var(--color-green)'; // Rouge pour inciter à l'action
+
+                const missionStatus = profile.ricMissionSubmitted ? 'RIC Soumise' : 'RIC Non Soumise';
+
                 title = "💼 Mon CV Numérique Citoyen (CVNU)";
-                content = `<p>Début de la gamification! Le CVNU agrège votre engagement et vos compétences.</p><p class="font-yellow" style="margin-top: 15px;">**Contenu Simulée :** Vous avez 450 points d'engagement.</p><div style="margin-top: 20px; text-align: center;"><button class="btn btn-primary">Mettre à jour mon CVNU</button></div>`; 
+                content = `
+                    <div class="cvnu-detail-modal">
+                        <h3 class="font-red">Statut d'Agent : Niveau ${profile.level}</h3>
+                        <p style="font-weight: bold;">${profile.utmiCredits.toLocaleString('fr-FR')} UTMi (Charge Agent Value)</p>
+                        
+                        <div class="stat-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px;">
+                            <div class="stat-card">
+                                <h4>Progression Niveau Actuel</h4>
+                                <p>${engagementScore} / ${utmiPerLevel} XP (Prochain Seuil)</p>
+                                <div class="progress-bar-cvnu"><div style="width: ${progressPercent}%;"></div></div>
+                            </div>
+                            <div class="stat-card">
+                                <h4>Missions Journalières</h4>
+                                <p style="color: ${veilleColor}; font-weight: bold;">${veilleStatus}</p>
+                                <p>${missionStatus}</p>
+                                <p style="font-size: 0.8em; color: var(--color-text-light); margin-top: 5px;">Total Missions Accomplies: ${profile.missionsCompleted}</p>
+                            </div>
+                        </div>
+
+                        <h4 class="font-yellow" style="margin-top: 25px;">Axes Cognitifs Dominants (via UTMi)</h4>
+                        <p class="font-red">Le système UTMi valorise votre contribution en fonction de la complexité et de l'impact (Analyse, Stratégie, Imagination).</p>
+                        <ul class="axis-list" style="margin-top: 10px;">
+                            <li><i class="fas fa-brain"></i> **Axe Principal :** Stratégie</li>
+                            <li><i class="fas fa-map-pin"></i> **Activité la plus valorisée :** Analyse de Cible (Carte)</li>
+                            <li><i class="fas fa-clock"></i> **Efficacité Temps Réel :** ${profile.energy} / ${profile.maxEnergy} EA</li>
+                        </ul>
+                        
+                        <p class="font-red" style="margin-top: 20px;">*Le CVNU est directement valorisé par le calcul UTMi, reflétant la qualité et l'impact de vos contributions.</p>
+                    </div>
+                    <div style="margin-top: 20px; text-align: center;"><button class="btn btn-primary">Mettre à jour mon CVNU</button></div>
+                `; 
+                window.openModal(title, content, false);
                 break;
+// ... (Reste de modalGestion.js)
+
             case 'rib':
                 title = "💳 RIB & Gestion Fiscale (Simulé)";
                 content = `<p>Cette section gère vos informations pour les **Allocations UTMi** et le suivi des **Impôts Citoyens**.</p><p class="font-red" style="margin-top: 15px;">**Note de Sécurité :** Cette interface est simulée.</p>`;
@@ -237,30 +316,14 @@ window.initializeModalHandling = function() {
         }
 
         if (action !== 'logout') {
-            // Passe le titre, le contenu et l'indicateur isChatbot (pour le style) à openModal
             window.openModal(title, content, action === 'chatbot');
-
             if (action === 'chatbot' && window.initializeChatbot) {
                 setTimeout(() => window.initializeChatbot(), 0); 
-            }
-            
-            if (action === 'ric-form') {
-                const ricForm = document.getElementById('ric-form');
-                if (ricForm) {
-                    ricForm.addEventListener('submit', (e) => {
-                        e.preventDefault();
-                        console.log("Formulaire RIC soumis ! (Action simulée)");
-                        
-                        window.closeModal();
-                        window.openModal("✅ Initiative soumise", "<p>Votre proposition de RIC a été enregistrée. Elle sera soumise à l'étape de validation juridique citoyenne.</p>");
-                    });
-                }
             }
         }
     }
     
     // --- Initialisation des Événements Statiques (Header et Modal) ---
-
     closeButton.addEventListener('click', window.closeModal);
     modal.addEventListener('click', (e) => {
         if (e.target === modal) {
@@ -268,11 +331,7 @@ window.initializeModalHandling = function() {
         }
     });
 
-    // Le menu utilisateur est géré dans app.js
-    
-    // Marquer l'initialisation comme complète
     modal.hasInitialized = true;
 };
 
-// Lancer l'initialisation après le chargement du DOM
 document.addEventListener('DOMContentLoaded', window.initializeModalHandling);

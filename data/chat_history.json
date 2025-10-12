@@ -193,5 +193,19 @@
     "role": "ai",
     "persona": "generaliste",
     "timestamp": "2025-10-12T17:40:58.177Z"
+  },
+  {
+    "id": "745db340-6b2d-47f6-9ffb-d47256c3d91e",
+    "role": "user",
+    "content": "rtest",
+    "persona": "vous",
+    "timestamp": "2025-10-12T23:34:15.345Z"
+  },
+  {
+    "id": "5f1ea9fa-1c3f-4a5b-b272-1e05a4985448",
+    "role": "ai",
+    "content": "Je suis prêt à aider ! Qu'est-ce que tu veux faire ou discuter ?",
+    "persona": "generaliste",
+    "timestamp": "2025-10-12T23:34:15.600Z"
   }
 ]

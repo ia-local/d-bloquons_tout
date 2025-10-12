@@ -1,42 +1,85 @@
-// docs/home.js - Logique de Rendu pour la Carte, le Tableau de Bord et le Bot + Chronologie
+// docs/home.js - Logique de Rendu pour la Page d'Accueil et la Chronologie (VERSION GAMIFIÉE)
 
 // Déclarer l'instance de la carte Leaflet globalement dans window pour app.js
 window.globalMap = null; 
-// 🛑 NOUVEAU: Stockage global des événements pour la modale
+// 🛑 Stockage global des événements pour la modale
 window.CHRONOLOGY_EVENTS = []; 
+// 🛑 Suivi du statut de la Veille Active (Gamification)
+window.hasCompletedDailyVeille = false; // Initialisé à faux par défaut
 
 // --- 0. RENDU DE LA PAGE HOME (Accueil Statique) ---
+
 window.loadHomePageContent = function() {
-    // La page Home est statique (Manifeste déjà en HTML).
     console.log("Page Accueil chargée (Contenu statique HTML).");
     
-    // DÉCLENCHEMENT DU CHARGEMENT DE LA CHRONOLOGIE
+    // 1. DÉCLENCHEMENT DU CHARGEMENT DE LA CHRONOLOGIE
     loadChronology();
 };
 
-// 🛑 RENDU DE LA CHRONOLOGIE
+/**
+ * 🛑 Fonction qui affiche la carte de la Mission Journalière (Veille Active)
+ */
+function displayEventObjective() {
+    const objectiveContainer = document.querySelector('#home-page .content');
+    if (!objectiveContainer) return;
+    
+    // S'assurer que le DOM de la chronologie existe avant d'essayer d'injecter
+    const chronology = document.getElementById('chronology-container');
+    if (!chronology || objectiveContainer.querySelector('.event-objective-card')) return;
+
+    // Utilisation de l'événement ID 16 ("MACRON ARRETE") comme objectif cible
+    const latestEvent = window.CHRONOLOGY_EVENTS.find(e => e.id === '16'); 
+    
+    if (!latestEvent) return; 
+
+    // Détermine le statut d'affichage
+    const isCompleted = window.hasCompletedDailyVeille;
+    
+    const objectiveHTML = `
+        <div class="alert ${isCompleted ? 'alert-success' : 'alert-info'} event-objective-card" style="margin-top: 30px; border-left: 5px solid ${isCompleted ? 'var(--color-green)' : 'var(--color-accent-red)'}; cursor: pointer;" data-event-id="${latestEvent.id}">
+            <h3 class="${isCompleted ? 'font-green' : 'font-yellow'}">
+                <i class="fas fa-bullseye"></i> ${isCompleted ? 'OBJECTIF ACCOMPLI' : 'OBJECTIF ÉVÉNEMENTIEL : VEILLE ACTIVE'}
+            </h3>
+            <p><strong>MISSION :</strong> ${latestEvent.title} - ${latestEvent.subtitle} (Cliquez pour lire et valider)</p>
+            <p class="${isCompleted ? 'font-green' : 'font-red'}">
+                RÉCOMPENSE : <strong>${isCompleted ? 'RÉCLAMÉE' : '+30 UTMi (Veille Active) + 5 EA'}</strong>
+            </p>
+        </div>
+    `;
+    
+    // Injection juste avant la chronologie
+    chronology.insertAdjacentHTML('beforebegin', objectiveHTML);
+    
+    // Attacher l'écouteur à la nouvelle carte
+    const objectiveCard = objectiveContainer.querySelector('.event-objective-card');
+    if (objectiveCard) {
+        objectiveCard.addEventListener('click', () => {
+            // Déclenche l'action 'chronology-detail'. Le 3ème argument (true/false) indique si c'est pour la récompense.
+            window.handleUserAction('chronology-detail', latestEvent.id, !isCompleted);
+        });
+    }
+}
+
+
+/**
+ * 🛑 RENDU DE LA CHRONOLOGIE
+ */
 async function loadChronology() {
     const container = document.getElementById('chronology-container');
     if (!container) return;
     
-    // Si le conteneur a déjà du contenu riche, ne pas recharger (optimisation)
     if (container.hasLoaded) return;
     
     try {
-        // Récupération des données via l'API (ou le mode de secours)
-        // Assure-toi que window.fetchData est disponible (défini dans app.js)
         const events = await window.fetchData('/api/chronology/events');
         
-        // Sécurité: Si fetchData a renvoyé [] (tableau vide), la condition est remplie.
         if (!events || events.length === 0) {
             container.innerHTML = `<h2 class="font-red">⌛ Chronologie</h2><p>Aucun événement clé trouvé.</p>`;
             container.hasLoaded = true;
             return;
         }
 
-        // 🛑 STOCKAGE DES DONNÉES GLOBALES ET TRI
         window.CHRONOLOGY_EVENTS = events;
-        // Trie par date décroissante (le plus récent en premier)
         events.sort((a, b) => new Date(b.start_date) - new Date(a.start_date));
 
         let html = `
@@ -52,8 +95,6 @@ async function loadChronology() {
                 day: 'numeric'
             });
             
-            // UTILISATION DES CLASSES CSS DEFINIES DANS styles.css (timeline-item et content)
-            // Ajout du rôle 'button' et tabindex pour l'accessibilité
             html += `
                 <div role="button" tabindex="0" class="timeline-item content" data-event-id="${event.id}" style="padding-left: 15px; margin-bottom: 15px; cursor: pointer;">
                     <h4 class="font-yellow" style="margin-bottom: 5px;">${event.title} (${event.city})</h4>
@@ -66,8 +107,11 @@ async function loadChronology() {
         html += '</div>';
         container.innerHTML = html;
         
-        // 🛑 ATTACHEMENT DES ÉVÉNEMENTS APRÈS INJECTION
+        // ATTACHEMENT DES ÉCOUTEURS DE NAVIGATION NORMALE
         attachChronologyListeners(container);
+        
+        // AFFICHAGE DE LA CARTE DE MISSION IMMÉDIATEMENT APRÈS LE CHARGEMENT DES DONNÉES
+        displayEventObjective(); 
 
         container.hasLoaded = true;
 
@@ -77,22 +121,23 @@ async function loadChronology() {
     }
 }
 
-// 🛑 NOUVEAU: Fonction d'attachement des écouteurs
+/**
+ * 🛑 Fonction d'attachement des écouteurs pour les détails sans récompense
+ */
 function attachChronologyListeners(container) {
     const timelineItems = container.querySelectorAll('.timeline-item');
     timelineItems.forEach(item => {
         const handler = () => {
             const eventId = item.getAttribute('data-event-id');
             if (window.handleUserAction) {
-                // Lance l'action 'chronology-detail' avec l'ID de l'événement
-                window.handleUserAction('chronology-detail', eventId);
+                // Lance l'action 'chronology-detail' sans bonus par défaut (false)
+                window.handleUserAction('chronology-detail', eventId, false); 
             } else {
                 console.error("handleUserAction non défini. La modale ne peut pas s'ouvrir.");
             }
         };
 
         item.addEventListener('click', handler);
-        // Gestion de la touche Entrée pour l'accessibilité
         item.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
@@ -101,155 +146,3 @@ function attachChronologyListeners(container) {
         });
     });
 }
-
-
-// --- 1. RENDU DE LA CARTE (Map Page) ---
-
-window.initMap = async function() {
-    // Si la carte est déjà initialisée, on ne fait rien
-    if (window.globalMap) return; 
-
-    const mapElement = document.getElementById('map');
-    if (!mapElement) { 
-        console.error("Élément #map introuvable. Assurez-vous d'être sur la page Carte."); 
-        return; 
-    }
-    
-    // Utiliser les constantes globales
-    window.globalMap = L.map('map', {
-        center: window.MAP_CONFIG.DEFAULT_CENTER,
-        zoom: window.MAP_CONFIG.DEFAULT_ZOOM,
-        maxZoom: window.MAP_CONFIG.MAX_ZOOM,
-        minZoom: 5 
-    });
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '© OpenStreetMap contributeurs'
-    }).addTo(window.globalMap);
-
-    await loadGeeTiles();
-    await loadManifestationPoints();
-};
-
-async function loadGeeTiles() {
-    const alertsElement = document.getElementById('realtime-alerts');
-    alertsElement.textContent = "📡 Connexion à Google Earth Engine...";
-    try {
-        // L'URL de GEE doit inclure les paramètres nécessaires
-        const geeData = await window.fetchData('/api/gee/tiles/COPERNICUS/S2_SR_HARMONIZED?bands=B4,B3,B2&cloud_percentage=5');
-        
-        if (geeData.mapid && geeData.token) {
-            L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-                attribution: `Satellite: ${geeData.satelliteName || 'S2_SR_HARMONIZED'}`,
-                opacity: 0.5,
-                zIndex: 100,
-                maxNativeZoom: 14 
-            }).addTo(window.globalMap);
-            alertsElement.textContent = `✅ Couche Satellite chargée.`;
-        } else {
-            alertsElement.textContent = `⚠️ GEE : ${geeData.error || "Réponse invalide (API). Vérifiez le serveur."}`;
-        }
-    } catch (error) {
-        alertsElement.textContent = "❌ Échec de l'initialisation GEE (Réseau).";
-        console.error("Échec de la connexion à l'API GEE:", error);
-    }
-}
-
-async function loadManifestationPoints() {
-    try {
-        // Récupération des points via l'API (ou le mode de secours)
-        const pointsData = await window.fetchData('/map/data/manifestations'); 
-        
-        // Sécurité: Si pointsData n'est pas un tableau valide, utiliser un tableau vide
-        const points = pointsData || [];
-        
-        let videoCount = 0;
-        
-        points.forEach(point => {
-            if (point.lat && point.lon) {
-                const marker = L.circleMarker([point.lat, point.lon], {
-                    radius: 8,
-                    color: '#f9e25b', 
-                    fillColor: '#f52639', 
-                    weight: 1,
-                    fillOpacity: 0.9,
-                }).addTo(window.globalMap);
-
-                let popupContent = `<div style="color: #1a1a1a;"><b>${point.name} - ${point.city}</b><br>Type: ${point.type || 'Rassemblement'}<br>Participants: ${point.count || 'N/A'}`;
-                if (point.video_link) {
-                    popupContent += `<br><a href="${point.video_link}" target="_blank" style="color: #f52639; font-weight: bold;">📺 Voir la vidéo</a>`;
-                    videoCount++;
-                }
-                popupContent += '</div>';
-                
-                marker.bindPopup(popupContent);
-            }
-        });
-        
-        const currentAlert = document.getElementById('realtime-alerts');
-        if(currentAlert) {
-             currentAlert.textContent = `${currentAlert.textContent} | Points: ${points.length} (Vidéo: ${videoCount})`;
-        }
-
-
-    } catch (error) {
-        console.error("Échec du chargement des points de manifestation:", error);
-    }
-}
-
-// --- 2. RENDU DU TABLEAU DE BORD (Dashboard Page) ---
-
-window.loadDashboardData = async function() {
-    const grid = document.getElementById('dashboard-grid');
-    if (!grid) return;
-
-    // Si la grille a déjà été chargée, on ne la recharge pas (sauf si nécessaire)
-    // NOTE: Il est possible de vouloir recharger pour les données live, mais pour l'instant, on optimise.
-    if (grid.hasLoaded) return; 
-    
-    grid.innerHTML = '<p class="font-yellow">Connexion et agrégation des données...</p>';
-
-    try {
-        // 🛑 TOUS LES APPELS API SONT MAINTENANT SÉPARÉS ET UTILISENT fetchData
-        const [summaryData, utmiData, smartContractData, pointsData] = await Promise.all([
-            window.fetchData('/api/dashboard/summary'),
-            window.fetchData('/api/dashboard/utmi-insights'),
-            window.fetchData('/smartContract/api/dashboard-data'),
-            // 🛑 AJOUT DE LA RÉCUPÉRATION DES POINTS DE MANIFESTATION ICI POUR LE COMPTE
-            window.fetchData('/map/data/manifestations') 
-        ]);
-
-        // Sécurité : Assurer que les listes sont des tableaux pour le .length
-        const points = pointsData || [];
-        const totalPoints = points.length;
-
-        const metrics = [
-            { title: "Solde Caisse Manifeste", value: `${(summaryData.caisseSolde || 0).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}`, desc: `Allocation Est. : ${(summaryData.monthlyAllocation || 0).toFixed(2)} €/bénéficiaire` },
-            { title: "Impact UTMi (Score)", value: (utmiData.totalUTMI || 0).toFixed(2), desc: `Score d'Unité et de Transformation du Mouvement` },
-            { title: "Manifestants Est.", value: (summaryData.estimatedManifestantCount || 0).toLocaleString('fr-FR'), desc: `${totalPoints} Points de Rassemblement` },
-            { title: "Recettes Contrat (Sim.)", value: `${(smartContractData.totalRecettes || 0).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}`, desc: `Dépenses (Allocations): ${(smartContractData.totalDepenses || 0).toFixed(2)} €` },
-            { title: "Boycotts Actifs", value: summaryData.boycottCount || 0, desc: `Alertes financières : ${summaryData.activeAlerts || 0}` },
-            { title: "RICs Actifs", value: summaryData.ricCount || 0, desc: `Citoyens enregistrés : ${summaryData.beneficiaryCount || 0}` }
-        ];
-
-        grid.innerHTML = metrics.map(m => `
-            <div class="feature-card insight-card">
-                <h3 style="color: inherit; font-size: 1.2rem; margin-bottom: 5px;">${m.title}</h3>
-                <p class="metric-value font-red"><b>${m.value}</b></p>
-                <p class="metric-desc">${m.desc}</p>
-            </div>
-        `).join('');
-
-        grid.hasLoaded = true; 
-        
-    } catch (error) {
-        // L'erreur est maintenant bien traitée par fetchData, nous utilisons les valeurs par défaut (0 ou {})
-        console.error("Erreur lors du chargement du tableau de bord (Final):", error);
-        grid.innerHTML = `<p class="font-red">❌ Échec de la connexion aux métriques API (Vérifiez le serveur ou les fichiers JSON de secours).</p>`;
-    }
-};
-
-// --- 3. RENDU DE LA PAGE TÉLÉGRAM (Settings Page) ---
-// 🛑 CETTE FONCTION EST SUPPRIMÉE, ELLE EST DÉSORMAIS DANS MISSIONS.JS
-// window.loadTelegramContent = function() { ... }

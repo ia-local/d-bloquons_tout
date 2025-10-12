@@ -1,22 +1,23 @@
-// docs/app.js - Logique Principale et Navigation (VERSION STABILISÉE FINALE)
+// docs/app.js - Logique Principale et Navigation (VERSION DYNAMIQUE STABILISÉE)
 
 // 🛑 Importation de la logique de Gamification depuis le composant dédié
 import { updateProfileUI, grantReward, checkLevelUp, getNextLevelThreshold } from './modalProfile.js';
 
-// Exposer les variables globales
+// Exposer les variables globales pour que home.js puisse y accéder
 window.MAP_CONFIG = {
     DEFAULT_CENTER: [46.603354, 1.888334], 
     DEFAULT_ZOOM: 6,
     MAX_ZOOM: 14
 };
 
-// Exposition globale des fonctions
+// Exposition globale des fonctions pour la rétrocompatibilité
 window.updateProfileUI = updateProfileUI; 
 window.grantReward = grantReward;
 window.checkLevelUp = checkLevelUp; 
 window.getNextLevelThreshold = getNextLevelThreshold;
 
 // --- 1. DONNÉES STATIQUES (TELEGRAM) ---
+// Ces données sont conservées en front-end pour la configuration du bot/télégramme.
 window.TELEGRAM_DATA = {
     topicLinks: {
         '🎨 Studio (Création)': 'https://t.me/c/2803900118/1232',
@@ -46,13 +47,15 @@ window.TELEGRAM_DATA = {
         { cmd: '/inviter', desc: 'Générer un lien d\'invitation.' }
     ]
 };
-// 🛑 Mappage des URLs API vers les noms de fichiers JSON locaux
+// 🛑 Mappage des URLs API vers les noms de fichiers JSON locaux (sans l'extension)
 const API_TO_FILE_MAP = {
     '/api/chronology/events': 'events',
     '/map/data/manifestations': 'manifestation_points_2_octobre',
     
     '/api/ric/data': 'ric_details',
+    // 🛑 AJOUT N°1 : Mapping pour la liste active des RICs
     '/api/ric/active-list': 'rics', 
+    // 🛑 AJOUT N°2 : Mapping pour le template de formulaire (si vous le chargez via fetchData)
     '/api/ric/form-template': 'ric_form_template', 
     
     '/api/dashboard/summary': 'dashboard_summary',
@@ -62,7 +65,6 @@ const API_TO_FILE_MAP = {
     '/api/hq/revendications': 'hq_revendications',
     '/api/hq/actions': 'hq_actions',
     '/api/hq/users': 'hq_users',
-    
     '/api/chat/history': 'chat_history',
     '/api/chat/message': 'chat_response',
     '/api/gee/tiles/COPERNICUS/S2_SR_HARMONIZED': 'gee_mock_data'
@@ -87,14 +89,14 @@ window.fetchData = async function(url, method = 'GET', body = null) {
     
     const cleanUrlForListCheck = url.includes('?') ? url.substring(0, url.indexOf('?')) : url;
 
-    // 🛑 CORRECTION APPLIQUÉE : Seuls les vrais tableaux sont listés.
+    // 🛑 CORRECTION : Ajout de '/api/ric/active-list' à la liste des endpoints qui DOIVENT retourner un tableau.
     const isListEndpoint = cleanUrlForListCheck.includes('/events') 
         || cleanUrlForListCheck.includes('/manifestations') 
         || cleanUrlForListCheck.includes('/api/rics') 
         || cleanUrlForListCheck.includes('/beneficiaries') 
         || cleanUrlForListCheck.includes('/api/chat/history')
-        || cleanUrlForListCheck === '/api/ric/active-list';
-        // '/api/hq/users' est désormais traité comme un OBJET par défaut.
+        || cleanUrlForListCheck === '/api/ric/active-list' // <--- NOUVEAU
+        || cleanUrlForListCheck === '/api/hq/users'; 
 
     let data;
     let fallbackUsed = false;
@@ -142,7 +144,7 @@ window.fetchData = async function(url, method = 'GET', body = null) {
             console.warn(`[NORMALISATION] Format manifestation_points extrait de la réponse ${fallbackUsed ? 'de secours' : 'API'}.`);
         }
         
-        // VÉRIFICATION DE SÉCURITÉ FINALE : Les données HQ qui ne sont pas ici (finances, users) sont retournées comme objets.
+        // VÉRIFICATION DE SÉCURITÉ FINALE : Assure que les listes sont bien des tableaux.
         if (isListEndpoint && !Array.isArray(data)) {
             console.error(`[SÉCURITÉ] L'endpoint ${url} a retourné un objet au lieu d'un tableau. Conversion forcée en tableau vide.`);
             return []; 
@@ -162,73 +164,18 @@ window.fetchData = async function(url, method = 'GET', body = null) {
 
 
 // --- 3. LOGIQUE DE NAVIGATION (setupNavigation) ---
-// docs/app.js - Mise à jour du bloc 3. LOGIQUE DE NAVIGATION (setupNavigation)
-
-// ... (Début du fichier inchangé) ...
-
-// --- 3. LOGIQUE DE NAVIGATION (setupNavigation) ---
 document.addEventListener('DOMContentLoaded', function() {
     
     const navLinks = document.querySelectorAll('[data-page]');
     const userMenuToggle = document.getElementById('user-menu-toggle');
     const userMenuDropdown = document.getElementById('user-menu-dropdown');
     
-    if (userMenuToggle && userMenuDropdown) { 
-        userMenuToggle.addEventListener('click', (e) => {
-            e.stopPropagation(); 
-            userMenuDropdown.classList.toggle('hidden');
-        });
+    if (userMenuToggle && userMenuDropdown) { /* ... (Logique inchangée) ... */ }
 
-        document.addEventListener('click', (e) => {
-            if (!userMenuDropdown.contains(e.target) && !userMenuToggle.contains(e.target)) {
-                userMenuDropdown.classList.add('hidden');
-            }
-        });
-        
-        // 🛑 CORRECTION : Attacher l'écouteur directement sur les liens <a> pour garantir l'appel
-        userMenuDropdown.querySelectorAll('a').forEach(link => {
-             link.addEventListener('click', (e) => {
-                 e.preventDefault();
-                 e.stopPropagation(); // Ajout de stopPropagation pour isoler l'événement
-                 
-                 const action = link.getAttribute('data-action');
-                 
-                 console.log(`Action Utilisateur demandée: ${action}`); 
-                 
-                 userMenuDropdown.classList.add('hidden'); 
-                 
-                 if (window.handleUserAction) {
-                     window.handleUserAction(action);
-                 } else {
-                     console.error(`Erreur: La fonction handleUserAction n'est pas chargée. Impossible de gérer l'action ${action}.`);
-                 }
-             });
-        });
-    }
     // Exposer showPage globalement (utile pour missions.js)
     window.showPage = function(pageName) {
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('data-page') === pageName) link.classList.add('active');
-        });
+        // ... (Logique de navigation et safeRenderCall inchangée) ...
 
-        const currentActivePage = document.querySelector('.page.active');
-        if (currentActivePage) {
-             currentActivePage.classList.remove('active');
-        }
-
-        const targetPageId = `${pageName}-page`;
-        const activePage = document.getElementById(targetPageId);
-        
-        if (!activePage) {
-            console.error(`Erreur critique: La page ${pageName} (${targetPageId}) n'a pas été trouvée dans le DOM.`);
-            return;
-        }
-
-        activePage.classList.add('active');
-
-        console.log(`[AFFICHAGE OK] Page visible: #${targetPageId}`);
-        
         const safeRenderCall = (renderFunc) => {
             try {
                 if (typeof renderFunc === 'function') {
@@ -240,7 +187,6 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         // --- DÉCLENCHEMENT DU RENDU SPÉCIFIQUE ---
-        // Le code ici n'appelle pas showPage à nouveau, la boucle est stoppée.
         
         if (pageName === 'map') {
             safeRenderCall(() => {

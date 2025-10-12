@@ -1,15 +1,23 @@
 // Fichier : routes/dashboard.js
 
 const express = require('express');
-const { getDatabase, readJsonFile } = require('../services/data');
-const { LOG_FILE_PATH, DATABASE_FILE_PATH } = require('../config');
+const { getDatabase, readJsonFile } = require('../services/data.js');
+const { LOG_FILE_PATH, DATABASE_FILE_PATH } = require('../config/index.js');
 const { calculateDashboardInsights, calculateUtmi } = require('../server_modules/utms_calculator.js');
 const operator = require('../server_modules/operator.js');
 
 const router = express.Router();
 
 // --- 1. ROUTES D'INSIGHTS ET DE TABLEAU DE BORD ---
-
+async function fetchStaticDashboardSummary() {
+    // 🛑 Le navigateur demande le fichier directement via l'URL statique
+    const response = await fetch('/data/dashboard_summary.json'); 
+    
+    if (!response.ok) {
+        throw new Error('Échec du chargement du fichier de résumé statique.');
+    }
+    return response.json();
+}
 // GET /api/dashboard/summary
 router.get('/summary', (req, res) => {
     try {

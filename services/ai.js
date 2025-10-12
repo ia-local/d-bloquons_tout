@@ -7,7 +7,7 @@ const { GoogleGenerativeAI } = require('@google/generative-ai');
 const { GROQ_API_KEY, GEMINI_API_KEY, GROQ_MODEL, AI_PERSONAS, CATEGORIES_TO_CLASSIFY } = require('../config');
 
 // Assurez-vous que services/utils.js contient bien la fonction cosineSimilarity
-const { cosineSimilarity } = require('./utils'); 
+// const { cosineSimilarity } = require('./utils'); 
 
 // --- 1. INITIALISATION DES CLIENTS ET GESTION DES CLÉS ---
 

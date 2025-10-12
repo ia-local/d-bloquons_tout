@@ -8,7 +8,8 @@ const {
     CHAT_HISTORY_FILE, 
     RICS_FILE_PATH, 
     BOYCOTT_FILE_PATH,
-    ACTIONS_DATA_FILE_PATH 
+    ACTIONS_DATA_FILE_PATH,
+    DASHBOARD_SUMMARY_OUTPUT 
 } = require('../config'); 
 
 // --- 1. ÉTAT GLOBAL CENTRALISÉ ---
@@ -164,7 +165,15 @@ async function loadBoycottData() {
     try { boycottsData = await readJsonFile(BOYCOTT_FILE_PATH, { boycotts: [] }); } catch (error) { boycottsData = { boycotts: [] }; }
 }
 
-
+async function updateDashboardSummary(summaryData) {
+    try {
+        // Écrit le fichier dashboard_summary.json directement dans docs/data/
+        await writeJsonFile(DASHBOARD_SUMMARY_OUTPUT, summaryData);
+        console.log("✅ Résumé du tableau de bord mis à jour dans le répertoire statique.");
+    } catch (error) {
+        console.error("Échec de l'écriture du résumé statique:", error);
+    }
+}
 // --- 4. GETTERS (pour accéder à l'état depuis les routes) ---
 
 function getDatabase() { return database; }
@@ -185,7 +194,7 @@ module.exports = {
     readRicsFile,
     writeRicsFile,
     loadBoycottData,
-    
+    updateDashboardSummary,
     // Getters de l'État
     getDatabase, 
     getChatHistory,

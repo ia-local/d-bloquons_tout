@@ -1,16 +1,80 @@
 // docs/ric.js - Logique de Rendu spécifique au Référendum d'Initiative Citoyenne (RIC)
 
+// Déclarer globalement les données dynamiques de la liste des RICs actifs
+window.ACTIVE_RICS = window.ACTIVE_RICS || [];
+
+// Fonction pour définir le Template RIC en ligne (pour éviter le 404 sur ric_form_template.json)
+function defineRicFormTemplate() {
+    // 🛑 Le contenu est désormais défini dans la variable globale pour être utilisé par modalGestion.js
+    window.RIC_FORM_TEMPLATE = `
+        <form id="ric-form">
+            <p class="font-yellow" style="margin-bottom: 20px;">Soumettez votre initiative en définissant la question, le type et le niveau de vote.</p>
+            <div class="form-group">
+                <label for="ric-question">Votre question (oui/non) :</label>
+                <input type="text" id="ric-question" name="question" placeholder="Ex: Faut-il abroger la loi du Plomb ?" required>
+            </div>
+            <div class="form-group">
+                <label for="ric-description">Description et justifications :</label>
+                <textarea id="ric-description" name="description" rows="5" placeholder="Expliquez la proposition en détail..." required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="ric-deadline">Date butoir :</label>
+                <input type="date" id="ric-deadline" name="deadline" required>
+            </div>
+            <div class="form-group">
+                <label for="ric-type">Type de RIC :</label>
+                <select id="ric-type" name="type" required>
+                    <option value="Législatif">Législatif</option>
+                    <option value="Abrogatoire">Abrogatoire</option>
+                    <option value="Constituant">Constituant</option>
+                    <option value="Révocatoire">Révocatoire</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="ric-level">Niveau de scrutin :</label>
+                <select id="ric-level" name="level" required>
+                    <option value="local">Local</option>
+                    <option value="departemental">Départemental</option>
+                    <option value="regional">Régional</option>
+                    <option value="national">National</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="ric-vote-method">Modalité de vote :</label>
+                <select id="ric-vote-method" name="voteMethod">
+                    <option value="click">Vote par clic (Internet)</option>
+                    <option value="petition">Signature sur pétition (feuille A4)</option>
+                    <option value="sms">Vote par SMS</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Soumettre le RIC</button>
+        </form>
+    `;
+    console.log("✅ RIC Form Template défini en ligne.");
+}
+
+
 window.loadRICContent = async function() {
     const container = document.getElementById('ric-content-container');
     if (container.hasLoaded) return; 
 
-    // Gérer l'affichage temporaire du bouton et le message de chargement
     container.innerHTML = '<div><p class="font-yellow" style="margin-top: 15px;">Récupération des détails du Référendum d\'Initiative Citoyenne...</p></div>';
 
     try {
-        const ricData = await window.fetchData('/api/ric/data');
+        // 🛑 Charger les données descriptives (ric_details.json) et la liste active (rics.json)
+        const [ricData, activeRicsData] = await Promise.all([
+            window.fetchData('/api/ric/data'),
+            window.fetchData('/api/ric/active-list')
+        ]);
+        
+        // Stockage global des données
+        window.RIC_DATA = ricData; 
+        window.ACTIVE_RICS = Array.isArray(activeRicsData) ? activeRicsData : []; 
+        
+        defineRicFormTemplate(); // 🛑 Définition en ligne du template
 
-        // Rendu des cartes RIC
+        // --- 1. CONSTRUCTION DU CONTENU HTML ---
+        
         const typeCards = ricData.types.map((type, index) => `
             <div class="feature-card ric-card-trigger" data-ric-index="${index}" style="transform: none; background: var(--color-ui-primary); border-color: var(--color-accent-red); color: var(--color-text); cursor: pointer;">
                 <h4 class="font-yellow" style="font-size: 1.1em;">${type.name}</h4>
@@ -18,7 +82,6 @@ window.loadRICContent = async function() {
             </div>
         `).join('');
 
-        // Rendu de la séparation des pouvoirs
         const powersHtml = ricData.separation_of_powers.map(p => `
             <div class="feature-card" style="background: var(--color-ui-content); padding: 15px; border-left: 5px solid var(--color-accent-yellow);">
                 <i class="${p.icon} font-red" style="font-size: 1.5em;"></i>
@@ -27,7 +90,6 @@ window.loadRICContent = async function() {
                 <p style="font-size: 0.8em; color: #aaa; margin-top: 5px;">* ${p.details}</p>
             </div>
         `).join('');
-
 
         const ricHtml = `
             <div class="content" style="transform: rotate(0.5deg); margin-bottom: 20px;">
@@ -56,6 +118,19 @@ window.loadRICContent = async function() {
                     <i class="fas fa-edit"></i> Soumettre ma Proposition de RIC
                 </button>
             </div>
+            
+            <div class="content" style="transform: rotate(0.5deg); margin-bottom: 30px;">
+                <h3 class="font-red">🗳️ Initiatives Actives (${window.ACTIVE_RICS.length})</h3>
+                <p>Liste des propositions en cours de vote/collecte de signatures. <span class="font-yellow">Votes totaux : ${window.ACTIVE_RICS.reduce((acc, ric) => acc + (ric.votes_for || 0) + (ric.votes_against || 0), 0).toLocaleString('fr-FR')}</span></p>
+                ${window.ACTIVE_RICS.slice(0, 3).map(ric => `
+                    <div class="card active-ric-item" data-ric-id="${ric.id}" style="margin-top: 10px; padding: 15px; border-left: 3px solid var(--color-blue); cursor: pointer;">
+                        <h4 style="font-size: 1.1em;">${ric.question}</h4>
+                        <p style="font-size: 0.9em; color: #ccc;">${ric.type} (${ric.level}) - Statut : ${ric.status}</p>
+                        <p style="font-size: 0.8em; font-weight: bold;">Votes : ${(ric.votes_for + ric.votes_against).toLocaleString('fr-FR')}</p>
+                    </div>
+                `).join('')}
+            </div>
+
 
             <div class="content" style="transform: rotate(-0.5deg);">
                 <h3 class="font-red">📋 Les 4 Piliers du RIC (Cliquez pour les détails)</h3>
@@ -64,32 +139,44 @@ window.loadRICContent = async function() {
                 </div>
             </div>
         `;
-
-        // 1. INJECTION DU CONTENU COMPLET DANS LE DOM
+        
+        // --- 2. INJECTION DU CONTENU ET ATTACHEMENT DES ÉCOUTEURS ---
+        
         container.innerHTML = ricHtml;
         
-        // 2. 🛑 ATTACHEMENT SÉCURISÉ DES ÉCOUTEURS
-        if (window.handleUserAction) {
-            // Bouton "Soumettre ma Proposition de RIC"
+        // ... (Logique d'attachement des écouteurs et de récompense inchangée) ...
+        if (window.handleUserAction && window.AGENT_PROFILE && typeof window.grantReward === 'function') {
+            
             const proposeRicBtn = document.getElementById('propose-ric-btn');
             if (proposeRicBtn) {
                  proposeRicBtn.addEventListener('click', (e) => {
                      e.preventDefault();
-                     window.handleUserAction('ric-form');
+                     if (!window.AGENT_PROFILE.ricMissionSubmitted) {
+                         window.AGENT_PROFILE.ricMissionSubmitted = true;
+                         window.grantReward(150, 10);
+                         console.log(`🎉 MISSION RIC ACCOMPLIE: +150 UTMI. Statut Agent mis à jour.`);
+                     }
+                     window.handleUserAction('ric-form'); 
                  });
             }
             
-            // Cartes pour les détails spécifiques (ric-detail)
-            const ricCards = container.querySelectorAll('.ric-card-trigger');
-            ricCards.forEach(card => {
+            container.querySelectorAll('.ric-card-trigger').forEach(card => {
                 card.addEventListener('click', (e) => {
                     e.preventDefault();
-                    const ricIndex = card.getAttribute('data-ric-index'); 
-                    window.handleUserAction('ric-detail', ricIndex); 
+                    window.handleUserAction('ric-detail', card.getAttribute('data-ric-index')); 
                 });
             });
+
+            container.querySelectorAll('.active-ric-item').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.handleUserAction('ric-active-detail', card.getAttribute('data-ric-id')); 
+                });
+            });
+
+
         } else {
-             console.error("Erreur d'initialisation: window.handleUserAction n'est pas prêt.");
+             console.error("Erreur d'initialisation: Les fonctions de jeu ne sont pas prêtes ou handleUserAction est absent.");
         }
 
 

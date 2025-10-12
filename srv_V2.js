@@ -1,10 +1,11 @@
-// Fichier : serveur.js (NETTOYÉ ET FINALISÉ)
+// Fichier : serveur.js (CORRIGÉ - Montage GEE dans l'app)
 
-const { app, startAppSetup } = require('./app'); 
-const { authenticateEarthEngine } = require('./services/gee'); 
-const { PORT, GROQ_API_KEY } = require('./config');
+const { app, startAppSetup } = require('./app.js'); 
+const { authenticateEarthEngine, geeRouter } = require('./services/gee.js'); // 🛑 IMPORTATION DE geeRouter
+const { PORT, GROQ_API_KEY } = require('./config/index.js');
 const telegramBot = require('./routes/telegramRouter.js'); 
-const { loadActionsData } = require('./services/data'); // Assurez-vous d'exporter loadActionsData depuis services/data.js
+const mapLeaflet = require('./config/leaflet.js'); 
+const { loadActionsData } = require('./services/data.js'); 
 
 // --- Fonction d'initialisation (Bootstrap) ---
 
@@ -13,6 +14,10 @@ async function bootstrap() {
         // 1. Authentification Earth Engine (Première étape critique)
         await authenticateEarthEngine();
         console.log('🌍 Earth Engine authentifié et initialisé.');
+        
+        // 🛑 MONTAGE DE LA ROUTE GEE (Si le montage n'est pas fait dans app.js)
+        app.use('/api/gee', geeRouter); // Assurez-vous que votre objet 'app' est bien Express
+        console.log('🌐 Route Google Earth Engine (/api/gee) montée.');
 
         // 2. Chargement des données (Base de données, Actions, Embeddings)
         await startAppSetup(); 
@@ -33,7 +38,6 @@ async function bootstrap() {
         
     } catch (err) {
         console.error('ERREUR FATALE AU DÉMARRAGE DU SERVEUR :', err.message);
-        // 🛑 Afficher la source de l'erreur pour le débogage (si pertinente)
         if (err.message.includes("GEE Private Key n'a pas été chargée")) {
              console.error("Veuillez vérifier le fichier private-key.json.");
         }

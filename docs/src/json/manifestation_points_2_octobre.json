@@ -1,0 +1,1387 @@
+[
+  {
+    "id": "manif-02-01",
+    "type": "Rassemblement",
+    "city": "Caen",
+    "name": "Caen - Gare",
+    "lat": 49.1764,
+    "lon": -0.3477,
+    "count": 6000,
+    "video_link": "https://www.youtube.com/watch?v=pAWZXhCAeeM",
+    "source": "Rapport local",
+    "level": "communal"
+  },
+  {
+    "id": "manif-02-02",
+    "type": "Rassemblement",
+    "city": "Paris",
+    "name": "Paris - Gare de Lyon (AG Cheminots)",
+    "lat": 48.8448,
+    "lon": 2.3735,
+    "count": 0,
+    "video_link": "https://www.youtube.com/watch?v=nuxnJNFuPZM",
+    "source": "CLPRESS / Agence de presse",
+    "level": "national"
+  },
+  {
+    "id": "manif-02-03",
+    "type": "Rassemblement",
+    "city": "Bourg-en-Bresse",
+    "name": "Bourg-en-Bresse - Champ de Foire",
+    "lat": 46.207066,
+    "lon": 5.230213,
+    "source": "Intersyndicale (via liste)",
+    "time": "14h30"
+  },
+  {
+    "id": "manif-02-04",
+    "type": "Rassemblement",
+    "city": "Oyonnax",
+    "name": "Oyonnax - Velexpo",
+    "lat": 46.25,
+    "lon": 5.666667,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h"
+  },
+  {
+    "id": "manif-02-05",
+    "type": "Rassemblement",
+    "city": "Montluçon",
+    "name": "Montluçon - Place Jean Dormoy",
+    "lat": 46.346392,
+    "lon": 2.5976358,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-06",
+    "type": "Rassemblement",
+    "city": "Moulins",
+    "name": "Moulins - Place de la Liberté",
+    "lat": 46.565,
+    "lon": 3.3333,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-07",
+    "type": "Rassemblement",
+    "city": "Vichy",
+    "name": "Vichy - Place de la poste",
+    "lat": 46.134409,
+    "lon": 3.423035,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-08",
+    "type": "Rassemblement",
+    "city": "Gap",
+    "name": "Gap - Esplanade Desmichels",
+    "lat": 44.5592,
+    "lon": 6.0785,
+    "source": "Intersyndicale (via liste)",
+    "time": "14h"
+  },
+  {
+    "id": "manif-02-09",
+    "type": "Rassemblement",
+    "city": "Nice",
+    "name": "Nice - Gare Nice Ville",
+    "lat": 43.7044,
+    "lon": 7.262,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h"
+  },
+  {
+    "id": "manif-02-10",
+    "type": "Rassemblement",
+    "city": "Annonay",
+    "name": "Annonay - Gare routière",
+    "lat": 45.2416,
+    "lon": 4.685,
+    "source": "Intersyndicale (via liste)",
+    "time": "14h30"
+  },
+  {
+    "id": "manif-02-11",
+    "type": "Rassemblement",
+    "city": "Aubenas",
+    "name": "Aubenas - Ponson",
+    "lat": 44.5607,
+    "lon": 4.3812,
+    "source": "Intersyndicale (via liste)",
+    "time": "14h"
+  },
+  {
+    "id": "manif-02-12",
+    "type": "Rassemblement",
+    "city": "Le Cheylard",
+    "name": "Le Cheylard - Mairie",
+    "lat": 44.906058,
+    "lon": 4.423409,
+    "source": "Intersyndicale (via liste)",
+    "time": "14h30"
+  },
+  {
+    "id": "manif-02-13",
+    "type": "Rassemblement",
+    "city": "Privas",
+    "name": "Privas - Préfecture",
+    "lat": 44.7374,
+    "lon": 4.6015,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-14",
+    "type": "Rassemblement",
+    "city": "Bar-sur-Aube",
+    "name": "Bar-sur-Aube - Hôtel de ville",
+    "lat": 48.2333,
+    "lon": 4.7167,
+    "source": "Intersyndicale (via liste)",
+    "time": "17h"
+  },
+  {
+    "id": "manif-02-15",
+    "type": "Rassemblement",
+    "city": "Romilly-sur-Seine",
+    "name": "Romilly-sur-Seine - Bourse du travail",
+    "lat": 48.516,
+    "lon": 3.733,
+    "source": "Intersyndicale (via liste)",
+    "time": "14h"
+  },
+  {
+    "id": "manif-02-16",
+    "type": "Rassemblement",
+    "city": "Troyes",
+    "name": "Troyes - Maison des syndicats",
+    "lat": 48.3031,
+    "lon": 4.0775,
+    "source": "Intersyndicale (via liste) & Media Auto",
+    "time": "14h",
+    "video_link": "https://www.youtube.com/watch?v=manifestation_troyes_live"
+  },
+  {
+    "id": "manif-02-17",
+    "type": "Rassemblement",
+    "city": "Carcassonne",
+    "name": "Carcassonne - Gambetta",
+    "lat": 43.211784,
+    "lon": 2.3575077,
+    "source": "Intersyndicale (via liste)",
+    "time": "14h30"
+  },
+  {
+    "id": "manif-02-18",
+    "type": "Rassemblement",
+    "city": "Narbonne",
+    "name": "Narbonne - Bourse du travail",
+    "lat": 43.1843,
+    "lon": 3.0039,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-19",
+    "type": "Rassemblement",
+    "city": "Rodez",
+    "name": "Rodez - Mail de Bourran",
+    "lat": 44.3607,
+    "lon": 2.5707,
+    "source": "Intersyndicale (via liste)",
+    "time": "14h"
+  },
+  {
+    "id": "manif-02-20",
+    "type": "Rassemblement",
+    "city": "Arles",
+    "name": "Arles - Kiosque à musique",
+    "lat": 43.675,
+    "lon": 4.628,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-21",
+    "type": "Rassemblement",
+    "city": "Marseille",
+    "name": "Marseille - Vieux Port",
+    "lat": 43.2952,
+    "lon": 5.3629,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-22",
+    "type": "Rassemblement",
+    "city": "Bayeux",
+    "name": "Bayeux - Place de la mairie",
+    "lat": 49.2766,
+    "lon": -0.7024,
+    "source": "Intersyndicale (via liste)",
+    "time": "09h30"
+  },
+  {
+    "id": "manif-02-23",
+    "type": "Rassemblement",
+    "city": "Lisieux",
+    "name": "Lisieux - Place François Mitterrand",
+    "lat": 49.1465,
+    "lon": 0.2291,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-24",
+    "type": "Rassemblement",
+    "city": "Vire-Normandie",
+    "name": "Vire-Normandie - Place de l'horloge",
+    "lat": 48.8407,
+    "lon": -0.8875,
+    "source": "Intersyndicale (via liste)",
+    "time": "17h30"
+  },
+  {
+    "id": "manif-02-25",
+    "type": "Rassemblement",
+    "city": "Aurillac",
+    "name": "Aurillac - Rond point Paul Doumer/Pierre Marty",
+    "lat": 44.9287,
+    "lon": 2.4439,
+    "source": "Intersyndicale (via liste)",
+    "time": "08h"
+  },
+  {
+    "id": "manif-02-26",
+    "type": "Rassemblement",
+    "city": "Angoulême",
+    "name": "Angoulême - Gare",
+    "lat": 45.6536,
+    "lon": 0.1646,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h"
+  },
+  {
+    "id": "manif-02-27",
+    "type": "Rassemblement",
+    "city": "Cognac",
+    "name": "Cognac - Place François 1er",
+    "lat": 45.6961,
+    "lon": -0.3297,
+    "source": "Intersyndicale (via liste)",
+    "time": "14h30"
+  },
+  {
+    "id": "manif-02-28",
+    "type": "Rassemblement",
+    "city": "Confolens",
+    "name": "Confolens - Sous-préfecture",
+    "lat": 46.0159,
+    "lon": 0.6728,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-29",
+    "type": "Rassemblement",
+    "city": "La Rochefoucauld",
+    "name": "La Rochefoucauld - Place de la gare",
+    "lat": 45.7403,
+    "lon": 0.3897,
+    "source": "Intersyndicale (via liste)",
+    "time": "16h30"
+  },
+  {
+    "id": "manif-02-30",
+    "type": "Rassemblement",
+    "city": "Ruffec",
+    "name": "Ruffec - Champ de foire",
+    "lat": 46.0263,
+    "lon": 0.2009,
+    "source": "Intersyndicale (via liste)",
+    "time": "17h"
+  },
+  {
+    "id": "manif-02-31",
+    "type": "Rassemblement",
+    "city": "Jonzac",
+    "name": "Jonzac - Jardin public",
+    "lat": 45.4415,
+    "lon": -0.4363,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h"
+  },
+  {
+    "id": "manif-02-32",
+    "type": "Rassemblement",
+    "city": "La Rochelle",
+    "name": "La Rochelle - Parvis de la gare",
+    "lat": 46.1557,
+    "lon": -1.1444,
+    "source": "Intersyndicale (via liste)",
+    "time": "14h"
+  },
+  {
+    "id": "manif-02-33",
+    "type": "Rassemblement",
+    "city": "Rochefort",
+    "name": "Rochefort - Place Colbert",
+    "lat": 45.936613,
+    "lon": -0.96162,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-34",
+    "type": "Rassemblement",
+    "city": "Saint-Jean-d’Angély",
+    "name": "Saint-Jean-d’Angély - Hôtel de ville",
+    "lat": 45.945253,
+    "lon": -0.518691,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-35",
+    "type": "Rassemblement",
+    "city": "Saintes",
+    "name": "Saintes - Palais de justice",
+    "lat": 45.747428,
+    "lon": -0.633681,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-36",
+    "type": "Rassemblement",
+    "city": "Bourges",
+    "name": "Bourges - Place Séreaucourt",
+    "lat": 47.0784,
+    "lon": 2.3929,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h"
+  },
+  {
+    "id": "manif-02-37",
+    "type": "Rassemblement",
+    "city": "La Guerche",
+    "name": "La Guerche - Place du Général de Gaulle",
+    "lat": 47.941933,
+    "lon": -1.230696,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-38",
+    "type": "Rassemblement",
+    "city": "Saint-Amand-Montrond",
+    "name": "Saint-Amand-Montrond - Place Jean Girault",
+    "lat": 46.72444,
+    "lon": 2.4991185,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h"
+  },
+  {
+    "id": "manif-02-39",
+    "type": "Rassemblement",
+    "city": "Saint-Florent-sur-Cher",
+    "name": "Saint-Florent-sur-Cher - Place de la république",
+    "lat": 47.0707,
+    "lon": 2.2289,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-40",
+    "type": "Rassemblement",
+    "city": "Vierzon",
+    "name": "Vierzon - Place Jacques Brel",
+    "lat": 47.2215,
+    "lon": 2.0628,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-41",
+    "type": "Rassemblement",
+    "city": "Brive La Gaillarde",
+    "name": "Brive La Gaillarde - Place de la Guierle",
+    "lat": 45.1629,
+    "lon": 1.53346,
+    "source": "Intersyndicale (via liste)",
+    "time": "15h"
+  },
+  {
+    "id": "manif-02-42",
+    "type": "Rassemblement",
+    "city": "Tulle",
+    "name": "Tulle - Place Brigouleix",
+    "lat": 45.2647,
+    "lon": 1.7766,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h"
+  },
+  {
+    "id": "manif-02-43",
+    "type": "Rassemblement",
+    "city": "Ussel",
+    "name": "Ussel - Place Voltaire",
+    "lat": 45.5539,
+    "lon": 2.3056,
+    "source": "Intersyndicale (via liste)",
+    "time": "15h"
+  },
+  {
+    "id": "manif-02-44",
+    "type": "Rassemblement",
+    "city": "Château-Thierry",
+    "name": "Château-Thierry - Paul Doumer",
+    "lat": 49.0499,
+    "lon": 3.4,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h"
+  },
+  {
+    "id": "manif-02-45",
+    "type": "Rassemblement",
+    "city": "Chauny",
+    "name": "Chauny - Hôtel de Ville",
+    "lat": 49.615798,
+    "lon": 3.2190599,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h"
+  },
+  {
+    "id": "manif-02-46",
+    "type": "Rassemblement",
+    "city": "Laon",
+    "name": "Laon - Gare",
+    "lat": 49.570556,
+    "lon": 3.624167,
+    "source": "Intersyndicale (via liste)",
+    "time": "09h"
+  },
+  {
+    "id": "manif-02-47",
+    "type": "Rassemblement",
+    "city": "Saint-Quentin",
+    "name": "Saint-Quentin - Place du 8 octobre",
+    "lat": 49.8491,
+    "lon": 3.2878,
+    "source": "Intersyndicale (via liste)",
+    "time": "15h"
+  },
+  {
+    "id": "manif-02-48",
+    "type": "Rassemblement",
+    "city": "Soissons",
+    "name": "Soissons - Pôle emploi",
+    "lat": 49.3798055,
+    "lon": 3.3295934,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h"
+  },
+  {
+    "id": "manif-02-49",
+    "type": "Rassemblement",
+    "city": "Ajaccio",
+    "name": "Ajaccio - Préfecture",
+    "lat": 41.9199,
+    "lon": 8.7363,
+    "source": "Intersyndicale (via liste)",
+    "time": "11h"
+  },
+  {
+    "id": "manif-02-50",
+    "type": "Rassemblement",
+    "city": "Bastia",
+    "name": "Bastia - Tribunal",
+    "lat": 42.7011,
+    "lon": 9.4533,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h"
+  },
+  {
+    "id": "manif-02-51",
+    "type": "Rassemblement",
+    "city": "Dijon",
+    "name": "Dijon - Place de la libération",
+    "lat": 47.3213,
+    "lon": 5.04137,
+    "source": "Intersyndicale (via liste)",
+    "time": "14h"
+  },
+  {
+    "id": "manif-02-52",
+    "type": "Rassemblement",
+    "city": "Montbard",
+    "name": "Montbard - Place Gambetta",
+    "lat": 47.626,
+    "lon": 4.341,
+    "source": "Intersyndicale (via liste)",
+    "time": "15h"
+  },
+  {
+    "id": "manif-02-53",
+    "type": "Rassemblement",
+    "city": "Dinan",
+    "name": "Dinan - Place de la résistance",
+    "lat": 48.452221,
+    "lon": -2.047222,
+    "source": "Intersyndicale (via liste)",
+    "time": "12h"
+  },
+  {
+    "id": "manif-02-54",
+    "type": "Rassemblement",
+    "city": "Guingamp",
+    "name": "Guingamp - Rond-point de Kerollo",
+    "lat": 48.5667,
+    "lon": -3.15,
+    "source": "Intersyndicale (via liste)",
+    "time": "11h"
+  },
+  {
+    "id": "manif-02-55",
+    "type": "Rassemblement",
+    "city": "Lamballe-Armor",
+    "name": "Lamballe-Armor - Gare",
+    "lat": 48.465834,
+    "lon": -2.511487,
+    "source": "Intersyndicale (via liste)",
+    "time": "09h30"
+  },
+  {
+    "id": "manif-02-56",
+    "type": "Rassemblement",
+    "city": "Lannion",
+    "name": "Lannion - Allée du palais de justice",
+    "lat": 48.72861,
+    "lon": -3.45811,
+    "source": "Intersyndicale (via liste)",
+    "time": "11h30"
+  },
+  {
+    "id": "manif-02-57",
+    "type": "Rassemblement",
+    "city": "Saint-Brieuc",
+    "name": "Saint-Brieuc - Place de la Liberté",
+    "lat": 48.509951,
+    "lon": -2.75152,
+    "source": "Intersyndicale (via liste)",
+    "time": "11h"
+  },
+  {
+    "id": "manif-02-58",
+    "type": "Rassemblement",
+    "city": "Guéret",
+    "name": "Guéret - Préfecture",
+    "lat": 46.1691761,
+    "lon": 1.868824,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-59",
+    "type": "Rassemblement",
+    "city": "Bergerac",
+    "name": "Bergerac - Palais de Justice",
+    "lat": 44.8533584,
+    "lon": 0.4867557,
+    "source": "Intersyndicale (via liste)",
+    "time": "15h"
+  },
+  {
+    "id": "manif-02-60",
+    "type": "Rassemblement",
+    "city": "Périgueux",
+    "name": "Périgueux - Palais de justice",
+    "lat": 45.1867,
+    "lon": 0.7196,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-61",
+    "type": "Rassemblement",
+    "city": "Sarlat",
+    "name": "Sarlat - Place Grande Rigaudie",
+    "lat": 44.883331,
+    "lon": 1.21667,
+    "source": "Intersyndicale (via liste)",
+    "time": "15h"
+  },
+  {
+    "id": "manif-02-62",
+    "type": "Rassemblement",
+    "city": "Besançon",
+    "name": "Besançon - Parking Battant",
+    "lat": 47.2441,
+    "lon": 6.0218,
+    "source": "Intersyndicale (via liste)",
+    "time": "13h"
+  },
+  {
+    "id": "manif-02-63",
+    "type": "Rassemblement",
+    "city": "Montbéliard",
+    "name": "Montbéliard - Champ de Foire",
+    "lat": 47.5146,
+    "lon": 6.8048,
+    "source": "Intersyndicale (via liste)",
+    "time": "14h"
+  },
+  {
+    "id": "manif-02-64",
+    "type": "Rassemblement",
+    "city": "Pontarlier",
+    "name": "Pontarlier - Place d'Arçon",
+    "lat": 46.9037483,
+    "lon": 6.354495,
+    "source": "Intersyndicale (via liste)",
+    "time": "11h30"
+  },
+  {
+    "id": "manif-02-65",
+    "type": "Rassemblement",
+    "city": "Montélimar",
+    "name": "Montélimar - Théâtre",
+    "lat": 44.5583,
+    "lon": 4.757,
+    "source": "Intersyndicale (via liste)",
+    "time": "14h"
+  },
+  {
+    "id": "manif-02-66",
+    "type": "Rassemblement",
+    "city": "Romans-sur-Isère",
+    "name": "Romans-sur-Isère - La Canopée",
+    "lat": 45.0392,
+    "lon": 5.0475,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h"
+  },
+  {
+    "id": "manif-02-67",
+    "type": "Rassemblement",
+    "city": "Valence",
+    "name": "Valence - Champs De Mars",
+    "lat": 44.9298,
+    "lon": 4.889,
+    "source": "Intersyndicale (via liste)",
+    "time": "14h"
+  },
+  {
+    "id": "manif-02-68",
+    "type": "Rassemblement",
+    "city": "Évreux",
+    "name": "Évreux - Pré du Bel-Ebat",
+    "lat": 49.0225,
+    "lon": 1.1578,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h"
+  },
+  {
+    "id": "manif-02-69",
+    "type": "Rassemblement",
+    "city": "Pont-Audemer",
+    "name": "Pont-Audemer - Place De Gaulle",
+    "lat": 49.354883,
+    "lon": 0.5142989,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h"
+  },
+  {
+    "id": "manif-02-70",
+    "type": "Rassemblement",
+    "city": "Chartres",
+    "name": "Chartres - Boulevard Chasles",
+    "lat": 48.44113,
+    "lon": 1.494078,
+    "source": "Intersyndicale (via liste)",
+    "time": "14h"
+  },
+  {
+    "id": "manif-02-71",
+    "type": "Rassemblement",
+    "city": "Brest",
+    "name": "Brest - Place de la Liberté",
+    "lat": 48.3905,
+    "lon": -4.4851,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-72",
+    "type": "Rassemblement",
+    "city": "Carhaix",
+    "name": "Carhaix - Maison des Syndicats",
+    "lat": 48.275584,
+    "lon": -3.574188,
+    "source": "Intersyndicale (via liste)",
+    "time": "11h"
+  },
+  {
+    "id": "manif-02-73",
+    "type": "Rassemblement",
+    "city": "Douarnenez",
+    "name": "Douarnenez - Place Ancienne Gare",
+    "lat": 48.056,
+    "lon": -4.1476,
+    "source": "Intersyndicale (via liste)",
+    "time": "17h"
+  },
+  {
+    "id": "manif-02-74",
+    "type": "Rassemblement",
+    "city": "Landerneau",
+    "name": "Landerneau - Rond Point du Family",
+    "lat": 48.441,
+    "lon": -4.2492,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-75",
+    "type": "Rassemblement",
+    "city": "Morlaix",
+    "name": "Morlaix - Place des Otages",
+    "lat": 48.57818,
+    "lon": -3.828809,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-76",
+    "type": "Rassemblement",
+    "city": "Quimper",
+    "name": "Quimper - Place de la Résistance",
+    "lat": 47.9938,
+    "lon": -4.1048,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-77",
+    "type": "Rassemblement",
+    "city": "Quimperlé",
+    "name": "Quimperlé - Gare",
+    "lat": 47.8647,
+    "lon": -3.5513,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-78",
+    "type": "Rassemblement",
+    "city": "Alès",
+    "name": "Alès - Sous Préfecture",
+    "lat": 44.1287,
+    "lon": 4.0772,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h"
+  },
+  {
+    "id": "manif-02-79",
+    "type": "Rassemblement",
+    "city": "Bagnols-sur-Cèze",
+    "name": "Bagnols-sur-Cèze - Monument aux morts",
+    "lat": 44.166672,
+    "lon": 4.61667,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h"
+  },
+  {
+    "id": "manif-02-80",
+    "type": "Rassemblement",
+    "city": "Le Vigan",
+    "name": "Le Vigan - Sous Préfecture",
+    "lat": 43.9926,
+    "lon": 3.5937,
+    "source": "Intersyndicale (via liste)",
+    "time": "18h"
+  },
+  {
+    "id": "manif-02-81",
+    "type": "Rassemblement",
+    "city": "Nîmes",
+    "name": "Nîmes - Jardins de la Fontaine",
+    "lat": 43.8386,
+    "lon": 4.35,
+    "source": "Intersyndicale (via liste)",
+    "time": "14h30"
+  },
+  {
+    "id": "manif-02-82",
+    "type": "Rassemblement",
+    "city": "Uzès",
+    "name": "Uzès - Mairie",
+    "lat": 44.015,
+    "lon": 4.421,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h"
+  },
+  {
+    "id": "manif-02-83",
+    "type": "Rassemblement",
+    "city": "Muret",
+    "name": "Muret - Sous Préfecture",
+    "lat": 43.4608,
+    "lon": 1.3218,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h"
+  },
+  {
+    "id": "manif-02-84",
+    "type": "Rassemblement",
+    "city": "Toulouse",
+    "name": "Toulouse - St Cyprien",
+    "lat": 43.598056,
+    "lon": 1.431667,
+    "source": "Intersyndicale (via liste)",
+    "time": "14h"
+  },
+  {
+    "id": "manif-02-85",
+    "type": "Rassemblement",
+    "city": "Auch",
+    "name": "Auch - Boulevard Sadi-Carnot",
+    "lat": 43.64828,
+    "lon": 0.58902,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-86",
+    "type": "Rassemblement",
+    "city": "Bordeaux",
+    "name": "Bordeaux - Place de la Bourse",
+    "lat": 44.841389,
+    "lon": -0.57,
+    "source": "Intersyndicale (via liste)",
+    "time": "11h"
+  },
+  {
+    "id": "manif-02-87",
+    "type": "Rassemblement",
+    "city": "Bédarieux",
+    "name": "Bédarieux - Maison des Syndicats",
+    "lat": 43.6068,
+    "lon": 3.2384,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-88",
+    "type": "Rassemblement",
+    "city": "Béziers",
+    "name": "Béziers - Bourse du travail",
+    "lat": 43.3409,
+    "lon": 3.2201,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-89",
+    "type": "Rassemblement",
+    "city": "Ganges",
+    "name": "Ganges - Mairie",
+    "lat": 43.936027,
+    "lon": 3.709386,
+    "source": "Intersyndicale (via liste)",
+    "time": "11h30"
+  },
+  {
+    "id": "manif-02-90",
+    "type": "Rassemblement",
+    "city": "Lodève",
+    "name": "Lodève - Sous Préfecture",
+    "lat": 43.7013,
+    "lon": 3.3151,
+    "source": "Intersyndicale (via liste)",
+    "time": "11h"
+  },
+  {
+    "id": "manif-02-91",
+    "type": "Rassemblement",
+    "city": "Montpellier",
+    "name": "Montpellier - Place Albert 1er",
+    "lat": 43.615578,
+    "lon": 3.874375,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-92",
+    "type": "Rassemblement",
+    "city": "Sète",
+    "name": "Sète - Mairie",
+    "lat": 43.401788,
+    "lon": 3.6959515,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-93",
+    "type": "Rassemblement",
+    "city": "Fougères",
+    "name": "Fougères - Esplanade des Chaussonnières",
+    "lat": 48.3585,
+    "lon": -1.2005,
+    "source": "Intersyndicale (via liste)",
+    "time": "17h30"
+  },
+  {
+    "id": "manif-02-94",
+    "type": "Rassemblement",
+    "city": "Redon",
+    "name": "Redon - Place de Bretagne",
+    "lat": 47.654,
+    "lon": -2.079,
+    "source": "Intersyndicale (via liste)",
+    "time": "17h"
+  },
+  {
+    "id": "manif-02-95",
+    "type": "Rassemblement",
+    "city": "Rennes",
+    "name": "Rennes - Esplanade Charles de Gaulle",
+    "lat": 48.106144,
+    "lon": -1.675994,
+    "source": "Intersyndicale (via liste)",
+    "time": "13h"
+  },
+  {
+    "id": "manif-02-96",
+    "type": "Rassemblement",
+    "city": "Saint-Malo",
+    "name": "Saint-Malo - Médiathèque",
+    "lat": 48.6496,
+    "lon": -2.005,
+    "source": "Intersyndicale (via liste)",
+    "time": "11h"
+  },
+  {
+    "id": "manif-02-97",
+    "type": "Rassemblement",
+    "city": "Vitré",
+    "name": "Vitré - Gare",
+    "lat": 48.1225,
+    "lon": -1.211667,
+    "source": "Intersyndicale (via liste)",
+    "time": "17h"
+  },
+  {
+    "id": "manif-02-98",
+    "type": "Rassemblement",
+    "city": "Châteauroux",
+    "name": "Châteauroux - Place de la République",
+    "lat": 46.811,
+    "lon": 1.699,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h"
+  },
+  {
+    "id": "manif-02-99",
+    "type": "Rassemblement",
+    "city": "Issoudun",
+    "name": "Issoudun - Parking Intermarché",
+    "lat": 46.9535,
+    "lon": 1.993,
+    "source": "Intersyndicale (via liste)",
+    "time": "14h30"
+  },
+  {
+    "id": "manif-02-100",
+    "type": "Rassemblement",
+    "city": "Tours",
+    "name": "Tours - Place de la Liberté",
+    "lat": 47.37987,
+    "lon": 0.69249,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h"
+  },
+  {
+    "id": "manif-02-101",
+    "type": "Rassemblement",
+    "city": "Beaurepaire",
+    "name": "Beaurepaire - Salle Polyvalente",
+    "lat": 45.335,
+    "lon": 5.0333,
+    "source": "Intersyndicale (via liste)",
+    "time": "18h"
+  },
+  {
+    "id": "manif-02-102",
+    "type": "Rassemblement",
+    "city": "Bourgoin-Jallieu",
+    "name": "Bourgoin-Jallieu - Place de la République",
+    "lat": 45.588753,
+    "lon": 5.27529,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h"
+  },
+  {
+    "id": "manif-02-103",
+    "type": "Rassemblement",
+    "city": "Grenoble",
+    "name": "Grenoble - Avenue Alsace-Lorraine",
+    "lat": 45.19,
+    "lon": 5.718,
+    "source": "Intersyndicale (via liste)",
+    "time": "14h"
+  },
+  {
+    "id": "manif-02-104",
+    "type": "Rassemblement",
+    "city": "Roussillon",
+    "name": "Roussillon - Place du Château",
+    "lat": 45.37313,
+    "lon": 4.811129,
+    "source": "Intersyndicale (via liste)",
+    "time": "09h30"
+  },
+  {
+    "id": "manif-02-105",
+    "type": "Rassemblement",
+    "city": "Vienne",
+    "name": "Vienne - Champ de Mars",
+    "lat": 45.526167,
+    "lon": 4.875277,
+    "source": "Intersyndicale (via liste)",
+    "time": "09h"
+  },
+  {
+    "id": "manif-02-106",
+    "type": "Rassemblement",
+    "city": "Voiron",
+    "name": "Voiron - Bourse du Travail",
+    "lat": 45.3615,
+    "lon": 5.584,
+    "source": "Intersyndicale (via liste)",
+    "time": "16h30"
+  },
+  {
+    "id": "manif-02-107",
+    "type": "Rassemblement",
+    "city": "La Motte-Servolex",
+    "name": "La Motte-Servolex - MEDEF",
+    "lat": 45.5898,
+    "lon": 5.8829,
+    "source": "Intersyndicale (via liste)",
+    "time": "11h"
+  },
+  {
+    "id": "manif-02-108",
+    "type": "Rassemblement",
+    "city": "Dignes-les-Bains",
+    "name": "Dignes-les-Bains - Rond-point 11 Nov.",
+    "lat": 44.0888,
+    "lon": 6.2307,
+    "source": "Intersyndicale (via liste)",
+    "time": "11h"
+  },
+  {
+    "id": "manif-02-109",
+    "type": "Rassemblement",
+    "city": "Mont-de-Marsan",
+    "name": "Mont-de-Marsan - Place des Arènes",
+    "lat": 43.758049,
+    "lon": -0.90935,
+    "source": "Intersyndicale (via liste)",
+    "time": "09h30"
+  },
+  {
+    "id": "manif-02-110",
+    "type": "Rassemblement",
+    "city": "Blois",
+    "name": "Blois - Préfecture",
+    "lat": 47.5843,
+    "lon": 1.3283,
+    "source": "Intersyndicale (via liste)",
+    "time": "14h15"
+  },
+  {
+    "id": "manif-02-111",
+    "type": "Rassemblement",
+    "city": "Romorantin",
+    "name": "Romorantin - Place de la Paix",
+    "lat": 47.3593269,
+    "lon": 1.7431311,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-112",
+    "type": "Rassemblement",
+    "city": "Vendôme",
+    "name": "Vendôme - Place de la Liberté",
+    "lat": 47.799999,
+    "lon": 1.06667,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-113",
+    "type": "Rassemblement",
+    "city": "Roanne",
+    "name": "Roanne - Centre Universitaire",
+    "lat": 46.0381,
+    "lon": 4.0722,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-114",
+    "type": "Rassemblement",
+    "city": "Saint-Étienne",
+    "name": "Saint-Étienne - Bourse du travail",
+    "lat": 45.433466,
+    "lon": 4.38807,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-115",
+    "type": "Rassemblement",
+    "city": "Le Puy-en-Velay",
+    "name": "Le Puy-en-Velay - Place Cadelade",
+    "lat": 45.045,
+    "lon": 3.886,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-116",
+    "type": "Rassemblement",
+    "city": "Ancenis",
+    "name": "Ancenis - Station Esso",
+    "lat": 47.399742,
+    "lon": -1.18421,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h"
+  },
+  {
+    "id": "manif-02-117",
+    "type": "Rassemblement",
+    "city": "Châteaubriant",
+    "name": "Châteaubriant - Rond point Ville en Bois",
+    "lat": 47.716667,
+    "lon": -1.366667,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-118",
+    "type": "Rassemblement",
+    "city": "Clisson",
+    "name": "Clisson - Gare",
+    "lat": 47.0858,
+    "lon": -1.2863,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h"
+  },
+  {
+    "id": "manif-02-119",
+    "type": "Rassemblement",
+    "city": "Nantes",
+    "name": "Nantes - Miroir d'eau",
+    "lat": 47.2155,
+    "lon": -1.5492,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-120",
+    "type": "Rassemblement",
+    "city": "Saint-Nazaire",
+    "name": "Saint-Nazaire - Place Amérique Latine",
+    "lat": 47.2789,
+    "lon": -2.2039,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-121",
+    "type": "Rassemblement",
+    "city": "Beaugency",
+    "name": "Beaugency - Place du Martroi",
+    "lat": 47.77728,
+    "lon": 1.63016,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-122",
+    "type": "Rassemblement",
+    "city": "Gien",
+    "name": "Gien - Place Jean Jaurès",
+    "lat": 47.6833,
+    "lon": 2.6333,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h"
+  },
+  {
+    "id": "manif-02-123",
+    "type": "Rassemblement",
+    "city": "Montargis",
+    "name": "Montargis - Place du Pâtis",
+    "lat": 48,
+    "lon": 2.75,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-124",
+    "type": "Rassemblement",
+    "city": "Orléans",
+    "name": "Orléans - Cathédrale",
+    "lat": 47.902222,
+    "lon": 1.908056,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-125",
+    "type": "Rassemblement",
+    "city": "Biars",
+    "name": "Biars - Mairie",
+    "lat": 44.924499,
+    "lon": 1.84375,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-126",
+    "type": "Rassemblement",
+    "city": "Cahors",
+    "name": "Cahors - Place Mitterrand",
+    "lat": 44.4458,
+    "lon": 1.4408,
+    "source": "Intersyndicale (via liste)",
+    "time": "14h30"
+  },
+  {
+    "id": "manif-02-127",
+    "type": "Rassemblement",
+    "city": "Figeac",
+    "name": "Figeac - Parking Lycée Champollion",
+    "lat": 44.6074,
+    "lon": 1.9702,
+    "source": "Intersyndicale (via liste)",
+    "time": "14h30"
+  },
+  {
+    "id": "manif-02-128",
+    "type": "Rassemblement",
+    "city": "Agen",
+    "name": "Agen - Préfecture",
+    "lat": 44.2051,
+    "lon": 0.6186,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h"
+  },
+  {
+    "id": "manif-02-129",
+    "type": "Rassemblement",
+    "city": "Marmande",
+    "name": "Marmande - Esplanade de Maré",
+    "lat": 44.4988,
+    "lon": 0.1691,
+    "source": "Intersyndicale (via liste)",
+    "time": "14h"
+  },
+  {
+    "id": "manif-02-130",
+    "type": "Rassemblement",
+    "city": "Mende",
+    "name": "Mende - Place Urbain V",
+    "lat": 44.5173,
+    "lon": 3.5,
+    "source": "Intersyndicale (via liste)",
+    "time": "11h"
+  },
+  {
+    "id": "manif-02-131",
+    "type": "Rassemblement",
+    "city": "Angers",
+    "name": "Angers - Place Leclerc",
+    "lat": 47.4721,
+    "lon": -0.5489,
+    "source": "Intersyndicale (via liste)",
+    "time": "14h"
+  },
+  {
+    "id": "manif-02-132",
+    "type": "Rassemblement",
+    "city": "Cholet",
+    "name": "Cholet - Place Les Halles",
+    "lat": 47.057471,
+    "lon": -0.879078,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h"
+  },
+  {
+    "id": "manif-02-133",
+    "type": "Rassemblement",
+    "city": "Saumur",
+    "name": "Saumur - Place Bilange",
+    "lat": 47.2608,
+    "lon": -0.0768,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h"
+  },
+  {
+    "id": "manif-02-134",
+    "type": "Rassemblement",
+    "city": "Segré",
+    "name": "Segré - Place du Port",
+    "lat": 47.6861,
+    "lon": -0.8668,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h"
+  },
+  {
+    "id": "manif-02-135",
+    "type": "Rassemblement",
+    "city": "Avranches",
+    "name": "Avranches - Mairie",
+    "lat": 48.683331,
+    "lon": -1.36667,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-136",
+    "type": "Rassemblement",
+    "city": "Cherbourg-Octeville",
+    "name": "Cherbourg - Place Napoléon",
+    "lat": 49.6385,
+    "lon": -1.6268,
+    "source": "Intersyndicale (via liste)",
+    "time": "10h30"
+  },
+  {
+    "id": "manif-02-137",
+    "type": "Rassemblement",
+    "city": "Nantes",
+    "name": "Nantes - Blocage R. Poincare",
+    "lat": 47.2065,
+    "lon": -1.5644,
+    "source": "Presse Locale - Live",
+    "time": "18h00"
+  },
+  {
+    "id": "manif-02-138",
+    "type": "Rassemblement",
+    "city": "Lyon",
+    "name": "Lyon - Vidéo Place Bellecour",
+    "lat": 45.7578,
+    "lon": 4.8315,
+    "video_link": "https://youtube.com/watch?v=live_lyon",
+    "source": "YouTube - Canaux Ind."
+  }
+]

@@ -1,0 +1,152 @@
+/* ric.css - Styles pour la page RIC et les Modales */
+
+/* --- Styles Généraux et Cartes de Caractéristiques --- */
+
+.feature-grid .feature-card {
+    transition: transform 0.2s;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: var(--color-bg-alt, #3b3b3b);
+    color: var(--color-text-light, #eee);
+}
+
+.feature-grid .feature-card:hover {
+    transform: translateY(-3px);
+}
+
+/* --- SECTION : Initiatives Actives (Dans la page RIC) --- */
+
+.active-ric-item {
+    padding: 15px;
+    margin-top: 10px;
+    /* Bleu : Couleur pour les actions en cours */
+    border-left: 5px solid var(--color-blue, #2196F3); 
+    background-color: var(--color-ui-primary, #2a2a2a);
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s;
+    border-radius: 4px;
+}
+
+.active-ric-item:hover {
+    background-color: var(--color-bg-hover, #333);
+    box-shadow: 0 0 10px rgba(33, 150, 243, 0.5); /* Effet lumineux bleu */
+}
+
+.active-ric-item h4 {
+    font-size: 1.1em;
+    color: var(--color-text, #fff);
+    margin-bottom: 5px;
+}
+
+.active-ric-item p {
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* --- SECTION : Styles pour les Modales RIC --- */
+
+/* Conteneur principal de la modale de détail */
+.ric-details-modal-content {
+    padding: 15px 5px;
+    color: var(--color-text-light, #ddd);
+}
+
+.ric-details-modal-content h4, 
+.ric-vote-modal-content h4 {
+    font-size: 1.3em;
+    font-weight: 700;
+    color: var(--color-yellow);
+}
+
+.ric-details-modal-content p {
+    margin: 8px 0;
+}
+
+/* Mise en forme spécifique des votes/statut dans la modale */
+#ric-modal-votes {
+    font-size: 1.1em !important;
+    color: var(--color-accent-red) !important;
+    border-top: 1px dashed var(--color-border, #444);
+    padding-top: 10px;
+}
+
+/* Placeholder pour le bouton de vote */
+#vote-button-placeholder {
+    text-align: center;
+    margin-top: 30px;
+}
+
+
+/* --- Styles de la Modale de Vote --- */
+
+.ric-vote-modal-content {
+    text-align: center;
+    padding: 20px 10px;
+}
+
+.vote-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.vote-buttons .btn {
+    flex-grow: 1;
+    max-width: 150px;
+    font-size: 0.95em;
+    padding: 12px 10px;
+    font-weight: bold;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: transform 0.1s;
+}
+
+.vote-buttons .btn:hover {
+    transform: translateY(-2px);
+}
+
+/* Couleurs spécifiques aux boutons de vote */
+#vote-yes-btn {
+    background-color: var(--color-green, #4CAF50) !important;
+}
+
+#vote-no-btn {
+    background-color: var(--color-red, #F44336) !important;
+}
+
+#vote-abstention-btn {
+    background-color: var(--color-yellow, #FFC107) !important;
+    color: var(--color-bg-dark, #1a1a1a) !important;
+}
+
+
+/* --- Styles pour les formulaires RIC --- */
+
+#ric-form .form-group {
+    margin-bottom: 15px;
+}
+
+#ric-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: var(--color-text-light, #ccc);
+}
+
+#ric-form input[type="text"],
+#ric-form input[type="date"],
+#ric-form textarea,
+#ric-form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--color-border, #444);
+    background-color: var(--color-bg-darker, #1e1e1e);
+    color: var(--color-text, #fff);
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#ric-form textarea {
+    resize: vertical;
+}

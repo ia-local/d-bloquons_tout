@@ -4,8 +4,8 @@ const express = require('express');
 const { v4: uuidv4 } = require('uuid');
 const axios = require('axios'); 
 const { calculateUtmi } = require('../server_modules/utms_calculator.js');
-const { getDatabase, writeDatabaseFile, getRicsData, writeRicsFile, getBoycottsData } = require('../services/data'); 
-const { PORT } = require('../config');
+const { getDatabase, writeDatabaseFile, getRicsData, writeRicsFile, getBoycottsData } = require('../services/data.js'); 
+const { PORT } = require('../config/index.js');
 
 const router = express.Router();
 
