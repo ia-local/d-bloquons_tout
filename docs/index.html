@@ -21,16 +21,23 @@
     <header id="main-header">
         <nav class="navBar">
             <div class="logo">
+                <!-- 🛑 BOUTON FLOTTANT D'ACCÈS RAPIDE AU CHATBOT -->
+                <button id="chatbot-fab" class="fab-btn" title="Ouvrir l'Assistant IA" onclick="window.handleUserAction('chatbot')">
+                    <i class="fas fa-robot"></i>
+                </button>
                 <!-- 🛑 NOUVEAUTÉ : Le logo entier est maintenant cliquable -->
                 <a href="#" onclick="event.preventDefault(); window.handleUserAction('chatbot')" 
                    style="display: flex; align-items: center; gap: 10px; color: inherit; text-decoration: none;">
                     <i class="fas fa-bullhorn font-yellow" style="font-size: 1.5rem;"></i>
+                    
                     <span>PLATEFORME CITOYENNE</span>
                 </a>
+
             </div>
             <div class="header-controls">
                 
                 <div class="user-profile-container">
+                    <button id="theme-toggle" class="theme-btn" title="Changer de thème">🌙</button>
                     <button id="user-menu-toggle" class="profile-btn" aria-label="Gestion du compte">
                         <i class="fas fa-user-circle"></i>
                     </button>
@@ -43,7 +50,6 @@
                     </div>
                 </div>
 
-                <button id="theme-toggle" class="theme-btn" title="Changer de thème">🌙</button>
             </div>
         </nav>
     </header>
@@ -172,9 +178,9 @@
         </div>
     </div>
     
-    <!-- 🛑 BOUTON FLOTTANT D'ACCÈS RAPIDE AU CHATBOT -->
-    <button id="chatbot-fab" class="fab-btn" title="Ouvrir l'Assistant IA" onclick="window.handleUserAction('chatbot')">
-        <i class="fas fa-robot"></i>
+
+        <button id="road-map" class="fab-btn" title="Ouvrir l'Assistant IA" onclick="window.handleUserAction('chatbot')">
+        <i class="fa-solid fa-map"></i>
     </button>
     <!-- Le CSS pour le FAB est dans styles.css -->
 

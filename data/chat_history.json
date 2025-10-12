@@ -152,5 +152,46 @@
     "content": "C'est un début !\n\nJe suis prêt à vous aider. Qu'est-ce que vous cherchez ? Une réponse à une question, une information sur un sujet, ou peut-être de l'aide pour un problème spécifique ? Dites-moi ce que vous avez besoin !",
     "persona": "generaliste",
     "timestamp": "2025-10-12T15:45:37.331Z"
+  },
+  {
+    "id": "5e6740ff-e8ac-4e60-b303-ee1af8fa55e5",
+    "role": "user",
+    "content": "test",
+    "persona": "vous",
+    "timestamp": "2025-10-12T16:47:42.029Z"
+  },
+  {
+    "id": "df9bcb0e-85e7-4b45-998b-5890112c4e08",
+    "role": "ai",
+    "content": "Je suis prêt à vous aider ! Qu'est-ce que vous cherchez à faire ou à savoir aujourd'hui ?",
+    "persona": "generaliste",
+    "timestamp": "2025-10-12T16:47:42.292Z"
+  },
+  {
+    "id": "e461aa4d-554b-4f39-a02b-23a676f0f204",
+    "role": "user",
+    "content": "test",
+    "persona": "vous",
+    "timestamp": "2025-10-12T17:00:27.484Z"
+  },
+  {
+    "id": "b73f32f3-787e-4412-b86a-67a983a2a8e0",
+    "role": "ai",
+    "content": "Je suis prêt à aider. Qu'est-ce que vous voulez faire ou savoir ?",
+    "persona": "generaliste",
+    "timestamp": "2025-10-12T17:00:27.734Z"
+  },
+  {
+    "id": "d28e6e31-e7e6-41b9-b5b8-f3d91985550d",
+    "role": "user",
+    "content": "test",
+    "persona": "vous",
+    "timestamp": "2025-10-12T17:40:58.177Z"
+  },
+  {
+    "id": "d6ed3d5b-77e5-42ac-8064-8377746f6a89",
+    "role": "ai",
+    "persona": "generaliste",
+    "timestamp": "2025-10-12T17:40:58.177Z"
   }
 ]

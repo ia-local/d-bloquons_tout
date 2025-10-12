@@ -1,6 +1,6 @@
 // src/cv_processing.js
 const Groq = require('groq-sdk'); // Assurez-vous que Groq est accessible
-const { MODEL_QUALITY_SCORES } = require('../server_modules/model_quality_config'); // Assurez-vous que le chemin est correct
+const { MODEL_QUALITY_SCORES } = require('./model_quality_config'); // Assurez-vous que le chemin est correct
 
 // Initialisation de Groq (assurez-vous que l'API key est passée ou configurée globalement si c'est un module serveur)
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY }); // Utilise la variable d'environnement

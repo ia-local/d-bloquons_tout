@@ -12,14 +12,32 @@
     --color-text: #ffffff;
     --color-text-dark: #1a1a1a; /* Noir très foncé */
      
-    --header-height: 55px;
+    --header-height: 75px;
     --footer-height-mobile: 65px; 
     --sidebar-width-desktop: 280px; 
     --shadow: 0 4px 12px rgba(0,0,0,0.4);
     --border-style: 2px solid var(--color-accent-yellow);
 }
-#chatbot-fab {
+#road-map {
     position: fixed;
+    bottom: calc(20px + var(--footer-height-mobile)); /* Ajusté pour laisser de la place au footer mobile */
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--color-accent-red); /* Rouge d'action */
+    color: white;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 1000;
+    transition: transform 0.2s, background-color 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#chatbot-fab {
     bottom: calc(20px + var(--footer-height-mobile)); /* Ajusté pour laisser de la place au footer mobile */
     right: 20px;
     width: 50px;
@@ -127,6 +145,7 @@ h1, h2, h3, h4, h5 {
     height: 100%;
     display: flex;
     align-items: center;
+    gap: 15px;
 }
 
 .profile-btn {
