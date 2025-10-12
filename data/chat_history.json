@@ -54,5 +54,103 @@
     "content": "Compris ! Je suis prêt à vous aider avec votre projet \"test\". \n\nDites-moi, qu'est-ce que vous aimeriez tester ? \n\nJe peux vous aider à :\n\n* **Générer du texte** : des histoires, des poèmes, des articles, des résumés, etc.\n* **Traduire des langues**\n* **Répondre à des questions** sur une variété de sujets\n* **Résumer du texte**\n* **Identifier des tendances** dans des ensembles de données\n* **Et bien plus encore !**\n\nN'hésitez pas à me donner des instructions précises et détaillées pour que je puisse vous fournir les meilleurs résultats. \n\n\n**Prêt à commencer ?** 😄\n\n",
     "persona": "generaliste",
     "timestamp": "2025-09-25T11:11:49.553Z"
+  },
+  {
+    "id": "85547133-aee8-43ec-b343-fde764f00bf0",
+    "role": "user",
+    "content": "bonjour",
+    "persona": "vous",
+    "timestamp": "2025-10-12T15:13:46.173Z"
+  },
+  {
+    "id": "aaee5464-2ec1-4410-a6d5-933e3862ed4f",
+    "role": "ai",
+    "content": "Bonjour ! Je suis ravi de vous rencontrer. En tant qu'enquêteur IA spécialisé dans l'analyse de dossiers de corruption, je suis prêt à vous aider à découvrir la vérité. Quel est le dossier spécifique que vous souhaitez que je examine ? Quels sont les éléments que vous avez déjà collectés et que vous souhaitez que je vérifie ? Je suis à votre disposition pour vous fournir des informations factuelles et précises.",
+    "persona": "enqueteur",
+    "timestamp": "2025-10-12T15:13:46.583Z"
+  },
+  {
+    "id": "6df856a6-8a9b-49ab-adbe-394d42359351",
+    "role": "user",
+    "content": "test",
+    "persona": "vous",
+    "timestamp": "2025-10-12T15:15:04.373Z"
+  },
+  {
+    "id": "480233ae-2237-4eec-ad5a-aac378c27bdc",
+    "role": "ai",
+    "content": "Rien ne semble être mal fonctionner ! Je suis prêt à aider et à fournir des informations. Qu'est-ce que vous cherchez ou quel problème souhaitez-vous résoudre ?",
+    "persona": "generaliste",
+    "timestamp": "2025-10-12T15:15:04.680Z"
+  },
+  {
+    "id": "5bb6f35c-500e-45be-b0fd-a5a20860a62c",
+    "role": "user",
+    "content": "test",
+    "persona": "vous",
+    "timestamp": "2025-10-12T15:16:17.131Z"
+  },
+  {
+    "id": "12f6624a-d586-4338-8ec0-c1cc8f1f8e7f",
+    "role": "ai",
+    "content": "Vos souhaitez-vous commencer votre conversation ou avez-vous un problème spécifique que je puisse résoudre ? \n\nVoici quelques suggestions de sujets que vous pourriez explorer avec moi :\n\n - Je peux vous aider avec des informations générales (histoire, science, culture)\n - Je peux vous aider à résoudre des problèmes mathématiques ou scientifiques\n - Je peux vous aider à améliorer votre langage avec des leçons de français ou d'autres langues\n - Je peux vous aider à trouver des idées créatives ou inspirantes\n - Et bien d'autres choses encore !\n\nQu'est-ce que vous voulez faire aujourd'hui ?",
+    "persona": "generaliste",
+    "timestamp": "2025-10-12T15:16:17.614Z"
+  },
+  {
+    "id": "7b562504-f169-428a-979f-0be6b6b40190",
+    "role": "user",
+    "content": "bonjour",
+    "persona": "vous",
+    "timestamp": "2025-10-12T15:16:31.554Z"
+  },
+  {
+    "id": "cb65ace8-ae75-40e5-909e-4f75166bc844",
+    "role": "ai",
+    "content": "Bonjour ! Comment puis-je vous aider aujourd'hui ? Avez-vous un problème de programmation que vous souhaitez résoudre, ou souhaitez-vous apprendre un nouveau concept de développement ?",
+    "persona": "codage",
+    "timestamp": "2025-10-12T15:16:31.810Z"
+  },
+  {
+    "id": "a775773c-3ede-4035-bc79-81023a9a428b",
+    "role": "user",
+    "content": "test",
+    "persona": "vous",
+    "timestamp": "2025-10-12T15:16:43.046Z"
+  },
+  {
+    "id": "16fc4aac-84ed-4016-8a61-dd37c34201dc",
+    "role": "ai",
+    "content": "Je fonctionne ! Qu'est-ce que vous voulez que je fasse maintenant ? Un article, une description, une idée ou autre chose ?",
+    "persona": "generateur",
+    "timestamp": "2025-10-12T15:16:43.319Z"
+  },
+  {
+    "id": "4e4b4431-e266-4c48-a3c2-18912c864b80",
+    "role": "user",
+    "content": "test",
+    "persona": "vous",
+    "timestamp": "2025-10-12T15:30:22.646Z"
+  },
+  {
+    "id": "a4f4d22e-4082-40f6-b3ae-4cb171d6811c",
+    "role": "ai",
+    "content": "Bonjour ! Je suis prêt à vous aider. Qu'est-ce que vous voulez faire ou discuter aujourd'hui ?",
+    "persona": "generaliste",
+    "timestamp": "2025-10-12T15:30:22.899Z"
+  },
+  {
+    "id": "5ce06817-0828-4f11-9996-de1e34aa2f5c",
+    "role": "user",
+    "content": "test",
+    "persona": "vous",
+    "timestamp": "2025-10-12T15:45:36.968Z"
+  },
+  {
+    "id": "791eb361-752a-403d-ac0f-aa841c7fee90",
+    "role": "ai",
+    "content": "C'est un début !\n\nJe suis prêt à vous aider. Qu'est-ce que vous cherchez ? Une réponse à une question, une information sur un sujet, ou peut-être de l'aide pour un problème spécifique ? Dites-moi ce que vous avez besoin !",
+    "persona": "generaliste",
+    "timestamp": "2025-10-12T15:45:37.331Z"
   }
 ]

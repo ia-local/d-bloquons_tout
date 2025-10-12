@@ -40,7 +40,7 @@ window.TELEGRAM_DATA = {
     ]
 };
 
-// Mappage des URLs API vers les noms de fichiers JSON locaux (sans l'extension)
+// 🛑 Mappage des URLs API vers les noms de fichiers JSON locaux (sans l'extension)
 const API_TO_FILE_MAP = {
     '/api/chronology/events': 'events',
     '/map/data/manifestations': 'manifestation_points_2_octobre',
@@ -48,7 +48,13 @@ const API_TO_FILE_MAP = {
     '/api/dashboard/summary': 'dashboard_summary',
     '/api/dashboard/utmi-insights': 'utmi_insights',
     '/smartContract/api/dashboard-data': 'smartcontract_data',
-    // Ajoutez ici d'autres mappings si nécessaire
+    // NOUVEAUX MAPPAGES QG & Chatbot
+    '/api/hq/finances': 'hq_finances',
+    '/api/hq/revendications': 'hq_revendications',
+    '/api/hq/actions': 'hq_actions',
+    '/api/hq/users': 'hq_users',
+    '/api/chat/history': 'chat_history',
+    '/api/chat/message': 'chat_response',
 };
 
 // --- 2. FONCTION UTILITAIRE DE RÉCUPÉRATION DE DONNÉES (Fetch Réel) ---
@@ -60,8 +66,7 @@ const API_TO_FILE_MAP = {
 window.fetchData = async function(url, method = 'GET', body = null) {
     console.log(`[Mode API] Tentative d'appel à l'API: ${url}`);
     
-    // Identifie les endpoints qui doivent retourner un tableau (pour les fonctions .sort() et .forEach())
-    const isListEndpoint = url.includes('/events') || url.includes('/manifestations') || url.includes('/api/rics') || url.includes('/beneficiaries');
+    const isListEndpoint = url.includes('/events') || url.includes('/manifestations') || url.includes('/api/rics') || url.includes('/beneficiaries') || url.includes('/api/chat/history');
     let data;
 
     try {
@@ -80,6 +85,12 @@ window.fetchData = async function(url, method = 'GET', body = null) {
         }
 
         data = await response.json();
+        
+        if (isListEndpoint && !Array.isArray(data)) {
+            console.error(`[SÉCURITÉ] L'endpoint ${url} a retourné un objet au lieu d'un tableau. Conversion forcée en tableau vide.`);
+            return [];
+        }
+        
         return data;
         
     } catch (error) {
@@ -87,8 +98,6 @@ window.fetchData = async function(url, method = 'GET', body = null) {
         
         // --- TENTATIVE DE MODE DE SECOURS LOCAL ---
         if (method === 'GET') {
-            
-            // Cherche le nom de fichier correspondant dans la map, en ignorant les query params
             const cleanUrl = url.split('?')[0]; 
             const fileNameRoot = API_TO_FILE_MAP[cleanUrl]; 
 
@@ -99,6 +108,12 @@ window.fetchData = async function(url, method = 'GET', body = null) {
                     if (localResponse.ok) {
                         data = await localResponse.json();
                         console.warn(`[MODE SECOURS] Chargement réussi du fichier local : ${localPath}`);
+                        
+                        if (isListEndpoint && !Array.isArray(data)) {
+                             console.error(`[SÉCURITÉ] Le secours local pour ${localPath} n'est pas un tableau. Retourne [].`);
+                            return [];
+                        }
+                        
                         return data;
                     }
                 } catch (localError) {
@@ -107,14 +122,12 @@ window.fetchData = async function(url, method = 'GET', body = null) {
             }
         }
 
-        // --- RETOUR DE STABILITÉ CRITIQUE ---
-        // Si tout échoue, renvoie le type de structure attendu.
+        // --- RETOUR DE STABILITÉ CRITIQUE FINAL ---
         if (isListEndpoint) {
-             console.warn(`[STABILITÉ] Retour d'un tableau vide pour éviter le crash UI (e.g. .sort() échoue).`);
+             console.warn(`[STABILITÉ] Retour d'un tableau vide pour éviter le crash UI.`);
             return []; 
         }
 
-        // Pour les objets uniques (dashboards, GEE, RIC data, etc.), retourne un objet vide.
         return {}; 
     }
 };
@@ -136,7 +149,6 @@ document.addEventListener('DOMContentLoaded', function() {
             userMenuDropdown.classList.toggle('hidden');
         });
 
-        // Fermer le menu si l'utilisateur clique n'importe où ailleurs
         document.addEventListener('click', (e) => {
             if (!userMenuDropdown.contains(e.target) && !userMenuToggle.contains(e.target)) {
                 userMenuDropdown.classList.add('hidden');
@@ -149,16 +161,13 @@ document.addEventListener('DOMContentLoaded', function() {
                  e.preventDefault();
                  const action = link.getAttribute('data-action');
                  
-                 // CONSOLE LOG DE CONTRÔLE 
                  console.log(`Action Utilisateur demandée: ${action}`); 
                  
                  userMenuDropdown.classList.add('hidden'); 
                  
-                 // Appel de la modale (logique dans modalGestion.js)
                  if (window.handleUserAction) {
                      window.handleUserAction(action);
                  } else {
-                     // Alerte de sécurité si le fichier modalGestion.js n'est pas chargé
                      console.error(`Erreur: La fonction handleUserAction n'est pas chargée. Impossible de gérer l'action ${action}.`);
                  }
              });
@@ -168,13 +177,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- LOGIQUE DE NAVIGATION DE BASE (MISE À JOUR) ---
 
     function showPage(pageName) {
-        // 1. Gérer les liens actifs (Footer et Aside) - Doit être synchrone
         navLinks.forEach(link => {
             link.classList.remove('active');
             if (link.getAttribute('data-page') === pageName) link.classList.add('active');
         });
 
-        // Trouver la page active actuelle et la retirer
         const currentActivePage = document.querySelector('.page.active');
         if (currentActivePage) {
              currentActivePage.classList.remove('active');
@@ -188,16 +195,13 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // Simplification: On applique la classe 'active' directement (CSS gère l'affichage)
         activePage.classList.add('active');
 
         console.log(`[AFFICHAGE OK] Page visible: #${targetPageId}`);
         
-        // Fonction Wrapper pour gérer les appels de rendu
         const safeRenderCall = (renderFunc) => {
             try {
                 if (typeof renderFunc === 'function') {
-                    // On appelle la fonction de rendu sans délai pour la fluidité
                     renderFunc(); 
                 }
             } catch (e) {
@@ -209,16 +213,18 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (pageName === 'map') {
             safeRenderCall(() => {
-                window.initMap(); 
-                // Le invalidateSize doit conserver un petit délai pour Leaflet
-                setTimeout(() => { 
-                   if (window.globalMap) window.globalMap.invalidateSize(); 
-                }, 50); 
+                if (window.initMap) {
+                    window.initMap(); 
+                    setTimeout(() => { 
+                       if (window.globalMap) window.globalMap.invalidateSize(); 
+                    }, 50); 
+                }
             });
         } else if (pageName === 'dashboard') {
             safeRenderCall(window.loadDashboardData);
         } else if (pageName === 'settings') {
-            safeRenderCall(window.loadTelegramContent);
+            // 🛑 APPEL DE LA NOUVELLE FONCTION DES MISSIONS
+            safeRenderCall(window.loadMissionsContent); 
         } else if (pageName === 'ric') {
             safeRenderCall(window.loadRICContent);
         } else if (pageName === 'home') {

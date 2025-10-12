@@ -10,7 +10,10 @@
     
     <link rel="stylesheet" href="styles.css"> 
     <link rel="stylesheet" href="modals.css"> 
+    <link rel="stylesheet" href="modalTelegram.css"> 
+    <link rel="stylesheet" href="missions.css"> 
     <link rel="stylesheet" href="dashboard.css"> 
+    <link rel="stylesheet" href="chatbot.css"> 
     <link rel="stylesheet" href="map-style.css"> 
 </head>
 <body>
@@ -18,8 +21,12 @@
     <header id="main-header">
         <nav class="navBar">
             <div class="logo">
-                <i class="fas fa-hammer font-yellow" style="font-size: 1.5rem;"></i>
-                <span>PLATEFORME CITOYENNE</span>
+                <!-- 🛑 NOUVEAUTÉ : Le logo entier est maintenant cliquable -->
+                <a href="#" onclick="event.preventDefault(); window.handleUserAction('chatbot')" 
+                   style="display: flex; align-items: center; gap: 10px; color: inherit; text-decoration: none;">
+                    <i class="fas fa-bullhorn font-yellow" style="font-size: 1.5rem;"></i>
+                    <span>PLATEFORME CITOYENNE</span>
+                </a>
             </div>
             <div class="header-controls">
                 
@@ -50,7 +57,7 @@
                     <li><a href="#" data-page="map"><i class="fas fa-map-marked-alt"></i><span>Carte</span></a></li>
                     <li><a href="#" data-page="dashboard"><i class="fas fa-chart-line"></i><span>Tableau</span></a></li>
                     <li><a href="#" data-page="ric"><i class="fas fa-balance-scale"></i><span>RIC & Démocratie</span></a></li>
-                    <li><a href="#" data-page="settings"><i class="fas fa-robot"></i><span>Bot/Cmds</span></a></li>
+                    <li><a href="#" data-page="settings"><i class="fas fa-robot"></i><span>Missions</span></a></li>
                 </ul>
             </nav>
         </aside>
@@ -133,11 +140,9 @@
             </div>
 
             <div id="settings-page" class="page">
+                <!-- 🛑 CONTENU CHARGÉ PAR MISSIONS.JS -->
                 <div class="content">
-                    <h2>🤖 Centre de Commandes Bot & Réseau</h2>
-                    <div id="telegram-content-container">
-                        <p class="font-yellow">Chargement des commandes du Bot...</p>
-                    </div>
+                    <p class="font-yellow">Chargement des Missions...</p>
                 </div>
             </div>
             
@@ -151,7 +156,7 @@
                 <li><a href="#" data-page="map"><i class="fas fa-map-marked-alt"></i><span>Carte</span></a></li>
                 <li><a href="#" data-page="dashboard"><i class="fas fa-chart-line"></i><span>Tableau</span></a></li>
                 <li><a href="#" data-page="ric"><i class="fas fa-balance-scale"></i><span>RIC</span></a></li>
-                <li><a href="#" data-page="settings"><i class="fas fa-robot"></i><span>Bot/Cmds</span></a></li>
+                <li><a href="#" data-page="settings"><i class="fas fa-robot"></i><span>Missions</span></a></li>
             </ul>
         </nav>
     </footer>
@@ -166,20 +171,30 @@
                 </div>
         </div>
     </div>
+    
+    <!-- 🛑 BOUTON FLOTTANT D'ACCÈS RAPIDE AU CHATBOT -->
+    <button id="chatbot-fab" class="fab-btn" title="Ouvrir l'Assistant IA" onclick="window.handleUserAction('chatbot')">
+        <i class="fas fa-robot"></i>
+    </button>
+    <!-- Le CSS pour le FAB est dans styles.css -->
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
     
     <!-- 🛑 SCRIPTS DE BASE ET UTILITAIRES -->
     <script type="module" src="theme.js"></script> 
     <script type="module" src="pagination.js"></script> 
+    <script type="module" src="modalChatbot.js"></script> 
     <script type="module" src="modalGestion.js"></script> 
+    <script type="module" src="modalTelegram.js"></script> 
+    <!-- 🛑 NOUVEAU SCRIPT POUR LA PAGE MISSIONS -->
+    <script type="module" src="missions.js"></script> 
     <!-- 🛑 LE SCRIPT app.js DOIT ÊTRE CHARGÉ AVANT LES PAGES qui l'utilisent -->
     <script type="module" src="app.js"></script> 
     
     <!-- 🛑 LOGIQUE DES PAGES (Doivent être chargées APRÈS app.js) -->
     <script type="module" src="home.js"></script> 
     <script type="module" src="ric.js"></script> 
-    <script type="module" src="dashboard.js"></script> <!-- CHARGÉ ICI POUR LA FONCTIONNALITÉ -->
+    <script type="module" src="dashboard.js"></script> 
     
     <!-- SCRIPTS SPÉCIFIQUES À LA CARTE ET AUX FORMULAIRES -->
     <script type="module" src="src/js/layerMap.js"></script>

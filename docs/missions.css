@@ -1,0 +1,99 @@
+/* docs/missions.css */
+
+/* --- Mise en page générale des sections --- */
+
+.content-section {
+    padding: 20px 0;
+    border-bottom: 1px dashed var(--color-ui-border);
+}
+
+.content-section:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+/* --- Grille et Cartes de Missions (Objectifs) --- */
+.mission-card-grid {
+    display: grid;
+    /* Rends la grille responsive */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-top: 25px;
+}
+
+.mission-card {
+    background-color: var(--color-ui-dark); 
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--color-ui-border);
+    /* Ajoute une transition pour l'effet de survol */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mission-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+.mission-card h4 {
+    font-size: 1.15rem;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.mission-card h4 i {
+    margin-right: 10px;
+    font-size: 1.25rem;
+}
+
+.mission-card p {
+    font-size: 0.9em;
+    line-height: 1.5;
+    margin-bottom: 8px;
+}
+
+/* --- Styles des liens de Topics (sur la page Missions) --- */
+/* Ces styles complètent ou surchargent modalTelegram.css pour l'affichage in-page */
+
+.topic-links-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+}
+
+.topic-links-list li {
+    margin-bottom: 10px;
+}
+
+.topic-links-list .btn-link {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    background-color: var(--color-ui-primary);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--color-text-light);
+    border: 1px solid var(--color-ui-border);
+    transition: background-color 0.2s ease;
+}
+
+.topic-links-list .btn-link:hover {
+    background-color: var(--color-ui-darker);
+}
+
+.topic-links-list .btn-link i {
+    margin-right: 10px;
+    color: var(--color-accent-yellow);
+    font-size: 1.1rem;
+}
+
+/* --- Amélioration des boutons d'action rapide (Chatbot/Telegram) --- */
+
+.content-section .btn-large {
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    min-width: 250px;
+    font-weight: 700;
+}

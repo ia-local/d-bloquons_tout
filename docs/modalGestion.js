@@ -1,57 +1,59 @@
-// docs/modalGestion.js - Logique d'affichage et de contenu des Modales (Correction Critique)
+// docs/modalGestion.js - Logique d'affichage et de contenu des Modales (Mise à jour pour Chatbot)
 
 // 🛑 GARDE-FOU: Définir la fonction handleUserAction à la portée globale immédiatement
-// Cela empêche Telegraf/App.js de lever une erreur si la navigation se déclenche trop tôt.
 window.handleUserAction = window.handleUserAction || function(action, detailKey = null) {
     console.error(`Modale non initialisée : action ${action} demandée.`);
 };
 
+// 🛑 VARIABLES GLOBALES DE SECOURS (Définies ici si les scripts de page ne sont pas encore chargés)
+window.RIC_DATA = window.RIC_DATA || { 
+    title: "Le RIC", 
+    definition: "Données non chargées.", 
+    types: [], 
+    manifestoLink: "#",
+    intro_modal: "Données manquantes.",
+    conclusion_modal: "",
+    separation_of_powers: []
+};
+window.CHRONOLOGY_EVENTS = window.CHRONOLOGY_EVENTS || [];
 
 window.initializeModalHandling = function() {
     // Si déjà initialisé, on sort
     if (document.getElementById('global-modal')?.hasInitialized) return;
 
     const modal = document.getElementById('global-modal');
+    const modalBox = document.getElementById('modal-box');
     const modalContentContainer = document.getElementById('modal-content-container');
     const closeButton = document.getElementById('modal-close-btn');
 
-    if (!modal || !modalContentContainer || !closeButton) {
+    if (!modal || !modalBox || !modalContentContainer || !closeButton) {
         console.error("Erreur critique: Les éléments de la modale sont introuvables.");
         return;
     }
 
-    // --- Fonctions utilitaires (openModal, closeModal, getRICData) ---
+    // --- Fonctions utilitaires (openModal, closeModal) ---
 
-    window.openModal = function(title, contentHTML) {
+    window.openModal = function(title, contentHTML, isChatbot = false) {
         document.getElementById('modal-title').textContent = title;
         modalContentContainer.innerHTML = contentHTML;
         modal.classList.add('visible');
-        document.body.classList.add('modal-open'); 
+        document.body.classList.add('modal-open');
+        
+        if (isChatbot) {
+            modalBox.classList.add('is-chatbot');
+        } else {
+            modalBox.classList.remove('is-chatbot');
+        }
     };
 
     window.closeModal = function() {
         modal.classList.remove('visible');
         document.body.classList.remove('modal-open');
-        modalContentContainer.innerHTML = ''; 
-    };
-
-    const getRICData = () => {
-        // Cette fonction devrait idéalement lire des données mises en cache ou faire un fetch ciblé
-        // Pour l'instant, elle retourne le mock structuré
-        return window.MOCK_DATA && window.MOCK_DATA['/api/ric/data'] 
-            ? window.MOCK_DATA['/api/ric/data'] 
-            : { 
-                title: "Le RIC", 
-                definition: "Données non chargées.", 
-                types: [], 
-                manifestoLink: "#",
-                intro_modal: "Données manquantes.",
-                conclusion_modal: "",
-                separation_of_powers: []
-            };
+        modalBox.classList.remove('is-chatbot'); 
+        modalContentContainer.innerHTML = '';
     };
     
-    // --- NOUVEAU: Contenu de Modale pour les Cartes QG ---
+    // --- Contenu de Modale pour les Cartes QG (Inchangé) ---
     const getHQDetailContent = (key) => {
         switch(key) {
             case 'finances':
@@ -95,7 +97,57 @@ window.initializeModalHandling = function() {
 
         switch (action) {
             
-            // 🛑 NOUVEAU CAS: Affichage des détails du Tableau de Bord QG
+            case 'chatbot':
+                // 🛑 AJOUT DE L'ÉMOJI
+                title = "🤖 Assistant IA - Conversation";
+                content = `
+                    <div id="chatbot-container">
+                        <div id="messages-display" style="height: calc(100% - 70px); overflow-y: auto; padding: 10px; border-bottom: 1px solid var(--color-ui-border);">
+                            <p class="chat-system">Connexion à l'Assistant IA...</p>
+                        </div>
+                        <form id="chat-input-form" style="display: flex; padding: 10px 0;">
+                            <select id="persona-select" name="persona" class="input-field" style="width: 30%; margin-right: 10px; padding: 10px;">
+                                <option value="generaliste">Généraliste</option>
+                                <option value="enqueteur">Enquêteur</option>
+                                <option value="avocat">Avocat</option>
+                                <option value="codage">Codage</option>
+                                <option value="secretaire">Secrétaire</option>
+                                <option value="generateur">Générateur</option>
+                            </select>
+                            <input type="text" id="chat-input" placeholder="Posez votre question à l'IA..." required class="input-field" style="flex-grow: 1; padding: 10px;">
+                            <button type="submit" class="btn btn-primary" style="margin-left: 10px;">Envoyer</button>
+                        </form>
+                    </div>
+                `;
+                break; 
+            
+            case 'telegram-commands':
+                // 🛑 APPEL DU NOUVEAU FICHIER MODALTELEGRAM.JS ET AJOUT DE L'ÉMOJI
+                title = "📞 Réseau Telegram - Commandes & Salons";
+                if (window.generateTelegramModalContent) {
+                    content = window.generateTelegramModalContent();
+                } else {
+                    content = "<p class='font-red'>❌ Erreur: Le module modalTelegram.js n'a pas été chargé.</p>";
+                }
+                break;
+                
+            case 'chronology-detail':
+                const event = window.CHRONOLOGY_EVENTS.find(e => e.id === detailKey);
+                
+                if (!event) {
+                    title = "Erreur de détail Chronologie";
+                    content = "<p class='font-red'>Événement historique introuvable.</p>";
+                    break;
+                }
+                
+                title = `Événement : ${event.title}`;
+                content = `
+                    <h3 class="font-red">${event.subtitle} (${event.city})</h3>
+                    <p>Date : ${new Date(event.start_date).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                    <p style="margin-top: 15px;">${event.description}</p>
+                `;
+                break;
+                
             case 'dashboard-detail':
                 const hqDetail = getHQDetailContent(detailKey);
                 title = hqDetail.title;
@@ -110,7 +162,7 @@ window.initializeModalHandling = function() {
                 break;
                 
             case 'ric-detail':
-                const ricDataDetail = getRICData();
+                const ricDataDetail = window.RIC_DATA;
                 const ricType = ricDataDetail.types[parseInt(detailKey)]; 
                 
                 if (!ricType) {
@@ -137,11 +189,11 @@ window.initializeModalHandling = function() {
                 break;
 
             case 'ric-types':
-                const ricDataAll = getRICData();
+                const ricDataAll = window.RIC_DATA;
                 title = ricDataAll.title || "Le Référendum d'Initiative Citoyenne";
                 
-                let typesHTML = ricDataAll.types.map(type => `
-                    <div class="ric-type-card">
+                let typesHTML = ricDataAll.types.map((type, index) => `
+                    <div class="ric-type-card" onclick="window.handleUserAction('ric-detail', ${index})">
                         <h4>${type.name}</h4>
                         <p>${type.desc}</p>
                     </div>
@@ -160,9 +212,8 @@ window.initializeModalHandling = function() {
                 
             case 'ric-form':
                 title = "🗳️ Proposer un nouveau RIC";
-                // Ceci nécessite que la variable soit définie (ex: dans app.js ou ric.js)
                 const formTemplate = window.RIC_FORM_TEMPLATE; 
-                content = formTemplate || "<p class='font-red'>Erreur: Template de formulaire non chargé. Vérifiez app.js/ric.js.</p>";
+                content = formTemplate || "<p class='font-red'>Erreur: Template de formulaire non chargé. Veuillez recharger la page RIC.</p>";
                 break;
                 
             case 'cvnu':
@@ -186,18 +237,20 @@ window.initializeModalHandling = function() {
         }
 
         if (action !== 'logout') {
-            window.openModal(title, content);
+            // Passe le titre, le contenu et l'indicateur isChatbot (pour le style) à openModal
+            window.openModal(title, content, action === 'chatbot');
 
-            // 🛑 Initialiser la soumission du formulaire après l'ouverture
+            if (action === 'chatbot' && window.initializeChatbot) {
+                setTimeout(() => window.initializeChatbot(), 0); 
+            }
+            
             if (action === 'ric-form') {
                 const ricForm = document.getElementById('ric-form');
                 if (ricForm) {
                     ricForm.addEventListener('submit', (e) => {
                         e.preventDefault();
                         console.log("Formulaire RIC soumis ! (Action simulée)");
-                        // Ici, vous enverriez les données à l'API POST /api/rics
                         
-                        // Simulation de succès
                         window.closeModal();
                         window.openModal("✅ Initiative soumise", "<p>Votre proposition de RIC a été enregistrée. Elle sera soumise à l'étape de validation juridique citoyenne.</p>");
                     });
@@ -215,17 +268,7 @@ window.initializeModalHandling = function() {
         }
     });
 
-    // 1. Menu utilisateur (Gestion des actions)
-    const userMenuDropdown = document.getElementById('user-menu-dropdown');
-    if (userMenuDropdown) {
-        userMenuDropdown.querySelectorAll('a[data-action]').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const action = link.getAttribute('data-action');
-                window.handleUserAction(action);
-            });
-        });
-    }
+    // Le menu utilisateur est géré dans app.js
     
     // Marquer l'initialisation comme complète
     modal.hasInitialized = true;

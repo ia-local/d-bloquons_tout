@@ -8,6 +8,7 @@ window.loadDashboardData = async function() {
     const grid = document.getElementById('dashboard-grid');
     if (!grid) return;
 
+    // Si la grille a déjà été chargée, on sort (optimisation)
     if (grid.hasLoaded) return; 
     
     grid.innerHTML = '<p class="font-yellow">Connexion au Quartier Général de données...</p>';
@@ -71,6 +72,7 @@ window.loadDashboardData = async function() {
             {
                 title: "Trésorerie & Allocations",
                 color: 'var(--color-accent-yellow)',
+                key: 'finances', // 🛑 CLÉ UTILISÉE PAR modalGestion.js
                 metrics: [
                     { label: "Solde Général", value: (financesData.caisseSolde || 0).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' }) },
                     { label: "Bénéficiaires", value: (financesData.beneficiaryCount || 0).toLocaleString('fr-FR') },
@@ -81,6 +83,7 @@ window.loadDashboardData = async function() {
             {
                 title: "Revendications & Démocratie",
                 color: 'var(--color-accent-red)',
+                key: 'revendications', // 🛑 CLÉ UTILISÉE PAR modalGestion.js
                 metrics: [
                     { label: "RICs Actifs", value: (revendicationsData.ricsActifs || 0) },
                     { label: "Pétitions en Cours", value: (revendicationsData.petitionsEnCours || 0) },
@@ -91,6 +94,7 @@ window.loadDashboardData = async function() {
             {
                 title: "Actions & Logistique",
                 color: 'var(--color-primary-green)',
+                key: 'actions', // 🛑 CLÉ UTILISÉE PAR modalGestion.js
                 metrics: [
                     { label: "Actions Totales", value: (actionsData.actionsTotales || 0) },
                     { label: "Actions En Cours", value: (actionsData.actionsEnCours || 0) },
@@ -101,6 +105,7 @@ window.loadDashboardData = async function() {
             {
                 title: "Gestion Utilisateurs (CVNU)",
                 color: 'var(--color-blue)',
+                key: 'users', // 🛑 CLÉ UTILISÉE PAR modalGestion.js
                 metrics: [
                     { label: "Bénéficiaires Enreg.", value: (usersData.beneficiairesEnregistres || 0).toLocaleString('fr-FR') },
                     { label: "CVNU Complets", value: (usersData.cvnuComplets || 0) },
@@ -115,7 +120,9 @@ window.loadDashboardData = async function() {
         
         // Rendu des 4 nouvelles cartes QG
         html += qgCards.map(card => `
-            <div class="feature-card hq-card" style="border-top: 5px solid ${card.color};">
+            <div class="feature-card hq-card" 
+                 style="border-top: 5px solid ${card.color}; cursor: pointer;"
+                 data-hq-key="${card.key}"> <!-- 🛑 AJOUT DU DATA ATTRIBUTE -->
                 <h3 style="color: ${card.color}; font-size: 1.3rem; margin-bottom: 10px;">${card.title}</h3>
                 <ul style="list-style: none; padding: 0; margin: 0;">
                     ${card.metrics.map(m => `
@@ -133,6 +140,18 @@ window.loadDashboardData = async function() {
         grid.innerHTML = html;
         grid.hasLoaded = true; 
         
+        // 🛑 ATTACHER LES ÉCOUTEURS DE CLIC POUR LA MODALE (HQ)
+        document.querySelectorAll('#hq-management-cards .hq-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                const key = card.getAttribute('data-hq-key');
+                if (window.handleUserAction) {
+                    window.handleUserAction('dashboard-detail', key);
+                } else {
+                    console.error("handleUserAction non défini. Impossible d'ouvrir la modale.");
+                }
+            });
+        });
+
     } catch (error) {
         console.error("Erreur critique lors du chargement du tableau de bord:", error);
         grid.innerHTML = `<p class="font-red">❌ Échec de la connexion aux API du QG (Vérifiez le serveur et les routes HQ).</p>`;

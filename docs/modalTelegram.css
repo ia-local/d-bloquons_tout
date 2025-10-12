@@ -1,0 +1,140 @@
+
+/* --- Styles Conteneur Général (Mobile-First) --- */
+
+.telegram-modal-content {
+    /* Marge interne pour respirer sur mobile */
+    padding: 10px;
+}
+
+.telegram-section-title {
+    font-size: 1.3rem; /* Légèrement plus grand pour l'impact */
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--color-ui-border);
+    color: var(--color-text-light);
+}
+
+/* --- Styles pour la liste des COMMANDES (Mobile-First: Une colonne) --- */
+
+.command-list-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Une seule colonne par défaut */
+    gap: 10px;
+    padding: 0;
+    /* 🛑 STYLE TERMINAL/ASCII */
+    font-family: 'Consolas', 'Courier New', monospace; /* Police mono-espace */
+}
+
+.command-item {
+    /* Fond très sombre pour le terminal */
+    background-color: #1a1a1a; 
+    padding: 15px; 
+    border-radius: 4px; /* Plus angulaire */
+    /* Bordure simple pour simuler un cadre d'écran */
+    border: 1px solid #00ff00; 
+    /* Ombre subtile pour la profondeur */
+    box-shadow: 0 0 5px rgba(0, 255, 0, 0.2); 
+    transition: box-shadow 0.3s ease;
+}
+
+.command-item:hover {
+    cursor: default;
+    /* Lueur plus intense au survol */
+    box-shadow: 0 0 10px 2px rgba(0, 255, 0, 0.4); 
+}
+
+.command-name {
+    /* Texte de commande en vert vif */
+    font-weight: bold;
+    color: #00ff00; 
+    font-size: 1.1rem; 
+    margin-bottom: 4px;
+    word-break: break-word;
+    /* Simule le curseur du terminal */
+    border-right: 2px solid #00ff00;
+    padding-right: 5px;
+    display: inline-block;
+}
+
+.command-desc {
+    /* Texte de description en jaune/ambre */
+    color: #f9e25b; 
+    font-size: 0.9rem;
+}
+
+/* Optimisation Tablette/Desktop (Plus de 768px) */
+@media (min-width: 768px) {
+    .command-list-grid {
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 20px;
+    }
+}
+
+
+/* --- Styles pour les LIENS VERS LES SALONS (Topics) --- */
+
+.topic-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.topic-list li {
+    margin-bottom: 12px;
+    padding: 0;
+}
+
+.telegram-topic-link {
+    width: 100%; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--color-ui-primary);
+    padding: 15px; 
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--color-text-light);
+    font-weight: 600;
+    transition: all 0.25s ease-in-out;
+    border: 1px solid var(--color-ui-border); 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4); 
+    min-height: 48px; 
+}
+
+/* 🛑 NOUVEAU STYLE POUR LE LABEL ET L'ICÔNE TELEGRAM */
+.topic-label {
+    display: flex;
+    align-items: center;
+    flex-grow: 1; 
+}
+
+.telegram-topic-link:hover {
+    background-color: var(--color-ui-secondary); 
+    transform: translateY(-3px); 
+    cursor: pointer;
+
+    /* 🛑 LUEUR PLUS VISIBLE ET FIABLE (Box-Shadow Multi-couche) */
+    border-color: #00b3f0; 
+    box-shadow: 
+        /* Lueur externe plus large et plus floue (effet glow) */
+        0 0 20px 5px rgba(0, 179, 240, 0.5), 
+        /* Maintient l'effet de profondeur */
+        0 8px 15px rgba(0, 0, 0, 0.7); 
+
+    color: var(--color-accent-yellow); 
+}
+
+/* Correction de la couleur et de la marge de l'icône */
+.telegram-topic-link i.fa-telegram-plane {
+    color: #00b3f0; 
+    margin-right: 15px;
+    font-size: 1.2rem;
+    text-shadow: none; 
+}
+
+.telegram-topic-link i.fa-chevron-right {
+    font-size: 0.8rem;
+    color: var(--color-accent-yellow);
+    min-width: 10px; 
+}

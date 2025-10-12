@@ -18,6 +18,29 @@
     --shadow: 0 4px 12px rgba(0,0,0,0.4);
     --border-style: 2px solid var(--color-accent-yellow);
 }
+#chatbot-fab {
+    position: fixed;
+    bottom: calc(20px + var(--footer-height-mobile)); /* Ajusté pour laisser de la place au footer mobile */
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--color-accent-red); /* Rouge d'action */
+    color: white;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 1000;
+    transition: transform 0.2s, background-color 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#chatbot-fab:hover {
+    transform: scale(1.1);
+    background-color: #e02031; /* Rouge légèrement plus foncé */
+}
 
 /* --- LIGHT MODE OVERRIDES --- */
 body[data-theme="light"] {
@@ -565,7 +588,9 @@ body[data-theme="light"] .alert p, body[data-theme="light"] .alert li {
    4. RÈGLES DESKTOP (NAVIGATION LATÉRALE)
    ========================================================================== */
 @media (min-width: 1025px) {
-    
+    #chatbot-fab {
+        bottom: 20px; /* Remonte à 20px du bas sans le footer */
+    }
     /* Cache le footer mobile */
     #mobile-nav-footer {
         display: none !important;
