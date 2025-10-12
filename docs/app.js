@@ -80,13 +80,6 @@ window.fetchData = async function(url, method = 'GET', body = null) {
         }
 
         data = await response.json();
-        
-        // 🛑 DOUBLE VÉRIFICATION DE SÉCURITÉ (Ajout de la vérification de type)
-        if (isListEndpoint && !Array.isArray(data)) {
-            console.error(`[SÉCURITÉ] L'endpoint ${url} a retourné un objet au lieu d'un tableau. Conversion forcée en tableau vide.`);
-            return [];
-        }
-        
         return data;
         
     } catch (error) {
@@ -95,6 +88,7 @@ window.fetchData = async function(url, method = 'GET', body = null) {
         // --- TENTATIVE DE MODE DE SECOURS LOCAL ---
         if (method === 'GET') {
             
+            // Cherche le nom de fichier correspondant dans la map, en ignorant les query params
             const cleanUrl = url.split('?')[0]; 
             const fileNameRoot = API_TO_FILE_MAP[cleanUrl]; 
 
@@ -105,13 +99,6 @@ window.fetchData = async function(url, method = 'GET', body = null) {
                     if (localResponse.ok) {
                         data = await localResponse.json();
                         console.warn(`[MODE SECOURS] Chargement réussi du fichier local : ${localPath}`);
-                        
-                        // 🛑 VÉRIFICATION DU MODE SECOURS
-                        if (isListEndpoint && !Array.isArray(data)) {
-                             console.error(`[SÉCURITÉ] Le secours local pour ${localPath} n'est pas un tableau. Retourne [].`);
-                            return [];
-                        }
-                        
                         return data;
                     }
                 } catch (localError) {
@@ -120,8 +107,8 @@ window.fetchData = async function(url, method = 'GET', body = null) {
             }
         }
 
-        // --- RETOUR DE STABILITÉ CRITIQUE FINAL ---
-        // Si tout échoue, renvoie le type de structure attendu (Array pour les listes).
+        // --- RETOUR DE STABILITÉ CRITIQUE ---
+        // Si tout échoue, renvoie le type de structure attendu.
         if (isListEndpoint) {
              console.warn(`[STABILITÉ] Retour d'un tableau vide pour éviter le crash UI (e.g. .sort() échoue).`);
             return []; 
