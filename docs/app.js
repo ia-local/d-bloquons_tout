@@ -1,4 +1,4 @@
-// docs/app.js - Logique Principale, Mocks de Données et Navigation (CORRECTION ASYNCHRONISME FINALE)
+// docs/app.js - Logique Principale, Mocks de Données et Navigation (VERSION DÉFINITIVE)
 
 // Exposer les variables globales pour que home.js puisse y accéder
 window.MAP_CONFIG = {
@@ -31,10 +31,126 @@ window.MOCK_DATA = {
         mapid: 'mock_mapid_gee',
         token: 'mock_token_gee_12345',
         satelliteName: 'COPERNICUS/S2_SR_HARMONIZED (Simulé)'
-    }
-};
+    },
+    
+    // 🛑 DONNÉES RIC (Simulé)
+    '/api/ric/data': {
+        title: "Le Référendum d'Initiative Citoyenne (RIC)",
+        definition: "Le RIC est un instrument de démocratie directe permettant aux citoyens de proposer, d'adopter, de rejeter ou d'abroger une loi, voire de modifier la Constitution.",
+        
+        intro_modal: "Le Référendum d'Initiative Citoyenne (RIC) : Le Cœur de notre Démocratie !",
+        conclusion_modal: "C'est la garantie que notre voix sera directement entendue et respectée. Nous organisons des sondages sur le revendications/actions régulièrement et des débats au sein du bot pour recueillir votre opinion et votre soutien sur le RIC. Utilisez la commande /ric pour participer !",
+        
+        types: [
+            { 
+                name: "RIC Législatif", 
+                desc: "Permet aux citoyens de proposer, amender ou adopter des lois.", 
+                detail: "Le RIC législatif permet d'introduire, de modifier ou d'adopter des lois ordinaires. C'est l'outil le plus courant pour contourner l'inertie parlementaire et légiférer directement sur des sujets sociaux ou économiques, sans passer par le Parlement."
+            },
+            { 
+                name: "RIC Abrogatoire", 
+                desc: "Permet aux citoyens de supprimer une loi déjà existante.", 
+                detail: "Le RIC abrogatoire donne le droit au peuple de révoquer une loi en vigueur qu'il juge injuste, dangereuse ou inefficace. Il agit comme un contre-pouvoir immédiat face aux décisions gouvernementales, permettant d'annuler une loi existante."
+            },
+            { 
+                name: "RIC Constituant", 
+                desc: "Permet aux citoyens de modifier la Constitution (le plus puissant).",
+                detail: "Le RIC constituant est la forme la plus puissante. Il permet aux citoyens de réviser directement la Constitution, redéfinissant ainsi les fondations mêmes de la République et les règles du jeu politique, garantissant que le pouvoir de refondation reste au peuple."
+            },
+            { 
+                name: "RIC Révocatoire", 
+                desc: "Permet aux citoyens de destituer un élu (Président, député, etc.) en cours de mandat.",
+                detail: "Le RIC révocatoire est un mécanisme de contrôle permanent sur les élus. Si un élu manque à son engagement ou abuse de son pouvoir, les citoyens peuvent déclencher un vote pour mettre fin à son mandat, assurant la responsabilité constante des représentants."
+            }
+        ],
+        separation_of_powers: [
+            {
+                power: "Pouvoir Juridique (l'Initiative)",
+                icon: "fas fa-lightbulb",
+                description: "Permettre à tout citoyen de porter l'initiative du référendum.",
+                details: "C'est l'étape où le citoyen soumet formellement la question et les justifications (via le formulaire ci-dessous)."
+            },
+            {
+                power: "Pouvoir Législatif (le Vote)",
+                icon: "fas fa-vote-yea",
+                description: "Chaque citoyen est dans l'exercice plein de son droit de vote sur l'initiative proposée.",
+                details: "Le vote s'effectue en ligne, par pétition physique, ou par d'autres modalités sécurisées."
+            },
+            {
+                power: "Pouvoir Exécutif (l'Application/le Contrôle)",
+                icon: "fas fa-user-tie",
+                description: "Déterminer les modalités d'application et de surveillance par un corps citoyen.",
+                details: "Un tirage au sort d'un minimum de 10 personnes est effectué pour former le Comité Citoyen de Contrôle et d'Application."
+            }
+        ],
+        manifestoLink: "https://ia-local.github.io/d-bloquons_tout/docs/src/pages/reforme.html"
+    },
 
-// Données du Telegram Router (Simulé)
+    // 🛑 TEMPLATE DU FORMULAIRE RIC (Inclus Abstention)
+    '/api/ric/form-template': `
+        <form id="ric-form">
+            <p class="font-yellow" style="margin-bottom: 20px;">Soumettez votre initiative en définissant la question, le type et le niveau de vote.</p>
+            <div class="form-group">
+                <label for="ric-question">Votre question (oui/non) :</label>
+                <input type="text" id="ric-question" name="question" placeholder="Ex: Faut-il abroger la loi du Plomb ?" required>
+            </div>
+            <div class="form-group">
+                <label for="ric-description">Description et justifications :</label>
+                <textarea id="ric-description" name="description" rows="5" placeholder="Expliquez la proposition en détail..." required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="ric-type">Type de RIC :</label>
+                <select id="ric-type" name="type" required>
+                    <option value="Législatif">Législatif</option>
+                    <option value="Abrogatoire">Abrogatoire</option>
+                    <option value="Constituant">Constituant</option>
+                    <option value="Révocatoire">Révocatoire</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="ric-level">Niveau de scrutin :</label>
+                <select id="ric-level" name="level" required>
+                    <option value="national">National</option>
+                    <option value="regional">Régional</option>
+                    <option value="departemental">Départemental</option>
+                    <option value="local">Local</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="ric-vote-method">Modalité de vote :</label>
+                <select id="ric-vote-method" name="voteMethod">
+                    <option value="click">Vote par clic (Internet)</option>
+                    <option value="petition">Signature sur pétition (feuille A4)</option>
+                    <option value="abstention">Vote avec Abstention</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Soumettre le RIC</button>
+        </form>
+    `,
+    
+    // 🛑 DONNÉES CHRONOLOGIE
+    '/api/chronology/events': [
+        { "id": "1", "title": "Election Macron", "subtitle": "Mai 2017", "description": "Collection du président de la république, création du gouvernement en marche", "start_date": "2017-07-08T00:00:00Z", "end_date": "2017-07-08T23:59:59Z", "lat": 48.8566, "lon": 2.3522, "city": "Paris" },
+        { "id": "2", "title": "Loi du Plomb", "subtitle": "Du 8 JUILLET", "description": "Lancement de la loi DUMPLOMB.", "start_date": "2025-07-08T00:00:00Z", "end_date": "2025-07-08T23:59:59Z", "lat": 48.8566, "lon": 2.3522, "city": "Paris" },
+        { "id": "3", "title": "Stratégie de boycottage été 2025", "subtitle": "Juilet et août 2025", "description": "Nous développons et mettons en œuvre la stratégie de boycottage et de financement de la caisse de manifestation. Des actions de sensibilisation seront menées pour mobiliser un maximum de citoyens.", "start_date": "2025-08-14T00:00:00Z", "end_date": "2025-08-14T23:59:59Z", "lat": 45.764, "lon": 4.8357, "city": "Lyon" },
+        { "id": "4", "title": "Assemblées Générale", "subtitle": "Aout - septembre 2025", "description": "Journée de la Démocratie Assemblée Générale. Type : AG.", "start_date": "2025-08-30T00:00:00Z", "end_date": "2025-08-30T23:59:59Z", "lat": 43.6045, "lon": 1.4442, "city": "Toulouse" },
+        { "id": "5", "title": "Socle démocratique : MAIRIE", "subtitle": "Le 8 septembre 2025", "description": "Bye, bail > BAYROUX. L'objectif est d'établir un socle démocratique au niveau local.", "start_date": "2025-09-08T00:00:00Z", "end_date": "2025-09-08T23:59:59Z", "lat": 48.8566, "lon": 2.3522, "city": "Paris" },
+        { "id": "6", "title": "Journée de Bloccage", "subtitle": "Le 10 septembre 2025", "description": "Nous vous invitons à vous rassembler, à distribuer de l'argent de la caisse de manifestation et à échanger autour d'un restaurant sur les revendications de justice sociale, de destitution et du RIC. C'est un moment pour se réapproprier l'espace public de manière constructive.", "start_date": "2025-09-10T00:00:00Z", "end_date": "2025-09-10T23:59:59Z", "lat": 48.8679, "lon": 2.3582, "city": "Paris" },
+        { "id": "7", "title": "Croissance Politique - caisse manifestation", "subtitle": "Le 12 septembre 2025", "description": "Boycottage - Caisse de Manifestation.", "start_date": "2025-09-12T00:00:00Z", "end_date": "2025-09-12T23:59:59Z", "lat": 48.8703, "lon": 2.3168, "city": "Paris" },
+        { "id": "8", "title": "Finance : EuropaFi", "subtitle": "occupation", "description": "Nous vous invitons à vous rassembler, à distribuer de l'argent de la caisse de manifestation et à échanger autour d'un restaurant sur les revendications de justice sociale, de destitution et du RIC. C'est un moment pour se réapproprier l'espace public de manière constructive.", "start_date": "2025-09-14T00:00:00Z", "end_date": "2025-09-14T23:59:59Z", "lat": 48.8703, "lon": 2.3168, "city": "Paris" },
+        { "id": "9", "title": "Manifestation - Grève Générale", "subtitle": "Le 18 septembre 2025", "description": "Nous vous invitons à vous rassembler, à distribuer de l'argent de la caisse de manifestation et à échanger autour d'un restaurant sur les revendications de justice sociale, de destitution et du RIC. C'est un moment pour se réapproprier l'espace public de manière constructive.", "start_date": "2025-09-18T00:00:00Z", "end_date": "2025-09-18T23:59:59Z", "lat": 48.8703, "lon": 2.3168, "city": "Paris" },
+        { "id": "10", "title": "Bilan Générale - secteur application", "subtitle": "19 septembbre 2025", "description": "Nous vous invitons à vous rassembler, à distribuer de l'argent de la caisse de manifestation et à échanger autour d'un restaurant sur les revendications de justice sociale, de destitution et du RIC. C'est un moment pour se réapproprier l'espace public de manière constructive.", "start_date": "2025-09-19T00:00:00Z", "end_date": "2025-09-19T23:59:59Z", "lat": 48.8703, "lon": 2.3168, "city": "Paris" },
+        { "id": "11", "title": "Place de la républicque", "subtitle": "Le 21 septembre 2025", "description": "Cet événement a célébré l'abolition de la monarchie et a été l'occasion de rassemblements À la place de la république à Paris..", "start_date": "2025-09-21T00:00:00Z", "end_date": "2025-09-21T23:59:59Z", "lat": 48.8703, "lon": 2.3168, "city": "Guingamp" },
+        { "id": "12", "title": "Grece reconductible", "subtitle": "Le 24 septembre 2025", "description": "organisation", "start_date": "2025-09-24T00:00:00Z", "end_date": "2025-09-24T23:59:59Z", "lat": 48.5638, "lon": -3.1491, "city": "Nationnal" },
+        { "id": "13", "title": "Marche pour le climat", "subtitle": "Le 28 septembre 2025", "description": "Marche pour la justice, climatique et environnemental", "start_date": "2025-09-28T00:00:00Z", "end_date": "2025-09-28T23:59:59Z", "lat": 48.5638, "lon": -3.1491, "city": "Nationnal" },
+        { "id": "14", "title": "manifestation pour la justice", "subtitle": "2 octobre 2025", "description": "grève pour une justice fiscale, sociale et environnemental", "start_date": "2025-10-02T00:00:00Z", "end_date": "2025-10-02T23:59:59Z", "lat": 48.5638, "lon": -3.1491, "city": "France" },
+        { "id": "15", "title": "santé - hospital", "subtitle": "9 octobre 2025", "description": "Cet événement a célébré l'abolition de la monarchie et a été l'occasion de rassemblements festifs et de kermesses. Il a permis de créer un lieu sécurisé pour la discussion, les conférences et les formations. Un rassemblement majeur a été organisé à Guingamp, mais des événements similaires ont eu lieu dans plusieurs villes.", "start_date": "2025-10-09T00:00:00Z", "end_date": "2025-10-09T23:59:59Z", "lat": 48.5638, "lon": -3.1491, "city": "France" },
+        { "id": "16", "title": "MACRON ARRETE", "subtitle": "11 octobre 2025", "description": "Cet événement a célébré l'abolition du trafique d'arme en france, notament dans le cadre, MACRON ARRETE de vendre de armes en Israel", "start_date": "2025-10-09T00:00:00Z", "end_date": "2025-10-09T23:59:59Z", "lat": 48.5638, "lon": -3.1491, "city": "France" },
+        { "id": "17", "title": "budget 2026", "subtitle": "31 decembre 2025", "description": "Lancement de la loi DUMPLOMB.", "start_date": "2025-12-30T00:00:00Z", "end_date": "2025-12-30T23:59:59Z", "lat": 48.8566, "lon": 2.3522, "city": "Paris" },
+        { "id": "18", "title": "Programmae France 2030", "subtitle": "france2030", "description": "Cet événement a célébré l'abolition de la monarchie et a été l'occasion de rassemblements festifs et de kermesses. Il a permis de créer un lieu sécurisé pour la discussion, les conférences et les formations. Un rassemblement majeur a été organisé à Guingamp, mais des événements similaires ont eu lieu dans plusieurs villes.", "start_date": "2030-12-30T00:00:00Z", "end_date": "2030-12-30T23:59:59Z", "lat": 48.5638, "lon": -3.1491, "city": "Guingamp" }
+    ],
+};
+// 🛑 CORRECTION ICI : L'objet MOCK_TELEGRAM_DATA est défini distinctement, après la fermeture de MOCK_DATA
 window.MOCK_TELEGRAM_DATA = {
     topicLinks: {
         '🎨 Studio (Création)': 'https://t.me/c/2803900118/1232',
@@ -70,8 +186,8 @@ window.MOCK_TELEGRAM_DATA = {
 
 window.fetchData = async function(url) {
     console.log(`[Statique Mode] Simulation de l'appel à l'API: ${url}`);
-    await new Promise(resolve => setTimeout(resolve, 300));
-
+    
+    // Le code de fetch ici est correct car il détecte les clés MOCK_DATA
     const data = window.MOCK_DATA[url];
     if (data) {
         return data;
@@ -89,6 +205,48 @@ window.fetchData = async function(url) {
 document.addEventListener('DOMContentLoaded', function() {
     
     const navLinks = document.querySelectorAll('[data-page]');
+    
+    // 🛑 ÉLÉMENTS DU MENU UTILISATEUR
+    const userMenuToggle = document.getElementById('user-menu-toggle');
+    const userMenuDropdown = document.getElementById('user-menu-dropdown');
+    
+    // 🛑 LOGIQUE D'AFFICHAGE DU MENU UTILISATEUR
+    if (userMenuToggle && userMenuDropdown) {
+        userMenuToggle.addEventListener('click', (e) => {
+            e.stopPropagation(); 
+            userMenuDropdown.classList.toggle('hidden');
+        });
+
+        // Fermer le menu si l'utilisateur clique n'importe où ailleurs
+        document.addEventListener('click', (e) => {
+            if (!userMenuDropdown.contains(e.target) && !userMenuToggle.contains(e.target)) {
+                userMenuDropdown.classList.add('hidden');
+            }
+        });
+
+        // Gestion des actions du menu (gamification)
+        userMenuDropdown.querySelectorAll('a').forEach(link => {
+             link.addEventListener('click', (e) => {
+                 e.preventDefault();
+                 const action = link.getAttribute('data-action');
+                 
+                 // CONSOLE LOG DE CONTRÔLE 
+                 console.log(`Action Utilisateur demandée: ${action}`); 
+                 
+                 userMenuDropdown.classList.add('hidden'); 
+                 
+                 // Appel de la modale (logique dans modalGestion.js)
+                 if (window.handleUserAction) {
+                     window.handleUserAction(action);
+                 } else {
+                     // Alerte de sécurité si le fichier modalGestion.js n'est pas chargé
+                     console.error(`Erreur: La fonction handleUserAction n'est pas chargée. Impossible de gérer l'action ${action}.`);
+                 }
+             });
+        });
+    }
+
+    // --- LOGIQUE DE NAVIGATION DE BASE (MISE À JOUR) ---
 
     function showPage(pageName) {
         // 1. Gérer les liens actifs (Footer et Aside) - Doit être synchrone
@@ -111,12 +269,16 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // --- ÉTAPE 2: FORCER LE RAFRAÎCHISSEMENT VISUEL & LANCER LE RENDU (ASYNCHRONE FORCÉ) ---
+        // Simplification: On applique la classe 'active' directement (CSS gère l'affichage)
+        activePage.classList.add('active');
+
+        console.log(`[AFFICHAGE OK] Page visible: #${targetPageId}`);
         
-        // Fonction Wrapper pour gérer les appels de rendu dans un try/catch général
+        // Fonction Wrapper pour gérer les appels de rendu
         const safeRenderCall = (renderFunc) => {
             try {
                 if (typeof renderFunc === 'function') {
+                    // On appelle la fonction de rendu sans délai pour la fluidité
                     renderFunc(); 
                 }
             } catch (e) {
@@ -124,37 +286,25 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         };
 
-        // Utiliser setTimeout(0) pour forcer le navigateur à traiter la suppression/ajout de classe
-        setTimeout(() => {
-            // HACK DE FLUIDITÉ: Forcer le navigateur à recalculer les styles
-            // Ceci est critique pour que l'élément positionné absolument (page) soit correctement affiché.
-            activePage.style.display = 'block'; // Assurer l'affichage initial
-            activePage.classList.add('active');
-            
-            if (currentActivePage) {
-                 currentActivePage.style.display = 'none'; // Cacher l'ancienne page après le changement
-            }
-            
-            activePage.style.display = ''; // Revenir à la règle CSS normale (display: block via .active)
-
-            console.log(`[AFFICHAGE OK] Page visible: #${targetPageId}`);
-            
-            if (pageName === 'map') {
-                 safeRenderCall(() => {
-                     window.initMap(); 
-                     // Assure le redimensionnement Leaflet après l'affichage
-                     setTimeout(() => { 
-                        if (window.globalMap) window.globalMap.invalidateSize(); 
-                     }, 50); 
-                 });
-            } else if (pageName === 'dashboard') {
-                safeRenderCall(window.loadDashboardData);
-            } else if (pageName === 'settings') {
-                safeRenderCall(window.loadTelegramContent);
-            } else if (pageName === 'home') {
-                safeRenderCall(window.loadHomePageContent);
-            }
-        }, 0); 
+        // --- DÉCLENCHEMENT DU RENDU SPÉCIFIQUE ---
+        
+        if (pageName === 'map') {
+            safeRenderCall(() => {
+                window.initMap(); 
+                // Le invalidateSize doit conserver un petit délai pour Leaflet
+                setTimeout(() => { 
+                   if (window.globalMap) window.globalMap.invalidateSize(); 
+                }, 50); 
+            });
+        } else if (pageName === 'dashboard') {
+            safeRenderCall(window.loadDashboardData);
+        } else if (pageName === 'settings') {
+            safeRenderCall(window.loadTelegramContent);
+        } else if (pageName === 'ric') {
+            safeRenderCall(window.loadRICContent);
+        } else if (pageName === 'home') {
+            safeRenderCall(window.loadHomePageContent);
+        }
     }
 
     // Attacher les écouteurs d'événements
@@ -162,7 +312,6 @@ document.addEventListener('DOMContentLoaded', function() {
         link.addEventListener('click', (e) => {
             console.log(`Navigation détectée pour: ${link.getAttribute('data-page')}`);
             
-            // Annuler la navigation par défaut
             e.preventDefault();
             
             const pageName = link.getAttribute('data-page');

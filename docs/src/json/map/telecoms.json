@@ -1,0 +1,7 @@
+[
+    { "id": 1, "name": "Orange", "type": "Opérateur 5G", "lat": 48.8566, "lon": 2.3522, "level": "national" },
+    { "id": 2, "name": "SFR", "type": "Opérateur 5G", "lat": 48.87, "lon": 2.33, "level": "national" },
+    { "id": 3, "name": "Free", "type": "Opérateur 5G", "lat": 48.86, "lon": 2.34, "level": "national" },
+    { "id": 4, "name": "Bouygues Telecom", "type": "Opérateur 5G", "lat": 48.85, "lon": 2.36, "level": "national" },
+    { "id": 5, "name": "Tour Eiffel", "type": "Opérateur 5G", "lat": 48.858370, "lon":2.294481, "level": "national" }
+]

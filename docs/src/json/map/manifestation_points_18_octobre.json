@@ -1,0 +1,46 @@
+[
+    {
+        "id": 1,
+        "name": "Palais de l'Élysée - Start",
+        "city": "Paris",
+        "type": "Rassemblement",
+        "lat": 48.8703,
+        "lon": 2.3168,
+        "source": "boutique.elysee.fr",
+        "level": "national"
+    },
+    {
+        "id": 2,
+        "name": "Commissariat de police - Go Paris",
+        "city": "Paris",
+        "type": "Rassemblement",
+        "lat": 48.8756,
+        "lon": 2.3168,
+        "source": "https://lannuaire.service-public.fr/ile-de-france/paris/ede12056-1e72-436f-a10e-42d456a93628",
+        "level": "national"
+    },
+    {
+        "id": "3",
+        "type": "Rassemblement",
+        "city": "Caen",
+        "name": "Caen - Gare - Go Paris",
+        "lat": 49.1764,
+        "lon": -0.3477,
+        "count": 6000,
+        "video_link": "https://www.youtube.com/watch?v=pAWZXhCAeeM",
+        "source": "Rapport local",
+        "level": "communal"
+  },
+      {
+        "id": "4",
+        "type": "Rassemblement",
+        "city": "Paris",
+        "name": "Point de Ralliement - 144 Camions",
+        "lat": 48.8584, 
+        "lon": 2.2945,
+        "count": 6000,
+        "video_link": "https://www.youtube.com/watch?v=pAWZXhCAeeM",
+        "source": "Déclaration PP / Opérateur Radio",
+        "level": "national"
+  }
+]

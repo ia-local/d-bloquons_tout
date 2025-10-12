@@ -1,0 +1,60 @@
+<div class="page-container">
+    <header class="page-header">
+        <h1>Stratégie de Boycottage et Économie Circulaire</h1>
+        <h2>Carte de la manifestation</h2>
+        <p>Participez activement en redirigeant vos achats pour soutenir une économie locale et une caisse de manifestation citoyenne.</p>
+    </header>
+    <div class="map-app">
+        <section class="map-section">
+            <div class="map-legend-aside">
+                <div id="map-categories-legend" class="map-legend">
+                    <h4>Catégories</h4>
+                    <ul id="legend-list-categories"></ul>
+                </div>
+                <div id="map-items-legend" class="map-legend" style="display: none;">
+                    <h4>Points de données</h4>
+                    <ul id="legend-list-items"></ul>
+                </div>
+            </div>
+            <div id="map"></div> 
+            <div class="map-controls">
+                <div class="map-filter">
+                    <label for="geographical-level-filter">Filtrer par niveau de scrutin:</label>
+                    <select id="geographical-level-filter">
+                        <option value="all">Tous les niveaux</option>
+                        <option value="europe">Europe</option>
+                        <option value="national">National</option>
+                        <option value="regional">Régional</option>
+                        <option value="departmental">Départemental</option>
+                        <option value="communal">Communal</option>
+                        <option value="local">Local</option>
+                    </select>
+                </div>
+                <div class="map-action-buttons"> 
+                    <button id="toggle-satellite-view-btn" class="action-btn" data-state="off">
+                        🛰️ Affichage Satellite
+                    </button>
+                </div>
+                <div class="user-map">
+                    <details class="user-dropdown">
+                        <summary>  - users</summary>
+                        <div id="users-cv" class="user-list-container"></div>
+                    </details>
+                    <details class="user-dropdown">
+                        <summary> - Utilisateurs Militants</summary>
+                        <div id="users-militant" class="user-list-container"></div>
+                    </details>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="ai-filter-container">
+        <h4>Filtrage IA</h4>
+        <input type="text" id="ai-filter-input" placeholder="Décrivez un lieu ou une action...">
+        <button id="ai-filter-btn" class="action-btn">Classer & Filtrer</button>
+    </div>
+    <div id="map-items-legend" class="map-legend" style="display: none;"> 
+        <h4>Points de données</h4>
+        <ul id="legend-list-items"></ul>
+    </div>
+</div>

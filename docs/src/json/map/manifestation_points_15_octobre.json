@@ -1,0 +1,12 @@
+[
+    {
+        "id": 1,
+        "name": "Palais de l'Élysée - Start",
+        "city": "Paris",
+        "type": "Rassemblement",
+        "lat": 48.8703,
+        "lon": 2.3168,
+        "source": "boutique.elysee.fr",
+        "level": "national"
+    }
+]

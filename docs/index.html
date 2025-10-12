@@ -9,16 +9,33 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link rel="stylesheet" href="styles.css"> 
+    <link rel="stylesheet" href="modals.css"> 
 </head>
 <body>
     
     <header id="main-header">
-        <nav>
+        <nav class="navBar">
             <div class="logo">
                 <i class="fas fa-hammer font-yellow" style="font-size: 1.5rem;"></i>
                 <span>PLATEFORME CITOYENNE</span>
             </div>
-            <button id="theme-toggle" class="theme-btn" title="Changer de thème">🌙</button>
+            <div class="header-controls">
+                
+                <div class="user-profile-container">
+                    <button id="user-menu-toggle" class="profile-btn" aria-label="Gestion du compte">
+                        <i class="fas fa-user-circle"></i>
+                    </button>
+                    <div id="user-menu-dropdown" class="dropdown-menu hidden">
+                        <a href="#" data-action="cvnu"><i class="fas fa-id-card"></i> CV Numérique (CVNU)</a>
+                        <a href="#" data-action="rib"><i class="fas fa-credit-card"></i> RIB & Fiscalité</a>
+                        <a href="#" data-action="config"><i class="fas fa-cog"></i> Configuration</a>
+                        <hr>
+                        <a href="#" data-action="logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+                    </div>
+                </div>
+
+                <button id="theme-toggle" class="theme-btn" title="Changer de thème">🌙</button>
+            </div>
         </nav>
     </header>
 
@@ -30,6 +47,7 @@
                     <li><a href="#" data-page="home" class="active"><i class="fas fa-home"></i><span>Accueil</span></a></li>
                     <li><a href="#" data-page="map"><i class="fas fa-map-marked-alt"></i><span>Carte</span></a></li>
                     <li><a href="#" data-page="dashboard"><i class="fas fa-chart-line"></i><span>Tableau</span></a></li>
+                    <li><a href="#" data-page="ric"><i class="fas fa-balance-scale"></i><span>RIC & Démocratie</span></a></li>
                     <li><a href="#" data-page="settings"><i class="fas fa-robot"></i><span>Bot/Cmds</span></a></li>
                 </ul>
             </nav>
@@ -60,7 +78,7 @@
                     <h3 class="font-red">Les raisons de notre colère</h3>
                     <div class="alert alert-info" style="transform: none;">
                         <p>Le plan Bayrou, c’est :</p>
-                        <ul style="color: #1a1a1a;">
+                        <ul style="color: var(--color-text-dark);">
                             <li>Une année blanche sans investissement dans les salaires, les retraites, ni les services publics !</li>
                             <li>3000 postes supprimés, un fonctionnaire sur trois non remplacé !</li>
                             <li>5 milliards retirés à la santé, reste à payer doublé pour les malades !</li>
@@ -75,6 +93,11 @@
                         <p><strong class="font-yellow">NOUS APPELONS CHAQUE DÉPUTÉ À FAIRE SON DEVOIR :</strong></p>
                         <p style="font-size: 1.4em;">VOTER LA MOTION DE CENSURE CONTRE CE PLAN INJUSTE ET DANGEREUX.</p>
                         <p style="font-size: 2em; margin: 10px 0;">⚠️</p>
+                    </div>
+                    
+                    <div id="chronology-container" style="margin-top: 40px; padding: 10px;">
+                        <h2 class="font-red">⌛ Chronologie du Mouvement</h2>
+                        <p class="font-yellow">Chargement des événements...</p>
                     </div>
                     </div>
             </div>
@@ -98,6 +121,15 @@
                 </div>
             </div>
             
+            <div id="ric-page" class="page">
+                 <div class="content" style="padding: 20px;">
+                    <h2>🗳️ Référendum d'Initiative Citoyenne (RIC)</h2>
+                    <div id="ric-content-container">
+                        <p class="font-yellow">Chargement de la doctrine RIC...</p>
+                    </div>
+                </div>
+            </div>
+
             <div id="settings-page" class="page">
                 <div class="content">
                     <h2>🤖 Centre de Commandes Bot & Réseau</h2>
@@ -116,16 +148,30 @@
                 <li><a href="#" data-page="home" class="active"><i class="fas fa-home"></i><span>Accueil</span></a></li>
                 <li><a href="#" data-page="map"><i class="fas fa-map-marked-alt"></i><span>Carte</span></a></li>
                 <li><a href="#" data-page="dashboard"><i class="fas fa-chart-line"></i><span>Tableau</span></a></li>
+                <li><a href="#" data-page="ric"><i class="fas fa-balance-scale"></i><span>RIC</span></a></li>
                 <li><a href="#" data-page="settings"><i class="fas fa-robot"></i><span>Bot/Cmds</span></a></li>
             </ul>
         </nav>
     </footer>
+    
+    <div id="global-modal">
+        <div id="modal-box">
+            <div id="modal-header">
+                <h3 id="modal-title">Titre de la Modale</h3>
+                <button id="modal-close-btn"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="modal-content-container">
+                </div>
+        </div>
+    </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
     <script src="theme.js"></script> 
     <script src="pagination.js"></script> 
     
+    <script src="modalGestion.js"></script> 
     <script src="app.js"></script> 
     <script src="home.js"></script> 
+    <script src="ric.js"></script> 
 </body>
 </html>

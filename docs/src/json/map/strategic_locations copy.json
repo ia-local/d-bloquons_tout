@@ -1,0 +1,25 @@
+{
+  "strategic_locations": [
+    { "id": "SL_001", "name": "Hôpital Lariboisière", "city": "Paris", "type": "Hôpital", "lat": 48.882, "lon": 2.355, "level": "communal" },
+    { "id": "SL_002", "name": "Université de la Sorbonne", "city": "Paris", "type": "Université", "lat": 48.846, "lon": 2.345, "level": "communal" },
+    { "id": "SL_003", "name": "CHU de Rennes", "city": "Rennes", "type": "Hôpital", "lat": 48.114, "lon": -1.691, "level": "communal" },
+    { "id": "SL_004", "name": "Université de Rennes 1", "city": "Rennes", "type": "Université", "lat": 48.116, "lon": -1.680, "level": "communal" },
+    { "id": "SL_005", "name": "Hôpital Michallon", "city": "Grenoble", "type": "Hôpital", "lat": 45.189, "lon": 5.722, "level": "communal" },
+    { "id": "SL_006", "name": "Université Grenoble Alpes", "city": "Grenoble", "type": "Université", "lat": 45.204, "lon": 5.768, "level": "communal" },
+    { "id": "SL_007", "name": "Université Lumière Lyon 2", "city": "Lyon", "lat": 45.7533, "lon": 4.8317, "count": "environ 200", "video_link": "https://www.example.com/video-lyon-protest", "source": "Média local Le Progrès", "level": "communal", "type": "Établissement scolaire", "description": "Rassemblement des étudiants sur le campus pour protester contre la réforme. Les cours ont été partiellement perturbés." }
+  ],
+  "roundabout_points": [
+    { "id": "RP_001", "name": "Rond-point de la Patte d'Oie", "city": "Amiens", "lat": 49.885, "lon": 2.298, "count": "À rechercher", "type": "Rond-point de Blocage", "level": "communal" },
+    { "id": "RP_002", "name": "Rond-point des Quatre-Vents", "city": "Créteil", "lat": 48.784, "lon": 2.459, "count": "À rechercher", "type": "Rond-point de Blocage", "level": "communal" },
+    { "id": "RP_003", "name": "Rond-point du Val d'Auron", "city": "Bourges", "lat": 47.069, "lon": 2.408, "count": "À rechercher", "type": "Rond-point de Blocage", "level": "communal" },
+    { "id": "RP_004", "name": "Rond-point de Castorama", "city": "Caen", "lat": 49.1764, "lon": -0.3168, "count": "À rechercher", "type": "Rond-point de Blocage", "video_link": "https://www.youtube.com/watch?v=pAWZXhCAeeM", "level": "communal" }
+  ],
+  "porte_points": [
+    { "id": "PP_001", "name": "Porte de Bagnolet", "city": "Paris", "lat": 48.8631, "lon": 2.4045, "count": "X", "type": "Porte de Paris", "video_link": "https://www.youtube.com/watch?v=pAWZXhCAeeM", "level": "communal" },
+    { "id": "PP_002", "name": "Porte d'Aubervilliers", "city": "Paris", "lat": 48.8988, "lon": 2.3739, "count": "À rechercher", "type": "Porte de Paris", "level": "communal" },
+    { "id": "PP_003", "name": "Porte de Clignancourt", "city": "Paris", "lat": 48.8985, "lon": 2.3481, "count": "À rechercher", "type": "Porte de Paris", "level": "communal" },
+    { "id": "PP_004", "name": "Porte de Montreuil", "city": "Paris", "lat": 48.8559, "lon": 2.4172, "count": "À rechercher", "type": "Porte de Paris", "level": "communal" },
+    { "id": "PP_005", "name": "Porte de Vincennes", "city": "Paris", "lat": 48.8475, "lon": 2.4191, "count": "À rechercher", "type": "Porte de Paris", "level": "communal" },
+    { "id": "PP_006", "name": "Gare du Nord", "city": "Paris", "lat": 48.88092, "lon": 2.35515, "count": "À rechercher", "type": "Porte de Paris", "level": "communal" }
+  ]
+}

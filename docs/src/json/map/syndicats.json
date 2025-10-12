@@ -1,0 +1,62 @@
+[
+    {
+      "id": "1",
+      "name": "CGT (Caen)",
+      "syndicats": ["CGT"],
+      "city": "Caen",
+      "lat": 49.18331,
+      "lon": -0.3705,
+      "type": "Siège Syndical",
+      "description": "Union Départementale Intersyndicale de Caen. La CGT est le premier syndicat français.",
+      "mediaSource": "src/img/cgt.png", 
+      "mediaType": "image"
+    },
+    {
+      "id": "2",
+      "name": "SS - Syndicat Solidaires",
+      "syndicats": ["Solidaires"],
+      "city": "Caen",
+      "lat": 49.1834,
+      "lon": -0.3708,
+      "type": "Siège Syndical",
+      "description": "Maison des syndicats pour les organisations du groupe Solidaires. Axé sur les services publics.",
+      "mediaSource": "src/img/solidaires.png", 
+      "mediaType": "image"
+    },
+    {
+      "id": "3",
+      "name": "FO - Force Ouvrière",
+      "syndicats": ["FO"],
+      "city": "Paris 14ème",
+      "lat": 48.8358,
+      "lon": 2.3276,
+      "type": "Siège Syndical",
+      "description": "Siège national de la Confédération Générale du Travail Force Ouvrière (141, avenue du Maine).",
+      "mediaSource": "src/img/fo.png", 
+      "mediaType": "image"
+    },
+    {
+      "id": "4",
+      "name": "FNSEA - Fédération Nationale",
+      "syndicats": ["FNSEA"],
+      "city": "Paris 8ème",
+      "lat": 49.1834,
+      "lon": -0.3708,
+      "type": "Siège Syndical",
+      "description": "Fédération Nationale des Syndicats d'Exploitants Agricoles (11 rue La Baume). Défense des intérêts des agriculteurs.",
+      "mediaSource": "src/img/fnsea.png", 
+      "mediaType": "image"
+    },
+    {
+      "id": "5",
+      "name": "GJ - Gilet Jaune",
+      "syndicats": ["GJ"],
+      "city": "Paris 8ème",
+      "lat": 48.8741,
+      "lon": 2.3129,
+      "type": "Siège Syndical",
+      "description": "syndicat des gilets jaunes",
+      "mediaSource": "src/img/gj.png", 
+      "mediaType": "image"
+    }
+]

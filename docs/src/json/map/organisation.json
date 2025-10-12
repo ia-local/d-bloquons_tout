@@ -1,0 +1,24 @@
+[
+    {
+      "id": "Cannard refractaire",
+      "name": "Cannard refractaire",
+      "city": "Guingamp",
+      "lat": 49.18331,
+      "lon": -0.3705,
+      "type": "Organisation locale",
+      "description": "Siège de l'Union Départementale de la CGT et de Force Ouvrière.",
+      "mediaSource": "https://www.youtube.com/embed/k19P2DYqimg",
+      "mediaType": "video"
+    },
+    {
+      "id": "Techno+",
+      "name": "Techno+",
+      "city": "Päris",
+      "lat": 48.858370, 
+      "lon":2.294481,
+      "type": "Organisation locale",
+      "description": "Techno+ a été créée en 1995. Que de souvenirs ! Pour célébrer ça, on va ressortir les chars de la Techno Parade 'Dream Nation'",
+      "mediaSource": "https://www.youtube.com//embed/J6qa81rKqj8",
+      "mediaType": "video"
+    }
+]

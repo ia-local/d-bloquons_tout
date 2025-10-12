@@ -1,0 +1,66 @@
+{
+  "general_settings": {
+    "update_frequency_minutes": 30,
+    "last_update": "2025-10-02T15:07:50Z",
+    "last_video_enrichment": "2025-10-02T17:00:00Z"
+  },
+  "search_config": {
+    "base_keywords": ["bloquons tout", "grève 2 octobre", "rassemblement national"],
+    "ignored_keywords": ["retraites", "réforme", "sport", "anniversaire"],
+    "default_city_list": ["Paris", "Marseille", "Lyon", "Toulouse", "Bordeaux", "Nantes", "Lille", "Strasbourg", "Caen"],
+    "trust_threshold": 0.75
+  },
+  "data_sources": [
+    {
+      "name": "Web Archiving - Internet Archive",
+      "source_type": "ARCHIVE_ORG_WAYBACK",
+      "description": "Recherche d'URL archivées pour les événements passés ou de liens supprimés. Maximize l'authenticité.",
+      "is_active": true,
+      "query_template": "web:archive.org/web/*/{city} {name} 2025",
+      "output_datakey": "manifestation_archive_sources",
+      "trust_score": 0.95,
+      "max_results": 3
+    },
+    {
+      "name": "YouTube - Vidéos Locales",
+      "source_type": "YOUTUBE_SEARCH",
+      "description": "Recherche de vidéos récentes spécifiques à la ville (score de confiance élevé).",
+      "is_active": true,
+      "query_template": "vidéo {city} {name} 2 octobre",
+      "output_datakey": "manifestation_live_points",
+      "trust_score": 0.9,
+      "max_results": 5
+    },
+    {
+      "name": "Google Actualités - Presse Locale/RSS",
+      "source_type": "GOOGLE_NEWS",
+      "description": "Recherche d'articles (avec potentiel vidéo/live) sur les médias régionaux.",
+      "is_active": true,
+      "query_template": "live {city} manifestation 2 octobre",
+      "output_datakey": "manifestation_live_points",
+      "trust_score": 0.8,
+      "max_results": 5,
+      "local_media_filter": true
+    },
+    {
+      "name": "Twitter/X - Canaux d'Actualités",
+      "source_type": "TWITTER_API",
+      "description": "Recherche de posts d'agences de presse ou de syndicats (pour URL courte).",
+      "is_active": false,
+      "query_template": "manifestation {city} 2 octobre from:clpress OR from:cgt",
+      "output_datakey": "manifestation_live_points",
+      "trust_score": 0.85,
+      "max_results": 3
+    },
+    {
+      "name": "Telegram - Canaux Publics",
+      "source_type": "TELEGRAM_RSS",
+      "description": "Suivi des flux RSS publics de Telegram (pour liens vidéo bruts/directs).",
+      "is_active": false,
+      "channel_links": ["https://t.me/+g-v07WePo0cyMmQ0", "https://t.me/peuplerevolteinfos"],
+      "output_datakey": "manifestation_live_points",
+      "trust_score": 0.7,
+      "parser_required": true
+    }
+  ]
+}

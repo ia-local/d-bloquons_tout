@@ -1,0 +1,129 @@
+{
+  "categories": [
+    {
+      "name": "Manifestations",
+      "icon": "manifestation-icon.png",
+
+      "dataKeys": ["manifestation_points_10_septembre", "manifestation_points_18_septembre","marche_climat", "manifestation_points_2_octobre","manifestation_points_15_octobre","manifestation_points_18_octobre","telecoms"],
+      "subcategories": [
+        { "name": "Bloquons Tout 10 Sept.", "icon": "manif_10sep_icon.png", "typeFilter": ["Rassemblement", "Manifestation"], "dataKeys": ["manifestation_points_10_septembre"] },
+        { "name": "Grèves Général du 18 Sept.", "icon": "manif_18sep_icon.png", "typeFilter": ["Rassemblement", "Manifestation"], "dataKeys": ["manifestation_points_18_septembre"] },
+        { "name": "Rassemblement du 2 Oct.", "icon": "manif_02oct_icon.png", "typeFilter": ["Rassemblement", "Manifestation"], "dataKeys": ["manifestation_points_2_octobre"] },
+        { "name": "Manifestation du 15 Oct.", "icon": "manifestive.png", "typeFilter": ["Rassemblement", "Manifestation"], "dataKeys": ["manifestation_points_15_octobre"] },
+        { "name": "Revendicative du 18 Oct.", "icon": "manifestive.png", "typeFilter": ["Rassemblement", "Manifestation"], "dataKeys": ["manifestation_points_18_octobre"] },
+        { "name": "Marche pour le climat", "icon": "climat-icon.png", "typeFilter": ["Manifestation","Marche pour le climat", ""], "dataKeys": ["marche_climat", "manifestation_points_2_octobre"] }, 
+        { "name": "Opérations Spéciales", "icon": "op.png", "typeFilter": ["Opération", "Action symbolique", "Opération 'Cana'"] },
+        { "name": "Piquet de grève", "icon": "op.png", "typeFilter": ["Piquet de grève"] },
+        { "name": "Pancarte / Affichage", "icon": "pancarte.png", "typeFilter": ["Pancarte"] }
+      ]
+    },
+{
+  "name": "Actions strategique",
+  "icon": "roundabout-icon.png",
+  "dataKeys": ["strategic_locations", "roundabout_points", "porte_points", "actions"],
+  "subcategories": [
+    { "name": "Ronds-points", "icon": "roundabout-icon.png", "typeFilter": ["Rond-point", "Rond-point de Blocage"], "dataKeys": ["roundabout_points", "strategic_locations"] },
+    { "name": "Portes & Gares", "icon": "porte-icon.png", "typeFilter": ["Porte", "Gare", "Porte de Paris"], "dataKeys": ["porte_points", "strategic_locations"] },
+    { "name": "Hôpitaux & Universités", "icon": "hospital.png", "typeFilter": ["Hôpital", "Université", "Établissement scolaire"], "dataKeys": ["strategic_locations"] },
+  
+    { "name": "Blocage Tactique", "icon": "blocage-icon.png", "typeFilter": ["Blocage"], "dataKeys": ["actions"] },
+    { "name": "Actions Économiques", "icon": "blocage-economie-icon.png", "typeFilter": ["Économie"], "dataKeys": ["actions"] },
+    { "name": "Actions Écologiques", "icon": "blocage-ecologie-icon.png", "typeFilter": ["Écologie"], "dataKeys": ["actions"] },
+    { "name": "Actions Symboliques", "icon": "blocage-Symbole-icon.png", "typeFilter": ["Symbole"], "dataKeys": ["actions"] },
+    { "name": "Actions Pédagogiques", "icon": "blocage-Pédagogie-icon.png", "typeFilter": ["Pédagogie"], "dataKeys": ["actions"] },
+    { "name": "Actions Numerique", "icon": "blocage-Numerique-icon.png", "typeFilter": ["Numerique"], "dataKeys": ["actions"] },
+    { "name": "Actions Artistique", "icon": "blocage-Artistique-icon.png", "typeFilter": ["Artistique"], "dataKeys": ["actions"] },
+    { "name": "Actions de Perturbation", "icon": "blocage-Perturbation-icon.png", "typeFilter": ["Perturbation"], "dataKeys": ["actions"] },
+    { "name": "Actions Satiriques", "icon": "satire-icon.png", "typeFilter": ["Satire"], "dataKeys": ["actions"] },
+    { "name": "Autres Actions", "icon": "blocage-Autres-icon.png", "typeFilter": ["Autres"], "dataKeys": ["actions"] }
+  ]
+},
+    {
+      "name": "Lieux Administratifs",
+      "icon": "mairie-icon.png",
+      "dataKeys": ["mairies", "prefectures", "elysee", "taxes"],
+      "subcategories": [
+        { "name": "Mairies", "icon": "mairie-icon.png", "typeFilter": ["Mairie"] },
+        { "name": "Préfectures", "icon": "pref.png", "typeFilter": ["Préfecture"] }, 
+        { "name": "Élysée", "icon": "elyseeBoutique.png", "typeFilter": ["elysee"]  },
+        { "name": "Ministères", "icon": "ministere.png", "typeFilter": ["Ministère"] },
+        { "name": "Centres des Impôts", "icon": "taxes-icon.png", "typeFilter": ["Centre des finances publiques", ""] } 
+      ]
+    },
+    {
+      "name": "Secteurs d'application",
+      "icon": "secteur-icon.png",
+      "dataKeys": ["boycotts", "telecoms"],
+      "subcategories": [
+        { "name": "Agriculture", "icon": "fnsea.png", "typeFilter": ["Agriculture", "BIO", "FNSEA"] },
+        { "name": "Éducation", "icon": "McDonalds.png", "typeFilter": ["Éducation", "Université", "Lycée", "Établissement scolaire", "SUD éducation"] },
+        { "name": "Santé", "icon": "hospital.png", "typeFilter": ["Santé", "Hôpital"] },
+        { "name": "Finance", "icon": "CreditCooperatif.png", "typeFilter": ["Finance", "Banque", "Holding Financière"] },
+        { "name": "Industrie", "icon": "industrie-icon.png", "typeFilter": ["Industrie", "Énergie/Stations-service"] },
+        { "name": "Commerce", "icon": "store.png", "typeFilter": ["Commerce", "Distribution", "Restauration", "Restauration Rapide", "Habillement", "E-commerce", "Streaming"] },
+        { "name": "Transport", "icon": "transport-icon.png", "typeFilter": ["Transport", "RATP", "SNCF", "Porte de Paris"] },
+        { "name": "Télécoms/Réseaux", "icon": "telecom.png", "typeFilter": ["Opérateur 5G"] }
+      ]
+    },
+    {
+      "name": "Boycotts",
+      "icon": "boycott-icon.png",
+      "dataKeys": ["boycotts"],
+      "subcategories": [
+        { "name": "Distribution", "icon": "store.png", "typeFilter": ["Distribution", "movie", "Habillement", "E-commerce", "Streaming"] },
+        { "name": "Banques", "icon": "CreditCooperatif.png", "typeFilter": ["Banque", "Holding Financière"] },
+        { "name": "Restauration", "icon": "McDonalds.png", "typeFilter": ["Restauration", "Restauration Rapide"] },
+        { "name": "Commerce (Divers)", "icon": "Carrefour.png", "typeFilter": ["commerce", "Énergie/Stations-service"] },
+        { "name": "Industrie", "icon": "industrie-icon.png", "typeFilter": ["Industrie"] }
+      ]
+    },
+    {
+      "name": "Surveillance & Réseaux",
+      "icon": "camera-icon.png",
+      "dataKeys": ["cameras_points", "telecoms"],
+      "subcategories": [
+        { "name": "Caméras Fixes", "icon": "fixed-camera.png", "typeFilter": ["fixed", "Caméra Fixe"] },
+        { "name": "Caméras Dôme", "icon": "dome-camera.png", "typeFilter": ["dome", "Caméra Dôme"] },
+        { "name": "Caméras Panoramiques", "icon": "panoramic-camera.png", "typeFilter": ["panning", "Caméra Panoramique"] },
+        { "name": "Agents de Sécurité", "icon": "guard-icon.png", "typeFilter": ["guard", "Agent de Sécurité"] },
+        { "name": "Opérateurs 5G / Antennes", "icon": "telecom.png", "typeFilter": ["Opérateur 5G", "Antenne Télécom"] }
+      ]
+    },
+    {
+      "name": "Organisations & Syndicats",
+      "icon": "syndicats.png",
+      "dataKeys": ["syndicats", "cnccfp_partis", "organisation"], 
+      "subcategories": [
+
+        { "name": "Organisations Locales", "icon": "syndicats.png", "dataKeys": ["organisation"], "typeFilter": ["Organisation locale", "Intersyndical", ""] },
+        { "name": "Sièges Syndicaux", "icon": "syndicats.png", "dataKeys": ["syndicats"], "typeFilter": ["Siège Syndical", ""] }, 
+        { "name": "Partis Politiques", "icon": "parti-icon.png", "dataKeys": ["cnccfp_partis"], "typeFilter": ["Parti Politique"] }
+      ]
+    },
+        {
+        "name": "Réseaux sociaux",
+        "icon": "reseau.png",
+        "dataKeys": ["reseau"], 
+        "subcategories": [
+            { "name": "Telegram", "icon": "telegram.png", "typeFilter": ["Telegram"] },
+            { "name": "Youtube", "icon": "youtube.png", "typeFilter": ["Youtube"] },
+            { "name": "Instagram", "icon": "instagram.png", "typeFilter": ["Instagram"] },
+            { "name": "Facebook", "icon": "facebook.png", "typeFilter": ["Facebook"] },
+            { "name": "Whatsapp", "icon": "whatapp.png", "typeFilter": ["Whatsapp"] },
+            { "name": "Signal", "icon": "signal.png", "typeFilter": ["Signal"] },
+            { "name": "Site Web", "icon": "site.png", "typeFilter": ["Site"] }
+        ]
+    },
+    {
+      "name": "RIC",
+      "icon": "folder-icon.png",
+      "dataKeys": ["rics"], 
+      "subcategories": [
+        { "name": "RIC Législatif", "icon": "ric-legislatif.png", "typeFilter": ["Législatif"] },
+        { "name": "RIC Abrogatoire", "icon": "ric-abrogatoire.png", "typeFilter": ["Abrogatoire"] },
+        { "name": "RIC Constituant", "icon": "ric-constituant.png", "typeFilter": ["Constituant"] },
+        { "name": "RIC Révocatoire", "icon": "ric-revocatoire.png", "typeFilter": ["Révocatoire"] }
+      ]
+    }
+  ]
+}

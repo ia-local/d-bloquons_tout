@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "name": "Direction Générale des Finances Publiques (DGFIP)",
+    "city": "Paris Bercy",
+    "lat": 48.8398,
+    "lon": 2.3789,
+    "type": "Centre des finances publiques",
+    "description": "Siège national de la DGFIP.",
+    "level": "national"
+  },
+  {
+    "id": 2,
+    "name": "Service des Impôts des Particuliers (SIP) Paris 2e",
+    "city": "Paris",
+    "lat": 48.8687,
+    "lon": 2.3421,
+    "type": "Centre des finances publiques",
+    "description": "Centre des Finances Publiques, 16 rue N-D des Victoires.",
+    "level": "local"
+  },
+  {
+    "id": 3,
+    "name": "Direction Régionale des Finances Publiques (DRFIP) Auvergne-Rhône-Alpes",
+    "city": "Lyon",
+    "lat": 45.7601,
+    "lon": 4.8624,
+    "type": "Centre des finances publiques",
+    "description": "Direction Régionale des Finances Publiques, 8 Rue Montrochet.",
+    "level": "regional"
+  },
+  {
+    "id": 4,
+    "name": "Service des Impôts des Particuliers (SIP) Marseille Prado",
+    "city": "Marseille",
+    "lat": 43.2796,
+    "lon": 5.3970,
+    "type": "Centre des finances publiques",
+    "description": "Centre des Finances Publiques, 183 avenue du Prado.",
+    "level": "local"
+  },
+    {
+    "id": 5,
+    "name": "Ministère des finance",
+    "city": "Bercy",
+    "lat": 48.8398,
+    "lon": 2.3807,
+    "type": "Ministère",
+    "description": "Ministères économiques et finance, 139 rue de Bercy, 75572 Paris Cedex 12 ",
+    "level": "nationnal"
+  }
+]

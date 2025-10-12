@@ -1,0 +1,2468 @@
+[
+  {
+    "id": 1,
+    "name": "Dublin",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKIIXjkp-3Vsxtf7_F_rPX6UfnGxVlZDbFpplIyIaCAXOsEhBjdE3kVMmkFKMQC3sdoJId",
+    "description": "Lien Signal pour Dublin.",
+    "lat": 53.333,
+    "lon": -5.9
+  },
+  {
+    "id": 2,
+    "name": "Vienne",
+    "type": "Telegram",
+    "url": "https://t.me/+98mIfq9YJ5c0NWI0",
+    "description": "Lien Telegram pour Vienne. Texte d'origine : 36322.",
+    "lat": 48.2202035,
+    "lon": 16.2970718
+  },
+  {
+    "id": 3,
+    "name": "Dublin",
+    "type": "Telegram",
+    "url": "https://t.me/+7cSgq4Jxdd03MGRk",
+    "description": "Lien Telegram pour Dublin.",
+    "lat": 53.496,
+    "lon": -5.817
+  },
+  {
+    "id": 4,
+    "name": "Belgique",
+    "type": "Telegram",
+    "url": "https://t.me/+vXyhM9YVjzMyOTJk",
+    "description": "Lien Telegram pour la Belgique.",
+    "lat": 50.890163106,
+    "lon": 4.337998648
+  },
+  {
+    "id": 5,
+    "name": "ÎLE-DE-FRANCE",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKIN88p8tNfZVKybCRXwCaekvNj-jUWwZ-uSnp2u0dZLYQEhBrnlShT9mC5RJ1GjjW0vrt",
+    "description": "Lien Signal pour l'ÎLE-DE-FRANCE.",
+    "lat": 48.85751049761375,
+    "lon": 2.3514497922516293
+  },
+  {
+    "id": 6,
+    "name": "ÎLE-DE-FRANCE",
+    "type": "Telegram",
+    "url": "https://t.me/+vCk5fVFqa3s0ZDlk",
+    "description": "Lien Telegram pour l'ÎLE-DE-FRANCE.",
+    "lat": 48.8581118,
+    "lon": 2.0
+  },
+  {
+    "id": 7,
+    "name": "Périgord Limousin",
+    "type": "Site",
+    "url": "https://limousin.onbloquetout.fr",
+    "description": "Lien Site pour Périgord Limousin.",
+    "lat": 45.4789,
+    "lon": 0.48
+  },
+  {
+    "id": 8,
+    "name": "ÎLE-DE-FRANCE",
+    "type": "Telegram",
+    "url": "https://t.me/+vCk5fVFqa3s0ZDlk",
+    "description": "Lien Telegram pour l'ÎLE-DE-FRANCE.",
+    "lat": 48.8502784,
+    "lon": 2.2881959
+  },
+  {
+    "id": 9,
+    "name": "OCCITANIE",
+    "type": "Telegram",
+    "url": "https://t.me/collectifsunis31",
+    "description": "Lien Telegram pour l'OCCITANIE.",
+    "lat": 43.057,
+    "lon": 3.417
+  },
+  {
+    "id": 10,
+    "name": "PROVENCE-ALPES-CÔTE D’AZUR",
+    "type": "Telegram",
+    "url": "https://t.me/+6nGU1MKqF1E1MTI0",
+    "description": "Lien Telegram pour PROVENCE-ALPES-CÔTE D’AZUR.",
+    "lat": 43.948486,
+    "lon": 4.887618
+  },
+  {
+    "id": 11,
+    "name": "PAYS DE LA LOIRE",
+    "type": "Telegram",
+    "url": "https://t.me/+UlH4Zr3yf5FjMmRk",
+    "description": "Lien Telegram pour PAYS DE LA LOIRE.",
+    "lat": 47.6594864,
+    "lon": -0.8186143
+  },
+  {
+    "id": 12,
+    "name": "GRAND EST",
+    "type": "Telegram",
+    "url": "https://t.me/+DwayRkLGjxBhYjc0",
+    "description": "Lien Telegram pour GRAND EST.",
+    "lat": 48.4845157,
+    "lon": 6.113035
+  },
+  {
+    "id": 13,
+    "name": "CORSICA",
+    "type": "Telegram",
+    "url": "https://t.me/+6nGU1MKqF1E1MTI0",
+    "description": "Lien Telegram pour CORSICA.",
+    "lat": 42.188098,
+    "lon": 9.0683139
+  },
+  {
+    "id": 14,
+    "name": "BRETAGNE",
+    "type": "Telegram",
+    "url": "https://t.me/+2zyykrgSNYI4YmQ0",
+    "description": "Lien Telegram pour la BRETAGNE.",
+    "lat": 48.1964432,
+    "lon": -2.9367658
+  },
+  {
+    "id": 15,
+    "name": "NOUVELLE-AQUITAINE",
+    "type": "Telegram",
+    "url": "https://t.me/+fFVATyvoOWowZjA0",
+    "description": "Lien Telegram pour NOUVELLE-AQUITAINE.",
+    "lat": 45.953,
+    "lon": -1.653
+  },
+  {
+    "id": 16,
+    "name": "HAUTS-DE-FRANCE",
+    "type": "Telegram",
+    "url": "https://t.me/+07fmAOi30jA1ODhk",
+    "description": "Lien Telegram pour HAUTS-DE-FRANCE.",
+    "lat": 50.1024606,
+    "lon": 2.7247515
+  },
+  {
+    "id": 17,
+    "name": "NORMANDIE",
+    "type": "Telegram",
+    "url": "https://t.me/+NY521X2MIxxhNzQ0",
+    "description": "Lien Telegram pour la NORMANDIE.",
+    "lat": 49.0677708,
+    "lon": 0.3138532
+  },
+  {
+    "id": 18,
+    "name": "CENTRE-VAL DE LOIRE",
+    "type": "Telegram",
+    "url": "https://t.me/+jR9bqrSbZVdkM2E8",
+    "description": "Lien Telegram pour CENTRE-VAL DE LOIRE.",
+    "lat": 47.5490251,
+    "lon": 1.7324062
+  },
+  {
+    "id": 19,
+    "name": "ÎLE-DE-FRANCE",
+    "type": "Telegram",
+    "url": "https://t.me/retlIDF",
+    "description": "Lien Telegram pour l'ÎLE-DE-FRANCE.",
+    "lat": 48.89346,
+    "lon": 2.41971
+  },
+  {
+    "id": 20,
+    "name": "BOURGOGNE-FRANCHE-COMTE",
+    "type": "Telegram",
+    "url": "https://t.me/+VMgGJ5vZ9kFhMDRk",
+    "description": "Lien Telegram pour BOURGOGNE-FRANCHE-COMTE.",
+    "lat": 47.118711,
+    "lon": 4.9691044
+  },
+  {
+    "id": 21,
+    "name": "AUVERGNE-RHÔNE-ALPES",
+    "type": "Telegram",
+    "url": "https://t.me/+2ydXihH_ft43OWI8",
+    "description": "Lien Telegram pour AUVERGNE-RHÔNE-ALPES.",
+    "lat": 45.5838,
+    "lon": 3.9104
+  },
+  {
+    "id": 22,
+    "name": "55 - Meuse",
+    "type": "Telegram",
+    "url": "https://t.me/+DwayRkLGjxBhYjc0",
+    "description": "Lien Telegram pour 55 - Meuse.",
+    "lat": 48.8114,
+    "lon": 5.4005
+  },
+  {
+    "id": 23,
+    "name": "04 - Alpes-de-Haute-Provence",
+    "type": "Telegram",
+    "url": "https://t.me/AlpesHauteProvenceInsurgees04",
+    "description": "Lien Telegram pour 04 - Alpes-de-Haute-Provence.",
+    "lat": 44.092329,
+    "lon": 6.241897
+  },
+  {
+    "id": 24,
+    "name": "34 - Hérault",
+    "type": "Telegram",
+    "url": "https://t.me/collectifsunis31",
+    "description": "Lien Telegram pour 34 - Hérault.",
+    "lat": 43.4885,
+    "lon": 3.2332
+  },
+  {
+    "id": 25,
+    "name": "23 - Creuse",
+    "type": "Site",
+    "url": "https://www.10s25-creuse.fr/",
+    "description": "Lien Site pour 23 - Creuse.",
+    "lat": 46.164562,
+    "lon": 1.863792
+  },
+  {
+    "id": 26,
+    "name": "88 - Vosges",
+    "type": "Telegram",
+    "url": "https://t.me/+KsMKfMWAJpxhZjFk",
+    "description": "Lien Telegram pour 88 - Vosges.",
+    "lat": 48.0597,
+    "lon": 6.1386
+  },
+  {
+    "id": 27,
+    "name": "09 - Ariège",
+    "type": "Telegram",
+    "url": "https://t.me/collectifsunis31",
+    "description": "Lien Telegram pour 09 - Ariège.",
+    "lat": 42.964127,
+    "lon": 1.605232
+  },
+  {
+    "id": 28,
+    "name": "81 - Tarn",
+    "type": "Telegram",
+    "url": "https://t.me/collectifsunis31",
+    "description": "Lien Telegram pour 81 - Tarn.",
+    "lat": 43.7068897,
+    "lon": 1.9532688
+  },
+  {
+    "id": 29,
+    "name": "68 - Haut-Rhin",
+    "type": "Telegram",
+    "url": "https://t.me/+dAf_whfVF2s1MGRk",
+    "description": "Lien Telegram pour 68 - Haut-Rhin.",
+    "lat": 48.0801,
+    "lon": 7.3365
+  },
+  {
+    "id": 30,
+    "name": "57 - Moselle",
+    "type": "Facebook",
+    "url": "https://www.facebook.com/profile.php?id=61579606352003",
+    "description": "Lien Facebook pour 57 - Moselle.",
+    "lat": 49.123,
+    "lon": 6.496
+  },
+  {
+    "id": 31,
+    "name": "82 - Tarn-et-Garonne",
+    "type": "Telegram",
+    "url": "https://t.me/collectifsunis31",
+    "description": "Lien Telegram pour 82 - Tarn-et-Garonne.",
+    "lat": 44.015919,
+    "lon": 1.344603
+  },
+  {
+    "id": 32,
+    "name": "66 - Pyrénées-Orientales",
+    "type": "Telegram",
+    "url": "https://t.me/collectifsunis31",
+    "description": "Lien Telegram pour 66 - Pyrénées-Orientales.",
+    "lat": 42.6874874,
+    "lon": 2.9006474
+  },
+  {
+    "id": 33,
+    "name": "31 - Haute-Garonne",
+    "type": "Telegram",
+    "url": "https://t.me/collectifsunis31",
+    "description": "Lien Telegram pour 31 - Haute-Garonne.",
+    "lat": 43.608878,
+    "lon": 1.580812
+  },
+  {
+    "id": 34,
+    "name": "46 - Lot",
+    "type": "Telegram",
+    "url": "https://t.me/collectifsunis31",
+    "description": "Lien Telegram pour 46 - Lot.",
+    "lat": 44.2944237,
+    "lon": 0.6129367
+  },
+  {
+    "id": 35,
+    "name": "52 - Haute-Marne",
+    "type": "Telegram",
+    "url": "https://t.me/IndignonsNousHM",
+    "description": "Lien Telegram pour 52 - Haute-Marne.",
+    "lat": 48.1110619,
+    "lon": 5.1396068
+  },
+  {
+    "id": 36,
+    "name": "83 - Var",
+    "type": "Telegram",
+    "url": "https://t.me/BloquonsToutVar",
+    "description": "Lien Telegram pour 83 - Var.",
+    "lat": 43.2269198,
+    "lon": 5.9374019
+  },
+  {
+    "id": 37,
+    "name": "63 - Puy-de-Dôme",
+    "type": "Telegram",
+    "url": "https://t.me/bloquonstout63",
+    "description": "Lien Telegram pour 63 - Puy-de-Dôme.",
+    "lat": 45.6867,
+    "lon": 3.04
+  },
+  {
+    "id": 38,
+    "name": "06 - Alpes-Maritimes",
+    "type": "Telegram",
+    "url": "https://t.me/+nj6dUP9wkuthZjU0",
+    "description": "Lien Telegram pour 06 - Alpes-Maritimes.",
+    "lat": 43.651288,
+    "lon": 7.031835
+  },
+  {
+    "id": 39,
+    "name": "30 - Gard",
+    "type": "Telegram",
+    "url": "https://t.me/collectifsunis31",
+    "description": "Lien Telegram pour 30 - Gard. Texte d'origine : 4,44,47776.",
+    "lat": 44.0,
+    "lon": 4.4
+  },
+  {
+    "id": 40,
+    "name": "37 - Indre-et-Loire",
+    "type": "Telegram",
+    "url": "https://t.me/+jR9bqrSbZVdkM2E8",
+    "description": "Lien Telegram pour 37 - Indre-et-Loire. Texte d'origine : 296602.",
+    "lat": 46.811222,
+    "lon": 0.8753244
+  },
+  {
+    "id": 41,
+    "name": "36 - Indre",
+    "type": "Telegram",
+    "url": "https://t.me/+jR9bqrSbZVdkM2E8",
+    "description": "Lien Telegram pour 36 - Indre. Texte d'origine : 296602.",
+    "lat": 46.811222,
+    "lon": 0.8753244
+  },
+  {
+    "id": 42,
+    "name": "29 - Eure-et-Loir",
+    "type": "Telegram",
+    "url": "https://t.me/+jR9bqrSbZVdkM2E8",
+    "description": "Lien Telegram pour 29 - Eure-et-Loir.",
+    "lat": 48.431,
+    "lon": 1.686
+  },
+  {
+    "id": 43,
+    "name": "18 - Cher",
+    "type": "Telegram",
+    "url": "https://t.me/+jR9bqrSbZVdkM2E8",
+    "description": "Lien Telegram pour 18 - Cher. Texte d'origine : 147711.",
+    "lat": 47.0247868,
+    "lon": 2.0964022
+  },
+  {
+    "id": 44,
+    "name": "04 - Alpes-de-Haute-Provence",
+    "type": "Telegram",
+    "url": "https://t.me/+AXnrNgAjeas3Njdk",
+    "description": "Lien Telegram pour 04 - Alpes-de-Haute-Provence.",
+    "lat": 44.0943,
+    "lon": 6.24824
+  },
+  {
+    "id": 45,
+    "name": "78 - Yvelines",
+    "type": "Telegram",
+    "url": "https://t.me/+q52fTby8owBmNTA0",
+    "description": "Lien Telegram pour 78 - Yvelines.",
+    "lat": 48.816199,
+    "lon": 1.90619
+  },
+  {
+    "id": 46,
+    "name": "60 - Oise",
+    "type": "Telegram",
+    "url": "https://t.me/+EIr-ak1256wzZWFk",
+    "description": "Lien Telegram pour 60 - Oise. Texte d'origine : 141874.",
+    "lat": 49.4117237,
+    "lon": 2.097008
+  },
+  {
+    "id": 47,
+    "name": "95 - Val-d’Oise",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKICU9VxuYI2wlx4_FAkNHfjNQ98ObGbcChxlEkuP32t5uEhAe-YnImNIkiP9h_vmWijhS",
+    "description": "Lien Signal pour 95 - Val-d’Oise. Texte d'origine : 71423.",
+    "lat": 49.0749383,
+    "lon": 1.9367303
+  },
+  {
+    "id": 48,
+    "name": "26 - Drôme",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKIAJn_eLVhE06JkDl2cj1vKML39Ik4S6InOMYQ1w4r4cZEhC_2sAmqGNFQkJMey7G3aVr",
+    "description": "Lien Signal pour 26 - Drôme.",
+    "lat": 44.9234149,
+    "lon": 4.8957427
+  },
+  {
+    "id": 49,
+    "name": "56 - Morbihan",
+    "type": "Telegram",
+    "url": "https://t.me/+2zyykrgSNYI4YmQ0",
+    "description": "Lien Telegram pour 56 - Morbihan.",
+    "lat": 47.7439325,
+    "lon": -3.2154235
+  },
+  {
+    "id": 50,
+    "name": "22 - Côtes d’Armor",
+    "type": "Telegram",
+    "url": "https://t.me/indignonsnous22",
+    "description": "Lien Telegram pour 22 - Côtes d’Armor. Texte d'origine : 144591.",
+    "lat": 48.4650949,
+    "lon": -3.4117902
+  },
+  {
+    "id": 51,
+    "name": "29 - Finistère",
+    "type": "Telegram",
+    "url": "https://t.me/+U8b1aHTa_wdjN2I0",
+    "description": "Lien Telegram pour 29 - Finistère.",
+    "lat": 48.3205785,
+    "lon": -3.9123203
+  },
+  {
+    "id": 52,
+    "name": "Périgord Limousin",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKIFYvfaowBQvDSse44uFXLAYN_wVaIXatHpa4zVgJbZcUEhCnsKjxuA7kO-i3R1xN0aWH",
+    "description": "Lien Signal pour Périgord Limousin.",
+    "lat": 45.5852583,
+    "lon": 0.9997565
+  },
+  {
+    "id": 53,
+    "name": "90 - Territoire de Belfort",
+    "type": "Facebook",
+    "url": "https://www.facebook.com/groups/746638358272365/",
+    "description": "Lien Facebook pour 90 - Territoire de Belfort.",
+    "lat": 47.6401842,
+    "lon": 6.914931
+  },
+  {
+    "id": 54,
+    "name": "72 - Sarthe",
+    "type": "Telegram",
+    "url": "https://t.me/+hh9tPqdATphiZjE8",
+    "description": "Lien Telegram pour 72 - Sarthe.",
+    "lat": 48.007383,
+    "lon": 0.196778
+  },
+  {
+    "id": 55,
+    "name": "44 - Loire-Atlantique",
+    "type": "Telegram",
+    "url": "https://t.me/+UlH4Zr3yf5FjMmRk",
+    "description": "Lien Telegram pour 44 - Loire-Atlantique.",
+    "lat": 47.218644,
+    "lon": -1.554139
+  },
+  {
+    "id": 56,
+    "name": "86 - Vienne",
+    "type": "Telegram",
+    "url": "https://t.me/+-Qz5dhr_0cYxODNk",
+    "description": "Lien Telegram pour 86 - Vienne.",
+    "lat": 46.5886523,
+    "lon": 0.4470267
+  },
+  {
+    "id": 57,
+    "name": "85 - Vendée",
+    "type": "Telegram",
+    "url": "https://t.me/+_plGCEAGAnZlYmQ8",
+    "description": "Lien Telegram pour 85 - Vendée. Texte d'origine : 149618.",
+    "lat": 46.6753632,
+    "lon": -1.7997093
+  },
+  {
+    "id": 58,
+    "name": "53 - Mayenne",
+    "type": "Telegram",
+    "url": "https://t.me/+a8Tv2s6foOxhNzE0",
+    "description": "Lien Telegram pour 53 - Mayenne. Texte d'origine : 9065.",
+    "lat": 48.3066306,
+    "lon": -0.6346414
+  },
+  {
+    "id": 59,
+    "name": "49 - Maine-et-Loire",
+    "type": "Telegram",
+    "url": "https://t.me/+sH1EnfLBhMY4M2M0",
+    "description": "Lien Telegram pour 49 - Maine-et-Loire. Texte d'origine : 147631.",
+    "lat": 47.3889647,
+    "lon": -0.890123
+  },
+  {
+    "id": 60,
+    "name": "12 - Aveyron",
+    "type": "Telegram",
+    "url": "https://t.me/+q3dsx7KFvWI4Yjk0",
+    "description": "Lien Telegram pour 12 - Aveyron.",
+    "lat": 44.315858,
+    "lon": 2.50657
+  },
+  {
+    "id": 61,
+    "name": "87 - Haute-Vienne",
+    "type": "Telegram",
+    "url": "https://t.me/+rFlmNBHXkDg5MjRk",
+    "description": "Lien Telegram pour 87 - Haute-Vienne.",
+    "lat": 45.835424,
+    "lon": 1.264482
+  },
+  {
+    "id": 62,
+    "name": "33 - Gironde",
+    "type": "Telegram",
+    "url": "https://t.me/+qk_X__IUUQphNzY8",
+    "description": "Lien Telegram pour 33 - Gironde.",
+    "lat": 44.841226,
+    "lon": -0.580044
+  },
+  {
+    "id": 63,
+    "name": "24 - Dordogne",
+    "type": "Telegram",
+    "url": "https://t.me/+S5lNMsTJ43JhNWE0",
+    "description": "Lien Telegram pour 24 - Dordogne.",
+    "lat": 45.13452,
+    "lon": 0.720807
+  },
+  {
+    "id": 64,
+    "name": "23 - Creuse",
+    "type": "Telegram",
+    "url": "https://t.me/+K8iTCXsU-cM0ZWZk",
+    "description": "Lien Telegram pour 23 - Creuse.",
+    "lat": 46.0589801,
+    "lon": 1.6616374
+  },
+  {
+    "id": 65,
+    "name": "Mulhouse Colmar Cernay et Altkirch ",
+    "type": "Telegram",
+    "url": "https://t.me/+dAf_whfVF2s1MGRk",
+    "description": "Lien Telegram pour Mulhouse Colmar Cernay et Altkirch .",
+    "lat": 47.910431,
+    "lon": 7.282164
+  },
+  {
+    "id": 66,
+    "name": "67 - Bas-Rhin",
+    "type": "Telegram",
+    "url": "https://t.me/+hD3FxDOng1NhYjdk",
+    "description": "Lien Telegram pour 67 - Bas-Rhin.",
+    "lat": 48.586,
+    "lon": 7.756
+  },
+  {
+    "id": 67,
+    "name": "75 - Paris",
+    "type": "Telegram",
+    "url": "https://t.me/+vCk5fVFqa3s0ZDlk",
+    "description": "Lien Telegram pour 75 - Paris.",
+    "lat": 48.853486,
+    "lon": 2.348397
+  },
+  {
+    "id": 68,
+    "name": "35 - Ille-et-Vilaine",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKIKpBWHOnofOcG3QB75_976gNFq-67P6LN0S1V3a3GZ2jEhCR_y098O3L9qP2qYLO_4ED",
+    "description": "Lien Signal pour 35 - Ille-et-Vilaine.",
+    "lat": 48.172768,
+    "lon": -1.649809
+  },
+  {
+    "id": 69,
+    "name": "74 - Haute-Savoie",
+    "type": "Telegram",
+    "url": "https://t.me/+g8gK3s_SLZ5mMTU0",
+    "description": "Lien Telegram pour 74 - Haute-Savoie.",
+    "lat": 46.069068,
+    "lon": 6.344535
+  },
+  {
+    "id": 70,
+    "name": "73 - Savoie",
+    "type": "Telegram",
+    "url": "https://t.me/+4cEY0DBTwW84NWI0",
+    "description": "Lien Telegram pour 73 - Savoie.",
+    "lat": 45.499049,
+    "lon": 6.382976
+  },
+  {
+    "id": 71,
+    "name": "69 - Rhône",
+    "type": "Telegram",
+    "url": "https://t.me/+wMC00KhgGZI2ZmFk",
+    "description": "Lien Telegram pour 69 - Rhône.",
+    "lat": 46.0,
+    "lon": 4.5
+  },
+  {
+    "id": 72,
+    "name": "63 - Puy-de-Dôme",
+    "type": "Telegram",
+    "url": "https://t.me/bloquons63",
+    "description": "Lien Telegram pour 63 - Puy-de-Dôme.",
+    "lat": 45.6667,
+    "lon": 3.0
+  },
+  {
+    "id": 73,
+    "name": "43 - Haute-Loire",
+    "type": "Telegram",
+    "url": "https://t.me/+E27DUVUAQx41NGJk",
+    "description": "Lien Telegram pour 43 - Haute-Loire.",
+    "lat": 45.0833,
+    "lon": 4.0
+  },
+  {
+    "id": 74,
+    "name": "42 - Loire",
+    "type": "Telegram",
+    "url": "https://t.me/+sU3LLbwW12IwMjBk",
+    "description": "Lien Telegram pour 42 - Loire.",
+    "lat": 45.4717,
+    "lon": 4.433
+  },
+  {
+    "id": 75,
+    "name": "38 - Isère",
+    "type": "Telegram",
+    "url": "https://t.me/IndignonsnousIsere",
+    "description": "Lien Telegram pour 38 - Isère.",
+    "lat": 45.1667,
+    "lon": 5.8333
+  },
+  {
+    "id": 76,
+    "name": "26 - Drôme",
+    "type": "Telegram",
+    "url": "https://t.me/+e6HcO3Fq_MViYzZk",
+    "description": "Lien Telegram pour 26 - Drôme.",
+    "lat": 44.5833,
+    "lon": 5.1667
+  },
+  {
+    "id": 77,
+    "name": "15 - Cantal",
+    "type": "Telegram",
+    "url": "https://t.me/+aSs9MVDIrDdhYTdk",
+    "description": "Lien Telegram pour 15 - Cantal.",
+    "lat": 45.0833,
+    "lon": 2.6667
+  },
+  {
+    "id": 78,
+    "name": "90 - Territoire de Belfort",
+    "type": "Telegram",
+    "url": "https://t.me/+VMgGJ5vZ9kFhMDRk",
+    "description": "Lien Telegram pour 90 - Territoire de Belfort.",
+    "lat": 47.629231,
+    "lon": 6.8993012
+  },
+  {
+    "id": 79,
+    "name": "89 - Yonne",
+    "type": "Telegram",
+    "url": "https://t.me/+iD-DeyFq66FjMzlk",
+    "description": "Lien Telegram pour 89 - Yonne.",
+    "lat": 47.840515089836,
+    "lon": 3.56331862412441
+  },
+  {
+    "id": 80,
+    "name": "71 - Saône-et-Loire",
+    "type": "Telegram",
+    "url": "https://t.me/+FAOiwCmuv1dhMDA0",
+    "description": "Lien Telegram pour 71 - Saône-et-Loire.",
+    "lat": 46.6447719537057,
+    "lon": 4.54277293221123
+  },
+  {
+    "id": 81,
+    "name": "58 - Nièvre",
+    "type": "Telegram",
+    "url": "https://t.me/+qgdxdUtp-xg3OTI0",
+    "description": "Lien Telegram pour 58 - Nièvre.",
+    "lat": 47.1157327467376,
+    "lon": 3.50421129285905
+  },
+  {
+    "id": 82,
+    "name": "45 - Loiret",
+    "type": "Telegram",
+    "url": "https://t.me/+Utc-XCqfvSphZjhk",
+    "description": "Lien Telegram pour 45 - Loiret.",
+    "lat": 47.99,
+    "lon": 1.7616
+  },
+  {
+    "id": 83,
+    "name": "94 - Val-de-Marne",
+    "type": "Telegram",
+    "url": "https://t.me/+MVVfx3Afj6AzNzFk",
+    "description": "Lien Telegram pour 94 - Val-de-Marne.",
+    "lat": 48.7774364130303,
+    "lon": 2.46928738518856
+  },
+  {
+    "id": 84,
+    "name": "93 - Seine-Saint-Denis",
+    "type": "Telegram",
+    "url": "https://t.me/+eo1IAGG_uV9lN2Zk",
+    "description": "Lien Telegram pour 93 - Seine-Saint-Denis.",
+    "lat": 48.9176098962278,
+    "lon": 2.47854089128323
+  },
+  {
+    "id": 85,
+    "name": "92 - Hauts-de-Seine",
+    "type": "Telegram",
+    "url": "https://t.me/+iMFbUWAScFw5MzFk",
+    "description": "Lien Telegram pour 92 - Hauts-de-Seine.",
+    "lat": 48.8475388508384,
+    "lon": 2.24606874275799
+  },
+  {
+    "id": 86,
+    "name": "91 - Essonne",
+    "type": "Telegram",
+    "url": "https://t.me/+ZMP8cVktBdQ2YjM0",
+    "description": "Lien Telegram pour 91 - Essonne.",
+    "lat": 48.5226198884686,
+    "lon": 2.24338748665539
+  },
+  {
+    "id": 87,
+    "name": "77 - Seine-et-Marne",
+    "type": "Telegram",
+    "url": "https://t.me/+rkUgIevw6EM3ZDY0",
+    "description": "Lien Telegram pour 77 - Seine-et-Marne.",
+    "lat": 48.6274987226065,
+    "lon": 2.9340854276159
+  },
+  {
+    "id": 88,
+    "name": "LA RÉUNION",
+    "type": "Telegram",
+    "url": "https://t.me/+l81KX9i3Z39hZWU8",
+    "description": "Lien Telegram pour LA RÉUNION.",
+    "lat": -21.1309332,
+    "lon": 55.5265771
+  },
+  {
+    "id": 89,
+    "name": "GUYANE",
+    "type": "Telegram",
+    "url": "https://t.me/+BZyC3CpGCIZhY2Q0",
+    "description": "Lien Telegram pour la GUYANE.",
+    "lat": 4.0039882,
+    "lon": -52.999998
+  },
+  {
+    "id": 90,
+    "name": "MARTINIQUE",
+    "type": "Telegram",
+    "url": "https://t.me/+-G6drNd53xQwYTI0",
+    "description": "Lien Telegram pour la MARTINIQUE.",
+    "lat": 14.6113732,
+    "lon": -60.9620777
+  },
+  {
+    "id": 91,
+    "name": "25 - Doubs",
+    "type": "Telegram",
+    "url": "https://t.me/doubs10Sep",
+    "description": "Lien Telegram pour 25 - Doubs.",
+    "lat": 47.066992,
+    "lon": 6.235623
+  },
+  {
+    "id": 92,
+    "name": "07 - Ardèche",
+    "type": "Telegram",
+    "url": "https://t.me/+e6HcO3Fq_MViYzZk",
+    "description": "Lien Telegram pour 07 - Ardèche.",
+    "lat": 44.7527552575178,
+    "lon": 4.42560660942855
+  },
+  {
+    "id": 93,
+    "name": "03 - Allier",
+    "type": "Telegram",
+    "url": "https://t.me/+VFRy-ZfSY6QwY2Rk",
+    "description": "Lien Telegram pour 03 - Allier.",
+    "lat": 46.3936406719208,
+    "lon": 3.18764486326068
+  },
+  {
+    "id": 94,
+    "name": "01 - Ain",
+    "type": "Telegram",
+    "url": "https://t.me/+ZGgNVBU6mSEwNGQ0",
+    "description": "Lien Telegram pour 01 - Ain.",
+    "lat": 46.0997671581629,
+    "lon": 5.34873032104146
+  },
+  {
+    "id": 95,
+    "name": "Challans",
+    "type": "Telegram",
+    "url": "https://t.me/+4y34ikSveVg4YzI0",
+    "description": "Lien Telegram pour Challans.",
+    "lat": 46.83290624968621,
+    "lon": -1.8436673937062422
+  },
+  {
+    "id": 96,
+    "name": "91 - Essonne",
+    "type": "Telegram",
+    "url": "https://t.me/c/2715476733/20",
+    "description": "Lien Telegram pour 91 - Essonne.",
+    "lat": 48.436466,
+    "lon": 2.161752
+  },
+  {
+    "id": 97,
+    "name": "91 - Essonne",
+    "type": "Telegram",
+    "url": "https://t.me/+JDWBBGDCYFowNzdk",
+    "description": "Lien Telegram pour 91 - Essonne.",
+    "lat": 48.670639,
+    "lon": 2.375705
+  },
+  {
+    "id": 98,
+    "name": "91 - Essonne",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKILos3O6Y5Js88w3Pe0dMCK3sEHR6gibyO8kJXVr5ZQZDEhBugpznS3XNScxRmxJompOq",
+    "description": "Lien Signal pour 91 - Essonne.",
+    "lat": 48.683171,
+    "lon": 2.169925
+  },
+  {
+    "id": 99,
+    "name": "91 - Essonne",
+    "type": "Whatsapp",
+    "url": "https://chat.whatsapp.com/FXS0C7JKgqrLErkSsDqf3e",
+    "description": "Lien Whatsapp pour 91 - Essonne.",
+    "lat": 48.711949,
+    "lon": 2.171535
+  },
+  {
+    "id": 100,
+    "name": "Dinan",
+    "type": "Telegram",
+    "url": "https://t.me/indignonsnous22/79",
+    "description": "Lien Telegram pour Dinan.",
+    "lat": 48.453978,
+    "lon": -2.047687
+  },
+  {
+    "id": 101,
+    "name": "Aubagne",
+    "type": "Telegram",
+    "url": "https://t.me/+WAzqMf3TdOUyNzZk",
+    "description": "Lien Telegram pour Aubagne.",
+    "lat": 43.341613463763,
+    "lon": 5.5909681035871
+  },
+  {
+    "id": 102,
+    "name": "Quimper",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKII1qXyyZlShZHZE4jrNn5tlRNXWfhVszh5mZMUCa2rCJEhBSXPFKiphSp2gqamlDf7cn",
+    "description": "Lien Signal pour Quimper.",
+    "lat": 47.996033,
+    "lon": -4.102478
+  },
+  {
+    "id": 103,
+    "name": "Paris 19e",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKILEtUX-Xjl1KE2DzzVThpot2R-29mPJuQWda_wjiWYJWEhBpoX9HLh7YhU8rh8USq458",
+    "description": "Lien Signal pour Paris 19e.",
+    "lat": 48.880149,
+    "lon": 2.3464283
+  },
+  {
+    "id": 104,
+    "name": "Flers",
+    "type": "Telegram",
+    "url": "https://t.me/+NY521X2MIxxhNzQ0",
+    "description": "Lien Telegram pour Flers.",
+    "lat": 48.76094,
+    "lon": -0.52202
+  },
+  {
+    "id": 105,
+    "name": "Val-de-Loire Sologne",
+    "type": "Telegram",
+    "url": "https://t.me/ValDeLoireSologne",
+    "description": "Lien Telegram pour Val-de-Loire Sologne.",
+    "lat": 47.589,
+    "lon": 2.041
+  },
+  {
+    "id": 106,
+    "name": "Chalon-sur-Saône",
+    "type": "Instagram",
+    "url": "https://www.instagram.com/bloquons_tout_chalon",
+    "description": "Lien Instagram pour Chalon-sur-Saône.",
+    "lat": 46.784619,
+    "lon": 4.860184
+  },
+  {
+    "id": 107,
+    "name": "Est-Lyonnais, Bron, Saint-Priest, Vénissieux, Décines, Chassieu",
+    "type": "Telegram",
+    "url": "https://t.me/Indignons_nous_Est_Lyonnais",
+    "description": "Lien Telegram pour Est-Lyonnais, Bron, Saint-Priest, Vénissieux, Décines, Chassieu.",
+    "lat": 45.71607,
+    "lon": 4.900809
+  },
+  {
+    "id": 108,
+    "name": "Paris 20e",
+    "type": "Telegram",
+    "url": "https://t.me/+3Gt4ug_ZgpZjMzA0",
+    "description": "Lien Telegram pour Paris 20e.",
+    "lat": 48.86565,
+    "lon": 2.39859
+  },
+  {
+    "id": 109,
+    "name": "Villeurbanne",
+    "type": "Telegram",
+    "url": "https://t.me/IndignonsNousVilleurbanne",
+    "description": "Lien Telegram pour Villeurbanne.",
+    "lat": 45.773413,
+    "lon": 4.886827
+  },
+  {
+    "id": 110,
+    "name": "60 - Oise",
+    "type": "Whatsapp",
+    "url": "https://chat.whatsapp.com/EiO1Ayb1qsd8vPwiIsxI3n",
+    "description": "Lien Whatsapp pour 60 - Oise.",
+    "lat": 49.26136,
+    "lon": 2.474248
+  },
+  {
+    "id": 111,
+    "name": "Vaulx-en-Velin",
+    "type": "Telegram",
+    "url": "https://t.me/+Xi66NYRgQXcyMGU0",
+    "description": "Lien Telegram pour Vaulx-en-Velin.",
+    "lat": 45.778041,
+    "lon": 4.919131
+  },
+  {
+    "id": 112,
+    "name": "Ploërmel",
+    "type": "Telegram",
+    "url": "https://t.me/+JoCC4jzum-5iOGI8",
+    "description": "Lien Telegram pour Ploërmel.",
+    "lat": 47.9161,
+    "lon": -2.3676
+  },
+  {
+    "id": 113,
+    "name": "Montceau - Le Creusot",
+    "type": "Telegram",
+    "url": "https://t.me/+3p4twOaH9EcxZjE0",
+    "description": "Lien Telegram pour Montceau - Le Creusot.",
+    "lat": 46.74874,
+    "lon": 4.49276
+  },
+  {
+    "id": 114,
+    "name": "Le Blanc",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKIPJRjbCq07owRqw3LbJJSI1pnsswIKwzw82rFN5Woo4DEhAB2B4bHwX1TZrC-IcjNe92",
+    "description": "Lien Signal pour Le Blanc.",
+    "lat": 46.64455,
+    "lon": 1.07252
+  },
+  {
+    "id": 115,
+    "name": "Le Blanc",
+    "type": "Telegram",
+    "url": "https://t.me/+8g6KsCB4-CRkZDRk",
+    "description": "Lien Telegram pour Le Blanc.",
+    "lat": 46.64617,
+    "lon": 1.06771
+  },
+  {
+    "id": 116,
+    "name": "Paris 19e",
+    "type": "Whatsapp",
+    "url": "https://chat.whatsapp.com/HzaAEwbZIFj2LSv9sLNQLB?mode=ems_share_t",
+    "description": "Lien Whatsapp pour Paris 19e.",
+    "lat": 48.88708,
+    "lon": 2.382915
+  },
+  {
+    "id": 117,
+    "name": "Béthune",
+    "type": "Telegram",
+    "url": "https://t.me/+07fmAOi30jA1ODhk",
+    "description": "Lien Telegram pour Béthune.",
+    "lat": 50.532007,
+    "lon": 2.643666
+  },
+  {
+    "id": 118,
+    "name": "Arles",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKICSz_DYoPS-5qaFEM-uSB9LvBgsC4lZcRcNLWNirPjHyEhDIIjF__pwT_7pY6iNSFDI0",
+    "description": "Lien Signal pour Arles.",
+    "lat": 43.6763809,
+    "lon": 4.6276202
+  },
+  {
+    "id": 119,
+    "name": "Troyes",
+    "type": "Telegram",
+    "url": "https://t.me/indignons_nous_troyes",
+    "description": "Lien Telegram pour Troyes.",
+    "lat": 48.296578,
+    "lon": 4.080369
+  },
+  {
+    "id": 120,
+    "name": "Audierne",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKIDPuc8KJLYLaffQ0F9XHXCHi7n02xMiwH8rCB66sYOvDEhDeeCAtgZxI8lRQlzhXO2N5",
+    "description": "Lien Signal pour Audierne.",
+    "lat": 48.02478,
+    "lon": -4.53564
+  },
+  {
+    "id": 121,
+    "name": "Vitré",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKINWXF3j2-jT54whaX5YOX4j_0gxgjWGkXZi_zSnK4REEEhD4BLQ_T6xLeyJhdYtNklVF",
+    "description": "Lien Signal pour Vitré.",
+    "lat": 48.124464,
+    "lon": -1.214306
+  },
+  {
+    "id": 122,
+    "name": "Rabastens",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKICXxXRH2zEO7_2iA9a4s5YkfDITiRlf_rfOsuGJqhgZNEhB56HtoCRk2_2eNFRl_LZut",
+    "description": "Lien Signal pour Rabastens.",
+    "lat": 43.8210639,
+    "lon": 1.7232722
+  },
+  {
+    "id": 123,
+    "name": "La-Barre-de-Monts",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKIAygHsP20B_GdYIeNMMELw0ZSqk5-qHl05vV3CFQDTycEhAorKcpvjQ6IWXbVc507nem",
+    "description": "Lien Signal pour La-Barre-de-Monts. Texte d'origine : 9317.",
+    "lat": 46.8741398,
+    "lon": -2.1121596
+  },
+  {
+    "id": 124,
+    "name": "Évreux",
+    "type": "Telegram",
+    "url": "https://t.me/+yKizofOwa8gyNzg0",
+    "description": "Lien Telegram pour Évreux.",
+    "lat": 45.935714,
+    "lon": 6.628275
+  },
+  {
+    "id": 125,
+    "name": "Sallanches",
+    "type": "Telegram",
+    "url": "https://t.me/+g8gK3s_SLZ5mMTU0",
+    "description": "Lien Telegram pour Sallanches.",
+    "lat": 45.935714,
+    "lon": 6.628275
+  },
+  {
+    "id": 126,
+    "name": "La Mure",
+    "type": "Telegram",
+    "url": "https://t.me/IndignonsnousIsere",
+    "description": "Lien Telegram pour La Mure.",
+    "lat": 44.906579,
+    "lon": 5.78567
+  },
+  {
+    "id": 127,
+    "name": "Saint-Quentin-Fallavier",
+    "type": "Telegram",
+    "url": "https://t.me/IndignonsnousIsere",
+    "description": "Lien Telegram pour Saint-Quentin-Fallavier.",
+    "lat": 45.631521,
+    "lon": 5.111322
+  },
+  {
+    "id": 128,
+    "name": "La Tour du Pin",
+    "type": "Telegram",
+    "url": "https://t.me/IndignonsnousIsere",
+    "description": "Lien Telegram pour La Tour du Pin.",
+    "lat": 45.677812,
+    "lon": 5.469319
+  },
+  {
+    "id": 129,
+    "name": "Lans-en-Vercors",
+    "type": "Telegram",
+    "url": "https://t.me/IndignonsnousIsere",
+    "description": "Lien Telegram pour Lans-en-Vercors.",
+    "lat": 45.127998,
+    "lon": 5.588329
+  },
+  {
+    "id": 130,
+    "name": "Bourgoin-Jallieu",
+    "type": "Telegram",
+    "url": "https://t.me/IndignonsnousIsere",
+    "description": "Lien Telegram pour Bourgoin-Jallieu.",
+    "lat": 45.587063,
+    "lon": 5.275728
+  },
+  {
+    "id": 131,
+    "name": "Cannes Nice Antibes Grasse Menton",
+    "type": "Telegram",
+    "url": "https://t.me/Bloquons06",
+    "description": "Lien Telegram pour Cannes Nice Antibes Grasse Menton.",
+    "lat": 43.7802,
+    "lon": 7.50143
+  },
+  {
+    "id": 132,
+    "name": "Manosque",
+    "type": "Telegram",
+    "url": "https://t.me/indignonsnousbloquonstout04",
+    "description": "Lien Telegram pour Manosque.",
+    "lat": 43.8292103,
+    "lon": 5.6247844
+  },
+  {
+    "id": 133,
+    "name": "Montreuil",
+    "type": "Site",
+    "url": "https://laparoleerrante.org/",
+    "description": "Lien Site pour Montreuil.",
+    "lat": 48.8575841,
+    "lon": 2.4377323
+  },
+  {
+    "id": 134,
+    "name": "Versailles",
+    "type": "Telegram",
+    "url": "https://t.me/+YRO9epp--xg4YTk0",
+    "description": "Lien Telegram pour Versailles.",
+    "lat": 48.81028,
+    "lon": 2.10036
+  },
+  {
+    "id": 135,
+    "name": "Yvelines Nord - Acheres Poissy Saint Germain",
+    "type": "Telegram",
+    "url": "https://t.me/+crw-GXIeZ2ViMmZk",
+    "description": "Lien Telegram pour Yvelines Nord - Acheres Poissy Saint Germain.",
+    "lat": 48.9271,
+    "lon": 2.0407
+  },
+  {
+    "id": 136,
+    "name": "Thionville",
+    "type": "Telegram",
+    "url": "https://t.me/+oYKSleXD_PU1ODE8",
+    "description": "Lien Telegram pour Thionville.",
+    "lat": 49.357956,
+    "lon": 6.167592
+  },
+  {
+    "id": 137,
+    "name": "Cahors",
+    "type": "Telegram",
+    "url": "https://t.me/collectifsunis31",
+    "description": "Lien Telegram pour Cahors.",
+    "lat": 44.448422,
+    "lon": 1.438007
+  },
+  {
+    "id": 138,
+    "name": "Souillac",
+    "type": "Telegram",
+    "url": "https://t.me/collectifsunis31",
+    "description": "Lien Telegram pour Souillac.",
+    "lat": 44.894999,
+    "lon": 1.478831
+  },
+  {
+    "id": 139,
+    "name": "Figeac",
+    "type": "Telegram",
+    "url": "https://t.me/collectifsunis31",
+    "description": "Lien Telegram pour Figeac.",
+    "lat": 44.611526,
+    "lon": 2.031666
+  },
+  {
+    "id": 140,
+    "name": "Saint-Avold",
+    "type": "Telegram",
+    "url": "https://t.me/+6Qbs3_5up-o0NTQ0",
+    "description": "Lien Telegram pour Saint-Avold.",
+    "lat": 49.104361,
+    "lon": 6.707169
+  },
+  {
+    "id": 141,
+    "name": "Yvelines Nord",
+    "type": "Telegram",
+    "url": "https://t.me/+crw-GXIeZ2ViMmZk",
+    "description": "Lien Telegram pour Yvelines Nord.",
+    "lat": 48.936935,
+    "lon": 2.06234
+  },
+  {
+    "id": 142,
+    "name": "Zone Conflans",
+    "type": "Telegram",
+    "url": "https://t.me/+bjPCPbLAbfI5MDRk",
+    "description": "Lien Telegram pour Zone Conflans.",
+    "lat": 49.000267,
+    "lon": 2.091179
+  },
+  {
+    "id": 143,
+    "name": "Yvelines Est",
+    "type": "Telegram",
+    "url": "https://t.me/+YRO9epp--xg4YTk0",
+    "description": "Lien Telegram pour Yvelines Est.",
+    "lat": 48.767957,
+    "lon": 2.090149
+  },
+  {
+    "id": 144,
+    "name": "Tulle",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKIFYvfaowBQvDSse44uFXLAYN_wVaIXatHpa4zVgJbZcUEhCnsKjxuA7kO-i3R1xN0aWH",
+    "description": "Lien Signal pour Tulle. Texte d'origine : 9.",
+    "lat": 45.2685941,
+    "lon": 1.107135
+  },
+  {
+    "id": 145,
+    "name": "Valenciennes",
+    "type": "Telegram",
+    "url": "https://t.me/+-eUXX7mz9z45ZGE0",
+    "description": "Lien Telegram pour Valenciennes.",
+    "lat": 50.3620937,
+    "lon": 3.4730188
+  },
+  {
+    "id": 146,
+    "name": "Luçon",
+    "type": "Telegram",
+    "url": "https://t.me/+3W9VNkjhnKpmNTU1",
+    "description": "Lien Telegram pour Luçon.",
+    "lat": 46.452081,
+    "lon": -1.2028458
+  },
+  {
+    "id": 147,
+    "name": "Auray",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKILrGWrRdnTGdyqSPyxdVlln9_rdh26Ut9dTCBr3uR2VZEhDvibbOe0ouYJzGwJpKxRiE",
+    "description": "Lien Signal pour Auray.",
+    "lat": 47.6684057,
+    "lon": -3.010724
+  },
+  {
+    "id": 148,
+    "name": "Montoir-sur-le-loir",
+    "type": "Telegram",
+    "url": "https://t.me/+glkw7NmEU4AxNjc0",
+    "description": "Lien Telegram pour Montoir-sur-le-loir. Texte d'origine : 13.",
+    "lat": 47.7664097,
+    "lon": 0.8035962
+  },
+  {
+    "id": 149,
+    "name": "Nancy",
+    "type": "Site",
+    "url": "https://www.indignonsnous-sud54.fr",
+    "description": "Lien Site pour Nancy.",
+    "lat": 48.69815640354123,
+    "lon": 6.184564395484894
+  },
+  {
+    "id": 150,
+    "name": "Questembert",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKIBjG4Z1yW3a83ptic0PCR6QP8AxpgkLJZ1gKAuT4hZ50EhAxT1f1ouu64rkIerWA4XZZ",
+    "description": "Lien Signal pour Questembert.",
+    "lat": 47.66558201097533,
+    "lon": -2.452658254149878
+  },
+  {
+    "id": 151,
+    "name": "Mazamet",
+    "type": "Telegram",
+    "url": "https://t.me/+4Ird290w9ag0NGNk",
+    "description": "Lien Telegram pour Mazamet.",
+    "lat": 43.492308,
+    "lon": 2.375049
+  },
+  {
+    "id": 152,
+    "name": "Strasbourg",
+    "type": "Telegram",
+    "url": "https://t.me/+hD3FxDOng1NhYjdk",
+    "description": "Lien Telegram pour Strasbourg.",
+    "lat": 48.58722,
+    "lon": 7.753947
+  },
+  {
+    "id": 153,
+    "name": "Carmaux",
+    "type": "Telegram",
+    "url": "https://t.me/+HaMc91Ada2M0Nzg0",
+    "description": "Lien Telegram pour Carmaux.",
+    "lat": 44.048401013581646,
+    "lon": 2.15415798536491
+  },
+  {
+    "id": 154,
+    "name": "La Fanfare Invisible",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKII1qXyyZlShZHZE4jrNn5tlRNXWfhVszh5mZMUCa2rCJEhBSXPFKiphSp2gqamlDf7cn",
+    "description": "Lien Signal pour La Fanfare Invisible.",
+    "lat": 48.093538142931415,
+    "lon": -4.332926818680802
+  },
+  {
+    "id": 155,
+    "name": "Village Graslin",
+    "type": "Telegram",
+    "url": "https://t.me/+TvdRGzyLq1U4NzBk",
+    "description": "Lien Telegram pour Village Graslin.",
+    "lat": 47.215722,
+    "lon": -1.562306
+  },
+  {
+    "id": 156,
+    "name": "Cognac",
+    "type": "Telegram",
+    "url": "https://t.me/+fFVATyvoOWowZjA0",
+    "description": "Lien Telegram pour Cognac.",
+    "lat": 45.6917,
+    "lon": -0.322
+  },
+  {
+    "id": 157,
+    "name": "Rochefort",
+    "type": "Telegram",
+    "url": "https://t.me/+fFVATyvoOWowZjA0",
+    "description": "Lien Telegram pour Rochefort.",
+    "lat": 45.9412,
+    "lon": -0.9671
+  },
+  {
+    "id": 158,
+    "name": "Saintes",
+    "type": "Telegram",
+    "url": "https://t.me/+fFVATyvoOWowZjA0",
+    "description": "Lien Telegram pour Saintes.",
+    "lat": 45.747,
+    "lon": -0.6338
+  },
+  {
+    "id": 159,
+    "name": "Montendre",
+    "type": "Telegram",
+    "url": "https://t.me/+fFVATyvoOWowZjA0",
+    "description": "Lien Telegram pour Montendre.",
+    "lat": 45.28582,
+    "lon": -0.40667
+  },
+  {
+    "id": 160,
+    "name": "Pays de Retz",
+    "type": "Telegram",
+    "url": "https://t.me/pdl10sept",
+    "description": "Lien Telegram pour Pays de Retz.",
+    "lat": 47.3585,
+    "lon": -1.5092
+  },
+  {
+    "id": 161,
+    "name": "Vannes",
+    "type": "Telegram",
+    "url": "https://t.me/+2zyykrgSNYI4YmQ0",
+    "description": "Lien Telegram pour Vannes.",
+    "lat": 47.658607,
+    "lon": -2.761669
+  },
+  {
+    "id": 162,
+    "name": "Aubusson",
+    "type": "Telegram",
+    "url": "https://t.me/+K8iTCXsU-cM0ZWZk",
+    "description": "Lien Telegram pour Aubusson. Texte d'origine : 9476.",
+    "lat": 45.9472437,
+    "lon": 2.1494442
+  },
+  {
+    "id": 163,
+    "name": "Pantin",
+    "type": "Whatsapp",
+    "url": "https://chat.whatsapp.com/HrpJxA6uYLGCZzViLRWCY2?mode=ems_copy_c",
+    "description": "Lien Whatsapp pour Pantin. Texte d'origine : 4480.",
+    "lat": 48.9005594,
+    "lon": 2.3982104
+  },
+  {
+    "id": 164,
+    "name": "Paris 20e",
+    "type": "Whatsapp",
+    "url": "https://chat.whatsapp.com/Jn7ms4hETaoBI7NCYB01hK?mode=ems_copy_t",
+    "description": "Lien Whatsapp pour Paris 20e.",
+    "lat": 48.8625291,
+    "lon": 2.3863061
+  },
+  {
+    "id": 165,
+    "name": "Pays voironnais",
+    "type": "Telegram",
+    "url": "https://t.me/IndignonsnousIsere/66",
+    "description": "Lien Telegram pour Pays voironnais. Texte d'origine : 38282.",
+    "lat": 45.3941569,
+    "lon": 5.4230402
+  },
+  {
+    "id": 166,
+    "name": "Quimperlé",
+    "type": "Telegram",
+    "url": "https://t.me/+qlZLbdtaN4VmYTA0",
+    "description": "Lien Telegram pour Quimperlé. Texte d'origine : 9145.",
+    "lat": 47.8558418,
+    "lon": -3.5792333
+  },
+  {
+    "id": 167,
+    "name": "Paris 14e",
+    "type": "Whatsapp",
+    "url": "https://chat.whatsapp.com/FXtblFJlBl1JD8mbzySBUR?mode=ems_copy_t",
+    "description": "Lien Whatsapp pour Paris 14e. Texte d'origine : 4486.",
+    "lat": 48.8296936,
+    "lon": 2.3126323
+  },
+  {
+    "id": 168,
+    "name": "Pays haut (Nord 54)",
+    "type": "Telegram",
+    "url": "https://t.me/+tDNxLGT1PURkZWQ0",
+    "description": "Lien Telegram pour Pays haut (Nord 54). Texte d'origine : 354848.",
+    "lat": 49.7748922,
+    "lon": 4.5392203
+  },
+  {
+    "id": 169,
+    "name": "Montpellier",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKIL4muJn1v17oQQClHjtK0vuwSERuMosyFySg9tUM4wFEEhAGNsJjKiu8a6KGpQ-JdfnX",
+    "description": "Lien Signal pour Montpellier.",
+    "lat": 43.6102954,
+    "lon": 3.8208202
+  },
+  {
+    "id": 170,
+    "name": "Graulhet",
+    "type": "Telegram",
+    "url": "https://t.me/+6TW0dMTAxCowMjZk",
+    "description": "Lien Telegram pour Graulhet.",
+    "lat": 43.759597,
+    "lon": 1.988911
+  },
+  {
+    "id": 171,
+    "name": "Gaillac",
+    "type": "Telegram",
+    "url": "https://t.me/+Hwdp8c35T2YxYmFk",
+    "description": "Lien Telegram pour Gaillac.",
+    "lat": 43.9018159,
+    "lon": 1.896506
+  },
+  {
+    "id": 172,
+    "name": "Castres",
+    "type": "Telegram",
+    "url": "https://t.me/+rUrHGp5p5swwMzY0",
+    "description": "Lien Telegram pour Castres.",
+    "lat": 43.6075999,
+    "lon": 2.2419407
+  },
+  {
+    "id": 173,
+    "name": "Albi",
+    "type": "Telegram",
+    "url": "https://t.me/+xoNKLdRR5iw2MjVk",
+    "description": "Lien Telegram pour Albi.",
+    "lat": 43.9248689,
+    "lon": 2.1486789
+  },
+  {
+    "id": 174,
+    "name": "Tricastin",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKIA62t-8R1q3oeCSyuVZbywQHQ-aeo7ZrEYVYwzaBirvLEhC6tuUCtUaTxhkIu7rsrjcb",
+    "description": "Lien Signal pour Tricastin. Texte d'origine : 38986.",
+    "lat": 44.3458497,
+    "lon": 4.6180682
+  },
+  {
+    "id": 175,
+    "name": "Clisson - Vallet-le-Loroux - Vertou",
+    "type": "Telegram",
+    "url": "https://t.me/+jmQ3BSgUlSIxZjhk",
+    "description": "Lien Telegram pour Clisson - Vallet-le-Loroux - Vertou.",
+    "lat": 47.134305,
+    "lon": -1.329263
+  },
+  {
+    "id": 176,
+    "name": "Villefranche-sur-Saône",
+    "type": "Telegram",
+    "url": "http://t.me/+DztcGgl5FGYxNWM0",
+    "description": "Lien Telegram pour Villefranche-sur-Saône.",
+    "lat": 45.989463,
+    "lon": 4.721712
+  },
+  {
+    "id": 177,
+    "name": "Auch",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKIGB1Cbe_1x6urKdjChHGY83GLpGtSW50SXfJINpg_pJBEhAUKZEDE0-4EZljTXPkMf69",
+    "description": "Lien Signal pour Auch.",
+    "lat": 43.6468938,
+    "lon": 0.5837642
+  },
+  {
+    "id": 178,
+    "name": "Drancy / Bobigny / Le Blanc Mesnil / Le Bourget",
+    "type": "Telegram",
+    "url": "https://t.me/+p33fGzwmYFRjYzQ0",
+    "description": "Lien Telegram pour Drancy / Bobigny / Le Blanc Mesnil / Le Bourget.",
+    "lat": 48.94393,
+    "lon": 2.44291
+  },
+  {
+    "id": 179,
+    "name": "Sud Briançonnais",
+    "type": "Whatsapp",
+    "url": "https://chat.whatsapp.com/LGCqrCJHz4JCF3o45xT5ev",
+    "description": "Lien Whatsapp pour Sud Briançonnais.",
+    "lat": 44.8956886,
+    "lon": 6.6328367
+  },
+  {
+    "id": 180,
+    "name": "Aix Marseille Université",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKIN2LgVhgVNtj8KIaZSVF4xs37h1UAbjqlPM2hpanmUFqEhAV_lOSajP2e72HA38QdGXf",
+    "description": "Lien Signal pour Aix Marseille Université.",
+    "lat": 43.304487,
+    "lon": 5.3795474
+  },
+  {
+    "id": 181,
+    "name": "Martigues",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKIPk_e91eGhuj9ysnnene_2wjl6V-v5xy-TvPLB3FMKSfEhDP8jCI-AvedmrS-eBK6RKV",
+    "description": "Lien Signal pour Martigues.",
+    "lat": 43.39631,
+    "lon": 5.034246
+  },
+  {
+    "id": 182,
+    "name": "Marseille Nord",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKIO-K7bQfMLEOyE4kg8B1RXLCRavzrPGehXSnAGa8k4HREhB9MAVzQMqR9vmA8bMeTc5d",
+    "description": "Lien Signal pour Marseille Nord.",
+    "lat": 43.3301987,
+    "lon": 5.3885049
+  },
+  {
+    "id": 183,
+    "name": "Aix-en-Provence",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKIJRfVJFH-y2Dacd-2-y20zdXNLq9AoAP4Ri4vvYAzNIhEhBeJHWtcBwalk1mj45mAAha",
+    "description": "Lien Signal pour Aix-en-Provence.",
+    "lat": 43.52444957167491,
+    "lon": 5.364547498721776
+  },
+  {
+    "id": 184,
+    "name": "Nogent-le-Rotrou",
+    "type": "Telegram",
+    "url": "https://t.me/+DkxfM-QCR69lZmRk",
+    "description": "Lien Telegram pour Nogent-le-Rotrou. Texte d'origine : 37318.",
+    "lat": 48.3130305,
+    "lon": 0.6782162
+  },
+  {
+    "id": 185,
+    "name": "Faux-la-Montagne",
+    "type": "Telegram",
+    "url": "https://t.me/+K8iTCXsU-cM0ZWZk",
+    "description": "Lien Telegram pour Faux-la-Montagne. Texte d'origine : 19020.",
+    "lat": 45.74907,
+    "lon": 1.8967583
+  },
+  {
+    "id": 186,
+    "name": "Bourganeuf",
+    "type": "Telegram",
+    "url": "https://t.me/+K8iTCXsU-cM0ZWZk",
+    "description": "Lien Telegram pour Bourganeuf. Texte d'origine : 9476.",
+    "lat": 45.947208,
+    "lon": 1.725978
+  },
+  {
+    "id": 187,
+    "name": "Boussac",
+    "type": "Telegram",
+    "url": "https://t.me/+K8iTCXsU-cM0ZWZk",
+    "description": "Lien Telegram pour Boussac. Texte d'origine : 2352.",
+    "lat": 46.3482109,
+    "lon": 2.216451
+  },
+  {
+    "id": 188,
+    "name": "La Souterraine",
+    "type": "Telegram",
+    "url": "https://t.me/+K8iTCXsU-cM0ZWZk",
+    "description": "Lien Telegram pour La Souterraine. Texte d'origine : 18856.",
+    "lat": 46.2307416,
+    "lon": 1.3963269
+  },
+  {
+    "id": 189,
+    "name": "Guéret",
+    "type": "Telegram",
+    "url": "https://t.me/+K8iTCXsU-cM0ZWZk",
+    "description": "Lien Telegram pour Guéret. Texte d'origine : 18880.",
+    "lat": 46.1584605,
+    "lon": 1.82919
+  },
+  {
+    "id": 190,
+    "name": "Saverne",
+    "type": "Telegram",
+    "url": "https://t.me/+XRVhRVGf0CNmOGNk",
+    "description": "Lien Telegram pour Saverne.",
+    "lat": 48.7439481,
+    "lon": 7.3123784
+  },
+  {
+    "id": 191,
+    "name": "Vendôme",
+    "type": "Telegram",
+    "url": "https://t.me/+2U_sY8PE0fgwZTBk",
+    "description": "Lien Telegram pour Vendôme. Texte d'origine : 18194.",
+    "lat": 47.7995693,
+    "lon": 1.023289
+  },
+  {
+    "id": 192,
+    "name": "La roche-sur-Yon",
+    "type": "Telegram",
+    "url": "https://t.me/+A5azmmdFUc0yMGU0",
+    "description": "Lien Telegram pour La roche-sur-Yon. Texte d'origine : 37175.",
+    "lat": 46.6660331,
+    "lon": -1.4987728
+  },
+  {
+    "id": 193,
+    "name": "Amplepuis",
+    "type": "Telegram",
+    "url": "https://t.me/+mpXANJoCqehhZDI0",
+    "description": "Lien Telegram pour Amplepuis. Texte d'origine : 18827.",
+    "lat": 45.9660336,
+    "lon": 4.2757191
+  },
+  {
+    "id": 194,
+    "name": "Tours",
+    "type": "Telegram",
+    "url": "https://t.me/+jR9bqrSbZVdkM2E8",
+    "description": "Lien Telegram pour Tours. Texte d'origine : 18336.",
+    "lat": 47.3943197,
+    "lon": 0.6537434
+  },
+  {
+    "id": 195,
+    "name": "L’Argentière-la-Bessée",
+    "type": "Whatsapp",
+    "url": "https://chat.whatsapp.com/LGCqrCJHz4JCF3o45xT5ev",
+    "description": "Lien Whatsapp pour L’Argentière-la-Bessée.",
+    "lat": 44.79414,
+    "lon": 6.54991
+  },
+  {
+    "id": 196,
+    "name": "Mantes-Dreux-Evreux",
+    "type": "Telegram",
+    "url": "https://t.me/+IyD36DMxoCZiNzI8",
+    "description": "Lien Telegram pour Mantes-Dreux-Evreux.",
+    "lat": 48.925742,
+    "lon": 1.454315
+  },
+  {
+    "id": 197,
+    "name": "Dol-de-bretagne",
+    "type": "Telegram",
+    "url": "https://t.me/+QQgeVyp5og44YzNk",
+    "description": "Lien Telegram pour Dol-de-bretagne.",
+    "lat": 48.5338366,
+    "lon": -1.7856964
+  },
+  {
+    "id": 198,
+    "name": "Lodévois",
+    "type": "Telegram",
+    "url": "https://t.me/+OSEUzEqKXoI1MWE8",
+    "description": "Lien Telegram pour Lodévois.",
+    "lat": 43.7855984,
+    "lon": 3.2809888
+  },
+  {
+    "id": 199,
+    "name": "Meisenthal",
+    "type": "Telegram",
+    "url": "https://t.me/IndignonsNousVosgesNord",
+    "description": "Lien Telegram pour Meisenthal. Texte d'origine : 4473.",
+    "lat": 48.9703695,
+    "lon": 7.335646
+  },
+  {
+    "id": 200,
+    "name": "Brocéliande",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKINc9U6SkDW9_PxkpOKReLxBQicJNN_ol5FpMCoX2_MYrEhAcZvvllIVh1E_RFRi0G3P1",
+    "description": "Lien Signal pour Brocéliande. Texte d'origine : 86894.",
+    "lat": 47.9196651,
+    "lon": -2.0828663
+  },
+  {
+    "id": 201,
+    "name": "Compiègne",
+    "type": "Telegram",
+    "url": "https://t.me/+_ivqaVHN-ppkNTI0",
+    "description": "Lien Telegram pour Compiègne. Texte d'origine : 8869.",
+    "lat": 49.400614,
+    "lon": 2.8340221
+  },
+  {
+    "id": 202,
+    "name": "La-Chapelle-sur-Erdre",
+    "type": "Telegram",
+    "url": "https://t.me/+lHvOnJj-N-UwNjM8",
+    "description": "Lien Telegram pour La-Chapelle-sur-Erdre.",
+    "lat": 47.3040919,
+    "lon": -1.6034172
+  },
+  {
+    "id": 203,
+    "name": "Flers",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKINW5TXV9KyfZ4MPRbN0xOj9ukVG2J3k5ErA4GlGM0FXSEhDJcm-FoItItcSQAXKMVK0U",
+    "description": "Lien Signal pour Flers.",
+    "lat": 48.72834,
+    "lon": -0.60493
+  },
+  {
+    "id": 204,
+    "name": "34 - Hérault",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKIL4muJn1v17oQQClHjtK0vuwSERuMosyFySg9tUM4wFEEhAGNsJjKiu8a6KGpQ-JdfnX",
+    "description": "Lien Signal pour 34 - Hérault.",
+    "lat": 43.477869,
+    "lon": 3.1842
+  },
+  {
+    "id": 205,
+    "name": "Gatinais Montargis",
+    "type": "Telegram",
+    "url": "https://t.me/+wQfOOcl0Tm0yNjBk",
+    "description": "Lien Telegram pour Gatinais Montargis. Texte d'origine : 4560.",
+    "lat": 47.9997687,
+    "lon": 2.7285145
+  },
+  {
+    "id": 206,
+    "name": "Calais",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKIATMRrmeM14cCe_gbcoQ5q6PGBJl07g1OOugmvI0BnRmEhD-pQYXF9e2nueEkLxIopD-",
+    "description": "Lien Signal pour Calais. Texte d'origine : 68701.",
+    "lat": 50.9419345,
+    "lon": 1.6589371
+  },
+  {
+    "id": 207,
+    "name": "Tarare",
+    "type": "Telegram",
+    "url": "https://t.me/tarare_10_septembre",
+    "description": "Lien Telegram pour Tarare.",
+    "lat": 45.897723,
+    "lon": 4.432733
+  },
+  {
+    "id": 208,
+    "name": "Brive-la-Gaillarde",
+    "type": "Telegram",
+    "url": "https://t.me/+fFVATyvoOWowZjA0",
+    "description": "Lien Telegram pour Brive-la-Gaillarde.",
+    "lat": 45.1450475,
+    "lon": 1.4364366
+  },
+  {
+    "id": 209,
+    "name": "Le Faouët",
+    "type": "Telegram",
+    "url": "https://t.me/+ufl83HVgddRmN2Nk",
+    "description": "Lien Telegram pour Le Faouët. Texte d'origine : 205337.",
+    "lat": 47.9272935,
+    "lon": -3.7615391
+  },
+  {
+    "id": 210,
+    "name": "Saint-Herblain",
+    "type": "Telegram",
+    "url": "https://t.me/+r21Ond7oYyhjNzhk",
+    "description": "Lien Telegram pour Saint-Herblain. Texte d'origine : 33759.",
+    "lat": 47.1881676,
+    "lon": -1.6826821
+  },
+  {
+    "id": 211,
+    "name": "Châteaubriant Nozay Blain Derval",
+    "type": "Telegram",
+    "url": "https://t.me/+Sl1p_7WkTro0Yjlk",
+    "description": "Lien Telegram pour Châteaubriant Nozay Blain Derval. Texte d'origine : 18222.",
+    "lat": 47.7199177,
+    "lon": -1.4323661
+  },
+  {
+    "id": 212,
+    "name": "Autun",
+    "type": "Telegram",
+    "url": "https://t.me/+wx67YJuf3y83NjU8",
+    "description": "Lien Telegram pour Autun.",
+    "lat": 46.955461,
+    "lon": 4.294883
+  },
+  {
+    "id": 213,
+    "name": "Rouen",
+    "type": "Telegram",
+    "url": "https://t.me/+cWtCwdI2cv1lYzVk",
+    "description": "Lien Telegram pour Rouen.",
+    "lat": 49.4412339,
+    "lon": 1.0705421
+  },
+  {
+    "id": 214,
+    "name": "Le Havre",
+    "type": "Telegram",
+    "url": "https://t.me/+nwEOj3XdQGk5MjQ0",
+    "description": "Lien Telegram pour Le Havre. Texte d'origine : 17704.",
+    "lat": 49.4958071,
+    "lon": 0.0899093
+  },
+  {
+    "id": 215,
+    "name": "Bayeux",
+    "type": "Telegram",
+    "url": "https://t.me/+415hLgv5_vszMmM0",
+    "description": "Lien Telegram pour Bayeux. Texte d'origine : 4446.",
+    "lat": 49.2771684,
+    "lon": -0.7119534
+  },
+  {
+    "id": 216,
+    "name": "Agen",
+    "type": "Site",
+    "url": "https://linktr.ee/mouvement10septembre47lg",
+    "description": "Lien Site pour Agen. Texte d'origine : 9770.",
+    "lat": 44.2010474,
+    "lon": 0.6095538
+  },
+  {
+    "id": 217,
+    "name": "Bordeaux",
+    "type": "Telegram",
+    "url": "https://t.me/+qk_X__IUUQphNzY8",
+    "description": "Lien Telegram pour Bordeaux. Texte d'origine : 19320.",
+    "lat": 44.8637104,
+    "lon": -0.6272971
+  },
+  {
+    "id": 218,
+    "name": "L’Arbresle",
+    "type": "Telegram",
+    "url": "https://t.me/+9VRLOD6UK9djYjZk",
+    "description": "Lien Telegram pour L’Arbresle. Texte d'origine : 4748.",
+    "lat": 45.8347066,
+    "lon": 4.5999113
+  },
+  {
+    "id": 219,
+    "name": "Sud Lubéron",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKIAF5TQRu2gQgFnuyUpdwzn3DnGiQyKv_6jRv8i9Yw_XhEhCk4nTxuqBaq1icMNQkUJIW",
+    "description": "Lien Signal pour Sud Lubéron.",
+    "lat": 43.7486227,
+    "lon": 5.3944167
+  },
+  {
+    "id": 220,
+    "name": "Marseille",
+    "type": "Telegram",
+    "url": "https://t.me/+WAzqMf3TdOUyNzZk",
+    "description": "Lien Telegram pour Marseille. Texte d'origine : 39687.",
+    "lat": 43.2803093,
+    "lon": 5.2980667
+  },
+  {
+    "id": 221,
+    "name": "Marseille Centre (complet) - rejoindre le telegram",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKICEugTnyEU830hvXPZ8ErNzy4jXHfE5IPlOnL5NHbC54EhBrodt5rX2RlVaWPzjU3RWP",
+    "description": "Lien Signal pour Marseille Centre (complet) - rejoindre le telegram. Texte d'origine : 9921.",
+    "lat": 43.2882836,
+    "lon": 5.3589323
+  },
+  {
+    "id": 222,
+    "name": "Redon",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKIBmy0-xFERka1kn94CL_PVnJl84K1oNa4pMsd1a9v7XIEhDGenUBQOUpemDkN02zKU8s",
+    "description": "Lien Signal pour Redon.",
+    "lat": 47.6556945,
+    "lon": -2.0993097
+  },
+  {
+    "id": 223,
+    "name": "Saint Malo",
+    "type": "Telegram",
+    "url": "https://t.me/indignonsnouspaysdesaintmalo",
+    "description": "Lien Telegram pour Saint Malo.",
+    "lat": 48.6961681,
+    "lon": -2.2161899
+  },
+  {
+    "id": 224,
+    "name": "Reims",
+    "type": "Telegram",
+    "url": "https://t.me/+5LH0u6BO-dU1ZTNk",
+    "description": "Lien Telegram pour Reims.",
+    "lat": 49.254879,
+    "lon": 4.022026
+  },
+  {
+    "id": 225,
+    "name": "Bénévent-Grand Bourg",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKIHNfdBo8Wwbl4lonLAfekh1B3yzBiMIR--4ccbmaMzGOEhDxlIT4o_zJJK7i5gZERPz4",
+    "description": "Lien Signal pour Bénévent-Grand Bourg. Texte d'origine : 9447.",
+    "lat": 46.1209184,
+    "lon": 1.6144352
+  },
+  {
+    "id": 226,
+    "name": "Cherbourg",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKIAdZkl1GoTx545haTv_x-9D1IyO3VFOVLUPXANT9QfQXEhDF3WhXeMrSYhMMl2L4Ctb8",
+    "description": "Lien Signal pour Cherbourg. Texte d'origine : 17656.",
+    "lat": 49.6276336,
+    "lon": -1.6769271
+  },
+  {
+    "id": 227,
+    "name": "Annonay",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKIN7E-gSGlNaoJ25ZMI3Y9doezYeHYhvp1QCZ2nW0P2eXEhA0c5wG-b43MjqKLu_tFcgC",
+    "description": "Lien Signal pour Annonay. Texte d'origine : 2399.",
+    "lat": 45.2405917,
+    "lon": 4.6721949
+  },
+  {
+    "id": 228,
+    "name": "Metz",
+    "type": "Telegram",
+    "url": "https://t.me/+KzGj90TwhckxZmM8",
+    "description": "Lien Telegram pour Metz. Texte d'origine : 17845.",
+    "lat": 49.1048177,
+    "lon": 6.1549488
+  },
+  {
+    "id": 229,
+    "name": "Tournus",
+    "type": "Telegram",
+    "url": "https://t.me/+BeznZsPiKJ8wZTg0",
+    "description": "Lien Telegram pour Tournus. Texte d'origine : 9370.",
+    "lat": 46.567966,
+    "lon": 4.881846
+  },
+  {
+    "id": 230,
+    "name": "Rennes",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKIKpBWHOnofOcG3QB75_976gNFq-67P6LN0S1V3a3GZ2jEhCR_y098O3L9qP2qYLO_4ED",
+    "description": "Lien Signal pour Rennes.",
+    "lat": 48.1159325,
+    "lon": -1.70909
+  },
+  {
+    "id": 231,
+    "name": "Sud Est 35",
+    "type": "Signal",
+    "url": "https://signal.group/#CjQKIP6-L39DF7s_tNVTmbCQ7qI2M4H89OvlfCKoLvso133jEhCLA5-_nGXXq-73TbWETfuy",
+    "description": "Lien Signal pour Sud Est 35.",
+    "lat": 48.046551,
+    "lon": -1.515611
+  },
+  {
+    "id": 232,
+    "name": "Salon-de-Provence",
+    "type": "Telegram",
+    "url": "https://t.me/indignonsnoussalon",
+    "description": "Lien Telegram pour Salon-de-Provence. Texte d'origine : 19725.",
+    "lat": 43.642961,
+    "lon": 4.9710154
+  },
+  {
+    "id": 233,
+    "name": "Marseille Est",
+    "type": "Telegram",
+    "url": "https://t.me/+VWZbkhGK9b00MmFk",
+    "description": "Lien Telegram pour Marseille Est. Texte d'origine : 1240.",
+    "lat": 43.2943189,
+    "lon": 5.4738447
+  },
+  {
+    "id": 234,
+    "name": "Bernay",
+    "type": "Facebook",
+    "url": "https://www.facebook.com/groups/3708800519421936/",
+    "description": "Lien Facebook pour Bernay. Texte d'origine : 13.",
+    "lat": 49.0911669,
+    "lon": 0.5198957
+  },
+  {
+    "id": 235,
+    "name": "Poitiers",
+    "type": "Telegram",
+    "url": "https://t.me/+fFVATyvoOWowZjA0",
+    "description": "Lien Telegram pour Poitiers.",
+    "lat": 46.58025,
+    "lon": 0.340209
+  },
+  {
+    "id": 236,
+    "name": "Châtellerault",
+    "type": "Telegram",
+    "url": "https://t.me/+fFVATyvoOWowZjA0",
+    "description": "Lien Telegram pour Châtellerault.",
+    "lat": 46.818012,
+    "lon": 0.545811
+  },
+  {
+    "id": 237,
+    "name": "Thouars",
+    "type": "Telegram",
+    "url": "https://t.me/c/1698890845/12612",
+    "description": "Lien Telegram pour Thouars.",
+    "lat": 46.979023,
+    "lon": -0.215363
+  },
+  {
+    "id": 238,
+    "name": "Niort",
+    "type": "Telegram",
+    "url": "https://t.me/+fFVATyvoOWowZjA0",
+    "description": "Lien Telegram pour Niort.",
+    "lat": 46.323931,
+    "lon": -0.464623
+  },
+  {
+    "id": 239,
+    "name": "Bressuire",
+    "type": "Telegram",
+    "url": "https://t.me/c/1698890845/6144",
+    "description": "Lien Telegram pour Bressuire.",
+    "lat": 46.842605,
+    "lon": -0.492883
+  },
+  {
+    "id": 240,
+    "name": "Pau",
+    "type": "Telegram",
+    "url": "https://t.me/+fFVATyvoOWowZjA0",
+    "description": "Lien Telegram pour Pau.",
+    "lat": 43.295752,
+    "lon": -0.368565
+  },
+  {
+    "id": 241,
+    "name": "Bayonne",
+    "type": "Telegram",
+    "url": "https://t.me/+fFVATyvoOWowZjA0",
+    "description": "Lien Telegram pour Bayonne.",
+    "lat": 43.494509,
+    "lon": -1.473662
+  },
+  {
+    "id": 242,
+    "name": "Sainte Foy la Grande",
+    "type": "Telegram",
+    "url": "https://t.me/+fFVATyvoOWowZjA0",
+    "description": "Lien Telegram pour Sainte Foy la Grande.",
+    "lat": 44.841641,
+    "lon": 0.214974
+  },
+  {
+    "id": 243,
+    "name": "Langon",
+    "type": "Telegram",
+    "url": "https://t.me/+fFVATyvoOWowZjA0",
+    "description": "Lien Telegram pour Langon.",
+    "lat": 44.553072,
+    "lon": -0.244926
+  },
+  {
+    "id": 244,
+    "name": "Libourne",
+    "type": "Telegram",
+    "url": "https://t.me/+fFVATyvoOWowZjA0",
+    "description": "Lien Telegram pour Libourne.",
+    "lat": 44.913362,
+    "lon": -0.242724
+  },
+  {
+    "id": 245,
+    "name": "La Rochelle",
+    "type": "Telegram",
+    "url": "https://t.me/+fFVATyvoOWowZjA0",
+    "description": "Lien Telegram pour La Rochelle.",
+    "lat": 46.159742,
+    "lon": -1.151614
+  },
+  {
+    "id": 246,
+    "name": "N10 - Rambouillet - Saint-Quentin-en-Yvelines",
+    "type": "Telegram",
+    "url": "https://t.me/+I5tJh1d7rbxhNmU8",
+    "description": "Lien Telegram pour N10 - Rambouillet - Saint-Quentin-en-Yvelines.",
+    "lat": 48.6539,
+    "lon": 1.834
+  },
+  {
+    "id": 247,
+    "name": "Lyon",
+    "type": "Telegram",
+    "url": "https://t.me/+SuOiGcRJZoliMDk0",
+    "description": "Lien Telegram pour Lyon. Texte d'origine : 19017.",
+    "lat": 45.7579433,
+    "lon": 4.7938389
+  },
+  {
+    "id": 248,
+    "name": "Grenoble",
+    "type": "Telegram",
+    "url": "https://t.me/+OKXn5kHL8-M4NTM0",
+    "description": "Lien Telegram pour Grenoble. Texte d'origine : 9606.",
+    "lat": 45.1842316,
+    "lon": 5.6948976
+  },
+  {
+    "id": 249,
+    "name": "Haut béarn",
+    "type": "Telegram",
+    "url": "https://t.me/+3wswVam9MC0wMjNk",
+    "description": "Lien Telegram pour Haut béarn. Texte d'origine : 159406.",
+    "lat": 43.0281593,
+    "lon": -0.955519
+  },
+  {
+    "id": 250,
+    "name": "Saint-yrieix-la-perche",
+    "type": "Telegram",
+    "url": "https://t.me/+5gHUQ7JNrwMyMjc8",
+    "description": "Lien Telegram pour Saint-yrieix-la-perche. Texte d'origine : 19096.",
+    "lat": 45.5274015,
+    "lon": 1.1613278
+  },
+  {
+    "id": 251,
+    "name": "Angoulème",
+    "type": "Telegram",
+    "url": "https://t.me/+U8ruFJrFrhs1NWQ8",
+    "description": "Lien Telegram pour Angoulème.",
+    "lat": 45.6479,
+    "lon": 0.16
+  },
+  {
+    "id": 252,
+    "name": "Saint Nazaire",
+    "type": "Telegram",
+    "url": "https://t.me/+KtuU08JRaV4yOWI0",
+    "description": "Lien Telegram pour Saint Nazaire. Texte d'origine : 18493.",
+    "lat": 47.276816,
+    "lon": -2.2804467
+  },
+  {
+    "id": 253,
+    "name": "Rezé",
+    "type": "Telegram",
+    "url": "https://t.me/+7ifqGHbsJ6QwMDlk",
+    "description": "Lien Telegram pour Rezé. Texte d'origine : 9265.",
+    "lat": 47.173344,
+    "lon": -1.5779205
+  },
+  {
+    "id": 254,
+    "name": "Nantes sud Loire",
+    "type": "Telegram",
+    "url": "https://t.me/+M6jHtN4YMmQ2OGU8",
+    "description": "Lien Telegram pour Nantes sud Loire.",
+    "lat": 47.1627401,
+    "lon": -1.6051543
+  },
+  {
+    "id": 255,
+    "name": "Nantes Nord",
+    "type": "Telegram",
+    "url": "https://t.me/+pXKibPlTgwFkNzBk",
+    "description": "Lien Telegram pour Nantes Nord. Texte d'origine : 4625.",
+    "lat": 47.2585943,
+    "lon": -1.5857811
+  },
+  {
+    "id": 256,
+    "name": "Nantes Agglomération",
+    "type": "Telegram",
+    "url": "https://t.me/+FVgpAoiS7-IzMTA0",
+    "description": "Lien Telegram pour Nantes Agglomération. Texte d'origine : 37020.",
+    "lat": 47.2277374,
+    "lon": -1.7232077
+  },
+  {
+    "id": 257,
+    "name": "L’Île de Nantes",
+    "type": "Telegram",
+    "url": "https://t.me/+4Hml85LTV8c1ZjA0",
+    "description": "Lien Telegram pour L’Île de Nantes. Texte d'origine : 2315.",
+    "lat": 47.2041664,
+    "lon": -1.5523826
+  },
+  {
+    "id": 258,
+    "name": "Carquefou",
+    "type": "Telegram",
+    "url": "https://t.me/+b-M-uMmOhzNhOWY8",
+    "description": "Lien Telegram pour Carquefou. Texte d'origine : 9243.",
+    "lat": 47.2968272,
+    "lon": -1.4893288
+  },
+  {
+    "id": 259,
+    "name": "Ancenis",
+    "type": "Telegram",
+    "url": "https://t.me/+f5ay1J6hmUg5ZGY0",
+    "description": "Lien Telegram pour Ancenis. Texte d'origine : 9228.",
+    "lat": 47.3818486,
+    "lon": -1.1888699
+  },
+  {
+    "id": 260,
+    "name": "Bocage virois",
+    "type": "Telegram",
+    "url": "https://t.me/+ruRhzuXcrO9iNzI8",
+    "description": "Lien Telegram pour Bocage virois. Texte d'origine : 17947.",
+    "lat": 48.819842,
+    "lon": -0.9480103
+  },
+  {
+    "id": 261,
+    "name": "Dieppe",
+    "type": "Telegram",
+    "url": "https://t.me/+wxsSWr1Oz05kMzNk",
+    "description": "Lien Telegram pour Dieppe. Texte d'origine : 8775.",
+    "lat": 49.9199091,
+    "lon": 1.0631637
+  },
+  {
+    "id": 262,
+    "name": "Caen",
+    "type": "Telegram",
+    "url": "https://t.me/+Yz3dBigEr5NmMTg0",
+    "description": "Lien Telegram pour Caen.",
+    "lat": 49.18134,
+    "lon": -0.363561
+  },
+  {
+    "id": 263,
+    "name": "Alençon",
+    "type": "Telegram",
+    "url": "https://t.me/+rVnxGVSLZikxMDc8",
+    "description": "Lien Telegram pour Alençon. Texte d'origine : 9043.",
+    "lat": 48.4310214,
+    "lon": 0.0716318
+  },
+  {
+    "id": 264,
+    "name": "Haute-corrèze",
+    "type": "Telegram",
+    "url": "https://t.me/+D1C6bDew459hMmJk",
+    "description": "Lien Telegram pour Haute-corrèze. Texte d'origine : 152742.",
+    "lat": 45.5361096,
+    "lon": 1.8790475
+  },
+  {
+    "id": 265,
+    "name": "Sud Manche",
+    "type": "Telegram",
+    "url": "https://t.me/+Hgpjxnkf-V84MDE8",
+    "description": "Lien Telegram pour Sud Manche. Texte d'origine : 285597.",
+    "lat": 49.0910279,
+    "lon": -2.005522
+  },
+  {
+    "id": 266,
+    "name": "Saint-lô",
+    "type": "Telegram",
+    "url": "https://t.me/+jGHHctdUMI01YzU0",
+    "description": "Lien Telegram pour Saint-lô. Texte d'origine : 8921.",
+    "lat": 49.1122743,
+    "lon": -1.1018626
+  },
+  {
+    "id": 267,
+    "name": "Bayeux",
+    "type": "Telegram",
+    "url": "https://t.me/+W78yndkfVjdhNGM8",
+    "description": "Lien Telegram pour Bayeux. Texte d'origine : 4446.",
+    "lat": 49.2771684,
+    "lon": -0.7119534
+  },
+  {
+    "id": 268,
+    "name": "Cholet",
+    "type": "Telegram",
+    "url": "https://t.me/+W78yndkfVjdhNGM8",
+    "description": "Lien Telegram pour Cholet.",
+    "lat": 47.0358358,
+    "lon": -0.9162437
+  },
+  {
+    "id": 269,
+    "name": "Malakoff Saint-Donatien",
+    "type": "Telegram",
+    "url": "https://t.me/+nKqjGihlVlM5ZDBk",
+    "description": "Lien Telegram pour Malakoff Saint-Donatien.",
+    "lat": 47.228767,
+    "lon": -1.542804
+  },
+  {
+    "id": 270,
+    "name": "41 - Loir-et-Cher",
+    "type": "Telegram",
+    "url": "https://t.me/+7moVpfgguQwyZjJk",
+    "description": "Lien Telegram pour 41 - Loir-et-Cher.",
+    "lat": 47.587672,
+    "lon": 1.333761
+  },
+  {
+    "id": 271,
+    "name": "Pays d’Avallon",
+    "type": "Telegram",
+    "url": "https://t.me/+-jnceFS4skczOGJk",
+    "description": "Lien Telegram pour Pays d’Avallon.",
+    "lat": 47.607386,
+    "lon": 3.758569
+  },
+  {
+    "id": 272,
+    "name": "Louhans",
+    "type": "Telegram",
+    "url": "https://t.me/+cx3AdCMJvBFiNmQ0",
+    "description": "Lien Telegram pour Louhans.",
+    "lat": 46.6279066,
+    "lon": 5.2212432
+  },
+  {
+    "id": 273,
+    "name": "Mâcon, Cluny, Charolles",
+    "type": "Telegram",
+    "url": "https://t.me/+EuVCnflkkFxkODdk",
+    "description": "Lien Telegram pour Mâcon, Cluny, Charolles.",
+    "lat": 46.3922617,
+    "lon": 4.6013122
+  },
+  {
+    "id": 274,
+    "name": "Chalon-sur-Saône",
+    "type": "Telegram",
+    "url": "https://t.me/+a3tRDc53UHk0ZTFi",
+    "description": "Lien Telegram pour Chalon-sur-Saône.",
+    "lat": 46.779153,
+    "lon": 4.857287
+  }
+]

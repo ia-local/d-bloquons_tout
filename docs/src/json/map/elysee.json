@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "name": "Palais de l'Élysée",
+        "city": "Paris",
+        "type": "elysee",
+        "lat": 48.8703,
+        "lon": 2.3168,
+        "source": "boutique.elysee.fr",
+        "level": "national"
+    },
+    {
+        "id": 2,
+        "name": "Commissariat de police - Poste de plaintes de Paris 8e arrondissement",
+        "city": "Paris",
+        "type": "elysee",
+        "lat": 48.8756,
+        "lon": 2.3168,
+        "source": "https://lannuaire.service-public.fr/ile-de-france/paris/ede12056-1e72-436f-a10e-42d456a93628",
+        "level": "national"
+    }
+]

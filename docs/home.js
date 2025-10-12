@@ -1,14 +1,95 @@
-// docs/home.js - Logique de Rendu pour la Carte, le Tableau de Bord et le Bot
+// docs/home.js - Logique de Rendu pour la Carte, le Tableau de Bord et le Bot + Chronologie
 
 // Déclarer l'instance de la carte Leaflet globalement dans window pour app.js
 window.globalMap = null; 
+// 🛑 NOUVEAU: Stockage global des événements pour la modale
+window.CHRONOLOGY_EVENTS = []; 
 
 // --- 0. RENDU DE LA PAGE HOME (Accueil Statique) ---
 window.loadHomePageContent = function() {
     // La page Home est statique (Manifeste déjà en HTML).
-    // Cette fonction sert uniquement de point d'appel pour la fonction showPage dans app.js.
     console.log("Page Accueil chargée (Contenu statique HTML).");
+    
+    // DÉCLENCHEMENT DU CHARGEMENT DE LA CHRONOLOGIE
+    loadChronology();
 };
+
+// 🛑 RENDU DE LA CHRONOLOGIE
+async function loadChronology() {
+    const container = document.getElementById('chronology-container');
+    if (!container) return;
+    
+    // Si le conteneur a déjà du contenu riche, ne pas recharger (optimisation)
+    if (container.hasLoaded) return;
+    
+    try {
+        // Récupération des données via le mock dans app.js
+        const events = await window.fetchData('/api/chronology/events');
+        
+        if (!events || events.length === 0) {
+            container.innerHTML = `<h2 class="font-red">⌛ Chronologie</h2><p>Aucun événement clé trouvé.</p>`;
+            container.hasLoaded = true;
+            return;
+        }
+
+        // 🛑 STOCKAGE DES DONNÉES GLOBALES ET TRI
+        window.CHRONOLOGY_EVENTS = events;
+        events.sort((a, b) => new Date(b.start_date) - new Date(a.start_date));
+
+        let html = `
+            <h2 class="font-red" style="text-align: center;">⌛ Chronologie des Événements Clés</h2>
+            <p style="color: #ccc; margin-bottom: 20px; text-align: center;">L'histoire de notre mobilisation, des origines à nos objectifs futurs.</p>
+            <div id="timeline-list">
+        `;
+
+        events.forEach(event => {
+            const date = new Date(event.start_date).toLocaleDateString('fr-FR', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            // UTILISATION DES CLASSES CSS DEFINIES DANS styles.css (timeline-item et content)
+            html += `
+                <div class="timeline-item content" data-event-id="${event.id}" style="padding-left: 15px; margin-bottom: 15px; cursor: pointer;">
+                    <h4 class="font-yellow" style="margin-bottom: 5px;">${event.title} (${event.city})</h4>
+                    <p style="font-size: 0.9em; font-weight: 600;">${event.subtitle} - ${date}</p>
+                    <p style="font-size: 0.8em; margin-top: 5px;">${event.description}</p>
+                </div>
+            `;
+        });
+        
+        html += '</div>';
+        container.innerHTML = html;
+        
+        // 🛑 ATTACHEMENT DES ÉVÉNEMENTS APRÈS INJECTION
+        attachChronologyListeners(container);
+
+        container.hasLoaded = true;
+
+    } catch (error) {
+        console.error("Erreur lors du chargement de la chronologie:", error);
+        container.innerHTML = `<h2 class="font-red">⌛ Chronologie</h2><p class="font-red">Échec du chargement des événements.</p>`;
+    }
+}
+
+// 🛑 NOUVEAU: Fonction d'attachement des écouteurs
+function attachChronologyListeners(container) {
+    const timelineItems = container.querySelectorAll('.timeline-item');
+    timelineItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+            const eventId = item.getAttribute('data-event-id');
+            // Assurez-vous que modalGestion.js est chargé avant d'appeler handleUserAction
+            if (window.handleUserAction) {
+                // Lance l'action 'chronology-detail' avec l'ID de l'événement
+                window.handleUserAction('chronology-detail', eventId);
+            } else {
+                console.error("handleUserAction non défini. La modale ne peut pas s'ouvrir.");
+            }
+        });
+    });
+}
+
 
 // --- 1. RENDU DE LA CARTE (Map Page) ---
 

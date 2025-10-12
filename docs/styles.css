@@ -7,10 +7,10 @@
     --color-background: #121214; /* Noir Profond */
     --color-ui-primary: #222;    /* Gris UI pour barres et fonds */
     --color-ui-content: #2c2c2c; /* Gris légèrement plus clair pour les cartes de contenu */
-    --color-accent-yellow: #f9e25b; /* Jaune Vif / Alerte */
+    --color-accent-yellow: #f9e25b; /* Jaune Vif / Alerte (Orange Thématique) */
     --color-accent-red: #f52639;    /* Rouge Vif / Action / Colère */
     --color-text: #ffffff;
-    --color-text-dark: #1a1a1a;
+    --color-text-dark: #1a1a1a; /* Noir très foncé */
      
     --header-height: 55px;
     --footer-height-mobile: 65px; 
@@ -27,7 +27,7 @@ body[data-theme="light"] {
     --color-accent-yellow: #f52639; /* Le JAUNE devient ROUGE pour l'accentuation */
     --color-accent-red: #f9e25b;    /* Le ROUGE devient JAUNE pour l'alerte/accentuation */
     --color-text: #1a1a1a;
-    --color-text-dark: #ffffff; 
+    --color-text-dark: #ffffff; /* Blanc très clair */
     --shadow: 0 4px 12px rgba(0,0,0,0.1);
     --border-style: 2px solid var(--color-accent-yellow);
 }
@@ -85,6 +85,81 @@ h1, h2, h3, h4, h5 {
     text-transform: uppercase;
 }
 .logo i { color: var(--color-accent-yellow); }
+
+/* --- 2. HEADER & NAVIGATION (SUITE) --- */
+.navBar {
+    justify-content: space-between;
+    width: 100%;
+    display: flex;
+}
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px; 
+    position: relative; 
+}
+
+.user-profile-container {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.profile-btn {
+    color: var(--color-accent-red); 
+    font-size: 1.6rem;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.2s;
+    background: transparent;
+    border: none;
+}
+
+.profile-btn:hover {
+    color: var(--color-accent-yellow);
+}
+
+/* --- Menu Déroulant --- */
+#user-menu-dropdown {
+    position: absolute;
+    top: 100%; 
+    right: 0;
+    width: 220px;
+    background: var(--color-ui-content);
+    border: 2px solid var(--color-accent-yellow);
+    box-shadow: var(--shadow);
+    z-index: 1001; 
+    padding: 10px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown-menu.hidden {
+    display: none !important;
+}
+
+#user-menu-dropdown a {
+    color: var(--color-text);
+    padding: 10px 15px;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.2s;
+    text-decoration: none;
+}
+
+#user-menu-dropdown a:hover {
+    background-color: var(--color-ui-primary);
+    color: var(--color-accent-yellow);
+}
+
+#user-menu-dropdown hr {
+    border: 0;
+    border-top: 1px solid rgba(249, 226, 91, 0.2);
+    margin: 5px 0;
+}
 
 /* Bouton Thème */
 .theme-btn { 
@@ -239,8 +314,9 @@ body[data-theme="light"] .theme-btn {
 /* --- Styles des Cartes/Contenu (Post-it style) --- */
 .content {
     /* FOND Jaune Vif / Texte Noir pour l'effet Post-it */
+
     background: var(--color-accent-yellow); 
-    color: var(--color-text-dark); 
+    color: var(--color-text); /* Texte foncé par défaut dans .content */
     
     padding: 20px;
     border: 3px solid var(--color-text-dark); /* BORDURE PLUS ÉPAISSE ET CONTRASTÉE */
@@ -251,9 +327,82 @@ body[data-theme="light"] .theme-btn {
     transform: rotate(-0.5deg); 
     transition: transform 0.2s, box-shadow 0.2s;
     
-    /* Assure que le contenu se contracte dans la colonne flex */
     flex-shrink: 0;
 }
+
+/* ==========================================================================
+   3. PAGES & CONTENU (GESTION DES VUES)
+   ========================================================================== */
+
+/* ... (Styles Généraux, .page, #map-page inchangés) ... */
+
+/* 🛑 Styles spécifiques Chronologie (Optimisation pour fond Jaune/Orange) */
+.timeline-item {
+    /* 🛑 FOND PAR DÉFAUT : Jaune/Orange vif */
+    background:var(--color-ui-content);
+    
+    transform: rotate(0deg) !important; 
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-out; 
+    
+    border: 1px solid var(--color-accent-red); /* Bordure rouge pour contraster */
+    border-left: 5px solid var(--color-accent-red) !important; 
+    
+    /* 🛑 TEXTE DE BASE : Noir (lisible sur le fond Jaune vif) */
+    color: var(--color-text); 
+}
+.content .timeline-item .p {
+    /* 🛑 FOND PAR DÉFAUT : Jaune/Orange vif */
+    background:var(--color-ui-content);
+    
+    transform: rotate(0deg) !important; 
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-out; 
+    
+    border: 1px solid var(--color-accent-red); /* Bordure rouge pour contraster */
+    border-left: 5px solid var(--color-accent-red) !important; 
+    
+    /* 🛑 TEXTE DE BASE : Noir (lisible sur le fond Jaune vif) */
+    color: var(--color-text); 
+}
+
+.timeline-item h4 {
+    /* TITRE DE BASE : Rouge vif */
+    color: var(--color-accent-red); 
+    transition: color 0.3s ease-out;
+}
+
+.content .timeline-item p {
+    /* Texte de description de base : Noir */
+    color: var(--color-text);
+    transition: color 0.3s ease-out;
+}
+
+/* 🛑 SURVOL et FOCUS : EFFET DYNAMIQUE (Inversion vers le mode Sombre) */
+.timeline-item:hover, 
+.timeline-item:focus { 
+    transform: scale(1.01) translateX(5px) !important;
+    
+    /* FOND INVERSÉ : Gris sombre (UI PRIMARY) */
+    background: var(--color-accent-yellow); 
+    
+    /* 🛑 TEXTE PRINCIPAL PASSE AU BLANC */
+    color: var(--color-text) !important; 
+}
+
+.timeline-item:hover h4,
+.timeline-item:focus h4 {
+    /* 🛑 TITRE AU SURVOL : Passe en Jaune vif/Orange */
+    color: var(--color-accent-red) !important; 
+}
+
+.timeline-item:hover p,
+.timeline-item:focus p {
+    /* TEXTE DE DESCRIPTION AU SURVOL : Passe au Blanc */
+    color: var(--color-text-dark) !important; 
+}
+
+
 /* Adapte le style au mode clair */
 body[data-theme="light"] .content {
     background: var(--color-accent-red); /* Le jaune du post-it devient rouge */
@@ -272,6 +421,19 @@ body[data-theme="light"] .content {
 /* Sauf les liens et les strong, qui redeviennent l'accent jaune/rouge */
 .content a, .content strong { 
     color: var(--color-accent-red); 
+}
+
+/* 🛑 CORRECTION: COULEUR DU TEXTE DANS LE MANIFESTE (.content) */
+.content p, .content li {
+    color: var(--color-text-dark); /* Texte foncé sur fond clair (.content) */
+}
+
+/* 🛑 CORRECTION: COULEUR DU TEXTE DANS LES ALERTES DU MANIFESTE (.alert) */
+body[data-theme="dark"] .alert p, body[data-theme="dark"] .alert li {
+    color: var(--color-text);
+}
+body[data-theme="light"] .alert p, body[data-theme="light"] .alert li {
+    color: var(--color-text);
 }
 
 
@@ -303,7 +465,7 @@ body[data-theme="light"] .content {
 }
 .feature-card {
     /* FOND en Rouge Vif pour l'impact (Action/Topic) */
-    background: var(--color-accent-red); 
+    background: var(--color-background); 
     border: 3px solid var(--color-accent-yellow); /* BORDURE PLUS ÉPAISSE */
     padding: 15px;
     text-align: center;

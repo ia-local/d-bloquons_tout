@@ -1,0 +1,213 @@
+/* Fichier : src/css/journal.css */
+
+/* --- Général --- */
+.journal-container {
+    display: flex;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.journal-main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* --- Menu latéral (Édition) --- */
+.journal-side-menu {
+    flex: 0 0 250px;
+    padding: 1rem;
+    background: var(--color-background-secondary);
+    border-radius: var(--border-radius-card);
+    box-shadow: var(--box-shadow-card);
+}
+
+.journal-side-menu h2 {
+    color: var(--color-primary-text);
+    margin-bottom: 1rem;
+}
+
+.journal-side-menu nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+.journal-side-menu nav a {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: var(--color-text);
+    text-decoration: none;
+    border-radius: var(--border-radius-button);
+    transition: background-color 0.2s ease-in-out;
+}
+
+.journal-side-menu nav a:hover {
+    background-color: var(--color-button-hover);
+    color: var(--color-primary-text);
+}
+
+/* --- Navigation (Page d'accueil et autres) --- */
+.journal-navigation {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.nav-button {
+    padding: 0.75rem 1.5rem;
+    background-color: var(--color-button-primary);
+    color: var(--color-button-text);
+    border-radius: var(--border-radius-button);
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+.nav-button:hover {
+    background-color: var(--color-button-hover);
+}
+
+/* --- Page d'accueil (Article à la une) --- */
+.journal-featured-section {
+    padding: 2rem;
+    background: var(--color-background-card);
+    border-radius: var(--border-radius-card);
+    box-shadow: var(--box-shadow-card);
+}
+
+.journal-featured-section h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.featured-article {
+    border: 2px solid var(--color-accent);
+    padding: 2rem;
+    text-align: center;
+}
+
+/* --- Articles (Général et Quotidien) --- */
+.journal-posts-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.journal-post-card {
+    background: var(--color-background-card);
+    border-radius: var(--border-radius-card);
+    box-shadow: var(--box-shadow-card);
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out;
+}
+
+.journal-post-card:hover {
+    transform: translateY(-5px);
+}
+
+.journal-post-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.journal-post-card h3 {
+    padding: 1rem 1rem 0;
+    margin: 0;
+    font-size: 1.25rem;
+    color: var(--color-primary-text);
+}
+
+.journal-post-card .post-date {
+    padding: 0 1rem;
+    font-size: 0.85rem;
+    color: var(--color-text);
+}
+
+.journal-post-card .post-content {
+    padding: 0 1rem 1rem;
+    max-height: 100px;
+    overflow: hidden;
+    mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+}
+
+/* --- Section Édition --- */
+.editor-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#journal-title-input,
+#journal-content-textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: var(--border-radius-input);
+    border: 1px solid var(--color-border);
+    background-color: var(--color-input-bg);
+    color: var(--color-input-text);
+}
+
+#journal-content-textarea {
+    min-height: 300px;
+}
+
+.controls-editor,
+.regenerate-controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.draft-preview {
+    border-top: 1px solid var(--color-border);
+    margin-top: 2rem;
+    padding-top: 2rem;
+}
+
+.draft-preview img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--border-radius-card);
+    margin-top: 1rem;
+}
+
+/* --- Section Historique --- */
+.historique-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.timeline-item {
+    padding: 1.5rem;
+    border-left: 3px solid var(--color-accent);
+    position: relative;
+    background: var(--color-background-card);
+    border-radius: var(--border-radius-card);
+    box-shadow: var(--box-shadow-card);
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    top: 1.5rem;
+    left: -12px;
+    width: 15px;
+    height: 15px;
+    background-color: var(--color-accent);
+    border-radius: 50%;
+}
+
+.timeline-item h4 {
+    margin-top: 0;
+    color: var(--color-primary-text);
+}
+
+.timeline-item .timeline-date {
+    font-size: 0.9rem;
+    color: var(--color-text);
+    margin-bottom: 1rem;
+}
