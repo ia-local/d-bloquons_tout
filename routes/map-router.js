@@ -1,27 +1,46 @@
-// Fichier : routes/map-router.js
+// Fichier: routes/map-router.js
+
 const express = require('express');
 const router = express.Router();
 const path = require('path');
 const fs = require('fs/promises');
 
-// Defining the correct path to the data files (pour référence future)
-const DATABASE_FILE_PATH = path.join(__dirname, '..', 'data', 'database.json');
+// 🛑 Chemin vers les données réelles de manifestations (Basé sur votre structure)
+const MANIFESTATIONS_FILE_PATH = path.join(__dirname, '..', 'docs', 'src', 'json', 'map', 'manifestation_points.json'); 
+// OU utilisez le fichier spécifique que vous voulez exposer, par exemple :
+// const MANIFESTATIONS_FILE_PATH = path.join(__dirname, '..', 'docs', 'src', 'json', 'map', 'manifestation_points_2_octobre.json');
+
+// Fonction utilitaire pour lire le fichier (similaire à celle de serveur.js)
+async function getMapDataFile(filePath) {
+    try {
+        const data = await fs.readFile(filePath, 'utf8');
+        return JSON.parse(data);
+    } catch (error) {
+        if (error.code === 'ENOENT' || error instanceof SyntaxError) {
+             // Utilisation d'un fichier par défaut pour garantir que l'API ne crash pas
+            return []; 
+        }
+        throw error;
+    }
+}
+
 
 /**
- * 🛑 Cette route a été retirée car la logique de catégorisation
- * et le chargement des fichiers JSON est géré directement par
- * le client (fichier public/src/js/map.js) via fetch/Promise.all.
- * * Si vous voulez ajouter une API dynamique plus tard, utilisez ce fichier:
- * * router.get('/api/custom-map-query', async (req, res) => {
- * // Logique d'API serveur ici
- * res.json({ message: "API Map customisée" });
- * });
+ * [GET] /map/data/manifestations
+ * Renvoie les points de manifestations pour affichage sur la carte.
  */
-
-// Route de base (ne fait rien d'autre que d'être un point de montage)
-router.get('/', (req, res) => {
-    // Peut rediriger ou renvoyer un message d'API simple
-    res.status(200).json({ status: "OK", message: "Map router is active, but core data is loaded client-side." });
+router.get('/data/manifestations', async (req, res) => {
+    try {
+        // Nous allons utiliser un fichier générique pour l'exemple
+        const manifestations = await getMapDataFile(MANIFESTATIONS_FILE_PATH);
+        res.status(200).json(manifestations);
+    } catch (error) {
+        console.error("Erreur lors du chargement des données de manifestations:", error);
+        res.status(500).json({ error: "Échec de la récupération des données de la carte." });
+    }
 });
+
+// Ajoutez ici d'autres routes /map/... si nécessaire
+// router.get('/data/cameras', ...);
 
 module.exports = router;

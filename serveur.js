@@ -25,12 +25,14 @@ const reseauRouter = require('./routes/reseauRouter.js');
 const journalRouter = require('./routes/journalRouter.js');
 const democratieRouter = require('./routes/democratie.js');
 const telegramBot = require('./routes/telegramRouter.js'); 
-const userRouter = require('./routes/userRouter'); 
+const userRouter = require('./routes/userRouter.js'); 
+const chronologyRouter = require('./routes/chronologyRouter.js');
+const mediaRouter = require('./routes/mediaRouter.js'); 
 const google = require('googleapis').google;
 const writeQueue = Promise.resolve();
 // --- Importation des Routeurs ---
-const revendicationsRouter = require('./routes/revendicationsRouter');
-const actionsRouter = require('./routes/actionsRouter');
+const revendicationsRouter = require('./routes/revendicationsRouter.js');
+const actionsRouter = require('./routes/actionsRouter.js');
 let isWriting = false;
 
 // --- DÉFINITIONS ---
@@ -486,6 +488,10 @@ app.use('/reforme', reformeRouter);
 app.use('/smartContract', smartContractRouter);
 app.use('/democratie', democratieRouter);
 app.use('/reseau', reseauRouter);
+
+app.use('/api/beneficiaries', userRouter);
+app.use('/api/chronology', chronologyRouter);
+app.use('/api/media', mediaRouter); // ⬅️ AJOUTER CETTE LIGNE
 
 // ------------------------------------------------
 // 3. MONTAGE DES ROUTEURS MODULAIRES

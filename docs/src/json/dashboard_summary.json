@@ -1,0 +1,18 @@
+{ 
+    "totalTransactions": 4528, 
+    "activeAlerts": 12, 
+    "caisseSolde": 154800.75, 
+    "boycottCount": 56, 
+    "ricCount": 3, 
+    "beneficiaryCount": 1250, 
+    "monthlyAllocation": 123.84, 
+    "estimatedManifestantCount": 3400,
+    "prefectureCount": 5,
+    "telegramGroupCount": 8,
+    "mairiesCount": 3,
+    "roundaboutCount": 10,
+    "universityCount": 4,
+    "carrefourCount": 1,
+    "bankCount": 2,
+    "tvaCommerceCount": 7
+}

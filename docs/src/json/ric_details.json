@@ -1,0 +1,18 @@
+{
+    "title": "Le Référendum d'Initiative Citoyenne (RIC)",
+    "definition": "Le RIC est un instrument de démocratie directe permettant aux citoyens de proposer, d'adopter, de rejeter ou d'abroger une loi, voire de modifier la Constitution.",
+    "intro_modal": "Le Référendum d'Initiative Citoyenne (RIC) : Le Cœur de notre Démocratie !",
+    "conclusion_modal": "C'est la garantie que notre voix sera directement entendue et respectée. Nous organisons des sondages sur le revendications/actions régulièrement et des débats au sein du bot pour recueillir votre opinion et votre soutien sur le RIC. Utilisez la commande /ric pour participer !",
+    "types": [
+        { "name": "RIC Législatif", "desc": "Permet aux citoyens de proposer, amender ou adopter des lois.", "detail": "Le RIC législatif permet d'introduire, de modifier ou d'adopter des lois ordinaires. C'est l'outil le plus courant..." },
+        { "name": "RIC Abrogatoire", "desc": "Permet aux citoyens de supprimer une loi déjà existante.", "detail": "Le RIC abrogatoire donne le droit au peuple de révoquer une loi en vigueur..." },
+        { "name": "RIC Constituant", "desc": "Permet aux citoyens de modifier la Constitution (le plus puissant).", "detail": "Le RIC constituant est la forme la plus puissante..." },
+        { "name": "RIC Révocatoire", "desc": "Permet aux citoyens de destituer un élu...", "detail": "Le RIC révocatoire est un mécanisme de contrôle permanent sur les élus." }
+    ],
+    "separation_of_powers": [
+        { "power": "Pouvoir Juridique (l'Initiative)", "icon": "fas fa-lightbulb", "description": "Permettre à tout citoyen de porter l'initiative du référendum.", "details": "C'est l'étape où le citoyen soumet formellement la question..." },
+        { "power": "Pouvoir Législatif (le Vote)", "icon": "fas fa-vote-yea", "description": "Chaque citoyen est dans l'exercice plein de son droit de vote sur l'initiative proposée.", "details": "Le vote s'effectue en ligne..." },
+        { "power": "Pouvoir Exécutif (l'Application/le Contrôle)", "icon": "fas fa-user-tie", "description": "Déterminer les modalités d'application et de surveillance par un corps citoyen.", "details": "Un tirage au sort d'un minimum de 10 personnes..." }
+    ],
+    "manifestoLink": "https://ia-local.github.io/d-bloquons_tout/docs/src/pages/reforme.html"
+}

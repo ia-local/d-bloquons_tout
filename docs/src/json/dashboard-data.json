@@ -1,0 +1,12 @@
+{
+    "totalRecettes": 154800.75,
+    "totalDepenses": 62500.00,
+    "nombreBeneficiaires": 500,
+    "distributionAllocation": {
+        "100": 150,
+        "1000": 300,
+        "5000": 50
+    },
+    "recettesParSource": { "TVA": 100000, "Donations": 54800.75 },
+    "tresorerie": 92300.75
+}

@@ -23,9 +23,10 @@ async function loadChronology() {
     if (container.hasLoaded) return;
     
     try {
-        // Récupération des données via le mock dans app.js
+        // Récupération des données via l'API (ou le mode de secours)
         const events = await window.fetchData('/api/chronology/events');
         
+        // Sécurité: Si fetchData a renvoyé [] (tableau vide), la condition est remplie.
         if (!events || events.length === 0) {
             container.innerHTML = `<h2 class="font-red">⌛ Chronologie</h2><p>Aucun événement clé trouvé.</p>`;
             container.hasLoaded = true;
@@ -34,6 +35,7 @@ async function loadChronology() {
 
         // 🛑 STOCKAGE DES DONNÉES GLOBALES ET TRI
         window.CHRONOLOGY_EVENTS = events;
+        // Le .sort() ne causera plus d'erreur car events est garanti être un Array
         events.sort((a, b) => new Date(b.start_date) - new Date(a.start_date));
 
         let html = `
@@ -123,32 +125,39 @@ window.initMap = async function() {
 
 async function loadGeeTiles() {
     const alertsElement = document.getElementById('realtime-alerts');
-    alertsElement.textContent = "📡 Connexion à Google Earth Engine (Simulé)...";
+    alertsElement.textContent = "📡 Connexion à Google Earth Engine...";
     try {
+        // L'URL de GEE doit inclure les paramètres nécessaires
         const geeData = await window.fetchData('/api/gee/tiles/COPERNICUS/S2_SR_HARMONIZED?bands=B4,B3,B2&cloud_percentage=5');
+        
         if (geeData.mapid && geeData.token) {
             L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-                attribution: `Satellite: ${geeData.satelliteName}`,
+                attribution: `Satellite: ${geeData.satelliteName || 'S2_SR_HARMONIZED'}`,
                 opacity: 0.5,
                 zIndex: 100,
                 maxNativeZoom: 14 
             }).addTo(window.globalMap);
-            alertsElement.textContent = `✅ Couche Satellite simulée chargée.`;
+            alertsElement.textContent = `✅ Couche Satellite chargée.`;
         } else {
-            alertsElement.textContent = `⚠️ GEE : ${geeData.error || "Réponse invalide."}`;
+            alertsElement.textContent = `⚠️ GEE : ${geeData.error || "Réponse invalide (API). Vérifiez le serveur."}`;
         }
     } catch (error) {
-        alertsElement.textContent = "❌ Échec de l'initialisation GEE (Simulé).";
-        console.error("Échec de la connexion à l'API GEE (Simulé):", error);
+        alertsElement.textContent = "❌ Échec de l'initialisation GEE (Réseau).";
+        console.error("Échec de la connexion à l'API GEE:", error);
     }
 }
 
 async function loadManifestationPoints() {
     try {
+        // Récupération des points via l'API (ou le mode de secours)
         const pointsData = await window.fetchData('/map/data/manifestations'); 
+        
+        // Sécurité: Si pointsData n'est pas un tableau valide, utiliser un tableau vide
+        const points = pointsData || [];
+        
         let videoCount = 0;
         
-        pointsData.forEach(point => {
+        points.forEach(point => {
             if (point.lat && point.lon) {
                 const marker = L.circleMarker([point.lat, point.lon], {
                     radius: 8,
@@ -171,12 +180,12 @@ async function loadManifestationPoints() {
         
         const currentAlert = document.getElementById('realtime-alerts');
         if(currentAlert) {
-             currentAlert.textContent = `${currentAlert.textContent} | Points: ${pointsData.length} (Vidéo: ${videoCount})`;
+             currentAlert.textContent = `${currentAlert.textContent} | Points: ${points.length} (Vidéo: ${videoCount})`;
         }
 
 
     } catch (error) {
-        console.error("Échec du chargement des points de manifestation (Simulé):", error);
+        console.error("Échec du chargement des points de manifestation:", error);
     }
 }
 
@@ -184,19 +193,26 @@ async function loadManifestationPoints() {
 
 window.loadDashboardData = async function() {
     const grid = document.getElementById('dashboard-grid');
+    if (!grid) return;
+
     // Si la grille a déjà été chargée, on ne la recharge pas (sauf si nécessaire)
     if (grid.hasLoaded) return; 
     
     grid.innerHTML = '<p class="font-yellow">Connexion et agrégation des données...</p>';
 
     try {
-        const [summaryData, utmiData, smartContractData] = await Promise.all([
+        // 🛑 TOUS LES APPELS API SONT MAINTENANT SÉPARÉS ET UTILISENT fetchData
+        const [summaryData, utmiData, smartContractData, pointsData] = await Promise.all([
             window.fetchData('/api/dashboard/summary'),
             window.fetchData('/api/dashboard/utmi-insights'),
-            window.fetchData('/smartContract/api/dashboard-data')
+            window.fetchData('/smartContract/api/dashboard-data'),
+            // 🛑 AJOUT DE LA RÉCUPÉRATION DES POINTS DE MANIFESTATION ICI POUR LE COMPTE
+            window.fetchData('/map/data/manifestations') 
         ]);
 
-        const totalPoints = window.MOCK_DATA['/map/data/manifestations'].length;
+        // Sécurité : Assurer que les listes sont des tableaux pour le .length
+        const points = pointsData || [];
+        const totalPoints = points.length;
 
         const metrics = [
             { title: "Solde Caisse Manifeste", value: `${(summaryData.caisseSolde || 0).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}`, desc: `Allocation Est. : ${(summaryData.monthlyAllocation || 0).toFixed(2)} €/bénéficiaire` },
@@ -218,8 +234,9 @@ window.loadDashboardData = async function() {
         grid.hasLoaded = true; 
         
     } catch (error) {
-        console.error("Erreur lors du chargement du tableau de bord (Simulé):", error);
-        grid.innerHTML = `<p class="font-red">❌ Échec de la connexion aux métriques API (Simulé).</p>`;
+        // L'erreur est maintenant bien traitée par fetchData, nous utilisons les valeurs par défaut (0 ou {})
+        console.error("Erreur lors du chargement du tableau de bord (Final):", error);
+        grid.innerHTML = `<p class="font-red">❌ Échec de la connexion aux métriques API (Vérifiez le serveur ou les fichiers JSON de secours).</p>`;
     }
 };
 
@@ -227,7 +244,8 @@ window.loadDashboardData = async function() {
 
 window.loadTelegramContent = function() {
     const container = document.getElementById('telegram-content-container');
-    const telegramData = window.MOCK_TELEGRAM_DATA;
+    // 🛑 UTILISATION DE LA VARIABLE GLOBALE CORRECTE
+    const telegramData = window.TELEGRAM_DATA; 
 
     if (container.hasLoaded) return; 
 
@@ -288,7 +306,9 @@ window.loadTelegramContent = function() {
             commandRenderer
         );
     } else {
-        listContainer.innerHTML = '<tr><td colspan="2" class="font-red">Erreur: Script de pagination non chargé.</td></tr>';
+        // Rendu des commandes brutes si pagination.js est manquant
+        listContainer.innerHTML = telegramData.commands.map(item => commandRenderer(item)).join('');
+        controlsContainer.innerHTML = '<tr><td colspan="2" class="font-red">Avertissement: Script de pagination non chargé. Affichage de toutes les commandes.</td></tr>';
     }
 
     container.hasLoaded = true;

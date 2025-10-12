@@ -14,7 +14,6 @@ window.initializeModalHandling = function() {
     const modal = document.getElementById('global-modal');
     const modalContentContainer = document.getElementById('modal-content-container');
     const closeButton = document.getElementById('modal-close-btn');
-    // Le ricModalButton n'est pas sélectionné ici car il est géré dans ric.js
 
     if (!modal || !modalContentContainer || !closeButton) {
         console.error("Erreur critique: Les éléments de la modale sont introuvables.");
@@ -37,6 +36,8 @@ window.initializeModalHandling = function() {
     };
 
     const getRICData = () => {
+        // Cette fonction devrait idéalement lire des données mises en cache ou faire un fetch ciblé
+        // Pour l'instant, elle retourne le mock structuré
         return window.MOCK_DATA && window.MOCK_DATA['/api/ric/data'] 
             ? window.MOCK_DATA['/api/ric/data'] 
             : { 
@@ -49,6 +50,42 @@ window.initializeModalHandling = function() {
                 separation_of_powers: []
             };
     };
+    
+    // --- NOUVEAU: Contenu de Modale pour les Cartes QG ---
+    const getHQDetailContent = (key) => {
+        switch(key) {
+            case 'finances':
+                return {
+                    title: "Détail : Trésorerie du Mouvement",
+                    icon: "fas fa-euro-sign",
+                    content: `<p>Aperçu des mouvements de fonds, y compris les allocations UTMi, le solde de la caisse principale et le statut du Smart Contract.</p><p class="font-yellow">**Fonctionnalité complète :** Affichage des transactions récentes et du tableau de ventilation des dépenses (Simulé).</p><div style="text-align: center; margin-top: 20px;"><button class="btn btn-primary" onclick="alert('Module de Trésorerie en cours de développement.')">Accéder au Journal Comptable</button></div>`
+                };
+            case 'revendications':
+                return {
+                    title: "Détail : Moteur de la Démocratie",
+                    icon: "fas fa-balance-scale",
+                    content: `<p>Statut détaillé de chaque initiative citoyenne (RICs et Pétitions), y compris les seuils de validation et les prochaines échéances.</p><p class="font-yellow">**Prochaine étape :** Intégration du système de vote sécurisé par blockchain pour les propositions soumises.</p>`
+                };
+            case 'actions':
+                return {
+                    title: "Détail : Logistique des Actions",
+                    icon: "fas fa-hammer",
+                    content: `<p>Tableau de bord logistique pour le suivi en temps réel des actions sur le terrain (rassemblements, blocages) et l'efficacité des boycotts commerciaux ciblés.</p><p class="font-red">**Alerte :** 3 actions critiques en attente de validation légale.</p>`
+                };
+            case 'users':
+                return {
+                    title: "Détail : Gestion des Utilisateurs (CVNU)",
+                    icon: "fas fa-users",
+                    content: `<p>Analyse de la démographie des bénéficiaires et des militants (CVNU). Permet de cibler les zones à faible engagement et de coordonner les compétences disponibles.</p><p class="font-yellow">**Gamification :** Les 100 meilleurs CVNU sont éligibles pour les postes de coordination locale.</p>`
+                };
+            default:
+                return {
+                    title: "Détail QG Inconnu",
+                    icon: "fas fa-question-circle",
+                    content: `<p class='font-red'>Le détail pour la clé '${key}' est introuvable.</p>`
+                };
+        }
+    };
 
     // --- Logique principale de gestion des actions (handleUserAction) ---
     
@@ -58,6 +95,20 @@ window.initializeModalHandling = function() {
 
         switch (action) {
             
+            // 🛑 NOUVEAU CAS: Affichage des détails du Tableau de Bord QG
+            case 'dashboard-detail':
+                const hqDetail = getHQDetailContent(detailKey);
+                title = hqDetail.title;
+                content = `
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <i class="${hqDetail.icon}" style="font-size: 2.5rem; color: var(--color-accent-red);"></i>
+                    </div>
+                    <div class="content-detail-hq">
+                        ${hqDetail.content}
+                    </div>
+                `;
+                break;
+                
             case 'ric-detail':
                 const ricDataDetail = getRICData();
                 const ricType = ricDataDetail.types[parseInt(detailKey)]; 
@@ -109,8 +160,9 @@ window.initializeModalHandling = function() {
                 
             case 'ric-form':
                 title = "🗳️ Proposer un nouveau RIC";
-                const formTemplate = window.MOCK_DATA['/api/ric/form-template'];
-                content = formTemplate || "<p class='font-red'>Erreur: Template de formulaire non chargé. Vérifiez app.js.</p>";
+                // Ceci nécessite que la variable soit définie (ex: dans app.js ou ric.js)
+                const formTemplate = window.RIC_FORM_TEMPLATE; 
+                content = formTemplate || "<p class='font-red'>Erreur: Template de formulaire non chargé. Vérifiez app.js/ric.js.</p>";
                 break;
                 
             case 'cvnu':
@@ -143,6 +195,9 @@ window.initializeModalHandling = function() {
                     ricForm.addEventListener('submit', (e) => {
                         e.preventDefault();
                         console.log("Formulaire RIC soumis ! (Action simulée)");
+                        // Ici, vous enverriez les données à l'API POST /api/rics
+                        
+                        // Simulation de succès
                         window.closeModal();
                         window.openModal("✅ Initiative soumise", "<p>Votre proposition de RIC a été enregistrée. Elle sera soumise à l'étape de validation juridique citoyenne.</p>");
                     });

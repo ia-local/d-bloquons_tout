@@ -1,0 +1,6 @@
+[
+    { "id": "m-001", "name": "Rassemblement", "city": "Paris", "lat": 48.8566, "lon": 2.3522, "type": "Prefecture", "count": 1200, "video_link": "https://www.youtube.com/watch?v=mock_video_paris" },
+    { "id": "m-002", "name": "Rond-Point", "city": "Lyon", "lat": 45.7578, "lon": 4.8320, "type": "Rassemblement", "count": 500, "video_link": null },
+    { "id": "m-003", "name": "Blocage", "city": "Marseille", "lat": 43.2965, "lon": 5.3813, "type": "Blocage", "count": 850, "video_link": null },
+    { "id": "m-004", "name": "Boycott Carrefour", "city": "Bordeaux", "lat": 44.8378, "lon": -0.5792, "type": "Boycott", "count": 200, "video_link": "https://www.youtube.com/watch?v=mock_video_bordeaux" }
+]

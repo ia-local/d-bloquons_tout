@@ -1,111 +1,140 @@
-// Fichier : docs/dashboard.js (VERSION FINALE)
-
-// Logique de rendu des données sur la page "Tableau de Bord Stratégique" (/dashboard)
-
-window.loadDashboardData = async function() {
-    const dashboardGrid = document.getElementById('dashboard-grid');
-    dashboardGrid.innerHTML = '<p class="font-yellow">⏳ Chargement des métriques...</p>';
-
-    try {
-        // --- 1. Récupération des données ---
-        // 🛑 Appel au NOUVEL ENDPOINT D'API pour le compte utilisateur
-        const userCountData = await window.fetchData('/api/beneficiaries/count'); 
-        
-        const summaryData = await window.fetchData('/api/dashboard/summary');
-        const smartContractData = await window.fetchData('/smartContract/api/dashboard-data');
-
-        // Utilisation du compte utilisateur obtenu
-        const totalUsers = userCountData.count || 0; 
-        
-        // --- 2. Construction des cartes de métriques ---
-        const metrics = [
-            // 🛑 Affiche le compte réel/mocké de l'API
-            { title: "Citoyens enregistrés", value: totalUsers, icon: "fas fa-users" }, 
-            
-            { title: "Manifestants estimés", value: summaryData.estimatedManifestantCount || 0, icon: "fas fa-person-booth" },
-            { title: "Alertes Critiques", value: summaryData.activeAlerts || 0, icon: "fas fa-exclamation-triangle", color: "font-red" },
-            { title: "RIC Actifs", value: summaryData.ricCount || 0, icon: "fas fa-balance-scale" },
-            { title: "Transactions Totales", value: summaryData.totalTransactions || 0, icon: "fas fa-exchange-alt" },
-            { title: "Actions de Boycott", value: summaryData.boycottCount || 0, icon: "fas fa-store-slash" },
-            { title: "Allocation Mensuelle CVNU", value: `${summaryData.monthlyAllocation?.toFixed(2) || 'N/A'} €`, icon: "fas fa-hand-holding-usd" }
-        ];
-
-        // --- 3. Construction du HTML du Dashboard ---
-        let htmlContent = `
-            <h3 class="font-yellow" style="margin-top: 0;">Synthèse des Métriques Clés</h3>
-            <div class="feature-grid" id="metrics-summary-grid">
-                ${metrics.map(metric => `
-                    <div class="feature-card">
-                        <h4><i class="${metric.icon}"></i> ${metric.title}</h4>
-                        <div class="metric-value ${metric.color || ''}">${metric.value}</div>
-                    </div>
-                `).join('')}
-            </div>
-            
-            <h3 class="font-yellow" style="margin-top: 30px;">Trésorerie & Caisse de Manifestation</h3>
-            <div class="feature-grid" id="treasury-grid">
-                <div class="feature-card" style="border-color: #00ff00;">
-                    <h4><i class="fas fa-wallet"></i> Trésorerie Nette (Smart Contract)</h4>
-                    <div class="metric-value" style="color: #00ff00;">${smartContractData.tresorerie?.toFixed(2) || 'N/A'} €</div>
-                </div>
-                <div class="feature-card">
-                    <h4><i class="fas fa-dollar-sign"></i> Recettes Totales</h4>
-                    <div class="metric-value">${smartContractData.totalRecettes?.toFixed(2) || 'N/A'} €</div>
-                </div>
-                <div class="feature-card">
-                    <h4><i class="fas fa-receipt"></i> Dépenses Totales</h4>
-                    <div class="metric-value font-red">${smartContractData.totalDepenses?.toFixed(2) || 'N/A'} €</div>
-                </div>
-                <div class="feature-card">
-                    <h4><i class="fas fa-hand-holding-heart"></i> Bénéficiaires Actifs</h4>
-                    <div class="metric-value">${smartContractData.nombreBeneficiaires || 0}</div>
-                </div>
-            </div>
-
-            <h3 class="font-yellow" style="margin-top: 30px;">Mon Compte Citoyen (Exemple)</h3>
-            <div class="feature-grid" id="user-status-grid">
-                ${createUserStatusCard()}
-            </div>
-        `;
-        
-        dashboardGrid.innerHTML = htmlContent;
-
-    } catch (error) {
-        console.error("Erreur lors du chargement des données du Dashboard:", error);
-        dashboardGrid.innerHTML = '<p class="font-red">❌ Erreur lors de la récupération des données. Veuillez vérifier l\'API ou les mocks.</p>';
-    }
-}
+// docs/dashboard.js - Contient la logique de chargement et de rendu du Tableau de Bord QG (Quartier Général)
 
 /**
- * Fonction simple pour simuler ou afficher l'état d'un utilisateur logué.
+ * Charge toutes les métriques du Tableau de Bord en effectuant des appels API asynchrones et parallèles.
+ * Cette fonction lit les données agrégées pour le QG (Finances, Revendications, Actions, Utilisateurs).
  */
-function createUserStatusCard() {
-    // Simule les données d'un utilisateur "logué"
-    const user = { 
-        name: "Citoyen(ne) Anonyme (ID: 123456)", 
-        cv_score: 95, 
-        status: "Actif / Plaignant",
-        last_action: "Vote RIC 'Abrogation Plomb' (2h ago)"
-    };
+window.loadDashboardData = async function() {
+    const grid = document.getElementById('dashboard-grid');
+    if (!grid) return;
+
+    if (grid.hasLoaded) return; 
     
-    return `
-        <div class="feature-card" style="grid-column: span 2 / auto; text-align: left; background: var(--color-ui-content);">
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
-                <h4 style="color: var(--color-text);"><i class="fas fa-user-check"></i> ${user.name}</h4>
-                <div class="metric-value" style="font-size: 1.2rem; color: var(--color-accent-yellow);">CVNU Score: ${user.cv_score}%</div>
+    grid.innerHTML = '<p class="font-yellow">Connexion au Quartier Général de données...</p>';
+
+    try {
+        // 🛑 CHARGEMENT ASYNCHRONE ET PARALLÈLE DE TOUTES LES DONNÉES CLÉS (7 appels API)
+        const [
+            summaryData, 
+            utmiData, 
+            smartContractData, 
+            pointsData,
+            financesData,
+            revendicationsData,
+            actionsData,
+            usersData
+        ] = await Promise.all([
+            // Données primaires (ancienne structure)
+            window.fetchData('/api/dashboard/summary'),
+            window.fetchData('/api/dashboard/utmi-insights'),
+            window.fetchData('/smartContract/api/dashboard-data'),
+            window.fetchData('/map/data/manifestations'), 
+            
+            // Nouvelles données QG (gestion des données)
+            window.fetchData('/api/hq/finances'),
+            window.fetchData('/api/hq/revendications'),
+            window.fetchData('/api/hq/actions'),
+            window.fetchData('/api/hq/users')
+        ]);
+
+        // Sécurité : Assurer que les listes sont des tableaux pour le .length
+        const points = pointsData || [];
+        const totalPoints = points.length;
+        
+        // --- SECTION 1: METRICS PRINCIPALES (BASÉES SUR L'ANCIEN RENDU) ---
+        const primaryMetrics = [
+            { title: "Solde Caisse Manifeste", value: `${(summaryData.caisseSolde || 0).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}`, desc: `Allocation Est. : ${(summaryData.monthlyAllocation || 0).toFixed(2)} €/bénéficiaire` },
+            { title: "Impact UTMi (Score)", value: (utmiData.totalUTMI || 0).toFixed(2), desc: `Score d'Unité et de Transformation du Mouvement` },
+            { title: "Manifestants Est.", value: (summaryData.estimatedManifestantCount || 0).toLocaleString('fr-FR'), desc: `${totalPoints} Points de Rassemblement` },
+            { title: "Recettes Contrat (Sim.)", value: `${(smartContractData.totalRecettes || 0).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}`, desc: `Dépenses (Allocations): ${(smartContractData.totalDepenses || 0).toFixed(2)} €` },
+            { title: "Boycotts Actifs", value: summaryData.boycottCount || 0, desc: `Alertes financières : ${summaryData.activeAlerts || 0}` },
+            { title: "RICs Actifs", value: summaryData.ricCount || 0, desc: `Citoyens enregistrés : ${summaryData.beneficiaryCount || 0}` }
+        ];
+
+        let html = '<h2 class="font-yellow" style="text-align: center; margin-bottom: 20px;">Tableau de Bord : Indicateurs Clés</h2>';
+        
+        // Affichage des metrics principaux
+        html += '<div id="primary-metrics" class="feature-grid">';
+        html += primaryMetrics.map(m => `
+            <div class="feature-card insight-card">
+                <h3 style="color: inherit; font-size: 1.2rem; margin-bottom: 5px;">${m.title}</h3>
+                <p class="metric-value font-red"><b>${m.value}</b></p>
+                <p class="metric-desc">${m.desc}</p>
             </div>
-            <p style="color: var(--color-text);">Statut : <strong>${user.status}</strong></p>
-            <p style="color: var(--color-text);">Dernière action : ${user.last_action}</p>
-        </div>
-        <div class="feature-card" style="background: var(--color-ui-content);">
-             <h4><i class="fas fa-piggy-bank"></i> Droits Civiques (UTMI)</h4>
-             <div class="metric-value font-yellow">8945.54</div>
-             <p style="font-size: 0.8em; color: var(--color-text);">Valeur UTMI totale accumulée.</p>
-        </div>
-        <div class="feature-card" style="background: var(--color-ui-content);">
-             <h4><i class="fas fa-landmark"></i> Évasion Fiscale Contrôlée</h4>
-             <div class="metric-value font-red">5200.00 €</div>
-             <p style="font-size: 0.8em; color: var(--color-text);">Total des taxes collectées via le Smart Contract.</p>
-        </div>
-    `;
-}
+        `).join('');
+        html += '</div>';
+
+        
+        // --- SECTION 2: QG DE GESTION (AGRÉGATION DES NOUVELLES DONNÉES HQ) ---
+        
+        const qgCards = [
+            {
+                title: "Trésorerie & Allocations",
+                color: 'var(--color-accent-yellow)',
+                metrics: [
+                    { label: "Solde Général", value: (financesData.caisseSolde || 0).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' }) },
+                    { label: "Bénéficiaires", value: (financesData.beneficiaryCount || 0).toLocaleString('fr-FR') },
+                    { label: "Trésorerie Contrat", value: (financesData.tresorerieSmartContract || 0).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' }) }
+                ],
+                desc: `Dernière mise à jour : ${new Date(financesData.lastUpdate || Date.now()).toLocaleTimeString('fr-FR')}`
+            },
+            {
+                title: "Revendications & Démocratie",
+                color: 'var(--color-accent-red)',
+                metrics: [
+                    { label: "RICs Actifs", value: (revendicationsData.ricsActifs || 0) },
+                    { label: "Pétitions en Cours", value: (revendicationsData.petitionsEnCours || 0) },
+                    { label: "Votes Totaux RIC", value: (revendicationsData.totalVotesRIC || 0).toLocaleString('fr-FR') }
+                ],
+                desc: `Dernier RIC : ${revendicationsData.dernierRic || 'N/A'}`
+            },
+            {
+                title: "Actions & Logistique",
+                color: 'var(--color-primary-green)',
+                metrics: [
+                    { label: "Actions Totales", value: (actionsData.actionsTotales || 0) },
+                    { label: "Actions En Cours", value: (actionsData.actionsEnCours || 0) },
+                    { label: "Boycotts Commerciaux", value: (actionsData.boycottsCommerce || 0) }
+                ],
+                desc: `Boycotts actifs totaux : ${actionsData.boycottsActifs || 0}`
+            },
+            {
+                title: "Gestion Utilisateurs (CVNU)",
+                color: 'var(--color-blue)',
+                metrics: [
+                    { label: "Bénéficiaires Enreg.", value: (usersData.beneficiairesEnregistres || 0).toLocaleString('fr-FR') },
+                    { label: "CVNU Complets", value: (usersData.cvnuComplets || 0) },
+                    { label: "Score CV Moyen", value: (usersData.scoreMoyen || 0).toFixed(2) }
+                ],
+                desc: `Militants actifs : ${usersData.militantsActifs || 0}`
+            }
+        ];
+
+        html += '<h2 class="font-red" style="text-align: center; margin-top: 40px; margin-bottom: 20px;">QG de Gestion des Données</h2>';
+        html += '<div id="hq-management-cards" class="feature-grid">';
+        
+        // Rendu des 4 nouvelles cartes QG
+        html += qgCards.map(card => `
+            <div class="feature-card hq-card" style="border-top: 5px solid ${card.color};">
+                <h3 style="color: ${card.color}; font-size: 1.3rem; margin-bottom: 10px;">${card.title}</h3>
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                    ${card.metrics.map(m => `
+                        <li style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px dotted #444;">
+                            <span style="font-size: 0.9em;">${m.label} :</span>
+                            <span style="font-weight: bold; color: #fff;">${m.value}</span>
+                        </li>
+                    `).join('')}
+                </ul>
+                <p class="metric-desc" style="margin-top: 10px; font-size: 0.8em; color: #aaa;">${card.desc}</p>
+            </div>
+        `).join('');
+        html += '</div>';
+
+        grid.innerHTML = html;
+        grid.hasLoaded = true; 
+        
+    } catch (error) {
+        console.error("Erreur critique lors du chargement du tableau de bord:", error);
+        grid.innerHTML = `<p class="font-red">❌ Échec de la connexion aux API du QG (Vérifiez le serveur et les routes HQ).</p>`;
+    }
+};

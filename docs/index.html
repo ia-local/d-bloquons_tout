@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="styles.css"> 
     <link rel="stylesheet" href="modals.css"> 
     <link rel="stylesheet" href="dashboard.css"> 
+    <link rel="stylesheet" href="map-style.css"> 
 </head>
 <body>
     
@@ -103,15 +104,15 @@
                     </div>
             </div>
             
-            <div id="map-page" class="page">
-                <h2>🗺️ Carte Tactique (GEE & Données Live Sim.)</h2>
-                <div id="map-container">
-                    <div id="map"></div>
-                    <div id="realtime-alerts">
-                        📡 Initialisation GEE...
-                    </div>
+        <div id="map-page" class="page">
+            <h2>🗺️ Carte Tactique (GEE & Données Live Sim.)</h2>
+            <div id="map-container">
+                <div id="map"></div>
+                <div id="realtime-alerts">
+                    📡 Initialisation GEE...
                 </div>
             </div>
+        </div>
             
             <div id="dashboard-page" class="page">
                 <div class="content" style="padding: 20px;">
@@ -167,13 +168,28 @@
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-    <script src="theme.js"></script> 
-    <script src="pagination.js"></script> 
-    <script src="dashboard.js"></script> 
     
-    <script src="modalGestion.js"></script> 
-    <script src="app.js"></script> 
-    <script src="home.js"></script> 
-    <script src="ric.js"></script> 
+    <!-- 🛑 SCRIPTS DE BASE ET UTILITAIRES -->
+    <script type="module" src="theme.js"></script> 
+    <script type="module" src="pagination.js"></script> 
+    <script type="module" src="modalGestion.js"></script> 
+    <!-- 🛑 LE SCRIPT app.js DOIT ÊTRE CHARGÉ AVANT LES PAGES qui l'utilisent -->
+    <script type="module" src="app.js"></script> 
+    
+    <!-- 🛑 LOGIQUE DES PAGES (Doivent être chargées APRÈS app.js) -->
+    <script type="module" src="home.js"></script> 
+    <script type="module" src="ric.js"></script> 
+    <script type="module" src="dashboard.js"></script> <!-- CHARGÉ ICI POUR LA FONCTIONNALITÉ -->
+    
+    <!-- SCRIPTS SPÉCIFIQUES À LA CARTE ET AUX FORMULAIRES -->
+    <script type="module" src="src/js/layerMap.js"></script>
+    <script type="module" src="src/js/layerLegend.js"></script>
+    <script type="module" src="src/js/layerModal.js"></script>
+    <script type="module" src="src/js/layerUser.js"></script>
+    <script type="module" src="src/js/modalActions.js"></script>
+    <script type="module" src="src/js/modalLegend.js"></script>
+    <script type="module" src="src/js/satellite.js"></script>
+    <script type="module" src="src/js/boycottageForm.js"></script>
+    <script type="module" src="src/js/ipCam.js"></script>
 </body>
 </html>

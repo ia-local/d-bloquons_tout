@@ -1,0 +1,9 @@
+{ 
+    "totalUTMI": 8945.54, 
+    "totalTaxAvoided": 5200.00, 
+    "taxCollectionSummary": {
+        "tax_tfa": { "name": "Taxe sur les Transactions Financières (TFA)", "utmi_value": 3000.00 },
+        "tax_vat": { "name": "Taxe sur la Valeur Ajoutée", "utmi_value": 5945.54 },
+        "tax_production": { "name": "Taxe Production", "utmi_value": 0.00 }
+    } 
+}
