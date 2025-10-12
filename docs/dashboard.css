@@ -1,0 +1,86 @@
+/* Fichier : docs/src/css/dashboard.css */
+
+/* ==========================================================================
+   1. STRUCTURE DE GRILLE
+   ========================================================================== */
+
+/* La grille générique (définie en partie dans styles.css, mais renforcée ici) */
+.feature-grid {
+    display: grid;
+    /* Ajuste la grille pour afficher 2 colonnes sur mobile, et plus sur desktop */
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* ==========================================================================
+   2. STYLES DES CARTES (FEATURE-CARD)
+   ========================================================================== */
+
+.feature-card {
+    /* Hérite du style Post-it sombre/contrasté de styles.css */
+    
+    background: var(--color-ui-content); /* Gris de contenu */
+    border: 3px solid var(--color-accent-yellow); 
+    padding: 15px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    color: var(--color-text); /* Texte clair */
+    
+    /* Retire la rotation excessive pour le dashboard pour plus de lisibilité */
+    transform: rotate(0deg); 
+    transition: transform 0.2s, box-shadow 0.2s;
+    height: 100%; /* Assure que toutes les cartes ont la même hauteur dans la rangée */
+}
+
+.feature-card:hover {
+    transform: scale(1.02); /* Léger zoom au survol */
+    box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+}
+
+.feature-card h4 {
+    color: var(--color-accent-red); /* Titres en Rouge */
+    font-size: 0.9em;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+/* ==========================================================================
+   3. VALEURS ET COULEURS SPÉCIFIQUES
+   ========================================================================== */
+
+.metric-value {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: var(--color-accent-yellow); /* Valeurs principales en Jaune */
+    display: block; /* S'assure que la valeur prend sa propre ligne */
+    margin-top: 5px;
+}
+
+/* Texte rouge pour les alertes critiques (utilisé pour les dépenses/erreurs) */
+.font-red { 
+    color: var(--color-accent-red) !important; 
+}
+
+/* Style spécifique pour la trésorerie nette (succès/vert) */
+.feature-card .metric-value[style*="#00ff00"] {
+    color: #00ff00 !important; /* Vert vif pour le solde positif */
+}
+
+/* --- Styles du Compte Citoyen (user-status-grid) --- */
+
+#user-status-grid .feature-card {
+    text-align: left;
+    /* Couleur de fond discrète pour les blocs de statut */
+    background: var(--color-ui-content); 
+    border-color: var(--color-accent-red); /* Bordure rouge pour l'engagement personnel */
+    padding: 20px;
+}
+
+/* Assure le span sur les colonnes pour les grands blocs (Desktop) */
+@media (min-width: 768px) {
+    #user-status-grid .feature-card:first-child {
+        grid-column: span 2;
+    }
+}

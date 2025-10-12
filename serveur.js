@@ -25,6 +25,7 @@ const reseauRouter = require('./routes/reseauRouter.js');
 const journalRouter = require('./routes/journalRouter.js');
 const democratieRouter = require('./routes/democratie.js');
 const telegramBot = require('./routes/telegramRouter.js'); 
+const userRouter = require('./routes/userRouter'); 
 const google = require('googleapis').google;
 const writeQueue = Promise.resolve();
 // --- Importation des Routeurs ---
@@ -657,7 +658,7 @@ app.get('/api/gee/tiles/:id', async (req, res) => {
         res.status(500).json({ error: `Échec GEE (ID: ${imageCollectionId}): ${errorMessage}. Erreur critique avant l'appel getMap.` });
     }
 });
-
+app.use('/api/beneficiaries', userRouter); 
 // Routes API pour le dashboard et les services (RÉINTÉGRATION COMPLÈTE)
 app.get('/api/dashboard/utmi-insights', async (req, res) => {
     try {
@@ -922,6 +923,70 @@ app.post('/api/blockchain/recevoir-fonds', async (req, res) => {
     res.status(200).json({ message: `Fonds de ${amount}€ reçus avec succès sur le smart contract (simulé).` });
 });
 app.post('/api/blockchain/decaisser-allocations', async (req, res) => { res.status(200).json({ message: 'Décaissement des allocations en cours...' }); });
+// --- GESTION CRUD COMPLÈTE DES UTILISATEURS / BÉNÉFICIAIRES ---
+
+// 1. READ ALL (Lister tous les bénéficiaires/citoyens)
+app.get('/api/beneficiaries', (req, res) => {
+    // Retourne le tableau de tous les bénéficiaires
+    res.json(database.beneficiaries || []);
+});
+
+// 2. READ ONE (Obtenir un bénéficiaire par ID)
+app.get('/api/beneficiaries/:id', (req, res) => {
+    const beneficiary = (database.beneficiaries || []).find(b => b.id === req.params.id);
+    if (!beneficiary) {
+        return res.status(404).json({ error: 'Citoyen/Bénéficiaire non trouvé.' });
+    }
+    res.json(beneficiary);
+});
+
+// 3. UPDATE (Mettre à jour un bénéficiaire/citoyen par ID)
+app.put('/api/beneficiaries/:id', async (req, res) => {
+    const { id } = req.params;
+    const updates = req.body;
+    const index = (database.beneficiaries || []).findIndex(b => b.id === id);
+
+    if (index === -1) {
+        return res.status(404).json({ error: 'Citoyen/Bénéficiaire non trouvé pour la mise à jour.' });
+    }
+
+    // S'assurer que l'ID n'est pas modifié involontairement
+    delete updates.id; 
+    
+    // Fusionner les données existantes avec les nouvelles (e.g., changer le 'name' ou le 'cv_score')
+    database.beneficiaries[index] = { 
+        ...database.beneficiaries[index], 
+        ...updates 
+    };
+
+    try {
+        await writeDatabaseFile();
+        res.json({ message: 'Compte mis à jour avec succès.', beneficiary: database.beneficiaries[index] });
+    } catch (error) {
+        res.status(500).json({ error: 'Erreur lors de la sauvegarde de la base de données.' });
+    }
+});
+
+// 4. DELETE (Supprimer un bénéficiaire/citoyen par ID)
+app.delete('/api/beneficiaries/:id', async (req, res) => {
+    const initialLength = (database.beneficiaries || []).length;
+    
+    // Filtrer le tableau pour retirer l'élément
+    database.beneficiaries = (database.beneficiaries || []).filter(b => b.id !== req.params.id);
+
+    if (database.beneficiaries.length < initialLength) {
+        try {
+            await writeDatabaseFile();
+            // Code 204: Succès, mais pas de contenu à retourner
+            res.status(204).end(); 
+        } catch (error) {
+            res.status(500).json({ error: 'Erreur lors de la sauvegarde de la base de données après suppression.' });
+        }
+    } else {
+        res.status(404).json({ error: 'Citoyen/Bénéficiaire non trouvé pour la suppression.' });
+    }
+});
+
 app.post('/api/beneficiaries/register', async (req, res) => {
     const { name, email, cv_score } = req.body;
     if (!name || !email || cv_score === undefined) { return res.status(400).json({ error: 'Données manquantes pour l\'inscription.' }); }

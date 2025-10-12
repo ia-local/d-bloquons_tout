@@ -2433,6 +2433,26 @@
         }
       ],
       "creatorId": 5715486909
+    },
+    {
+      "id": "0a211e23-e750-4e9a-8d2c-84e3dd334ea4",
+      "messageId": 1589,
+      "question": "Quel sujet devrions-nous aborder dans le prochain live ?",
+      "options": [
+        {
+          "text": "Justice Sociale",
+          "votes": 0
+        },
+        {
+          "text": "Justice Fiscale",
+          "votes": 0
+        },
+        {
+          "text": "Justice Climatique",
+          "votes": 0
+        }
+      ],
+      "creatorId": 5715486909
     }
   ],
   "organizers": [],
