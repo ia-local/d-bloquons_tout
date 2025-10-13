@@ -29,8 +29,8 @@
 
 /* 🛑 BOUTON PRINCIPAL (FAB) : Couleur Rouge Vif (Action/Danger) */
 #road-map {
-    width: 60px;
-    height: 60px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     /* Utilise la variable CSS, avec un fallback */
     background-color: var(--color-red, #FF4136); 
@@ -154,8 +154,8 @@
     }
 
     #road-map {
-        width: 40px; /* Bouton standard */
-        height: 60px;
+        width: 42px; /* Bouton standard */
+        height: 42px;
         font-size: 1.5rem; /* Icône standard */
     }
 
