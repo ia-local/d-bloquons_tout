@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="dashboard.css"> 
     <link rel="stylesheet" href="chatbot.css"> 
     <link rel="stylesheet" href="map-style.css"> 
+    <link rel="stylesheet" href="item-map.css"> 
     <link rel="stylesheet" href="profile.css"> 
 </head>
 <body>
@@ -201,9 +202,29 @@
     </div>
     
 
-        <button id="road-map" class="fab-btn" title="Ouvrir l'Assistant IA" onclick="window.handleUserAction('chatbot')">
-        <i class="fa-solid fa-map"></i>
+<div id="road-map-container">
+    <button id="road-map" class="map-btn" title="Ouvrir les options de carte">
+        <i class="fas fa-layer-group"></i>
     </button>
+
+    <nav id="map-layers-menu" class="map-layers-dropdown hidden">
+        <button data-map-layer-toggle="manifestations" title="Afficher les points de ralliement" class="map-item">
+            <i class="fas fa-bullhorn"></i>
+        </button>
+        
+        <button data-map-layer-toggle="gee-satellite" title="Afficher les tuiles satellite GEE" class="map-item">
+            <i class="fas fa-satellite"></i>
+        </button>
+        
+        <button data-map-action="recharge" title="Recharger Énergie" class="map-item">
+            <i class="fas fa-bolt"></i>
+        </button>
+        
+        <button data-map-action="scan" title="Scanner le secteur" class="map-item">
+            <i class="fas fa-search-location"></i>
+        </button>
+    </nav>
+</div>
     <template id="ric-description-template">
     <div class="ric-details-modal-content">
         <p id="ric-modal-description" class="font-light" style="margin-bottom: 15px;"></p>
@@ -244,13 +265,14 @@
     <script type="module" src="modalGestion.js"></script> 
     <script type="module" src="modalTelegram.js"></script>
     <script type="module" src="modalProfile.js"></script>  
+    <script type="module" src="map-item.js"></script>  
     <script type="module" src="missions.js"></script> 
     <script type="module" src="app.js"></script> 
     <script src="map.js"></script> 
     <script type="module" src="home.js"></script> 
     <script type="module" src="ric.js"></script> 
     <script type="module" src="dashboard.js"></script> 
-        <script type="module" src="modalRic.js"></script> 
+    <script type="module" src="modalRic.js"></script> 
     <script type="module" src="src/js/layerMap.js"></script>
     <script type="module" src="src/js/layerLegend.js"></script>
     <script type="module" src="src/js/layerModal.js"></script>

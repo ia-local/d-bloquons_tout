@@ -207,5 +207,19 @@
     "content": "Je suis prêt à aider ! Qu'est-ce que tu veux faire ou discuter ?",
     "persona": "generaliste",
     "timestamp": "2025-10-12T23:34:15.600Z"
+  },
+  {
+    "id": "de86f0d5-870d-4562-95e6-c005fbac7798",
+    "role": "user",
+    "content": "bonjour",
+    "persona": "vous",
+    "timestamp": "2025-10-12T23:50:20.259Z"
+  },
+  {
+    "id": "2ad870e1-b926-43f6-a975-50d23c8c72f7",
+    "role": "ai",
+    "content": "Bonjour ! Comment puis-je vous aider aujourd'hui ? Avez-vous besoin d'un article, d'une description ou d'une idée créative ?",
+    "persona": "generateur",
+    "timestamp": "2025-10-12T23:50:20.529Z"
   }
 ]

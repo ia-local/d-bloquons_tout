@@ -162,17 +162,13 @@ window.fetchData = async function(url, method = 'GET', body = null) {
 
 
 // --- 3. LOGIQUE DE NAVIGATION (setupNavigation) ---
-// docs/app.js - Mise à jour du bloc 3. LOGIQUE DE NAVIGATION (setupNavigation)
-
-// ... (Début du fichier inchangé) ...
-
-// --- 3. LOGIQUE DE NAVIGATION (setupNavigation) ---
 document.addEventListener('DOMContentLoaded', function() {
     
     const navLinks = document.querySelectorAll('[data-page]');
     const userMenuToggle = document.getElementById('user-menu-toggle');
     const userMenuDropdown = document.getElementById('user-menu-dropdown');
     
+    // Logique du menu utilisateur (inchangée)
     if (userMenuToggle && userMenuDropdown) { 
         userMenuToggle.addEventListener('click', (e) => {
             e.stopPropagation(); 
@@ -205,6 +201,57 @@ document.addEventListener('DOMContentLoaded', function() {
              });
         });
     }
+
+    // 🚀 BLOC CRITIQUE : Logique pour le menu radial des couches de la carte
+    const mapLayersToggle = document.getElementById('road-map'); 
+    const mapLayersMenu = document.getElementById('map-layers-menu'); 
+    
+    if (mapLayersToggle && mapLayersMenu) {
+        mapLayersToggle.addEventListener('click', (e) => {
+            // Empêche l'événement d'être capturé par d'autres gestionnaires de clic globaux
+            e.stopPropagation(); 
+            
+            // 1. Bascule l'affichage du menu
+            mapLayersMenu.classList.toggle('hidden');
+            
+            // 2. Bascule la classe pour l'animation/rotation du bouton principal (fab-open)
+            mapLayersToggle.classList.toggle('fab-open'); 
+        });
+
+        // Fermer le menu si l'utilisateur clique n'importe où ailleurs
+        document.addEventListener('click', (e) => {
+            if (!mapLayersMenu.contains(e.target) && !mapLayersToggle.contains(e.target)) {
+                mapLayersMenu.classList.add('hidden');
+                mapLayersToggle.classList.remove('fab-open'); // Fermer aussi l'état du FAB
+            }
+        });
+
+        // 🛑 Gestion des actions/bascules dans le menu des couches (réfère à map-item.js)
+        mapLayersMenu.querySelectorAll('button').forEach(button => {
+             button.addEventListener('click', (e) => {
+                 e.preventDefault();
+                 e.stopPropagation(); 
+                 
+                 const action = button.getAttribute('data-map-action');
+                 const layerToggle = button.getAttribute('data-map-layer-toggle');
+                 
+                 // Fermer le menu après l'action
+                 mapLayersMenu.classList.add('hidden'); 
+                 mapLayersToggle.classList.remove('fab-open'); 
+                 
+                 // Les fonctions sont définies dans map-item.js et sont globales
+                 if (action && window.handleMapAction) {
+                     window.handleMapAction(action);
+                 } else if (layerToggle && window.toggleMapLayer) {
+                     window.toggleMapLayer(layerToggle);
+                 } else {
+                     console.error(`Erreur: La logique de carte est absente (map-item.js n'est pas chargé ou les fonctions manquent).`);
+                 }
+             });
+        });
+    }
+
+
     // Exposer showPage globalement (utile pour missions.js)
     window.showPage = function(pageName) {
         navLinks.forEach(link => {
@@ -240,7 +287,6 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         // --- DÉCLENCHEMENT DU RENDU SPÉCIFIQUE ---
-        // Le code ici n'appelle pas showPage à nouveau, la boucle est stoppée.
         
         if (pageName === 'map') {
             safeRenderCall(() => {

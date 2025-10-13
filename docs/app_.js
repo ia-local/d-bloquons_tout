@@ -176,6 +176,65 @@ document.addEventListener('DOMContentLoaded', function() {
     window.showPage = function(pageName) {
         // ... (Logique de navigation et safeRenderCall inchangée) ...
 
+    // Logique du menu utilisateur (inchangée)
+    if (userMenuToggle && userMenuDropdown) { 
+        userMenuToggle.addEventListener('click', (e) => {
+            e.stopPropagation(); 
+            userMenuDropdown.classList.toggle('hidden');
+        });
+        // ... (Gestion de la fermeture du menu utilisateur inchangée) ...
+        userMenuDropdown.querySelectorAll('a').forEach(link => {
+             // ... (Gestion des actions utilisateur inchangée) ...
+        });
+    }
+
+    // 🛑 NOUVEAU BLOC : Logique pour le menu radial des couches de la carte
+    const mapLayersToggle = document.getElementById('road-map');
+    const mapLayersMenu = document.getElementById('map-layers-menu'); 
+    
+    if (mapLayersToggle && mapLayersMenu) {
+        mapLayersToggle.addEventListener('click', (e) => {
+            e.stopPropagation(); 
+            // 🛑 Bascule de la classe 'hidden' pour afficher/masquer le menu radial
+            mapLayersMenu.classList.toggle('hidden');
+        });
+
+        // Fermer le menu si l'utilisateur clique n'importe où ailleurs
+        document.addEventListener('click', (e) => {
+            if (!mapLayersMenu.contains(e.target) && !mapLayersToggle.contains(e.target)) {
+                mapLayersMenu.classList.add('hidden');
+            }
+        });
+
+        // 🛑 Gestion des actions/bascules dans le menu des couches (boutons du menu radial)
+        mapLayersMenu.querySelectorAll('button').forEach(button => {
+             button.addEventListener('click', (e) => {
+                 e.preventDefault();
+                 e.stopPropagation(); 
+                 
+                 const action = button.getAttribute('data-map-action');
+                 const layerToggle = button.getAttribute('data-map-layer-toggle');
+                 
+                 // Fermer le menu après une action
+                 mapLayersMenu.classList.add('hidden'); 
+                 
+                 if (action && window.handleMapAction) {
+                     // Gère les actions gamifiées (recharge, scan) définies dans map.js
+                     window.handleMapAction(action);
+                 } else if (layerToggle && window.toggleMapLayer) {
+                     // Gère la bascule des couches (manifestations, gee-satellite) définies dans map.js
+                     window.toggleMapLayer(layerToggle);
+                     
+                     // 💡 Mise à jour de l'état visuel du bouton de bascule
+                     button.classList.toggle('active-layer');
+                 } else {
+                     console.error(`Erreur: Fonction handleMapAction ou toggleMapLayer manquante.`);
+                 }
+             });
+        });
+    }
+
+
         const safeRenderCall = (renderFunc) => {
             try {
                 if (typeof renderFunc === 'function') {

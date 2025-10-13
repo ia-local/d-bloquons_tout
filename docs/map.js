@@ -1,4 +1,4 @@
-// docs/map.js - VERSION FINALE STABILISÉE ET GAMIFIÉE (CORRIGÉE DE L'ERREUR CRITIQUE D'ORDRE)
+// docs/map.js - VERSION FINALE STABILISÉE ET GAMIFIÉE (Logique Leaflet Core)
 
 const MAP_CONFIG = {
     DEFAULT_CENTER: [46.603354, 1.888334], 
@@ -9,108 +9,125 @@ const MAP_CONFIG = {
 let map = null; 
 window.globalMap = map;
 
+// --- VARIABLES GLOBALES DE COUCHES ---
+let manifestationLayerGroup = null; 
+let geeTileLayer = null; 
+window.mapHasManifestations = false; 
+
 // --- 1. SIMULATION DES DONNÉES JSON (MOCK DATA) ---
 const MOCK_DATA = {
-    // Données de base (pour la compatibilité avec dashboard.js)
-    '/api/dashboard/summary': { totalTransactions: 4528, activeAlerts: 12, caisseSolde: 154800.75, boycottCount: 56, ricCount: 3, beneficiaryCount: 1250, monthlyAllocation: 123.84, estimatedManifestantCount: 3400 },
-    '/api/dashboard/utmi-insights': { totalUTMI: 8945.54, totalTaxAvoided: 5200.00, taxCollectionSummary: {} },
-    '/smartContract/api/dashboard-data': { totalRecettes: 154800.75, totalDepenses: 62500.00, nombreBeneficiaires: 500, tresorerie: 92300.75 },
-    
-    // Données de la Carte (Simulé)
+    // ... (MOCK_DATA inchangé) ...
     '/map/data/manifestations': [
-        // Points de démonstration pour le filtrage par type
         { "city": "Caen", "lat": 49.183333, "lon": -0.350000, "count": 6000, "type": "Manifestation" },
         { "city": "Rennes", "lat": 48.111979, "lon": -1.681864, "count": 15000, "type": "Rassemblement" },
         { "city": "Grenoble", "lat": 45.185, "lon": 5.725, "count": 30000, "type": "Manifestation" },
         { "city": "Marseille", "lat": 43.2961, "lon": 5.3699, "count": "Plusieurs milliers", "type": "Blocage" },
         { "city": "Bordeaux", "lat": 44.8378, "lon": -0.5792, "count": 200, "type": 'Boycott' }
     ],
-    // MOCK SIMPLIFIÉ POUR LES ENDPOINTS HQ
-    '/api/hq/finances': { caisseSolde: 154800.75, beneficiaryCount: 1250 },
-    '/api/hq/revendications': { ricsActifs: 3, petitionsEnCours: 5 },
-    '/api/hq/actions': { actionsTotales: 42, boycottsCommerce: 10 },
-    '/api/hq/users': []
+    // ... (Autres MOCK_DATA inchangés) ...
 };
-// --- 1.5. NOUVEAU: COÛT DES ACTIONS (LOGIQUE DE JEU) ---
+
+// --- 1.5. COÛT DES ACTIONS (Pour analyzeTarget) ---
 const ACTION_COSTS = {
     ANALYZE_TARGET: 10,
     SCAN_SECTOR: 5,     
     RECHARGE_BASE: 50   
 };
 // --- 2. FONCTIONS DE SIMULATION ET UTILITAIRES ---
-
-// Fonction de simulation locale (inchangée)
-async function fetchData(url) { /* ... */ return {}; }
-
+// Assurez-vous que window.fetchData est définie dans app.js
+async function fetchData(url) { 
+    return MOCK_DATA[url] || {};
+}
 // Fonction de normalisation (rendue globale)
-function normalizeManifestationData(data) { /* ... */ return []; }
+function normalizeManifestationData(data) { 
+    if (Array.isArray(data)) return data;
+    if (data && Array.isArray(data.manifestation_points)) return data.manifestation_points;
+    return []; 
+}
 window.normalizeManifestationData = normalizeManifestationData;
 
 
 // --- 3. LOGIQUE D'ACTION DE TERRAIN GAMIFIÉE ---
-/**
- * Simule l'analyse d'une cible (Manifestation Point), coûtant de l'énergie.
- */
 function analyzeTarget(manifestationData) {
     if (!window.AGENT_PROFILE || typeof window.grantReward !== 'function') {
-        console.error("Erreur: Le profil d'Agent n'est pas chargé.");
+        console.error("Erreur: Le profil d'Agent ou grantReward n'est pas chargé.");
         return false;
     }
-    
     const cost = ACTION_COSTS.ANALYZE_TARGET;
-    
     if (window.AGENT_PROFILE.energy < cost) {
-        console.warn(`🚨 ENERGIE FAIBLE: Impossible d'analyser la cible. Coût: ${cost} EA, Disponible: ${window.AGENT_PROFILE.energy} EA.`);
+        console.warn(`🚨 ENERGIE FAIBLE: ${cost} EA requis.`);
         return false; 
     }
-
     window.AGENT_PROFILE.energy -= cost;
-    console.log(`🔋 ÉNERGIE CONSOMMÉE: Analyse de ${manifestationData.city}. Reste: ${window.AGENT_PROFILE.energy} EA.`);
-
     const count = typeof manifestationData.count === 'string' ? parseInt(manifestationData.count.replace(/\D/g, ''), 10) || 10 : manifestationData.count;
     const baseReward = count >= 1000 ? 50 : 10;
-    
     window.grantReward(baseReward, 5); 
-    
-    console.log(`🌟 RÉCOMPENSE: +${baseReward} UTMI et +5 EA. Niveau actuel: ${window.AGENT_PROFILE.level}.`);
-    
+    console.log(`🔋 ÉNERGIE CONSOMMÉE: Analyse de ${manifestationData.city}.`);
     return true; 
 }
 window.analyzeTarget = analyzeTarget; 
 
 
-// --- 4. FONCTIONS PRINCIPALES DE CARTE ET NAVIGATION ---
+// --- 4. GESTION DES COUCHES LEAFLET (Interface avec map-item.js) ---
 
-// 🛑 NOUVEAU : DÉFINITION DE BASE DU CONTRÔLE DE LÉGENDE SI LE FICHIER EXTERNE MANQUE
-if (typeof L !== 'undefined' && typeof L.Control.CategoryLegend === 'undefined') {
-    L.Control.CategoryLegend = L.Control.extend({
-        options: { position: 'bottomright' },
-        onAdd: function (map) {
-            const container = L.DomUtil.create('div', 'leaflet-legend-mock');
-            container.innerHTML = 'Légende (Mock)';
-            return container;
-        },
-        onRemove: function (map) {}
-    });
-    L.control.categoryLegend = function (options) {
-        return new L.Control.CategoryLegend(options);
-    };
-}
+/**
+ * 🛑 INTERFACE GLOBALE 🛑 : Bascule les couches Leaflet.
+ * Appelée par map-item.js pour contrôler l'affichage.
+ */
+window.toggleMapLayerInMapJS = function(layerName) {
+    if (map === null) {
+        console.error("Carte non initialisée. Impossible de basculer la couche.");
+        return false;
+    }
+    
+    let isCurrentlyActive;
+    
+    switch (layerName) {
+        case 'manifestations':
+            if (manifestationLayerGroup === null) {
+                // 1. Charger et initialiser le LayerGroup
+                loadManifestationPoints(); 
+                isCurrentlyActive = true; 
+            } else if (map.hasLayer(manifestationLayerGroup)) {
+                // 2. Retirer de la carte
+                map.removeLayer(manifestationLayerGroup);
+                isCurrentlyActive = false;
+            } else {
+                // 3. Ajouter à la carte
+                map.addLayer(manifestationLayerGroup);
+                isCurrentlyActive = true;
+            }
+            window.mapHasManifestations = isCurrentlyActive; 
+            console.log(`[LEAFLET] Manifestations : ${isCurrentlyActive ? 'Affichées' : 'Masquées'}`);
+            return true;
+            
+        case 'gee-satellite':
+            if (geeTileLayer === null) {
+                loadGeeTiles(); 
+                isCurrentlyActive = true;
+            } else if (map.hasLayer(geeTileLayer)) {
+                map.removeLayer(geeTileLayer);
+                isCurrentlyActive = false;
+            } else {
+                map.addLayer(geeTileLayer);
+                isCurrentlyActive = true;
+            }
+            console.log(`[LEAFLET] GEE Satellite : ${isCurrentlyActive ? 'Affichées' : 'Masquées'}`);
+            return true;
+            
+        default:
+            console.warn(`Couche Leaflet inconnue: ${layerName}`);
+            return false;
+    }
+};
 
-// Fonction Synchrone d'initialisation du DOM et des contrôles de Leaflet
+
+// --- 5. INITIALISATION DE LA CARTE ---
+
 function _initializeMapCore() {
     const mapElement = document.getElementById('map');
-    
-    if (!mapElement || typeof L === 'undefined') {
-        console.error("Échec de l'initialisation de la carte: #map ou Leaflet (L) est manquant.");
-        return; 
-    }
+    if (!mapElement || typeof L === 'undefined' || map !== null) return; 
 
-    if (map !== null) {
-        return;
-    }
-
-    // 🛑 1. CRÉATION ET DÉFINITION DE L'OBJET MAP (CORRECTION DE L'ERREUR D'ORDRE)
     map = L.map('map', {
         center: MAP_CONFIG.DEFAULT_CENTER,
         zoom: MAP_CONFIG.DEFAULT_ZOOM,
@@ -118,82 +135,91 @@ function _initializeMapCore() {
     });
     window.globalMap = map; 
 
-    // Ajout de la couche de base OSM
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributeurs'
     }).addTo(map);
 
-    // Ajout du marqueur test
     L.marker([48.8656, 2.3251]).addTo(map) 
-        .bindPopup("🎯 <b>Cible Test: Place de la Concorde</b><br>L'interface de scan est validée !").openPopup();
+        .bindPopup("🎯 <b>Cible Test: Place de la Concorde</b>").openPopup();
 
-    // 🛑 2. AJOUT DES CONTRÔLES (MAINTENANT QUE 'map' EST DÉFINI)
-    
-    // Stabilisation du contrôle de légende (utilise la version mock si l'autre n'est pas chargée)
     if (L.control.categoryLegend) {
          L.control.categoryLegend({ position: 'bottomright' }).addTo(map); 
-    } else {
-         console.warn("⚠️ Contrôle de légende manquant (L.control.categoryLegend). Vérifiez config/leaflet.js.");
     }
 }
 
-// 🛑 FONCTION window.initMap (Appelée par app.js)
 window.initMap = async function() {
-    // 1. Exécution synchrone
     _initializeMapCore();
-
     if (map === null) return;
     
-    // 2. Exécution Asynchrone des appels de données
-    setTimeout(async () => {
-        try {
-            await loadGeeTiles();
-            await loadManifestationPoints();
-        } catch (e) {
-            console.error("Erreur lors de l'appel initial aux données de carte (non bloquant):", e);
-        }
-    }, 0);
-    
-    // 3. Invalidation de la taille
+    // Invalidation de la taille (important pour les cartes masquées au chargement)
     setTimeout(() => { 
-        if (map) {
-            map.invalidateSize(); 
-        }
+        if (map) map.invalidateSize(); 
     }, 50); 
 }
 
 
-// Fonction pour ajouter les tuiles satellite (inchangée)
-async function loadGeeTiles() { /* ... */ }
+// --- 6. FONCTIONS DE CHARGEMENT ASYNCHRONE ---
 
-// Fonction de chargement des points (inchangée)
+/**
+ * Crée ou ajoute la couche de tuiles GEE (Mock).
+ */
+async function loadGeeTiles() {
+    if (map === null) return;
+    
+    if (geeTileLayer) {
+        if (!map.hasLayer(geeTileLayer)) map.addLayer(geeTileLayer);
+        return; 
+    }
+    
+    const MOCK_TILE_URL = 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png'; 
+    
+    geeTileLayer = L.tileLayer(MOCK_TILE_URL, {
+        attribution: 'OpenTopoMap'
+    });
+    
+    geeTileLayer.addTo(map);
+}
+
+/**
+ * Charge les données, crée le LayerGroup et attache les marqueurs.
+ */
 async function loadManifestationPoints() {
+    if (map === null) return;
+    
+    if (manifestationLayerGroup) {
+         if (!map.hasLayer(manifestationLayerGroup)) map.addLayer(manifestationLayerGroup);
+         return;
+    }
+
     try {
         const fetcher = window.fetchData || fetchData;
         const pointsData = await fetcher('/map/data/manifestations'); 
-        
         const points = window.normalizeManifestationData(pointsData) || [];
         
-        const currentAlert = document.getElementById('realtime-alerts');
+        manifestationLayerGroup = L.layerGroup();
+        manifestationLayerGroup.addTo(window.globalMap);
         
         points.forEach(point => {
             if (point.lat && point.lon) {
-                const marker = L.marker([point.lat, point.lon]).addTo(window.globalMap);
+                const marker = L.marker([point.lat, point.lon]);
                 
+                // Attacher la logique de Gamification
                 marker.on('click', () => {
                     const success = analyzeTarget(point);
+                    if (window.updateProfileUI) window.updateProfileUI();
+                    
                     if (success) {
-                        marker.bindPopup(`**ANALYSE DE CIBLE RÉUSSIE**<br>Ville: ${point.city}<br>Type: ${point.type}<br>Population: ${point.count}`).openPopup();
+                        marker.bindPopup(`**ANALYSE RÉUSSIE**`).openPopup();
                     } else {
-                         marker.bindPopup(`**ANALYSE REFUSÉE**: Énergie d'Action Insuffisante. (Coût: ${ACTION_COSTS.ANALYZE_TARGET} EA)`).openPopup();
-                    }
-                    if (window.updateProfileUI) {
-                        window.updateProfileUI();
+                         marker.bindPopup(`**ANALYSE REFUSÉE**: Énergie Insuffisante.`).openPopup();
                     }
                 });
+                
+                marker.addTo(manifestationLayerGroup); 
             }
         });
 
+        const currentAlert = document.getElementById('realtime-alerts');
         if(currentAlert) {
              currentAlert.textContent += ` | ${points.length} points de ralliement tracés.`;
         }

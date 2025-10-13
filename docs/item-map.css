@@ -1,0 +1,141 @@
+/* item-map.css - Menu Radial de la Carte (Final) */
+
+/* ------------------------------------------- */
+/* DÉFINITIONS DES COULEURS (Fallbacks) */
+/* Les variables CSS doivent être définies ailleurs (ex: styles.css),
+   mais les fallbacks garantissent que les couleurs s'affichent.
+*/
+:root {
+    --color-red: #FF4136;         /* Couleur d'action principale / d'urgence */
+    --color-green: #2ECC40;       /* Couleur de succès / actif */
+    --color-yellow: #FFDC00;      /* Couleur d'énergie / avertissement */
+    --color-bg-dark: #1F2833;     /* Fond sombre */
+    --color-bg-card: #3D4A5C;     /* Fond des éléments inactifs */
+    --color-text-light: #F2F4F7;  /* Texte clair */
+}
+
+/* ------------------------------------------- */
+/* 1. CONTENEUR GLOBAL ET POSITIONNEMENT DU FAB */
+/* ------------------------------------------- */
+
+#road-map-container {
+    position: fixed;
+    bottom: 80px; 
+    right: 20px;
+    z-index: 1000;
+    width: 60px;
+    height: 60px;
+}
+
+/* 🛑 BOUTON PRINCIPAL (FAB) : Couleur Rouge Vif (Action/Danger) */
+#road-map {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    /* Utilise la variable CSS, avec un fallback */
+    background-color: var(--color-red, #FF4136); 
+    color: var(--color-bg-dark, #111111);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    border: none;
+    position: absolute; 
+    bottom: 0;
+    right: 0;
+}
+
+#road-map:hover {
+    transform: scale(1.05);
+}
+
+/* 🛑 Rotation de l'icône lors de l'ouverture du menu (géré par la classe fab-open dans app.js) */
+#road-map.fab-open i {
+    transform: rotate(135deg); 
+    transition: transform 0.3s ease;
+}
+
+
+/* ------------------------------------------- */
+/* 2. MENU RADIAL (LES ITEMS SATELLITES) */
+/* ------------------------------------------- */
+
+#map-layers-menu {
+    position: absolute;
+    bottom: 0; 
+    right: 0; 
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.map-item {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    /* Couleur des items INACTIFS (gris/bleu sombre) */
+    background-color: var(--color-bg-card, #3D4A5C); 
+    color: var(--color-text-light, #F2F4F7); /* Icônes claires */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease, background-color 0.3s;
+    z-index: -1; 
+    border: 2px solid transparent; 
+}
+
+.map-item:hover {
+    transform: scale(1.1);
+    background-color: var(--color-bg-dark, #1F2833); /* Devient plus sombre au survol */
+}
+
+/* 🛑 ÉTAT ACTIF DE LA COUCHE (géré par map-item.js) : Couleur Verte (Actif/OK) */
+.map-item.active-layer {
+    background-color: var(--color-green, #2ECC40); 
+    color: var(--color-bg-dark, #111111);
+    border: 2px solid var(--color-yellow, #FFDC00); /* Bordure jaune pour l'énergie */
+    box-shadow: 0 0 15px var(--color-green, #2ECC40);
+}
+
+/* ------------------------------------------- */
+/* 3. EFFET ORBITAL - Basculé par le JS */
+/* ------------------------------------------- */
+
+#map-layers-menu:not(.hidden) .map-item {
+    opacity: 1;
+    z-index: 999; 
+}
+
+/* ITEM 1: Manifestations */
+#map-layers-menu:not(.hidden) .map-item:nth-child(1) {
+    transform: translate(-50px, -120px); 
+    transition-delay: 0.05s;
+}
+
+/* ITEM 2: Satellite */
+#map-layers-menu:not(.hidden) .map-item:nth-child(2) {
+    transform: translate(-100px, -100px); 
+    transition-delay: 0.1s;
+}
+
+/* ITEM 3: Recharge Énergie */
+#map-layers-menu:not(.hidden) .map-item:nth-child(3) {
+    transform: translate(-120px, -50px);
+    transition-delay: 0.15s;
+}
+
+/* ITEM 4: Scan Secteur */
+#map-layers-menu:not(.hidden) .map-item:nth-child(4) {
+    transform: translate(-100px, 0px);
+    transition-delay: 0.2s;
+}
