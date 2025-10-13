@@ -47,7 +47,7 @@ const bot = new Telegraf(TELEGRAM_API_KEY, {
     telegram: { webhookReply: true }
 });
 let database = {};
-
+let commands = []; // 👈 AJOUTEZ CETTE LIGNE
 // --- FONCTIONS UTILITAIRES DE BASE ---
 async function readJsonFile(filePath, defaultValue = {}) {
     try {
@@ -728,7 +728,7 @@ bot.on('message', async (ctx) => {
 
 // --- MISE À JOUR DU MENU DES COMMANDES OFFICIELLES ---
 async function setBotCommands() {
-    const commands = [
+     commands = [
         { command: 'start', description: 'Revenir au menu principal.' },
         { command: 'user', description: 'Gérer votre compte citoyen.' },
         { command: 'web', description: 'Lancer l\'Application Web Telegram (TWA).' },
@@ -760,4 +760,9 @@ async function setBotCommands() {
 // Optionnel: Appeler la fonction lors de l'initialisation du module
 setBotCommands();
 
-module.exports = bot;
+module.exports = {
+    launch: () => bot.launch(), 
+    bot: bot, 
+    commands, // La liste des commandes pour le build script
+    topicLinks: TOPIC_LINKS // Les liens des topics pour le build script
+};

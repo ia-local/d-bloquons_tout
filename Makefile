@@ -1,54 +1,71 @@
+# Cela rend les clés API disponibles pour nos commandes.
+ifneq (,$(wildcard ./.env))
+    include .env
+    export
+endif
 
+# --- CONNECTEUR 1: Versionning depuis package.json ---
+# Récupère dynamiquement la version actuelle de l'application.
+VERSION := $(shell node -p "require('./package.json').version")
 
-COMMANDE1_MSG="✨ Menu ✨"
+# --- MESSAGES standards (inchangés) ---
+serveur_MSG="✨ Lancement du serveur..."
+update_MSG="✨ Préparation de la mise à jour..."
+notify_MSG="🚀 Envoi de la notification Telegram..."
+build_MSG="🔧 Synchronisation des données commandes Telegram..."
 
-serveur_MSG="✨ Lancement du serveur✨"
-session_START_MSG="✨ start session✨"
-dev_MSG="✨ /dev mode✨"
-focus_MSG="✨ /focus mode > ✨"
-debug_MSG="✨ /mode _debug_✨"
-mode_MSG="✨ Lancement du serveur✨"
-democratie_MSG="✨ init window democratie✨"
-dashboard_MSG="✨ init window dashboard✨"
-playground_MSG="✨ init window playground✨"
-missions_MSG="✨ init window missions ✨"
-cvnu_MSG="✨ init window cvnu✨"
-smartContract_MSG="✨ init window smartContract✨"
-reseau_MSG="✨ init window reseau ✨"
-journal_MSG="✨ init window journal✨"
-tresorie_MS="✨ init window tresorie✨"
-organisation_MSG="✨ init window organisation✨"
-contacts_MSG="✨ init window contacts✨"
-map_MSG="✨ Lancement de l'application MapAscii✨"
+# --- CONNECTEUR 2: Commandes de versionning Git ---
+# Ces commandes automatisent la mise à jour de la version et les commits associés.
 
+# `make patch` -> v1.0.0 devient v1.0.1
+patch:
+	@npm version patch -m "Upgrade to %s"
+	@make notify msg="✅ Nouvelle version PATCH **$(VERSION)** publiée."
 
-democratie:
-	@echo "${democratie_MSG}";
-dashboard:
-	@echo "${dashboard_MSG}";
-playground:
-	@echo "${playground_MSG}"
-missions:
-	@echo "${missions_MSG}"
-cvnu:
-	@echo "${cvnu_MSG}"
-smartContract:
-	@echo "${smartContract_MSG}"
-reseau:
-	@echo "${reseau_MSG}"
-journal:
-	@echo "${journal_MSG}"
-tresorie:
-	@echo "${tresorie_MSG}"
-organisation:
-	@echo "${organisation_MSG}"
-contacts:
-	@echo "${contacts_MSG}"
-map:
-	@echo "${map_MSG}"
+# `make minor` -> v1.0.1 devient v1.1.0
+minor:
+	@npm version minor -m "Upgrade to %s"
+	@make notify msg="📈 Nouvelle version MINEURE **$(VERSION)** publiée avec de nouvelles fonctionnalités."
+
+# `make major` -> v1.1.0 devient v2.0.0
+major:
+	@npm version major -m "Upgrade to %s"
+	@make notify msg="🎉 NOUVELLE VERSION MAJEURE **$(VERSION)** publiée ! Des changements importants ont été apportés."
+
+# --- CONNECTEUR 3: Cible de notification Telegram ---
+# Envoie un message au groupe d'organisateurs en utilisant l'API Telegram via curl.
+# Utilise les variables chargées depuis le fichier .env.
+notify:
+	@echo "${notify_MSG}"
+	@curl -s -X POST https://api.telegram.org/bot$(TELEGRAM_API_KEY)/sendMessage \
+	-d chat_id=$(ORGANIZER_GROUP_ID_CHAT) \
+	-d text="$(msg)" \
+	-d parse_mode="Markdown" > /dev/null
+
+# --- CONNECTEUR 4: Synchronisation Frontend/Backend ---
+# Exécute un script Node.js pour générer les données Telegram pour le frontend.
+build-js:
+	@echo "${build_MSG}"
+	@node build/session_messages.js
+
+# --- Commandes de Workflow Mises à Jour ---
 serveur:
 	@echo "${serveur_MSG}"
 	@node serveur.js
+
+# La commande 'update' va maintenant synchroniser les données avant de commiter.
+update: build-js
+	@echo "${update_MSG}"
+	@git add .
+	@git commit -m "update synchronisation et modifications générales"
+	@git push
+	@echo "✨ Mise à jour terminée et poussée sur GitHub."
+
+# Les autres commandes (dev, focus, etc.) peuvent rester les mêmes
+# ...
+
+
+COMMANDE1_MSG="✨ Menu ✨"
 
 menu:
 	@echo "Welcom To cycliq Economical system."
@@ -86,20 +103,6 @@ brainstorm:
 	@echo "✨ Session terminée✨"
 
 update_MSG="✨ Mise en état du dossier sur github✨"
-update:
-	@echo "${update_MSG}"
-	@git add .
-	@git commit -m "update beta"
-	@git push
-	@echo "✨ Mise à jour terminée✨"
-
-session:
-	@echo "${session_START_MSG}"
-	@git add .
-	@git commit -m "Session"
-	@git push
-	@echo "✨ Mise à jour terminée✨"
-
 dev:
 	@echo "${dev_MSG}"
 	@git add .

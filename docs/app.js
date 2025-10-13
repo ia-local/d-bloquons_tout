@@ -49,11 +49,6 @@ window.grantReward = grantReward;
 window.checkLevelUp = checkLevelUp; 
 window.getNextLevelThreshold = getNextLevelThreshold;
 
-window.AGENT_PROFILE = {
-    level: 1, experience: 0, energy: 100, maxEnergy: 100, utmiCredits: 0, 
-    missionsCompleted: 0, ricMissionSubmitted: false, dashboardVeilleCompleted: false 
-};
-
 // --- 1. DONNÉES STATIQUES (MAPPAGE API & PROFIL) ---
 window.TELEGRAM_DATA = {
     topicLinks: {
@@ -101,7 +96,10 @@ const API_TO_FILE_MAP = {
     '/api/chat/message': 'chat_response',
     '/api/gee/tiles/COPERNICUS/S2_SR_HARMONIZED': 'gee_mock_data'
 };
-window.AGENT_PROFILE = { /* ... */ };
+window.AGENT_PROFILE = {
+    level: 1, experience: 0, energy: 100, maxEnergy: 100, utmiCredits: 0, 
+    missionsCompleted: 0, ricMissionSubmitted: false, dashboardVeilleCompleted: false 
+};
 
 
 // 🛑 FONCTION DE SECOURS: Tente de charger le JSON local (Correction du chemin relative)
@@ -113,7 +111,7 @@ async function attemptLocalFallback(originalUrl, originalMethod) {
         const fileNameRoot = API_TO_FILE_MAP[cleanUrl] || API_TO_FILE_MAP[originalUrl]; 
 
         if (fileNameRoot) {
-            // 🛑 CORRECTION : Utiliser le chemin relatif "./src/json/" (plus robuste pour les serveurs statiques)
+            // 🛑 CORRECTION CRITIQUE : Utiliser le chemin relatif "./src/json/" 
             const localPath = `./src/json/${fileNameRoot}.json`; 
             try {
                 const localResponse = await fetch(localPath);

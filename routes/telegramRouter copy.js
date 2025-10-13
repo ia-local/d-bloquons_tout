@@ -272,5 +272,7 @@ setBotCommands();
 
 module.exports = {
     launch: () => bot.launch(), 
-    bot: bot 
+    bot: bot, 
+    commands, // La liste des commandes pour le build script
+    topicLinks: TOPIC_LINKS // Les liens des topics pour le build script
 };
