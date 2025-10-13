@@ -147,22 +147,22 @@
     
     /* 🛑 Bouton Principal (FAB) : Taille Standard pour Desktop */
     #road-map-container {
-        bottom: 80px; 
+        bottom: 60px; 
         right: 20px;
-        width: 60px; /* Retour à la taille initiale */
+        width: 40px; /* Retour à la taille initiale */
         height: 60px;
     }
 
     #road-map {
-        width: 60px; /* Bouton standard */
+        width: 40px; /* Bouton standard */
         height: 60px;
         font-size: 1.5rem; /* Icône standard */
     }
 
     /* Items Satellites : Taille Standard et Rayon Standard */
     .map-item {
-        width: 50px; /* Items satellites standard */
-        height: 50px;
+        width: 42px; /* Items satellites standard */
+        height: 42px;
         font-size: 1.2rem;
     }
 
