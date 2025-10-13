@@ -139,3 +139,47 @@
     transform: translate(-100px, 0px);
     transition-delay: 0.2s;
 }
+/* ------------------------------------------- */
+/* 3. MEDIA QUERY (ÉCRANS > 768px, Desktop) */
+/* ------------------------------------------- */
+
+@media (min-width: 768px) {
+    
+    /* 🛑 Bouton Principal (FAB) : Taille Standard pour Desktop */
+    #road-map-container {
+        bottom: 80px; 
+        right: 20px;
+        width: 60px; /* Retour à la taille initiale */
+        height: 60px;
+    }
+
+    #road-map {
+        width: 60px; /* Bouton standard */
+        height: 60px;
+        font-size: 1.5rem; /* Icône standard */
+    }
+
+    /* Items Satellites : Taille Standard et Rayon Standard */
+    .map-item {
+        width: 50px; /* Items satellites standard */
+        height: 50px;
+        font-size: 1.2rem;
+    }
+
+    /* 🛑 EFFET ORBITAL DESKTOP : Rayon plus grand (ex: 120px max) */
+    #map-layers-menu:not(.hidden) .map-item:nth-child(1) {
+        transform: translate(-50px, -120px); 
+    }
+    
+    #map-layers-menu:not(.hidden) .map-item:nth-child(2) {
+        transform: translate(-100px, -100px); 
+    }
+    
+    #map-layers-menu:not(.hidden) .map-item:nth-child(3) {
+        transform: translate(-120px, -50px);
+    }
+    
+    #map-layers-menu:not(.hidden) .map-item:nth-child(4) {
+        transform: translate(-100px, 0px);
+    }
+}
