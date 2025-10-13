@@ -28,6 +28,7 @@ const SATELLITES_DATA_FILE = path.join(DATA_DIR, 'satellites.json');
 const LOG_FILE_PATH = path.join(DATA_DIR, 'logs.json');
 const EE_PRIVATE_KEY_PATH = './private-key.json'; // Clé GEE synchrone
 const ACTIONS_DATA_FILE_PATH = path.join(__dirname, '..', 'docs', 'src', 'json', 'map', 'actions.json');
+const MANIFESTATION_DATA_FILE_PATH = path.join(__dirname, '..', 'data', 'manifestation_data.json');
 
 // --- CONFIGURATION AI ---
 const GROQ_MODEL = "llama-3.1-8b-instant";
@@ -82,6 +83,7 @@ module.exports = {
     DOCS_DIR,
     DYNAMIC_JSON_DIR,
     DASHBOARD_SUMMARY_OUTPUT,
-    DEEPSEEK_MODEL // 🛑 EXPOSÉ
+    DEEPSEEK_MODEL, // 🛑 EXPOSÉ
+    MANIFESTATION_DATA_FILE_PATH
     // ... exportez toutes les autres constantes (CATEGORIES_TO_CLASSIFY, etc.)
 };

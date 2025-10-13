@@ -3,7 +3,7 @@ const fs = require('fs').promises;
 const path = require('path');
 
 // On importe UNIQUEMENT les données exportées de notre routeur
-const { commands, topicLinks } = require('../routes/telegramRouter.js');
+const { commands, topicLinks } = require('../services/dataService.js');
 
 async function build() {
     console.log("Génération du fichier de données Telegram pour le frontend...");

@@ -6,8 +6,6 @@ const path = require('path');
 const fs = require('fs/promises');
 const Groq = require('groq-sdk');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
-const dataService = require('../services/dataService.js'); // 👈 AJOUTEZ CETTE LIGNE
-
 const axios = require('axios'); // Nécessaire pour la commande /user
 
 // --- CONSTANTES ET VARIABLES GLOBALES ---
@@ -117,40 +115,13 @@ Le RIC est l'outil essentiel pour redonner le pouvoir aux citoyens. Il se décli
 `;
 }
 async function getManifestationInfo() {
-  try {
-    const data = await dataService.getAllData();
-    const infoManif = data.manifestation;
-
-    return `📢 **Infos sur la manifestation :**\n\n` +
-                  `**🗓️ Date :** ${infoManif.date}\n` +
-                  `**📍 Lieu :** ${infoManif.lieu}\n` +
-                  `**🎯 Objectif :** ${infoManif.objectifs}`;
-  } catch (error) {
-    console.error("Erreur pour récupérer les infos de la manif via le service:", error);
-    return "Impossible de récupérer les informations sur la manifestation pour le moment.";
-  }
+  const info = `Voici quelques informations sur la manifestation : \n\n` +
+                `**Date :** 10 Septembre 2025\n` +
+                `**Objectif :** Grève Générale pour la Justice Sociale\n` +
+                `**Points de ralliement :** Paris (Place de la République), Lyon (Place Bellecour), Marseille (Vieux-Port). D'autres lieux seront annoncés prochainement.`;
+  return info;
 }
-// Exemple de commande CREATE
-bot.command('addevent', async (ctx) => {
-    const text = ctx.message.text.split(' ').slice(1).join(' ');
-    if (!text) {
-        return ctx.reply('Usage: /addevent [description de event 910 ]');
-    }
 
-    try {
-        const eventData = {
-            description: text,
-            lieu: "Via Telegram",
-            log: null,
-            lat: null
-        };
-        const newEvent = await dataService.addElement('evenements', eventData);
-        ctx.reply(`✅ Événement ajouté avec succès !\nID: ${newEvent.id}`);
-    } catch (error) {
-        console.error(error);
-        ctx.reply(`❌ Erreur lors de l'ajout de l'événement : ${error.message}`);
-    }
-});
 // --- CONTEXTES ET PROMPTS IA ---
 const PLAINTE_PENALE_CONTEXT = `
 Objet : Plainte Pénale contre X (Fonctionnaires d'État et Responsables Politiques) pour Infractions Criminelles et Abus d'Autorité (2017–2025).

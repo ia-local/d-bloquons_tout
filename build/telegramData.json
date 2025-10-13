@@ -1,0 +1,56 @@
+{
+  "manifestation": {
+    "date": "11 octobre 2025",
+    "lieu": "Paris et d'autres villes françaises",
+    "motifs": "Dénoncer la vente d'armes à Israël par la France et demander au gouvernement français de cesser ces ventes",
+    "objectifs": "Exprimer l'opposition à la politique d'armement de la France et demander un changement de politique pour soutenir la cause palestinienne"
+  },
+  "evenements": [
+    {
+      "description": "La manifestation 'Arrête de vendre des Armes à Israél Macron Arrête' a rassemblé des centaines de personnes dans les rues de Paris et d'autres villes françaises.",
+      "lieu": "Paris et d'autres villes françaises",
+      "log": 48.8566,
+      "lat": 2.3522
+    },
+    {
+      "description": "Les participants ont brandi des pancartes et des drapeaux pour exprimer leur solidarité avec la cause palestinienne et leur opposition à la politique d'armement de la France.",
+      "lieu": "Paris et d'autres villes françaises",
+      "log": 48.8566,
+      "lat": 2.3522
+    }
+  ],
+  "impact": [
+    {
+      "description": "Le mouvement a suscité un débat public en France sur la politique d'armement de la France et ses implications dans la région.",
+      "lieu": "France",
+      "log": 46.2276,
+      "lat": 2.2137
+    },
+    {
+      "description": "Même si on peut considérer le mouvement comme un échec, il a cependant contribué à sensibiliser l'opinion publique à ces questions et à les placer sur l'agenda politique.",
+      "lieu": "France",
+      "log": 46.2276,
+      "lat": 2.2137
+    }
+  ],
+  "questions": [
+    {
+      "description": "Quels sont les résultats concrets du mouvement ?",
+      "lieu": "Aucun",
+      "log": null,
+      "lat": null
+    },
+    {
+      "description": "Comment a réagi le gouvernement français à ce mouvement ?",
+      "lieu": "Aucun",
+      "log": null,
+      "lat": null
+    },
+    {
+      "description": "Quels sont les prochains pas à prendre pour obtenir un changement de politique ?",
+      "lieu": "Aucun",
+      "log": null,
+      "lat": null
+    }
+  ]
+}
