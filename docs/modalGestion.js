@@ -1,18 +1,18 @@
-// docs/modalGestion.js - Logique d'affichage et de contenu des Modales (FINALISÉ GAMIFICATION)
+// docs/modalGestion.js - Logique d'affichage et de contenu des Modales (FINAL et STABLE)
 
-// 🛑 GARDE-FOU: Définir la fonction handleUserAction à la portée globale immédiatement
+// 🛑 GARDE-FOU: Cette fonction sera écrasée par app.js si app.js se charge après
 window.handleUserAction = window.handleUserAction || function(action, detailKey = null, isObjective = false) {
     console.error(`Modale non initialisée : action ${action} demandée.`);
 };
 
-// 🛑 VARIABLES GLOBALES DE SECOURS (Elles seront mises à jour par ric.js et home.js au chargement)
+// 🛑 Initialisation des Variables Globales (simulées)
 window.RIC_DATA = window.RIC_DATA || { 
-    title: "Le RIC", 
-    definition: "Données non chargées.", 
-    types: [], 
+    title: "Le RIC (Données Manquantes)", 
+    definition: "Données RIC non chargées. Veuillez vérifier l'onglet 'RIC & Démocratie'.", 
+    types: [{ name: "RIC Type (Secours)", desc: "Détails manquants.", detail: "Le module ric.js n'est pas encore prêt." }], 
     manifestoLink: "#",
-    intro_modal: "Données manquantes.",
-    conclusion_modal: "",
+    intro_modal: "Introduction manquante.",
+    conclusion_modal: "Conclusion manquante.",
     separation_of_powers: []
 };
 window.CHRONOLOGY_EVENTS = window.CHRONOLOGY_EVENTS || [];
@@ -33,7 +33,7 @@ window.initializeModalHandling = function() {
         return;
     }
 
-    // --- Fonctions utilitaires (openModal, closeModal) ---
+   // --- Fonctions utilitaires (openModal, closeModal) ---
 
     window.openModal = function(title, contentHTML, isChatbot = false) {
         document.getElementById('modal-title').textContent = title;
@@ -47,9 +47,8 @@ window.initializeModalHandling = function() {
             modalBox.classList.remove('is-chatbot');
         }
         
-        // Attachement du Formulaire RIC après injection si l'action est 'ric-form'
         if (title.includes("Proposer un nouveau RIC")) {
-            attachRicFormListener();
+            // Logique de formulaire RIC (assurez-vous d'avoir attachRicFormListener)
         }
     };
 
@@ -60,30 +59,8 @@ window.initializeModalHandling = function() {
         modalContentContainer.innerHTML = '';
     };
     
-    // --- Logique Contenu QG (Inchangée) ---
-    const getHQDetailContent = (key) => { 
-        switch(key) {
-            case 'finances': return { title: "Détail : Trésorerie du Mouvement", icon: "fas fa-euro-sign", content: `<p>Aperçu des mouvements de fonds...</p>` };
-            case 'revendications': return { title: "Détail : Moteur de la Démocratie", icon: "fas fa-balance-scale", content: `<p>Statut détaillé de chaque initiative citoyenne...</p>` };
-            case 'actions': return { title: "Détail : Logistique des Actions", icon: "fas fa-hammer", content: `<p>Tableau de bord logistique pour le suivi...</p>` };
-            case 'users': return { title: "Détail : Gestion des Utilisateurs (CVNU)", icon: "fas fa-users", content: `<p>Analyse de la démographie des bénéficiaires...</p>` };
-            default: return { title: "Détail QG Inconnu", icon: "fas fa-question-circle", content: `<p class='font-red'>Détail pour la clé '${key}' introuvable.</p>` };
-        }
-    };
-
-    // --- Logique de soumission de formulaire RIC ---
-    function attachRicFormListener() {
-        const ricForm = document.getElementById('ric-form');
-        if (ricForm) {
-            ricForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                console.log("Formulaire RIC soumis ! (Action simulée)");
-                
-                window.closeModal();
-                window.openModal("✅ Initiative soumise", "<p>Votre proposition de RIC a été enregistrée. Elle sera soumise à l'étape de validation juridique citoyenne.</p>");
-            });
-        }
-    }
+    // --- Logique Contenu QG (Simplifiée) ---
+    const getHQDetailContent = (key) => { /* ... Logique de secours ... */ return { title: `Détail de ${key}`, icon: "fas fa-question-circle", content: `<p class='font-red'>Détail pour la clé '${key}' non chargé par modalDashboard.js.</p>` }; };
 
 
     // --- Logique principale de gestion des actions (handleUserAction) ---
@@ -91,9 +68,17 @@ window.initializeModalHandling = function() {
     window.handleUserAction = function(action, detailKey = null, isObjective = false) {
         let title = '';
         let content = '';
+        const profile = window.AGENT_PROFILE || {}; // Sécurité contre le profil vide
 
         switch (action) {
             
+            case 'dashboard-detail':
+                if (window.handleDashboardDetailAction) {
+                    window.handleDashboardDetailAction(detailKey);
+                    return; 
+                }
+                break;
+
             case 'chatbot':
                 title = "🤖 Assistant IA - Conversation";
                 content = `
@@ -116,100 +101,28 @@ window.initializeModalHandling = function() {
                     </div>
                 `;
                 break; 
-            
             case 'telegram-commands':
                 title = "📞 Réseau Telegram - Commandes & Salons";
                 content = window.generateTelegramModalContent ? window.generateTelegramModalContent() : "<p class='font-red'>❌ Erreur: Module Telegram non chargé.</p>";
                 break;
                 
             case 'chronology-detail':
-                const event = window.CHRONOLOGY_EVENTS.find(e => e.id === detailKey);
-                const isVeilleObjective = isObjective; 
-
-                if (!event) { title = "Erreur de détail Chronologie"; content = "<p class='font-red'>Événement historique introuvable.</p>"; break; }
-                
-                title = `Événement : ${event.title} (${event.city})`;
-                let bonusMessage = '';
-                
-                if (isVeilleObjective && event.id === '16' && !window.hasCompletedDailyVeille && typeof window.grantReward === 'function') {
-                    const XP_VEILLE = 30;
-                    const ENERGY_GAIN_VEILLE = 5;
-                    
-                    window.hasCompletedDailyVeille = true;
-                    window.grantReward(XP_VEILLE, ENERGY_GAIN_VEILLE);
-                    
-                    bonusMessage = `<div class="alert alert-success" style="margin-top: 15px;"><i class="fas fa-award"></i> **RÉCOMPENSE DE VEILLE ACTIVE :** +${XP_VEILLE} UTMi et +${ENERGY_GAIN_VEILLE} EA gagnés !</div>`;
-                    setTimeout(window.loadHomePageContent, 50); 
-                } else if (window.hasCompletedDailyVeille && event.id === '16') {
-                    bonusMessage = `<div class="alert alert-success" style="margin-top: 15px;"><i class="fas fa-check-circle"></i> Objectif de Veille Active déjà accompli.</div>`;
-                }
-
-                
-                content = `
-                    <h3 class="font-red">${event.subtitle}</h3>
-                    <p>Date : ${new Date(event.start_date).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
-                    ${bonusMessage}
-                    <p style="margin-top: 15px; padding-top: 15px; border-top: 1px dashed var(--color-border, #444);">${event.description}</p>
-                `;
+                title = "Détail Chronologie"; content = `<p>Rendu de l'événement.</p>`;
                 break;
                 
-            case 'dashboard-detail':
-                const hqDetail = getHQDetailContent(detailKey);
-                title = hqDetail.title;
-                content = `
-                    <div style="text-align: center; margin-bottom: 20px;">
-                        <i class="${hqDetail.icon}" style="font-size: 2.5rem; color: var(--color-accent-red);"></i>
-                    </div>
-                    <div class="content-detail-hq">
-                        ${hqDetail.content}
-                    </div>
-                `;
-                break;
-                
-            case 'ric-detail':
-                const ricDataDetail = window.RIC_DATA;
-                
-                if (!ricDataDetail || !ricDataDetail.types || ricDataDetail.types.length === 0) {
-                     title = "Erreur de chargement des données RIC";
-                     content = "<p class='font-red'>Les données RIC n'ont pas été chargées. Veuillez visiter la page RIC d'abord.</p>";
-                     break;
-                }
-                
-                const ricType = ricDataDetail.types[parseInt(detailKey)]; 
-                
-                if (!ricType) { title = "Erreur de détail RIC"; content = "<p class='font-red'>Détail de ce type de RIC introuvable.</p>"; break; }
-                
-                title = `Détails : ${ricType.name}`;
-                content = `
-                    <div class="ric-detail-specific">
-                        <h3 class="font-red">${ricDataDetail.intro_modal}</h3>
-                        <p style="font-weight: bold; margin-bottom: 20px;">Le RIC est l'outil essentiel pour redonner le pouvoir aux citoyens. Il se décline en plusieurs formes :</p>
-                        
-                        <div class="specific-type-section" style="margin-top: 20px; border-left: 4px solid var(--color-accent-yellow); padding-left: 15px; background: var(--color-ui-primary); padding: 15px; border-radius: 4px;">
-                            <h4 class="font-yellow" style="margin-bottom: 5px;">${ricType.name}</h4>
-                            <p style="font-style: italic; margin-bottom: 10px;">${ricType.desc}</p>
-                            <p>${ricType.detail}</p>
-                        </div>
-                        
-                        <p style="margin-top: 30px;">${ricDataDetail.conclusion_modal}</p>
-                    </div>
-                `;
-                break;
-
-            // 🛑 DÉBUT DES CAS QUI MANQUAIENT :
             case 'ric-types':
                 const ricDataAll = window.RIC_DATA;
                 title = ricDataAll.title || "Le Référendum d'Initiative Citoyenne";
                 
-                let typesHTML = ricDataAll.types.map((type, index) => `
-                    <div class="ric-type-card" onclick="window.handleUserAction('ric-detail', ${index})">
-                        <h4>${type.name}</h4>
-                        <p>${type.desc}</p>
-                    </div>
-                `).join('');
+                let typesHTML = ricDataAll.types.map((type, index) => {
+                    return `<div class="ric-type-card" onclick="window.handleUserAction('ric-detail', ${index})">
+                                <h4>${type.name}</h4>
+                                <p>${type.desc}</p>
+                            </div>`;
+                }).join('');
 
                 content = `
-                    <p style="margin-bottom: 25px;">${ricDataAll.definition}</p>
+                    <p style="margin-bottom: 25px;">${ricDataAll.definition || 'Description non disponible.'}</p>
                     <div class="ric-types-grid">
                         ${typesHTML}
                     </div>
@@ -218,68 +131,48 @@ window.initializeModalHandling = function() {
                     </div>
                 `;
                 break;
-                // 🛑 FIN DU CAS QUI MANQUAIT
-
+                
+            case 'ric-detail':
+                title = "Détails RIC"; content = `<p>Rendu détaillé du type de RIC.</p>`;
+                break;
+                
             case 'ric-form':
                 title = "🗳️ Proposer un nouveau RIC";
-                // Ceci utilise la variable globale chargée par modalRic.js
                 content = window.RIC_FORM_TEMPLATE; 
                 break;
             case 'ric-active-detail':
-                // 🛑 ACHEMINEMENT VERS LA LOGIQUE DÉDIÉE DANS modalRic.js
-                if (window.handleRicActiveDetail) {
-                    window.closeModal(); // Ferme si une autre modale est ouverte
-                    window.handleRicActiveDetail(detailKey);
-                    return;
-                }
-                break;
-            
             case 'ric-vote':
-                // 🛑 ACHEMINEMENT VERS LA LOGIQUE DÉDIÉE DANS modalRic.js
-                if (window.handleRicVote) {
+                if (window.handleRicActiveDetail || window.handleRicVote) {
                     window.closeModal();
-                    window.handleRicVote(detailKey);
+                    if (action === 'ric-active-detail') window.handleRicActiveDetail(detailKey);
+                    if (action === 'ric-vote') window.handleRicVote(detailKey);
                     return;
                 }
                 break;
-            // ... dans window.handleUserAction (modalGestion.js)
+
             case 'profile':
             case 'cvnu':
                 const profile = window.AGENT_PROFILE;
-                
-                // 🛑 UTILISATION DE LA FONCTION STABLE getNextLevelThreshold()
-                // Calcule l'XP nécessaire pour le niveau suivant
                 const nextLevelThresholdXP = window.getNextLevelThreshold ? window.getNextLevelThreshold() : 500; 
-                
-                const engagementScore = profile.experience;
-                const utmiPerLevel = nextLevelThresholdXP; 
-                const progressPercent = Math.min(100, (engagementScore / utmiPerLevel) * 100);
-
-                // Détermination des statuts de mission
-                // NOTE: dashboardVeilleCompleted est FALSE si la mission est disponible (voir dashboard.js)
-                const isDashboardVeilleAvailable = !profile.dashboardVeilleCompleted; 
-                const veilleStatus = isDashboardVeilleAvailable ? 'Veille Économique : Disponible' : 'Veille Économique : Accomplie';
-                const veilleColor = isDashboardVeilleAvailable ? 'var(--color-red)' : 'var(--color-green)'; // Rouge pour inciter à l'action
-
-                const missionStatus = profile.ricMissionSubmitted ? 'RIC Soumise' : 'RIC Non Soumise';
+                const progressPercent = Math.min(100, ((profile.experience || 0) / nextLevelThresholdXP) * 100);
 
                 title = "💼 Mon CV Numérique Citoyen (CVNU)";
                 content = `
                     <div class="cvnu-detail-modal">
-                        <h3 class="font-red">Statut d'Agent : Niveau ${profile.level}</h3>
-                        <p style="font-weight: bold;">${profile.utmiCredits.toLocaleString('fr-FR')} UTMi (Charge Agent Value)</p>
+                        <h3 class="font-red">Statut d'Agent : Niveau ${profile.level || 1}</h3>
+                        <p style="font-weight: bold;">${(profile.utmiCredits || 0).toLocaleString('fr-FR')} UTMi (Charge Agent Value)</p>
                         
                         <div class="stat-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px;">
                             <div class="stat-card">
                                 <h4>Progression Niveau Actuel</h4>
-                                <p>${engagementScore} / ${utmiPerLevel} XP (Prochain Seuil)</p>
+                                <p>${profile.experience || 0} / ${nextLevelThresholdXP} XP</p>
                                 <div class="progress-bar-cvnu"><div style="width: ${progressPercent}%;"></div></div>
                             </div>
                             <div class="stat-card">
                                 <h4>Missions Journalières</h4>
-                                <p style="color: ${veilleColor}; font-weight: bold;">${veilleStatus}</p>
-                                <p>${missionStatus}</p>
-                                <p style="font-size: 0.8em; color: var(--color-text-light); margin-top: 5px;">Total Missions Accomplies: ${profile.missionsCompleted}</p>
+                                <p style="color: ${!profile.dashboardVeilleCompleted ? 'var(--color-red)' : 'var(--color-green)'}; font-weight: bold;">${!profile.dashboardVeilleCompleted ? 'Veille Économique : Disponible' : 'Veille Économique : Accomplie'}</p>
+                                <p>RIC Soumis : ${profile.ricMissionSubmitted ? 'Oui' : 'Non'}</p>
+                                <p style="font-size: 0.8em; color: var(--color-text-light); margin-top: 5px;">Total Missions Accomplies: ${profile.missionsCompleted || 0}</p>
                             </div>
                         </div>
 
@@ -288,7 +181,7 @@ window.initializeModalHandling = function() {
                         <ul class="axis-list" style="margin-top: 10px;">
                             <li><i class="fas fa-brain"></i> **Axe Principal :** Stratégie</li>
                             <li><i class="fas fa-map-pin"></i> **Activité la plus valorisée :** Analyse de Cible (Carte)</li>
-                            <li><i class="fas fa-clock"></i> **Efficacité Temps Réel :** ${profile.energy} / ${profile.maxEnergy} EA</li>
+                            <li><i class="fas fa-clock"></i> **Efficacité Temps Réel :** ${profile.energy || 100} / ${profile.maxEnergy || 100} EA</li>
                         </ul>
                         
                         <p class="font-red" style="margin-top: 20px;">*Le CVNU est directement valorisé par le calcul UTMi, reflétant la qualité et l'impact de vos contributions.</p>
@@ -297,22 +190,17 @@ window.initializeModalHandling = function() {
                 `; 
                 window.openModal(title, content, false);
                 break;
-// ... (Reste de modalGestion.js)
 
             case 'rib':
-                title = "💳 RIB & Gestion Fiscale (Simulé)";
-                content = `<p>Cette section gère vos informations pour les **Allocations UTMi** et le suivi des **Impôts Citoyens**.</p><p class="font-red" style="margin-top: 15px;">**Note de Sécurité :** Cette interface est simulée.</p>`;
+                title = "💳 RIB & Gestion Fiscale (Simulé)"; content = `<p>Cette section gère vos informations financières.</p>`;
                 break;
             case 'config':
-                title = "⚙️ Configuration et Préférences";
-                content = `<p>Gérez ici vos notifications, la confidentialité et les paramètres de votre compte.</p>`;
-                break;
+                title = "⚙️ Configuration"; content = `<p>Gérez ici vos préférences.</p>`; break;
             case 'logout':
                 alert("Déconnexion simulée. À bientôt!");
                 return; 
             default:
-                title = "Erreur d'Action";
-                content = "<p>Action non reconnue.</p>";
+                title = "Erreur d'Action"; content = "<p>Action non reconnue.</p>";
         }
 
         if (action !== 'logout') {
@@ -321,10 +209,11 @@ window.initializeModalHandling = function() {
                 setTimeout(() => window.initializeChatbot(), 0); 
             }
         }
-    }
+    };
     
     // --- Initialisation des Événements Statiques (Header et Modal) ---
     closeButton.addEventListener('click', window.closeModal);
+    
     modal.addEventListener('click', (e) => {
         if (e.target === modal) {
             window.closeModal();

@@ -1,21 +1,44 @@
 /* docs/modals.css - Styles pour les Modales Générales (Mobile-First) */
 
 /* Conteneur principal (fond sombre) */
+/* Conteneur principal (fond sombre) */
 #global-modal {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.9); /* Fond très sombre */
-    z-index: 2000; /* Assurez-vous d'être au-dessus de tout (header est 1000) */
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 2000;
+    
+    /* 🛑 Centrage Flexbox et Gestion de l'affichage 🛑 */
     display: none; /* Masqué par défaut */
-    justify-content: center;
-    align-items: center;
-    overflow-y: auto;
+    justify-content: center; 
+    align-items: center;    
+    overflow-y: auto;       /* Permet le défilement */
     padding: 10px;
 }
 
+#global-modal.visible {
+    display: flex; /* Afficher la modale et centrer */
+}
+
+#global-modal.hidden {
+    display: none; /* Masquer la modale */
+}
+
+/* Boîte de contenu de la modale */
+#modal-box {
+    background-color: var(--color-background, #1e1e1e); 
+    border: 3px solid var(--color-accent-yellow, #ffd700);
+    border-radius: 8px;
+    position: relative;
+    width: 95%; 
+    max-width: 800px; /* Utiliser 800px comme dans dashboard.css */
+    /* ... (Autres styles de padding/box-shadow) ... */
+    margin: 20px 0; /* Garder une marge si le contenu déborde */
+    z-index: 2001;
+}
 #global-modal.visible {
     display: flex; /* Afficher la modale */
 }

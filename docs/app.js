@@ -1,7 +1,40 @@
-// docs/app.js - Logique Principale et Navigation (VERSION STABILISÉE FINALE)
+// docs/app.js - Logique Principale et Navigation (VERSION FINALE ET ROBUSTE)
 
 // 🛑 Importation de la logique de Gamification depuis le composant dédié
 import { updateProfileUI, grantReward, checkLevelUp, getNextLevelThreshold } from './modalProfile.js';
+
+// --- NOUVEAU: GESTION DES MODES D'ÉTAT GLOBALES ---
+window.APP_STATE = {
+    MODE: '/session', 
+    LOG_LEVEL: 'warn', 
+    IS_DEV: false
+};
+// ... (window.setAppState et expositions globales inchangées) ...
+window.setAppState = function(mode) {
+    const validModes = ['/dev', '/focus', '/active', '/session'];
+    if (!validModes.includes(mode)) {
+        console.warn(`[STATE] Mode d'état inconnu: ${mode}. L'état n'a pas été modifié.`);
+        return;
+    }
+    
+    window.APP_STATE.MODE = mode;
+    window.APP_STATE.IS_DEV = mode === '/dev';
+
+    if (mode === '/dev') {
+        window.APP_STATE.LOG_LEVEL = 'debug';
+        console.log("🚦 Mode DEV activé: Logs détaillés.");
+    } else if (mode === '/focus') {
+        window.APP_STATE.LOG_LEVEL = 'info';
+        console.log("🚦 Mode FOCUS activé: Concentré.");
+    } else {
+        window.APP_STATE.LOG_LEVEL = 'warn';
+        console.log(`🚦 Mode SESSION activé: Logs de base.`);
+    }
+    
+    if (window.initDevTools) {
+        window.initDevTools(window.APP_STATE.IS_DEV);
+    }
+};
 
 // Exposer les variables globales
 window.MAP_CONFIG = {
@@ -16,7 +49,12 @@ window.grantReward = grantReward;
 window.checkLevelUp = checkLevelUp; 
 window.getNextLevelThreshold = getNextLevelThreshold;
 
-// --- 1. DONNÉES STATIQUES (TELEGRAM) ---
+window.AGENT_PROFILE = {
+    level: 1, experience: 0, energy: 100, maxEnergy: 100, utmiCredits: 0, 
+    missionsCompleted: 0, ricMissionSubmitted: false, dashboardVeilleCompleted: false 
+};
+
+// --- 1. DONNÉES STATIQUES (MAPPAGE API & PROFIL) ---
 window.TELEGRAM_DATA = {
     topicLinks: {
         '🎨 Studio (Création)': 'https://t.me/c/2803900118/1232',
@@ -46,92 +84,97 @@ window.TELEGRAM_DATA = {
         { cmd: '/inviter', desc: 'Générer un lien d\'invitation.' }
     ]
 };
-// 🛑 Mappage des URLs API vers les noms de fichiers JSON locaux
 const API_TO_FILE_MAP = {
     '/api/chronology/events': 'events',
     '/map/data/manifestations': 'manifestation_points_2_octobre',
-    
     '/api/ric/data': 'ric_details',
     '/api/ric/active-list': 'rics', 
     '/api/ric/form-template': 'ric_form_template', 
-    
     '/api/dashboard/summary': 'dashboard_summary',
     '/api/dashboard/utmi-insights': 'utmi_insights',
     '/smartContract/api/dashboard-data': 'smartcontract_data',
-    '/api/hq/finances': 'hq_finances',
-    '/api/hq/revendications': 'hq_revendications',
-    '/api/hq/actions': 'hq_actions',
-    '/api/hq/users': 'hq_users',
-    
+    '/api/hq/finances': 'finances',
+    '/api/hq/revendications': 'revendications',
+    '/api/hq/actions': 'actions',
+    '/api/hq/users': 'users',
     '/api/chat/history': 'chat_history',
     '/api/chat/message': 'chat_response',
     '/api/gee/tiles/COPERNICUS/S2_SR_HARMONIZED': 'gee_mock_data'
 };
+window.AGENT_PROFILE = { /* ... */ };
 
-// --- 1.5. NOUVEAU: PROFIL D'AGENT (LOGIQUE DE JEU) ---
-window.AGENT_PROFILE = {
-    level: 1, 
-    experience: 0, 
-    energy: 100, 
-    maxEnergy: 100,
-    utmiCredits: 0, 
-    missionsCompleted: 0,
-    ricMissionSubmitted: false,
-    dashboardVeilleCompleted: false 
-};
 
-// --- 2. FONCTION UTILITAIRE DE RÉCUPÉRATION DE DONNÉES (Fetch Réel) ---
+// 🛑 FONCTION DE SECOURS: Tente de charger le JSON local (Correction du chemin relative)
+async function attemptLocalFallback(originalUrl, originalMethod) {
+    let data = null;
+    
+    if (originalUrl === 'GET') {
+        const cleanUrl = originalUrl.includes('?') ? originalUrl.substring(0, originalUrl.indexOf('?')) : originalUrl;
+        const fileNameRoot = API_TO_FILE_MAP[cleanUrl] || API_TO_FILE_MAP[originalUrl]; 
+
+        if (fileNameRoot) {
+            // 🛑 CORRECTION : Utiliser le chemin relatif "./src/json/" (plus robuste pour les serveurs statiques)
+            const localPath = `./src/json/${fileNameRoot}.json`; 
+            try {
+                const localResponse = await fetch(localPath);
+                
+                if (localResponse.ok) {
+                    data = await localResponse.json();
+                    if (window.APP_STATE.LOG_LEVEL !== 'error') {
+                        console.warn(`[MODE SECOURS SUCCÈS] Chargement réussi de : ${localPath}`);
+                    }
+                } else {
+                     console.error(`[MODE SECOURS ÉCHEC FATAL] Fichier ${localPath} non trouvé (Statut: ${localResponse.status}).`);
+                }
+            } catch (localError) {
+                console.error(`[MODE SECOURS ÉCHEC CRITIQUE] Erreur réseau lors du chargement local.`, localError);
+            }
+        }
+    }
+    return { data };
+}
+
+
+// --- 2. FONCTION UTILITAIRE DE RÉCUPÉRATION DE DONNÉES (Fetch Réel - Corrigé) ---
 
 window.fetchData = async function(url, method = 'GET', body = null) {
-    console.log(`[Mode API] Tentative d'appel à l'API: ${url}`);
+    if (window.APP_STATE.LOG_LEVEL === 'debug') {
+        console.log(`[Mode API] Tentative d'appel à l'API: ${url}`);
+    }
     
+    let data = null;
     const cleanUrlForListCheck = url.includes('?') ? url.substring(0, url.indexOf('?')) : url;
-
-    // 🛑 CORRECTION APPLIQUÉE : Seuls les vrais tableaux sont listés.
     const isListEndpoint = cleanUrlForListCheck.includes('/events') 
         || cleanUrlForListCheck.includes('/manifestations') 
         || cleanUrlForListCheck.includes('/api/rics') 
         || cleanUrlForListCheck.includes('/beneficiaries') 
         || cleanUrlForListCheck.includes('/api/chat/history')
         || cleanUrlForListCheck === '/api/ric/active-list';
-        // '/api/hq/users' est désormais traité comme un OBJET par défaut.
+    
+    let apiFailed = false;
 
-    let data;
-    let fallbackUsed = false;
-
+    // TENTATIVE DE FETCH RÉEL
     try {
         const options = { method: method, headers: { 'Content-Type': 'application/json' } };
         if (body) { options.body = JSON.stringify(body); }
 
         const response = await fetch(url, options);
-        if (!response.ok) {
-            const errorBody = await response.json().catch(() => ({ message: 'Erreur réseau ou format de réponse invalide.' }));
-            throw new Error(`Erreur HTTP ${response.status}: ${errorBody.error || errorBody.message} pour ${url}`);
-        }
-        data = await response.json();
-        
-    } catch (error) {
-        console.error(`[Erreur Fetch] Échec de la récupération des données pour l'URL: ${url}`, error);
-        
-        // --- TENTATIVE DE MODE DE SECOURS LOCAL ---
-        if (method === 'GET') {
-            const cleanUrl = url.includes('?') ? url.substring(0, url.indexOf('?')) : url;
-            const fileNameRoot = API_TO_FILE_MAP[cleanUrl] || API_TO_FILE_MAP[url]; 
 
-            if (fileNameRoot) {
-                const localPath = `src/json/${fileNameRoot}.json`;
-                try {
-                    const localResponse = await fetch(localPath);
-                    if (localResponse.ok) {
-                        data = await localResponse.json();
-                        fallbackUsed = true;
-                        console.warn(`[MODE SECOURS] Chargement réussi du fichier local : ${localPath}`);
-                    }
-                } catch (localError) {
-                    console.error(`[MODE SECOURS ÉCHEC] Le fichier local ${localPath} n'a pas pu être chargé.`, localError);
-                }
-            }
+        if (response.ok) {
+            data = await response.json();
+        } else {
+            apiFailed = true;
         }
+
+    } catch (error) {
+        console.error(`[Erreur Fetch] Échec lors de la requête API pour l'URL: ${url}`, error);
+        apiFailed = true;
+    }
+
+    // --- LOGIQUE DE SECOURS ---
+    if (apiFailed) {
+        const fallbackResult = await attemptLocalFallback(url, method);
+        data = fallbackResult.data;
     }
     
     // --- 🛑 LOGIQUE DE NORMALISATION ET DE VÉRIFICATION DE SÉCURITÉ UNIVERSELLE ---
@@ -139,10 +182,11 @@ window.fetchData = async function(url, method = 'GET', body = null) {
     if (data) {
         if (cleanUrlForListCheck.includes('/map/data/manifestations') && !Array.isArray(data) && Array.isArray(data.manifestation_points)) {
             data = data.manifestation_points;
-            console.warn(`[NORMALISATION] Format manifestation_points extrait de la réponse ${fallbackUsed ? 'de secours' : 'API'}.`);
+            if (window.APP_STATE.LOG_LEVEL !== 'warn') {
+                 console.warn(`[NORMALISATION] Format manifestation_points extrait.`);
+            }
         }
         
-        // VÉRIFICATION DE SÉCURITÉ FINALE : Les données HQ qui ne sont pas ici (finances, users) sont retournées comme objets.
         if (isListEndpoint && !Array.isArray(data)) {
             console.error(`[SÉCURITÉ] L'endpoint ${url} a retourné un objet au lieu d'un tableau. Conversion forcée en tableau vide.`);
             return []; 
@@ -151,9 +195,10 @@ window.fetchData = async function(url, method = 'GET', body = null) {
         return data;
     }
 
-    // --- RETOUR DE STABILITÉ CRITIQUE FINAL ---
     if (isListEndpoint) {
-         console.warn(`[STABILITÉ] Retour d'un tableau vide pour éviter le crash UI.`);
+         if (window.APP_STATE.LOG_LEVEL !== 'error') {
+            console.warn(`[STABILITÉ] Retour d'un tableau vide pour éviter le crash UI.`);
+         }
         return []; 
     }
 
@@ -164,96 +209,88 @@ window.fetchData = async function(url, method = 'GET', body = null) {
 // --- 3. LOGIQUE DE NAVIGATION (setupNavigation) ---
 document.addEventListener('DOMContentLoaded', function() {
     
+    window.setAppState('/dev'); 
+    
     const navLinks = document.querySelectorAll('[data-page]');
     const userMenuToggle = document.getElementById('user-menu-toggle');
     const userMenuDropdown = document.getElementById('user-menu-dropdown');
     
-    // Logique du menu utilisateur (inchangée)
+    // 🛑 Fonction de gestion unifiée des interactions (Cerveau de l'IA)
+    window.handleGlobalInteraction = function(context, type, value) {
+        
+        if (context === 'profile') {
+            if (window.handleUserAction) {
+                window.handleUserAction(value);
+            } else {
+                console.error(`[INTENT] handleUserAction non chargé pour l'action ${value}.`);
+            }
+        
+        } else if (context === 'map') {
+            if (type === 'action' && window.handleMapAction) {
+                window.handleMapAction(value);
+            } else if (type === 'layer' && window.toggleMapLayer) {
+                window.toggleMapLayer(value);
+            } else {
+                 console.error(`[INTENT] Fonction de carte (${type}) non chargée pour l'action ${value}.`);
+            }
+        }
+        
+        // Fermeture des menus après interaction
+        const mapLayersToggle = document.getElementById('road-map'); 
+        const mapLayersMenu = document.getElementById('map-layers-menu'); 
+        
+        if (context === 'profile' && userMenuDropdown) {
+             userMenuDropdown.classList.add('hidden'); 
+        } else if (context === 'map' && mapLayersMenu) {
+             mapLayersMenu.classList.add('hidden');
+             if (mapLayersToggle) mapLayersToggle.classList.remove('fab-open');
+        }
+    }
+
+    // --- 3.1 INITIALISATION DU MENU UTILISATEUR ---
     if (userMenuToggle && userMenuDropdown) { 
         userMenuToggle.addEventListener('click', (e) => {
             e.stopPropagation(); 
             userMenuDropdown.classList.toggle('hidden');
         });
-
         document.addEventListener('click', (e) => {
             if (!userMenuDropdown.contains(e.target) && !userMenuToggle.contains(e.target)) {
                 userMenuDropdown.classList.add('hidden');
             }
         });
-        
-        // 🛑 CORRECTION : Attacher l'écouteur directement sur les liens <a> pour garantir l'appel
         userMenuDropdown.querySelectorAll('a').forEach(link => {
              link.addEventListener('click', (e) => {
                  e.preventDefault();
-                 e.stopPropagation(); // Ajout de stopPropagation pour isoler l'événement
-                 
+                 e.stopPropagation(); 
                  const action = link.getAttribute('data-action');
-                 
-                 console.log(`Action Utilisateur demandée: ${action}`); 
-                 
-                 userMenuDropdown.classList.add('hidden'); 
-                 
-                 if (window.handleUserAction) {
-                     window.handleUserAction(action);
-                 } else {
-                     console.error(`Erreur: La fonction handleUserAction n'est pas chargée. Impossible de gérer l'action ${action}.`);
-                 }
+                 window.handleGlobalInteraction('profile', 'action', action);
              });
         });
     }
 
-    // 🚀 BLOC CRITIQUE : Logique pour le menu radial des couches de la carte
+    // --- 3.2 INITIALISATION DU MENU RADIAL DE LA CARTE ---
     const mapLayersToggle = document.getElementById('road-map'); 
     const mapLayersMenu = document.getElementById('map-layers-menu'); 
     
     if (mapLayersToggle && mapLayersMenu) {
         mapLayersToggle.addEventListener('click', (e) => {
-            // Empêche l'événement d'être capturé par d'autres gestionnaires de clic globaux
             e.stopPropagation(); 
-            
-            // 1. Bascule l'affichage du menu
             mapLayersMenu.classList.toggle('hidden');
-            
-            // 2. Bascule la classe pour l'animation/rotation du bouton principal (fab-open)
             mapLayersToggle.classList.toggle('fab-open'); 
         });
 
-        // Fermer le menu si l'utilisateur clique n'importe où ailleurs
         document.addEventListener('click', (e) => {
-            if (!mapLayersMenu.contains(e.target) && !mapLayersToggle.contains(e.target)) {
+            if (!mapLayersMenu.contains(e.target) && !userMenuToggle.contains(e.target)) {
                 mapLayersMenu.classList.add('hidden');
-                mapLayersToggle.classList.remove('fab-open'); // Fermer aussi l'état du FAB
+                mapLayersToggle.classList.remove('fab-open'); 
             }
-        });
-
-        // 🛑 Gestion des actions/bascules dans le menu des couches (réfère à map-item.js)
-        mapLayersMenu.querySelectorAll('button').forEach(button => {
-             button.addEventListener('click', (e) => {
-                 e.preventDefault();
-                 e.stopPropagation(); 
-                 
-                 const action = button.getAttribute('data-map-action');
-                 const layerToggle = button.getAttribute('data-map-layer-toggle');
-                 
-                 // Fermer le menu après l'action
-                 mapLayersMenu.classList.add('hidden'); 
-                 mapLayersToggle.classList.remove('fab-open'); 
-                 
-                 // Les fonctions sont définies dans map-item.js et sont globales
-                 if (action && window.handleMapAction) {
-                     window.handleMapAction(action);
-                 } else if (layerToggle && window.toggleMapLayer) {
-                     window.toggleMapLayer(layerToggle);
-                 } else {
-                     console.error(`Erreur: La logique de carte est absente (map-item.js n'est pas chargé ou les fonctions manquent).`);
-                 }
-             });
         });
     }
 
-
-    // Exposer showPage globalement (utile pour missions.js)
+    // --- 3.3 LOGIQUE DE NAVIGATION PRINCIPALE ---
     window.showPage = function(pageName) {
+        
+        // Logique de mise à jour de la classe 'active' pour la navigation
         navLinks.forEach(link => {
             link.classList.remove('active');
             if (link.getAttribute('data-page') === pageName) link.classList.add('active');
@@ -273,8 +310,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         activePage.classList.add('active');
-
-        console.log(`[AFFICHAGE OK] Page visible: #${targetPageId}`);
+        if (window.APP_STATE.LOG_LEVEL !== 'warn') console.log(`[AFFICHAGE OK] Page visible: #${targetPageId}`);
         
         const safeRenderCall = (renderFunc) => {
             try {
@@ -286,11 +322,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         };
 
-        // --- DÉCLENCHEMENT DU RENDU SPÉCIFIQUE ---
-        
         if (pageName === 'map') {
             safeRenderCall(() => {
-                console.log("➡️ Entrée dans le **Module de Cartographie**. Lancement du Scan du Terrain.");
+                if (window.APP_STATE.LOG_LEVEL !== 'warn') console.log("➡️ Entrée dans le **Module de Cartographie**.");
                 if (window.initMap) {
                     window.initMap(); 
                     setTimeout(() => { 
@@ -300,7 +334,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         } else if (pageName === 'dashboard') {
             safeRenderCall(window.loadDashboardData);
-            console.log("➡️ Accès au **Tableau de Bord Stratégique**. Vérification des Finances et Statistiques de Ralliement.");
+            if (window.APP_STATE.LOG_LEVEL !== 'warn') console.log("➡️ Accès au **Tableau de Bord Stratégique**.");
         } else if (pageName === 'settings') {
             safeRenderCall(window.loadMissionsContent); 
         } else if (pageName === 'ric') {
@@ -313,19 +347,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Attacher les écouteurs d'événements
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
-            console.log(`Navigation détectée pour: ${link.getAttribute('data-page')}`);
-            
             e.preventDefault();
-            
             const pageName = link.getAttribute('data-page');
             window.showPage(pageName);
         });
-    });
-    
-    // Démarrer sur la page 'home' par défaut
+    }); 
     window.showPage('home'); 
     
-    // 🛑 Initialisation de l'affichage du profil au démarrage (via la fonction importée)
     if (window.updateProfileUI) {
         window.updateProfileUI();
     }

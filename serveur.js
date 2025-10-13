@@ -6,7 +6,7 @@ const { PORT, GROQ_API_KEY } = require('./config/index.js');
 const telegramBot = require('./routes/telegramRouter.js'); 
 const mapLeaflet = require('./config/leaflet.js'); 
 const { loadActionsData } = require('./services/data.js'); 
-
+const aiRouter = require('./routes/aiRouter.js'); 
 // --- Fonction d'initialisation (Bootstrap) ---
 
 async function bootstrap() {

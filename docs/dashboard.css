@@ -1,36 +1,76 @@
-/* Fichier : dashboard.css - Mobile First pour le QG */
+/* Fichier : dashboard.css - Version Fusionnée et Finalisée */
 
 /* ==========================================================================
    1. STRUCTURE DE GRILLE (MOBILE FIRST)
    ========================================================================== */
+/* Fichier : dashboard.css - Version Fusionnée et Finalisée (CORRECTION FINALE) */
 
-/* Par défaut, la grille affiche une seule colonne sur les très petits écrans */
+/* ... (SECTION 1. STRUCTURE DE GRILLE MOBILE FIRST inchangée) ... */
+
+/* ==========================================================================
+   4. STYLES DE MODALE (UTMI & HQ DETAIL)
+   ========================================================================== */
+
+/* 🛑 CORRECTION MAJEURE: Centrage de la Fenêtre Modale 🛑 */
+/* Ces styles doivent être appliqués à l'élément #global-modal (qui a display: none dans index.html) */
+/* Le contenu de la boîte modale elle-même */
+#modal-box {
+    /* Style déjà défini en inline dans index.html, mais nous le rendons responsive */
+    width: 95%; /* Prend 95% sur mobile */
+    max-width: 800px;
+    margin: 20px auto; /* Marge supérieure si la modale est courte */
+}
+
+.hq-detail-container {
+    padding: 15px;
+    /* max-height: 80vh; <-- Rendu inutile par le scroll du #global-modal */
+    overflow-y: initial; /* Laisser le conteneur principal gérer le scroll */
+}
+
+
+/* 🛑 Centrage du contenu lors du chargement (spinner) 🛑 */
+#modal-content-container {
+    /* Ceci est le conteneur où le spinner est injecté */
+    min-height: 100px;
+    /* Laisser les règles flex pour le centrage du spinner/texte de chargement */
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    flex-direction: column;
+}
+
+/* 🛑 Optimisation de la Grille dans la Modale (UTMi Insights) 🛑 */
+.hq-detail-container .feature-grid.modal-insights-grid {
+    margin-top: 10px;
+    /* 🛑 S'assurer que le mobile a un minimum de 2 colonnes pour les insights */
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 10px;
+    display: grid; 
+}
+
+/* ... (Le reste des styles de modale et de grille interne reste inchangé) ... */
 .feature-grid {
     display: grid;
-    /* Une colonne par défaut sur mobile, mais auto-fit permet de s'adapter */
     grid-template-columns: 1fr; 
     gap: 15px;
     margin-top: 20px;
     margin-bottom: 20px;
 }
 
-/* À partir d'une taille mobile plus large (ex: 480px), on passe à 2 colonnes */
+/* Grille Mobile Large (480px) */
 @media (min-width: 480px) {
     .feature-grid {
-        /* minmax(180px, 1fr) assure que la carte ne devient pas trop étroite */
         grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     }
 }
 
-/* Sur les tablettes et desktops (ex: 768px), on passe à un layout plus riche */
+/* Grille Desktop (768px) */
 @media (min-width: 768px) {
     .feature-grid {
-        /* Permet 3 ou 4 colonnes, s'ajustant au mieux */
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 20px;
     }
     
-    /* Assure le span sur les colonnes pour les grands blocs (Desktop) */
     #user-status-grid .feature-card:first-child {
         grid-column: span 2;
     }
@@ -38,19 +78,15 @@
 
 
 /* ==========================================================================
-   2. STYLES DES CARTES (FEATURE-CARD et HQ-CARD)
+   2. STYLES DES CARTES ET COULEURS DE BASE
    ========================================================================== */
 
 .feature-card {
     background: var(--color-ui-content); 
     border: 1px solid var(--color-ui-border); 
     padding: 15px;
-    text-align: center;
     box-shadow: var(--shadow);
     color: var(--color-text);
-    
-    /* Retiré la rotation pour le dashboard */
-    transform: rotate(0deg); 
     transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
     height: 100%; 
     border-radius: 6px;
@@ -59,79 +95,89 @@
 .feature-card:hover {
     transform: scale(1.02); 
     box-shadow: 0 6px 12px rgba(0,0,0,0.4);
-    border-color: var(--color-accent-red); /* Met en évidence l'interaction */
+    border-color: var(--color-accent-red); 
 }
-
-.feature-card h3, .feature-card h4 {
-    font-size: 1.1em;
-    margin-bottom: 10px;
-    color: var(--color-accent-yellow);
-}
-
-/* --- Style spécifique pour les cartes QG (QG Management Cards) --- */
 
 .hq-card {
-    /* Le style par défaut sans la bordure jaune principale */
     border: 1px solid var(--color-ui-border);
-    /* La bordure colorée est gérée par le style inline (border-top) */
     text-align: left;
     padding: 20px 15px;
+    cursor: pointer; 
 }
 
-.hq-card h3 {
-    font-size: 1.25rem;
-    margin-bottom: 15px;
-    /* La couleur est définie par JS (var(--color-accent-red), etc.) */
+
+/* 🛑 STYLE SPÉCIFIQUE À LA GRILLE INTERNE RBU DU DASHBOARD PRINCIPAL 🛑 */
+#utmi-rbu-metrics-grid {
+    grid-template-columns: repeat(2, 1fr); /* Mobile: 2 colonnes */ 
+    gap: 15px;
+    margin: 10px 0;
+    padding: 10px;
+    background: rgba(0,0,0,0.1); 
+    border-radius: 4px;
 }
 
-/* Liste des métriques à l'intérieur de la carte QG */
-.hq-card ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.hq-card li {
-    display: flex;
-    justify-content: space-between;
-    padding: 7px 0;
-    border-bottom: 1px dotted rgba(255, 255, 255, 0.1);
-}
-
-.hq-card li:last-child {
-    border-bottom: none;
-}
-
-.hq-card span:last-child {
-    font-weight: bold;
-    color: var(--color-accent-yellow); /* Met en évidence les valeurs clés */
+/* Rétablir la grille à 4 colonnes sur desktop pour le conteneur RBU principal */
+@media (min-width: 768px) {
+    #utmi-rbu-metrics-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
 }
 
 
 /* ==========================================================================
-   3. VALEURS ET COULEURS SPÉCIFIQUES
+   4. STYLES DE MODALE (UTMI & HQ DETAIL)
    ========================================================================== */
 
-.metric-value {
-    font-size: 1.8rem;
-    font-weight: 900;
-    color: var(--color-accent-red); /* Valeurs principales en Rouge pour l'impact */
+/* 🛑 CORRECTION DU CENTRAGE DE LA MODALE 🛑 */
+/* NOTE: Le style inline dans index.html fait déjà le centrage de base. */
+/* Nous ciblons ici le conteneur interne pour le centrage du spinner */
+#modal-content-container {
+    min-height: 100px;
+    display: flex; 
+    /* Les règles suivantes doivent être annulées par le rendu HTML réel */
+    justify-content: center; 
+    align-items: center;
+    flex-direction: column;
+}
+
+.hq-detail-container {
+    padding: 15px;
+    max-height: 80vh; 
+    overflow-y: auto;
+    /* 🛑 Réinitialisation pour que le contenu détaillé reprenne tout l'espace 🛑 */
     display: block; 
-    margin-top: 5px;
 }
 
-.metric-desc {
-    font-size: 0.8em;
-    color: var(--color-text-dark); /* Texte descriptif plus discret */
+/* Spinner de chargement (le centrage est fait par le parent flex) */
+.loading-spinner {
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    border-top: 4px solid var(--color-accent-red);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 🛑 Optimisation de la Grille dans la Modale (UTMi Insights) 🛑 */
+.hq-detail-container .feature-grid.modal-insights-grid {
     margin-top: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 10px;
+    display: grid; 
 }
 
-/* Texte rouge pour les alertes critiques */
-.font-red { 
-    color: var(--color-accent-red) !important; 
+.hq-detail-container .feature-card.modal-insight-card {
+    transform: none;
+    transition: none;
+    background: var(--color-bg-card, #3D4A5C); 
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+    padding: 10px; 
+    text-align: left;
 }
-
-/* Texte jaune pour les titres/éléments clés */
-.font-yellow {
-    color: var(--color-accent-yellow) !important;
-}
+/* ... (Le reste des styles de modale inchangés) ... */

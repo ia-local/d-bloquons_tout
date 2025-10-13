@@ -3,6 +3,11 @@
 COMMANDE1_MSG="✨ Menu ✨"
 
 serveur_MSG="✨ Lancement du serveur✨"
+session_START_MSG="✨ start session✨"
+dev_MSG="✨ /dev mode✨"
+focus_MSG="✨ /focus mode > ✨"
+debug_MSG="✨ /mode _debug_✨"
+mode_MSG="✨ Lancement du serveur✨"
 democratie_MSG="✨ init window democratie✨"
 dashboard_MSG="✨ init window dashboard✨"
 playground_MSG="✨ init window playground✨"
@@ -45,7 +50,6 @@ serveur:
 	@echo "${serveur_MSG}"
 	@node serveur.js
 
-
 menu:
 	@echo "Welcom To cycliq Economical system."
 	@echo"",
@@ -86,5 +90,33 @@ update:
 	@echo "${update_MSG}"
 	@git add .
 	@git commit -m "update beta"
+	@git push
+	@echo "✨ Mise à jour terminée✨"
+
+session:
+	@echo "${session_START_MSG}"
+	@git add .
+	@git commit -m "Session"
+	@git push
+	@echo "✨ Mise à jour terminée✨"
+
+dev:
+	@echo "${dev_MSG}"
+	@git add .
+	@git commit -m "dev mode"
+	@git push
+	@echo "✨ Mise à jour terminée✨"
+
+focus:
+	@echo "${focus_MSG}"
+	@git add .
+	@git commit -m "dev mode focus"
+	@git push
+	@echo "✨ Mise à jour terminée✨"
+
+debug:
+	@echo "${debug_MSG}"
+	@git add .
+	@git commit -m "dev mode focus"
 	@git push
 	@echo "✨ Mise à jour terminée✨"

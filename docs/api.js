@@ -50,37 +50,7 @@ window.checkLevelUp = checkLevelUp;
 window.getNextLevelThreshold = getNextLevelThreshold;
 
 // --- 1. DONNÉES STATIQUES (MAPPAGE API & PROFIL) ---
-
-// --- 1. DONNÉES STATIQUES (TELEGRAM) ---
-window.TELEGRAM_DATA = {
-    topicLinks: {
-        '🎨 Studio (Création)': 'https://t.me/c/2803900118/1232',
-        '📝 Revendication (Détails)': 'https://t.me/c/2803900118/3',
-        '🗳️ RIC (Référendum)': 'https://t.me/c/2803900118/329',
-        '👥 Organisation (Planning)': 'https://t.me/c/2803900118/2',
-        '🗺️ Cartes (Ralliement)': 'https://t.me/c/2803900118/991',
-        '📄 Documents (Législation)': 'https://t.me/c/2803900118/13',
-        '📞 Contacts (Presse/Élus)': 'https://t.me/c/2803900118/8',
-        '⚖️ Auditions Libres': 'https://t.me/c/2803900118/491'
-    },
-    commands: [
-        { cmd: '/start', desc: 'Revenir au menu principal du Bot.' },
-        { cmd: '/topics', desc: 'Accéder directement aux salons de discussion Telegram.' },
-        { cmd: '/manifeste', desc: 'Lire un extrait du manifeste du mouvement.' },
-        { cmd: '/ric', desc: 'Tout savoir sur le Référendum d\'Initiative Citoyenne.' },
-        { cmd: '/destitution', desc: 'Comprendre la procédure de destitution (Art. 68).' },
-        { cmd: '/greve', desc: 'Infos pratiques sur la Grève du 10 Septembre 2025.' },
-        { cmd: '/imagine [desc]', desc: 'Générer une image libre via l\'IA (Simulé).' },
-        { cmd: '/caricature [desc]', desc: 'Générer une caricature politique via l\'IA (Simulé).' },
-        { cmd: '/caricature_plainte', desc: 'Caricature automatisée sur la Plainte Pénale.' },
-        { cmd: '/ai_vision', desc: 'Générer la vision IA de la Plainte Pénale.' },
-        { cmd: '/galerie', desc: 'Accéder à la galerie des images générées.' },
-        { cmd: '/stats', desc: 'Afficher les statistiques d\'utilisation du bot.' },
-        { cmd: '/help', desc: 'Afficher toutes les commandes.' },
-        { cmd: '/petition', desc: 'Lancer une nouvelle pétition citoyenne.' },
-        { cmd: '/inviter', desc: 'Générer un lien d\'invitation.' }
-    ]
-};
+window.TELEGRAM_DATA = { /* ... */ };
 const API_TO_FILE_MAP = {
     '/api/chronology/events': 'events',
     '/map/data/manifestations': 'manifestation_points_2_octobre',
@@ -103,17 +73,18 @@ window.AGENT_PROFILE = {
     missionsCompleted: 0, ricMissionSubmitted: false, dashboardVeilleCompleted: false 
 };
 
+
 // 🛑 FONCTION DE SECOURS: Tente de charger le JSON local (Correction du chemin relative)
 async function attemptLocalFallback(originalUrl, originalMethod) {
     let data = null;
     
-    if (originalUrl === 'GET') {
+    if (originalMethod === 'GET') {
         const cleanUrl = originalUrl.includes('?') ? originalUrl.substring(0, originalUrl.indexOf('?')) : originalUrl;
         const fileNameRoot = API_TO_FILE_MAP[cleanUrl] || API_TO_FILE_MAP[originalUrl]; 
 
         if (fileNameRoot) {
-            // 🛑 CORRECTION FINALE DU CHEMIN : Utiliser le chemin relatif "./src/json/" (plus robuste pour les serveurs statiques)
-            const localPath = `./src/json/${fileNameRoot}.json`; 
+            // 🛑 CHEMIN RELATIF SIMPLE (Le plus robuste pour les serveurs statiques)
+            const localPath = `src/json/${fileNameRoot}.json`; 
             try {
                 const localResponse = await fetch(localPath);
                 
@@ -208,6 +179,7 @@ window.fetchData = async function(url, method = 'GET', body = null) {
 // --- 3. LOGIQUE DE NAVIGATION (setupNavigation) ---
 document.addEventListener('DOMContentLoaded', function() {
     
+    // 🛑 Utiliser /DEV ou /FOCUS au démarrage sur un environnement statique pour garantir le fallback.
     window.setAppState('/dev'); 
     
     const navLinks = document.querySelectorAll('[data-page]');

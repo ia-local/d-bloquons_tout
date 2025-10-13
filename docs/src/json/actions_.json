@@ -1,0 +1,1306 @@
+{
+  "titre_general": "PLUIE D'ACTIONS POUR TOUT BLOQUER : Risques Légaux, Durées et Coordonnées pour Cartographie",
+  "objectif": "Consolidation et analyse juridique des 70+ actions avec estimation du temps de perturbation potentielle et ajout des champs de coordonnées géographiques pour la cartographie.",
+  "avertissement": "Les champs 'latitude' et 'longitude' sont remplis avec des coordonnées fictives pour l'affichage cartographique (simulant des actions lancées).",
+  "definitions_risque": {
+    "nul": "Aucune infraction pénale ou simple règlement interne.",
+    "faible": "Contravention (max 1 500 €), risque minime de poursuite pénale sauf aggravation.",
+    "modere": "Délit possible (1 an max de prison, forte amende) ou risque de requalification.",
+    "eleve": "Délit lourd (jusqu'à 2 ans de prison, amende significative, casier judiciaire).",
+    "tres_eleve": "Délit/Crime majeur (peine de prison > 2 ans), mettant en danger la sécurité d'autrui ou causant des destructions graves."
+  },
+  "liste_des_categories": {
+    "type": [
+      "Blocage", "Économie", "Écologie", "Satire", "Symbole", "Pédagogie", "Perturbation", "Autres"
+    ],
+    "niveaux_de_risque": [
+      "Nul", "Faible", "Faible/Modéré", "Modéré", "Modéré/Élevé", "Élevé", "Très Élevé", "Crime"
+    ],
+    "combinaisons_utilisees": [
+      "Blocage / Nul", "Blocage / Faible", "Blocage / Faible/Modéré", "Blocage / Modéré", "Blocage / Modéré/Élevé", "Blocage / Élevé", "Blocage / Très Élevé", "Blocage / Crime",
+      "Économie / Faible", "Économie / Nul", "Économie / Modéré",
+      "Écologie / Modéré", "Écologie / Modéré/Élevé", "Écologie / Nul", "Écologie / Nul/Faible",
+      "Satire / Nul", "Satire / Nul/Modéré",
+      "Symbole / Faible", "Symbole / Nul", "Symbole / Nul/Faible", "Symbole / Élevé",
+      "Pédagogie / Nul", "Pédagogie / Nul/Faible", "Pédagogie / Faible", "Pédagogie / Faible/Modéré",
+      "Perturbation / Modéré", "Perturbation / Modéré/Élevé", "Perturbation / Nul", "Perturbation / Nul/Faible", "Perturbation / Faible", "Perturbation / Faible/Modéré",
+      "Autres / Modéré", "Autres / Nul", "Autres / Faible", "Autres / Faible/Modéré", "Autres / Très Élevé"
+    ]
+  },
+  "liste_actions_consolidee": [
+    {
+      "id": 21,
+      "type": "Blocage",
+      "titre": "Incendie Volontaire de Barricade",
+      "action": "🔥 🔥 🔥 Incendie volontaire de barricade ou d’objets...",
+      "description": "Incendie volontaire de barricade ou d’objets, risque légal très élevé.",
+      "risque": "Crime",
+      "duree_potentielle_blocage": "Plusieurs heures (nécessite l'intervention des pompiers, extinction, refroidissement et déblaiement)",
+      "consequences_juridiques": "**Crime de destruction par incendie** (Code pénal, Art. 322-6) : **10 ans d'emprisonnement et 150 000 € d'amende** (...)",
+      "coordonnees_initiales": {
+        "latitude": 48.8566,
+        "longitude": 2.3522
+      }
+    },
+    {
+      "id": 84,
+      "type": "Autres",
+      "titre": "Blocage Économique Forcé",
+      "action": "⚠️ ⚠️ ⚠️ **Bloquer physiquement pour faire perdre de l’argent** (Endegelande, République des Pollueurs).",
+      "description": "Bloquer physiquement pour faire perdre de l’argent (Endegelande, République des Pollueurs).",
+      "risque": "Très Élevé",
+      "duree_potentielle_blocage": "Plusieurs heures à plusieurs jours (jusqu'à l'évacuation forcée)",
+      "consequences_juridiques": "Identique à id 60 ou 27, aggravé par l'intention de nuire à l'activité économique : **Délit d'entrave à la liberté du travail** (...) et **occupation illicite**.",
+      "coordonnees_initiales": {
+        "latitude": 45.7640,
+        "longitude": 4.8357
+      }
+    },
+    {
+      "id": 19,
+      "type": "Blocage",
+      "titre": "Barricade avec Dégradation Urbaine",
+      "action": "Barricade avec mobilisation de mobilier urbain (bancs, abribus) avec dégradation.",
+      "description": "Barricade avec mobilisation de mobilier urbain (bancs, abribus) avec dégradation.",
+      "risque": "Très Élevé",
+      "duree_potentielle_blocage": "Plusieurs heures (nécessite l'intervention des forces de l'ordre et des services de déblaiement lourd)",
+      "consequences_juridiques": "**Délit d'entrave** (...) **+ Délit de dégradation du domaine public aggravée** (...)",
+      "coordonnees_initiales": {
+        "latitude": 43.6047,
+        "longitude": 1.4442
+      }
+    },
+    {
+      "id": 17,
+      "type": "Blocage",
+      "titre": "Déclenchement Fausse Alarme Incendie",
+      "action": "Déclenchement d’une alarme incendie sans raison valable.",
+      "description": "Déclenchement d’une alarme incendie sans raison valable.",
+      "risque": "Très Élevé",
+      "duree_potentielle_blocage": "10 à 60 minutes (évacuation, intervention des pompiers, levée de doute)",
+      "consequences_juridiques": "**Délit de fausse alerte** (Code pénal, Art. 322-14) : **2 ans d'emprisonnement et 30 000 € d'amende.** (...)",
+      "coordonnees_initiales": {
+        "latitude": 44.8378,
+        "longitude": -0.5792
+      }
+    },
+    {
+      "id": 20,
+      "type": "Blocage",
+      "titre": "Ouverture Borne Incendie (Street-Pooling)",
+      "action": "Ouverture d'une borne incendie ('street-pooling') pour inonder une voie publique.",
+      "description": "Ouverture d'une borne incendie ('street-pooling') pour inonder une voie publique.",
+      "risque": "Très Élevé",
+      "duree_potentielle_blocage": "1 heure à 1 journée (...) **Vol d'énergie ou d'eau** (...)",
+      "consequences_juridiques": "si l'eau cause un accident ou prive les pompiers de ressources.",
+      "coordonnees_initiales": {
+        "latitude": 47.2184,
+        "longitude": -1.5536
+      }
+    },
+    {
+      "id": 43,
+      "type": "Symbole",
+      "titre": "Altération Symbolique de Billets",
+      "action": "⚠️ **Écrire « cet argent n’existe pas » sur chaque billet**, ou juste mettre un tampon.",
+      "description": "Écrire « cet argent n’existe pas » sur chaque billet, ou juste mettre un tampon.",
+      "risque": "Élevé",
+      "duree_potentielle_blocage": "Indéfini (circulation des billets jusqu'à ce que la Banque de France les retire)",
+      "consequences_juridiques": "**Délit d'altération de signes monétaires** (...)",
+      "coordonnees_initiales": {
+        "latitude": 43.2965,
+        "longitude": 5.3698
+      }
+    },
+    {
+      "id": 42,
+      "type": "Symbole",
+      "titre": "Faucheurs de Chaises (Vol Symbolique)",
+      "action": "⚠️ **Prendre en otage des chaises** (faucheurs de chaises) et les rendre contre l’argent de l’évasion fiscale.",
+      "description": "Prendre en otage des chaises (faucheurs de chaises) et les rendre contre l’argent de l’évasion fiscale.",
+      "risque": "Élevé",
+      "duree_potentielle_blocage": "Indéfini (jusqu'à la restitution ou la saisie par la police)",
+      "consequences_juridiques": "**Délit de vol** (...). Le fait que l'acte soit symbolique n'exonère pas l'infraction de vol.",
+      "coordonnees_initiales": {
+        "latitude": 50.6292,
+        "longitude": 3.0573
+      }
+    },
+    {
+      "id": 16,
+      "type": "Blocage",
+      "titre": "Barrage Filtrant (Objets non Fixés)",
+      "action": "Barrage filtrant (partiel) avec objets non fixés (palettes, pneus).",
+      "description": "Barrage filtrant (partiel) avec objets non fixés (palettes, pneus).",
+      "risque": "Élevé",
+      "duree_potentielle_blocage": "30 minutes à 2 heures (jusqu'à l'intervention des forces de l'ordre)",
+      "consequences_juridiques": "**Délit d'entrave volontaire à la circulation** (...)",
+      "coordonnees_initiales": {
+        "latitude": 48.1173,
+        "longitude": -1.6778
+      }
+    },
+    {
+      "id": 18,
+      "type": "Blocage",
+      "titre": "Blocage Temporaire par Obstacle Mobile",
+      "action": "Blocage temporaire avec objets mobiles (poubelles, cônes) sur la chaussée.",
+      "description": "Blocage temporaire avec objets mobiles (poubelles, cônes) sur la chaussée.",
+      "risque": "Élevé",
+      "duree_potentielle_blocage": "5 à 30 minutes (jusqu'à ce que les objets soient poussés ou enlevés)",
+      "consequences_juridiques": "**Délit d'entrave volontaire à la circulation** (...)",
+      "coordonnees_initiales": {
+        "latitude": 43.7102,
+        "longitude": 7.2620
+      }
+    },
+    {
+      "id": 75,
+      "type": "Autres",
+      "titre": "Action Anti-Publicité / Remplacement",
+      "action": "⚠️ **Anti-pub : arracher des pubs et les remplacer par des dessins**.",
+      "description": "Anti-pub : arracher des pubs et les remplacer par des dessins.",
+      "risque": "Modéré",
+      "duree_potentielle_blocage": "Indéfini (jusqu'à l'affichage d'une nouvelle publicité)",
+      "consequences_juridiques": "**Délit de dégradation volontaire du bien d'autrui** (...)",
+      "coordonnees_initiales": {
+        "latitude": 47.9029,
+        "longitude": 1.9093
+      }
+    },
+    {
+      "id": 27,
+      "type": "Économie",
+      "titre": "Occupation de Magasin",
+      "action": "⚠️ **Occuper un magasin** pour dénoncer ses pratiques.",
+      "description": "Occuper un magasin pour dénoncer ses pratiques.",
+      "risque": "Modéré",
+      "duree_potentielle_blocage": "Plusieurs heures (jusqu'à l'intervention policière)",
+      "consequences_juridiques": "**Délit d'occupation illicite du bien d'autrui** (...)",
+      "coordonnees_initiales": {
+        "latitude": 49.4404,
+        "longitude": 2.1501
+      }
+    },
+    {
+      "id": 15,
+      "type": "Blocage",
+      "titre": "Déclenchement d'Alarme (non-incendie)",
+      "action": "Déclenchement d’une alarme (non incendie) dans un bâtiment public ou un commerce.",
+      "description": "Déclenchement d’une alarme (non incendie) dans un bâtiment public ou un commerce.",
+      "risque": "Modéré",
+      "duree_potentielle_blocage": "15 à 30 minutes (...)",
+      "consequences_juridiques": "**Trouble à l’ordre public** (...)",
+      "coordonnees_initiales": {
+        "latitude": 48.5839,
+        "longitude": 7.7455
+      }
+    },
+    {
+      "id": 60,
+      "type": "Perturbation",
+      "titre": "Piquets de Grève Volants",
+      "action": "Piquets de grève volants: aller de site en site pour bloquer successivement.",
+      "description": "Piquets de grève volants: aller de site en site pour bloquer successivement.",
+      "risque": "Modéré",
+      "duree_potentielle_blocage": "30 minutes à 2 heures (par site)",
+      "consequences_juridiques": "**Délit d'entrave à la liberté du travail** (...)",
+      "coordonnees_initiales": {
+        "latitude": 47.4764,
+        "longitude": 0.6863
+      }
+    },
+    {
+      "id": 22,
+      "type": "Économie",
+      "titre": "Altération de Marchandises (Bouchon)",
+      "action": "Enlever le bouchon des lessives ou roundup ou coca-cola pour les rendre impropres à la consommation.",
+      "description": "Enlever le bouchon des lessives ou roundup ou coca-cola pour les rendre impropres à la consommation.",
+      "risque": "Faible",
+      "duree_potentielle_blocage": "Indéfini (...)",
+      "consequences_juridiques": "**Délit de dégradation légère du bien d'autrui** (...)",
+      "coordonnees_initiales": {
+        "latitude": 45.1885,
+        "longitude": 5.7245
+      }
+    },
+    {
+      "id": 74,
+      "type": "Perturbation",
+      "titre": "Salissure (Ketchup, etc.)",
+      "action": "Faire tomber de la nourriture salissante sur les tapis, par exemple ketchup.",
+      "description": "Faire tomber de la nourriture salissante sur les tapis, par exemple ketchup.",
+      "risque": "Faible",
+      "duree_potentielle_blocage": "15 à 60 minutes (temps de nettoyage)",
+      "consequences_juridiques": "**Dégradation légère du bien d'autrui** (...)",
+      "coordonnees_initiales": {
+        "latitude": 47.3220,
+        "longitude": 5.0415
+      }
+    },
+    {
+      "id": 38,
+      "type": "Symbole",
+      "titre": "Jets de Faux Billets Sanglants",
+      "action": "Imprimer et jeter en l’air des billets tâchés de sang dans des lieux de corruption.",
+      "description": "Imprimer et jeter en l’air des billets tâchés de sang dans des lieux de corruption.",
+      "risque": "Faible",
+      "duree_potentielle_blocage": "Nul (...)",
+      "consequences_juridiques": "**Contravention de 3e classe** (...) pour jet de déchets/incivilité (...)",
+      "coordonnees_initiales": {
+        "latitude": 49.0305,
+        "longitude": 6.1757
+      }
+    },
+    {
+      "id": 10,
+      "type": "Blocage",
+      "titre": "Stationnement Gênant (Contravention)",
+      "action": "Stationnement prolongé ou gênant (voie de bus, place réservée).",
+      "description": "Stationnement prolongé ou gênant (voie de bus, place réservée).",
+      "risque": "Faible",
+      "duree_potentielle_blocage": "Quelques heures (...)",
+      "consequences_juridiques": "Amende forfaitaire de 2e classe (...) pour **stationnement gênant** (...)",
+      "coordonnees_initiales": {
+        "latitude": 48.4074,
+        "longitude": 4.0772
+      }
+    },
+    {
+      "id": 61,
+      "type": "Perturbation",
+      "titre": "Information Syndicale de Base",
+      "action": "Aller à la maison des syndicats pour informer et créer des blocages à partir de la base des travailleurs.",
+      "description": "Aller à la maison des syndicats pour informer et créer des blocages à partir de la base des travailleurs.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Nul",
+      "consequences_juridiques": "Liberté de réunion et d'information.",
+      "coordonnees_initiales": {
+        "latitude": 43.1242,
+        "longitude": 5.9280
+      }
+    },
+    {
+      "id": 70,
+      "type": "Perturbation",
+      "titre": "Occupation de Toilettes Publiques",
+      "action": "Aller dans une réunion et s’enfermer dans les WC.",
+      "description": "Aller dans une réunion et s’enfermer dans les WC.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Quelques heures (par toilette bloquée)",
+      "consequences_juridiques": "Identique à id 5. Aucune sanction.",
+      "coordonnees_initiales": {
+        "latitude": 43.5290,
+        "longitude": 6.9406
+      }
+    },
+    {
+      "id": 67,
+      "type": "Perturbation",
+      "titre": "Applaudissements / Bruit à Contretemps",
+      "action": "Applaudir à contretemps et faire du bruit bouche fermée lors des colloques et des conférences.",
+      "description": "Applaudir à contretemps et faire du bruit bouche fermée lors des colloques et des conférences.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Durée de la perturbation sonore",
+      "consequences_juridiques": "Trouble mineur à une réunion. Pas de risque si la perturbation est brève et non-violente.",
+      "coordonnees_initiales": {
+        "latitude": 48.9718,
+        "longitude": 2.8596
+      }
+    },
+    {
+      "id": 56,
+      "type": "Pédagogie",
+      "titre": "Atelier Scotch (Idées Reçues)",
+      "action": "Atelier scotch : démonter une idée reçue avec des chiffres symbolisés par un scotch au sol.",
+      "description": "Atelier scotch : démonter une idée reçue avec des chiffres symbolisés par un scotch au sol.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Durée de l'installation",
+      "consequences_juridiques": "Aucun risque si le scotch est facilement retirable.",
+      "coordonnees_initiales": {
+        "latitude": 47.0706,
+        "longitude": 2.3941
+      }
+    },
+    {
+      "id": 6,
+      "type": "Blocage",
+      "titre": "Blocage de Caisses Automatiques",
+      "action": "Bloquer les caisses automatiques en se 'trompant' constamment (erreurs de pesée/scan).",
+      "description": "Bloquer les caisses automatiques en se 'trompant' constamment (erreurs de pesée/scan).",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "5 à 10 minutes par intervention du personnel",
+      "consequences_juridiques": "Simple dysfonctionnement de procédure. Pas de tentative de vol ou d'escroquerie prouvée. Aucune sanction.",
+      "coordonnees_initiales": {
+        "latitude": 49.2583,
+        "longitude": 0.3541
+      }
+    },
+    {
+      "id": 29,
+      "type": "Écologie",
+      "titre": "Bombes à Graines (Reverdissement)",
+      "action": "Bombes à graines : larguer des boules artisanales d’argile + graine pour reverdir la ville.",
+      "description": "Bombes à graines : larguer des boules artisanales d’argile + graine pour reverdir la ville.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Nul (...)",
+      "consequences_juridiques": "Si la terre n'est pas polluante et ne dégrade rien, aucune infraction.",
+      "coordonnees_initiales": {
+        "latitude": 48.7831,
+        "longitude": 2.3021
+      }
+    },
+    {
+      "id": 31,
+      "type": "Écologie",
+      "titre": "Étiquetage OGM",
+      "action": "Coller « OGM » sur chaque produit qui en contient.",
+      "description": "Coller « OGM » sur chaque produit qui en contient.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Indéfini (...)",
+      "consequences_juridiques": "Si l'autocollant est facile à retirer, aucune infraction.",
+      "coordonnees_initiales": {
+        "latitude": 48.5839,
+        "longitude": 7.7455
+      }
+    },
+    {
+      "id": 25,
+      "type": "Économie",
+      "titre": "Coller Faux Codes Barres (Non-vol)",
+      "action": "Coller des codes barres d’un autre magasin sur les produits.",
+      "description": "Coller des codes barres d’un autre magasin sur les produits.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "5 minutes (...)",
+      "consequences_juridiques": "Si l'acte ne vise pas à voler (...) mais à perturber (...), risque **Nul**.(...)",
+      "coordonnees_initiales": {
+        "latitude": 47.9029,
+        "longitude": 1.9093
+      }
+    },
+    {
+      "id": 55,
+      "type": "Pédagogie",
+      "titre": "Revendications au Sol (Craie)",
+      "action": "Coller des revendications au sol et en discuter avec les passants.",
+      "description": "Coller des revendications au sol et en discuter avec les passants.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Durée de l'action",
+      "consequences_juridiques": "Similaire à id 40. Si c'est à la craie, aucun risque.",
+      "coordonnees_initiales": {
+        "latitude": 43.6047,
+        "longitude": 1.4442
+      }
+    },
+    {
+      "id": 54,
+      "type": "Pédagogie",
+      "titre": "Stickers Évasion Fiscale (Banques)",
+      "action": "Coller des stickers avec coûts de l’évasion fiscale sur les distributeurs de banque.",
+      "description": "Coller des stickers avec coûts de l’évasion fiscale sur les distributeurs de banque.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Indéfini (...)",
+      "consequences_juridiques": "Similaire à id 8. Faible risque si l'autocollant est petit et facile à retirer.",
+      "coordonnees_initiales": {
+        "latitude": 44.8378,
+        "longitude": -0.5792
+      }
+    },
+    {
+      "id": 50,
+      "type": "Pédagogie",
+      "titre": "Mots sur Vitrines (Pratiques d'Entreprise)",
+      "action": "Coller un mot sur les vitrines des banques ou du McDo pour expliquer leurs pratiques.",
+      "description": "Coller un mot sur les vitrines des banques ou du McDo pour expliquer leurs pratiques.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Indéfini (...)",
+      "consequences_juridiques": "Si l'autocollant est facile à retirer, aucune infraction.",
+      "coordonnees_initiales": {
+        "latitude": 45.7640,
+        "longitude": 4.8357
+      }
+    },
+    {
+      "id": 90,
+      "type": "Autres",
+      "titre": "Création et Diffusion de Mèmes Politiques",
+      "action": "Créer des mèmes politiques.",
+      "description": "Créer des mèmes politiques.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Nul",
+      "consequences_juridiques": "Liberté d'expression et satire. Sauf si diffamation ou injure caractérisée (...)",
+      "coordonnees_initiales": {
+        "latitude": 48.8566,
+        "longitude": 2.3522
+      }
+    },
+    {
+      "id": 89,
+      "type": "Autres",
+      "titre": "Twitter Storm (Inonder Hashtags)",
+      "action": "Créer et répandre un hashtag, ou inonder les hashtags populaires avec nos revendications ('Twitter storms').",
+      "description": "Créer et répandre un hashtag, ou inonder les hashtags populaires avec nos revendications ('Twitter storms').",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Indéfini (...)",
+      "consequences_juridiques": "Liberté d'expression en ligne.",
+      "coordonnees_initiales": {
+        "latitude": 45.7640,
+        "longitude": 4.8357
+      }
+    },
+    {
+      "id": 68,
+      "type": "Perturbation",
+      "titre": "Détournement de Prospectus",
+      "action": "Détourner ou prendre tous les prospectus dans les racks de présentation d’un salon.",
+      "description": "Détourner ou prendre tous les prospectus dans les racks de présentation d’un salon.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Indéfini (...)",
+      "consequences_juridiques": "Similaire à id 3. Vol de biens gratuits. Aucune sanction.",
+      "coordonnees_initiales": {
+        "latitude": 43.6047,
+        "longitude": 1.4442
+      }
+    },
+    {
+      "id": 45,
+      "type": "Symbole",
+      "titre": "Entassement de Capsules de Lacrymo",
+      "action": "Entasser les capsules de lacrymos pour symboliser la répression.",
+      "description": "Entasser les capsules de lacrymos pour symboliser la répression.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Durée de l'installation",
+      "consequences_juridiques": "Aucune infraction si les objets ne sont pas volés et sont ensuite ramassés.",
+      "coordonnees_initiales": {
+        "latitude": 44.8378,
+        "longitude": -0.5792
+      }
+    },
+    {
+      "id": 34,
+      "type": "Satire",
+      "titre": "Marche Funèbre de la Presse",
+      "action": "Envoyer des faire-part pour la mort de la presse et organiser une marche funèbre.",
+      "description": "Envoyer des faire-part pour la mort de la presse et organiser une marche funèbre.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Durée de la marche",
+      "consequences_juridiques": "Liberté d'expression. Si la marche est déclarée ou ne trouble pas l'ordre public, aucune sanction.",
+      "coordonnees_initiales": {
+        "latitude": 47.2184,
+        "longitude": -1.5536
+      }
+    },
+    {
+      "id": 59,
+      "type": "Pédagogie",
+      "titre": "Front de Libération de la Croissance",
+      "action": "Faire un front de libération de la croissance : comparer ce qui est bon pour soi vs pour le PIB.",
+      "description": "Faire un front de libération de la croissance : comparer ce qui est bon pour soi vs pour le PIB.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Durée de l'action",
+      "consequences_juridiques": "Liberté d'expression.",
+      "coordonnees_initiales": {
+        "latitude": 43.2965,
+        "longitude": 5.3698
+      }
+    },
+    {
+      "id": 26,
+      "type": "Économie",
+      "titre": "Pique-Nique Gratuit en Magasin",
+      "action": "Faire un pique-nique gratuit dans un magasin ('goûter').",
+      "description": "Faire un pique-nique gratuit dans un magasin ('goûter').",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "30 minutes à 1 heure (...)",
+      "consequences_juridiques": "Pas d'infraction. Peut entraîner l'expulsion (...) mais pas de sanction pénale.",
+      "coordonnees_initiales": {
+        "latitude": 50.6292,
+        "longitude": 3.0573
+      }
+    },
+    {
+      "id": 35,
+      "type": "Satire",
+      "titre": "Manif Satirique Capitaliste",
+      "action": "Faire une manif de droite, déguisé en capitaliste avec des slogans méprisants.",
+      "description": "Faire une manif de droite, déguisé en capitaliste avec des slogans méprisants.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Durée de la manifestation",
+      "consequences_juridiques": "Liberté d'expression et de satire, tant qu'il n'y a pas d'incitation à la haine ou d'atteinte caractérisée à l'honneur.",
+      "coordonnees_initiales": {
+        "latitude": 48.1173,
+        "longitude": -1.6778
+      }
+    },
+    {
+      "id": 86,
+      "type": "Autres",
+      "titre": "Manif Décentralisée (Groupes 1-2)",
+      "action": "Faire une manif décentralisée: groupes de 1 ou 2 circulant dans toute la ville avec pancartes.",
+      "description": "Faire une manif décentralisée: groupes de 1 ou 2 circulant dans toute la ville avec pancartes.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Nul",
+      "consequences_juridiques": "Liberté de manifestation et d'expression, toléré si la circulation n'est pas bloquée.",
+      "coordonnees_initiales": {
+        "latitude": 43.7102,
+        "longitude": 7.2620
+      }
+    },
+    {
+      "id": 33,
+      "type": "Satire",
+      "titre": "Parodie d'Adoration du Capital",
+      "action": "Faire une parodie d’adoration du Capital ou d’un chef d’entreprise.",
+      "description": "Faire une parodie d’adoration du Capital ou d’un chef d’entreprise.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Nul",
+      "consequences_juridiques": "Liberté d'expression, pas d'infraction.",
+      "coordonnees_initiales": {
+        "latitude": 47.9029,
+        "longitude": 1.9093
+      }
+    },
+    {
+      "id": 80,
+      "type": "Autres",
+      "titre": "Scène de Théâtre Devant Entreprise",
+      "action": "Faire une scène de théâtre devant le hall d’une entreprise.",
+      "description": "Faire une scène de théâtre devant le hall d’une entreprise.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Durée de la représentation",
+      "consequences_juridiques": "Liberté d'expression. Aucun risque si non-violent et non-bloquant.",
+      "coordonnees_initiales": {
+        "latitude": 49.4404,
+        "longitude": 2.1501
+      }
+    },
+    {
+      "id": 53,
+      "type": "Pédagogie",
+      "titre": "Glisser Flyers Anti-Propagande",
+      "action": "Glisser des flyers de contre-propagande dans la presse gratuite ou dans les livres.",
+      "description": "Glisser des flyers de contre-propagande dans la presse gratuite ou dans les livres.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Indéfini (...)",
+      "consequences_juridiques": "Distribution de tracts (toléré) sans dégradation du bien d'autrui.",
+      "coordonnees_initiales": {
+        "latitude": 48.5839,
+        "longitude": 7.7455
+      }
+    },
+    {
+      "id": 91,
+      "type": "Autres",
+      "titre": "Intervention Commentaires (Réseaux)",
+      "action": "Intervenir dans les commentaires des pages et groupes et chaînes et réseaux sociaux de la cible.",
+      "description": "Intervenir dans les commentaires des pages et groupes et chaînes et réseaux sociaux de la cible.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Nul",
+      "consequences_juridiques": "Liberté d'expression. Sauf si diffamation ou injure caractérisée (...)",
+      "coordonnees_initiales": {
+        "latitude": 47.4764,
+        "longitude": 0.6863
+      }
+    },
+    {
+      "id": 64,
+      "type": "Perturbation",
+      "titre": "Jouer du Pipeau (Satire)",
+      "action": "Jouer du pipeau pendant une intervention mensongère.",
+      "description": "Jouer du pipeau pendant une intervention mensongère.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Durée de la satire",
+      "consequences_juridiques": "Liberté d'expression et satire.",
+      "coordonnees_initiales": {
+        "latitude": 45.1885,
+        "longitude": 5.7245
+      }
+    },
+    {
+      "id": 47,
+      "type": "Symbole",
+      "titre": "Lancer de Boules de Papier",
+      "action": "Lancer des boules de papier contenant des messages sur notre cible.",
+      "description": "Lancer des boules de papier contenant des messages sur notre cible.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Quelques secondes",
+      "consequences_juridiques": "Aucun risque si non-violent et non-diffamatoire.",
+      "coordonnees_initiales": {
+        "latitude": 47.3220,
+        "longitude": 5.0415
+      }
+    },
+    {
+      "id": 52,
+      "type": "Pédagogie",
+      "titre": "Lecture d'Article de Loi Violé",
+      "action": "Lire à haute voix (et écrire en gros) un article de loi ou constitution enfreint par une institution.",
+      "description": "Lire à haute voix (et écrire en gros) un article de loi ou constitution enfreint par une institution.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Durée de la lecture",
+      "consequences_juridiques": "Liberté d'expression.",
+      "coordonnees_initiales": {
+        "latitude": 49.0305,
+        "longitude": 6.1757
+      }
+    },
+    {
+      "id": 37,
+      "type": "Satire",
+      "titre": "Lecture des 'Valeurs' d'Entreprise",
+      "action": "Lire à haute voix les « valeurs » extraites des sites des pires compagnies.",
+      "description": "Lire à haute voix les « valeurs » extraites des sites des pires compagnies.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Durée de la lecture (...)",
+      "consequences_juridiques": "Liberté d'expression.",
+      "coordonnees_initiales": {
+        "latitude": 48.4074,
+        "longitude": 4.0772
+      }
+    },
+    {
+      "id": 73,
+      "type": "Perturbation",
+      "titre": "Consommation Massive de Buffet",
+      "action": "Manger tous les petits fours possibles et boire tout leur champagne.",
+      "description": "Manger tous les petits fours possibles et boire tout leur champagne.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Indéfini (...)",
+      "consequences_juridiques": "Aucune infraction.",
+      "coordonnees_initiales": {
+        "latitude": 43.1242,
+        "longitude": 5.9280
+      }
+    },
+    {
+      "id": 78,
+      "type": "Autres",
+      "titre": "Manifestation Téléphonique",
+      "action": "Manif téléphonique : faire une liste de gens qui appellent un numéro à un certain créneau.",
+      "description": "Manif téléphonique : faire une liste de gens qui appellent un numéro à un certain créneau.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Durée du créneau (...)",
+      "consequences_juridiques": "Si les appels sont répétés (...) : **Délit d'appels téléphoniques malveillants répétés** (...). Contre une compagnie : Nul, sauf si saturation des lignes (Faible).",
+      "coordonnees_initiales": {
+        "latitude": 43.5290,
+        "longitude": 6.9406
+      }
+    },
+    {
+      "id": 76,
+      "type": "Autres",
+      "titre": "Contre-Publicités sur Essuie-Glaces",
+      "action": "Mettre des contre-publicités derrière les essuie-glaces.",
+      "description": "Mettre des contre-publicités derrière les essuie-glaces.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Nul (...)",
+      "consequences_juridiques": "Distribution de tracts. Aucune sanction.",
+      "coordonnees_initiales": {
+        "latitude": 48.9718,
+        "longitude": 2.8596
+      }
+    },
+    {
+      "id": 9,
+      "type": "Blocage",
+      "titre": "Submersion du Tri Postal",
+      "action": "Mettre des lettres sans adresse (...) dans les boîtes aux lettres de La Poste.",
+      "description": "Mettre des lettres sans adresse (...) dans les boîtes aux lettres de La Poste.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Augmentation indéfinie du temps de tri du courrier",
+      "consequences_juridiques": "Aucun risque. Le traitement du courrier mal adressé est interne à La Poste.",
+      "coordonnees_initiales": {
+        "latitude": 47.0706,
+        "longitude": 2.3941
+      }
+    },
+    {
+      "id": 72,
+      "type": "Perturbation",
+      "titre": "Infiltration Satirique de Réunion",
+      "action": "Participer à une réunion d’affaire avec un gros cigare (...).",
+      "description": "Participer à une réunion d’affaire avec un gros cigare (...).",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Durée de la présence",
+      "consequences_juridiques": "Liberté d'expression et satire. Fumer est interdit dans un lieu public clos (...).",
+      "coordonnees_initiales": {
+        "latitude": 49.2583,
+        "longitude": 0.3541
+      }
+    },
+    {
+      "id": 79,
+      "type": "Autres",
+      "titre": "Paiement en Petite Monnaie",
+      "action": "Payer en pièces jaunes voire rouge, et demander à être remboursé, puis recommencer.",
+      "description": "Payer en pièces jaunes voire rouge, et demander à être remboursé, puis recommencer.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "5 à 15 minutes (...)",
+      "consequences_juridiques": "Moyen de paiement légal, même si cela ralentit les caisses. Aucune sanction.",
+      "coordonnees_initiales": {
+        "latitude": 48.7831,
+        "longitude": 2.3021
+      }
+    },
+    {
+      "id": 49,
+      "type": "Symbole",
+      "titre": "Satire Vestimentaire (Égouttoir)",
+      "action": "Porter des choses improbables sur la tête (égouttoir) pour se moquer d’une loi vestimentaire.",
+      "description": "Porter des choses improbables sur la tête (égouttoir) pour se moquer d’une loi vestimentaire.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Durée de la présence",
+      "consequences_juridiques": "Liberté vestimentaire (...).",
+      "coordonnees_initiales": {
+        "latitude": 48.5839,
+        "longitude": 7.7455
+      }
+    },
+    {
+      "id": 82,
+      "type": "Autres",
+      "titre": "Publicité Militante Réseaux",
+      "action": "Poster une pub Facebook/Youtube militante pour faire connaître une action ou un rassemblement.",
+      "description": "Poster une pub Facebook/Youtube militante pour faire connaître une action ou un rassemblement.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Nul",
+      "consequences_juridiques": "Liberté d'expression et de communication.",
+      "coordonnees_initiales": {
+        "latitude": 47.9029,
+        "longitude": 1.9093
+      }
+    },
+    {
+      "id": 7,
+      "type": "Blocage",
+      "titre": "Prise de Faux Rendez-Vous",
+      "action": "Prendre de faux rendez-vous (...) et ne pas les honorer ou ne rien souscrire.",
+      "description": "Prendre de faux rendez-vous (...) et ne pas les honorer ou ne rien souscrire.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "30 minutes à 1 heure (...)",
+      "consequences_juridiques": "Simple perte de temps commercial. Non-infraction.",
+      "coordonnees_initiales": {
+        "latitude": 49.4404,
+        "longitude": 2.1501
+      }
+    },
+    {
+      "id": 4,
+      "type": "Blocage",
+      "titre": "Blocage de Bornes Fast-Food",
+      "action": "Prendre des dizaines de tickets à la borne du fast-food (...) et ne pas les payer pour bloquer les bornes.",
+      "description": "Prendre des dizaines de tickets à la borne du fast-food (...) et ne pas les payer pour bloquer les bornes.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "15 à 45 minutes (...)",
+      "consequences_juridiques": "Simple désistement d'achat. Pas de vol ni d'escroquerie caractérisée. Aucune sanction.",
+      "coordonnees_initiales": {
+        "latitude": 48.8566,
+        "longitude": 2.3522
+      }
+    },
+    {
+      "id": 3,
+      "type": "Blocage",
+      "titre": "Vol de Journaux Gratuits (Poubelles)",
+      "action": "Prendre des piles de journaux gratuits (...) et les mettre dans les poubelles pour les remplir et lutter contre la 'propagande'.",
+      "description": "Prendre des piles de journaux gratuits (...) et les mettre dans les poubelles pour les remplir et lutter contre la 'propagande'.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Minutes (...)",
+      "consequences_juridiques": "Non-vol (car gratuits). Non-dégradation majeure. Aucune sanction.",
+      "coordonnees_initiales": {
+        "latitude": 45.7640,
+        "longitude": 4.8357
+      }
+    },
+    {
+      "id": 88,
+      "type": "Autres",
+      "titre": "Photo-Militantisme des Passants",
+      "action": "Prendre en photo des passants volontaires avec une pancarte pré-écrite (...).",
+      "description": "Prendre en photo des passants volontaires avec une pancarte pré-écrite (...).",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Nul",
+      "consequences_juridiques": "Aucun risque si les personnes sont volontaires et qu'il n'y a pas d'atteinte à la dignité.",
+      "coordonnees_initiales": {
+        "latitude": 43.6047,
+        "longitude": 1.4442
+      }
+    },
+    {
+      "id": 46,
+      "type": "Symbole",
+      "titre": "Miroir à la Cible",
+      "action": "Présenter un miroir à notre cible et lui proposer de s’y regarder.",
+      "description": "Présenter un miroir à notre cible et lui proposer de s’y regarder.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Quelques secondes",
+      "consequences_juridiques": "Liberté d'expression. Aucun risque si non-violent.",
+      "coordonnees_initiales": {
+        "latitude": 44.8378,
+        "longitude": -0.5792
+      }
+    },
+    {
+      "id": 58,
+      "type": "Pédagogie",
+      "titre": "Agoras / Cercle de Parole",
+      "action": "Proposer une agora : micro et cercle de parole sur une place publique.",
+      "description": "Proposer une agora : micro et cercle de parole sur une place publique.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Durée de la réunion",
+      "consequences_juridiques": "Liberté de réunion. Si la sonorisation n'est pas excessive, pas de risque.",
+      "coordonnees_initiales": {
+        "latitude": 47.2184,
+        "longitude": -1.5536
+      }
+    },
+    {
+      "id": 23,
+      "type": "Économie",
+      "titre": "Abandon de Chariots Frais",
+      "action": "Remplir des chariots de produits frais et les abandonner en caisse.",
+      "description": "Remplir des chariots de produits frais et les abandonner en caisse.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "30 minutes à 1 heure (...)",
+      "consequences_juridiques": "Simple abandon d'achat. Pas d'infraction pénale.",
+      "coordonnees_initiales": {
+        "latitude": 43.2965,
+        "longitude": 5.3698
+      }
+    },
+    {
+      "id": 41,
+      "type": "Symbole",
+      "titre": "Représentation de Victimes (Chaussures)",
+      "action": "Représenter le nombre de victimes (ou milliards) par un amas de chaussures.",
+      "description": "Représenter le nombre de victimes (ou milliards) par un amas de chaussures.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Durée de l'installation (...)",
+      "consequences_juridiques": "Aucun risque si le lieu n'est pas bloqué et que les objets sont retirés.",
+      "coordonnees_initiales": {
+        "latitude": 50.6292,
+        "longitude": 3.0573
+      }
+    },
+    {
+      "id": 5,
+      "type": "Blocage",
+      "titre": "Occupation de Toilettes Longue Durée",
+      "action": "S'enfermer dans les toilettes d'un lieu public clos à fort passage pendant plusieurs heures (...).",
+      "description": "S'enfermer dans les toilettes d'un lieu public clos à fort passage pendant plusieurs heures (...).",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Quelques heures (...)",
+      "consequences_juridiques": "Pas d'infraction pénale si pas de dégradation ou trouble manifeste à l'ordre public (...).",
+      "coordonnees_initiales": {
+        "latitude": 48.1173,
+        "longitude": -1.6778
+      }
+    },
+    {
+      "id": 51,
+      "type": "Pédagogie",
+      "titre": "Poste de Caution (Panneau)",
+      "action": "Se poser devant un lieu, avec un panneau décrivant ce qu’on cautionne lorsqu’on y entre.",
+      "description": "Se poser devant un lieu, avec un panneau décrivant ce qu’on cautionne lorsqu’on y entre.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Durée de la présence",
+      "consequences_juridiques": "Manifestation individuelle et statique. Liberté d'expression.",
+      "coordonnees_initiales": {
+        "latitude": 43.7102,
+        "longitude": 7.2620
+      }
+    },
+    {
+      "id": 2,
+      "type": "Blocage",
+      "titre": "Signalement Faux Bagages Abandonnés",
+      "action": "Signaler des bagages non étiquetés dans un train (...) comme abandonnés pour submerger le personnel.",
+      "description": "Signaler des bagages non étiquetés dans un train (...) comme abandonnés pour submerger le personnel.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "30 minutes à 2 heures (...)",
+      "consequences_juridiques": "Action conforme aux procédures de sécurité ferroviaire. C'est un devoir de signalement. Aucune sanction.",
+      "coordonnees_initiales": {
+        "latitude": 47.9029,
+        "longitude": 1.9093
+      }
+    },
+    {
+      "id": 48,
+      "type": "Symbole",
+      "titre": "Nettoyage Symbolique (Karcher)",
+      "action": "Venir sur un lieu de corruption avec du matériel de nettoyage (karcher) pour assainir.",
+      "description": "Venir sur un lieu de corruption avec du matériel de nettoyage (karcher) pour assainir.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Durée de l'action symbolique",
+      "consequences_juridiques": "Liberté d'expression. Le Karcher ne doit pas être utilisé pour dégrader ou mouiller des personnes.",
+      "coordonnees_initiales": {
+        "latitude": 49.4404,
+        "longitude": 2.1501
+      }
+    },
+    {
+      "id": 11,
+      "type": "Blocage",
+      "titre": "Sac Abandonné (Fausse Alerte)",
+      "action": "'Oublier' un sac dégradé (...) pour déclencher une alerte bagage abandonné.",
+      "description": "Oublier un sac dégradé (...) pour déclencher une alerte bagage abandonné.",
+      "risque": "Faible/Modéré",
+      "duree_potentielle_blocage": "30 minutes à 3 heures (...)",
+      "consequences_juridiques": "Peut être requalifié en **Délit de communication de fausse information** (...)",
+      "coordonnees_initiales": {
+        "latitude": 48.5839,
+        "longitude": 7.7455
+      }
+    },
+    {
+      "id": 30,
+      "type": "Écologie",
+      "titre": "Arrachage de Plants OGM",
+      "action": "⚠️ **Arracher des plants OGM**.",
+      "description": "Arracher des plants OGM.",
+      "risque": "Modéré/Élevé",
+      "duree_potentielle_blocage": "Journée (...)",
+      "consequences_juridiques": "**Délit de destruction, dégradation ou détérioration** (...)",
+      "coordonnees_initiales": {
+        "latitude": 47.4764,
+        "longitude": 0.6863
+      }
+    },
+    {
+      "id": 57,
+      "type": "Pédagogie",
+      "titre": "Affiches Wanted (Diffamation)",
+      "action": "⚠️ **Coller des affiches « wanted »** dans les rues avec la tête d’un responsable.",
+      "description": "Coller des affiches « wanted » dans les rues avec la tête d’un responsable.",
+      "risque": "Faible/Modéré",
+      "duree_potentielle_blocage": "Indéfini (...)",
+      "consequences_juridiques": "Infraction au droit de l'affichage (...) Risque de **diffamation publique** (...)",
+      "coordonnees_initiales": {
+        "latitude": 45.1885,
+        "longitude": 5.7245
+      }
+    },
+    {
+      "id": 65,
+      "type": "Perturbation",
+      "titre": "Coller des Serrures",
+      "action": "⚠️ **Coller des serrures** de banques & entreprises ciblées.",
+      "description": "Coller des serrures de banques & entreprises ciblées.",
+      "risque": "Modéré/Élevé",
+      "duree_potentielle_blocage": "Plusieurs heures (...)",
+      "consequences_juridiques": "Identique à id 12. **Délit de dégradation volontaire** (...)",
+      "coordonnees_initiales": {
+        "latitude": 47.3220,
+        "longitude": 5.0415
+      }
+    },
+    {
+      "id": 69,
+      "type": "Perturbation",
+      "titre": "Bouchage de Toilettes (Non-dommage)",
+      "action": "Boucher les toilettes d’une rencontre avec des prospectus ou du papier.",
+      "description": "Boucher les toilettes d’une rencontre avec des prospectus ou du papier.",
+      "risque": "Nul/Faible",
+      "duree_potentielle_blocage": "Plusieurs heures (...)",
+      "consequences_juridiques": "Si le bouchage cause des dommages (...), **dégradation légère** (...). Si c'est juste un bouchage sans dommage, risque nul.",
+      "coordonnees_initiales": {
+        "latitude": 49.0305,
+        "longitude": 6.1757
+      }
+    },
+    {
+      "id": 14,
+      "type": "Blocage",
+      "titre": "Chaîne Humaine (Passage Piéton)",
+      "action": "Chaîne humaine temporaire sur un passage piéton (...).",
+      "description": "Chaîne humaine temporaire sur un passage piéton (...).",
+      "risque": "Modéré/Élevé",
+      "duree_potentielle_blocage": "5 à 30 minutes (...)",
+      "consequences_juridiques": "**Délit d'entrave volontaire à la circulation** (...)",
+      "coordonnees_initiales": {
+        "latitude": 48.4074,
+        "longitude": 4.0772
+      }
+    },
+    {
+      "id": 77,
+      "type": "Autres",
+      "titre": "Saturation de Boîtes Mails (STAD)",
+      "action": "Cibler et saturer les boîtes mails d’un élu ou d’une compagnie.",
+      "description": "Cibler et saturer les boîtes mails d’un élu ou d’une compagnie.",
+      "risque": "Faible/Modéré",
+      "duree_potentielle_blocage": "Indéfini (...)",
+      "consequences_juridiques": "**Délit d'entrave ou d'atteinte au fonctionnement d'un système de traitement automatisé de données (STAD)** (...)",
+      "coordonnees_initiales": {
+        "latitude": 43.1242,
+        "longitude": 5.9280
+      }
+    },
+    {
+      "id": 8,
+      "type": "Blocage",
+      "titre": "Affiches 'EN PANNE'",
+      "action": "Coller des affiches A4 'EN PANNE' sur tous les appareils possibles (...).",
+      "description": "Coller des affiches A4 'EN PANNE' sur tous les appareils possibles (...).",
+      "risque": "Nul/Faible",
+      "duree_potentielle_blocage": "Indéfini (...)",
+      "consequences_juridiques": "Contravention de 1re classe (...) pour dégradation légère du domaine public (...). Souvent toléré.",
+      "coordonnees_initiales": {
+        "latitude": 43.5290,
+        "longitude": 6.9406
+      }
+    },
+    {
+      "id": 28,
+      "type": "Écologie",
+      "titre": "Dégonflage Pneus 4x4",
+      "action": "Dégonfler les pneus des 4x4 ou leur mettre une amende symbolique.",
+      "description": "Dégonfler les pneus des 4x4 ou leur mettre une amende symbolique.",
+      "risque": "Modéré/Élevé",
+      "duree_potentielle_blocage": "Quelques heures (...)",
+      "consequences_juridiques": "**Délit de dégradation légère** (...) ou **Délit d'entrave à un véhicule** (...)",
+      "coordonnees_initiales": {
+        "latitude": 48.9718,
+        "longitude": 2.8596
+      }
+    },
+    {
+      "id": 1,
+      "type": "Blocage",
+      "titre": "Déplacement de Panneaux de Déviation",
+      "action": "Déplacer des panneaux de déviation de manière à perturber le trafic.",
+      "description": "Déplacer des panneaux de déviation de manière à perturber le trafic.",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "Quelques minutes (...)",
+      "consequences_juridiques": "Aucune infraction pénale si les panneaux sont déplacés et non dégradés. Potentielle contravention de 1re classe (...) si dégradation. Très difficile à caractériser.",
+      "coordonnees_initiales": {
+        "latitude": 47.0706,
+        "longitude": 2.3941
+      }
+    },
+    {
+      "id": 40,
+      "type": "Symbole",
+      "titre": "Die-In (Craie)",
+      "action": "Die-in : s’allonger devant un lieu de pouvoir et tracer les contours au sol à la craie.",
+      "description": "Die-in : s’allonger devant un lieu de pouvoir et tracer les contours au sol à la craie.",
+      "risque": "Nul/Faible",
+      "duree_potentielle_blocage": "5 à 30 minutes (...)",
+      "consequences_juridiques": "Occupation temporaire de la voie publique (...). La craie est facilement effaçable : non-dégradation.",
+      "coordonnees_initiales": {
+        "latitude": 49.2583,
+        "longitude": 0.3541
+      }
+    },
+    {
+      "id": 44,
+      "type": "Symbole",
+      "titre": "Distribution de Fausses Amendes",
+      "action": "Distribuer de fausses amendes, ou simuler une fausse arrestation.",
+      "description": "Distribuer de fausses amendes, ou simuler une fausse arrestation.",
+      "risque": "Nul/Faible",
+      "duree_potentielle_blocage": "Nul",
+      "consequences_juridiques": "**Usurpation de fonctions** si l'amende ressemble à un document officiel (...). Simple satire si elle est clairement fausse (...).",
+      "coordonnees_initiales": {
+        "latitude": 48.7831,
+        "longitude": 2.3021
+      }
+    },
+    {
+      "id": 71,
+      "type": "Perturbation",
+      "titre": "Boule Puante",
+      "action": "Éclater une boule puante au milieu de tout le monde.",
+      "description": "Éclater une boule puante au milieu de tout le monde.",
+      "risque": "Faible/Modéré",
+      "duree_potentielle_blocage": "15 à 60 minutes (...)",
+      "consequences_juridiques": "**Trouble à l’ordre public** (...). Si l'odeur est jugée dangereuse (...) : **Mise en danger d’autrui** (...).",
+      "coordonnees_initiales": {
+        "latitude": 48.5839,
+        "longitude": 7.7455
+      }
+    },
+    {
+      "id": 24,
+      "type": "Économie",
+      "titre": "Étiquetage Contre-Propagande",
+      "action": "Étiqueter les produits d’une entreprise (fraude fiscale, licenciements).",
+      "description": "Étiqueter les produits d’une entreprise (fraude fiscale, licenciements).",
+      "risque": "Nul/Faible",
+      "duree_potentielle_blocage": "Indéfini (...)",
+      "consequences_juridiques": "Si l'étiquette est facilement retirable, aucune infraction. Si elle détériore l'emballage, **Contravention de 5e classe** pour dégradation légère.",
+      "coordonnees_initiales": {
+        "latitude": 47.9029,
+        "longitude": 1.9093
+      }
+    },
+    {
+      "id": 87,
+      "type": "Autres",
+      "titre": "Casserolade",
+      "action": "Faire une casserolade.",
+      "description": "Faire une casserolade.",
+      "risque": "Nul/Faible",
+      "duree_potentielle_blocage": "Durée de l'action",
+      "consequences_juridiques": "Trouble sonore (...). Peut être sanctionné par un **arrêté municipal pour tapage nocturne ou diurne** (...) si le bruit est excessif ou la cible un élu (...).",
+      "coordonnees_initiales": {
+        "latitude": 49.4404,
+        "longitude": 2.1501
+      }
+    },
+    {
+      "id": 13,
+      "type": "Blocage",
+      "titre": "Fausse Panne de Voiture",
+      "action": "Fausse panne de voiture sur une voie publique pour ralentir la circulation.",
+      "description": "Fausse panne de voiture sur une voie publique pour ralentir la circulation.",
+      "risque": "Modéré/Élevé",
+      "duree_potentielle_blocage": "10 minutes à 1 heure (...)",
+      "consequences_juridiques": "**Délit d'entrave volontaire à la circulation** (...)",
+      "coordonnees_initiales": {
+        "latitude": 48.5839,
+        "longitude": 7.7455
+      }
+    },
+    {
+      "id": 66,
+      "type": "Perturbation",
+      "titre": "Jeter des Paillettes",
+      "action": "Jeter des paillettes sur un élu pour le ridiculiser.",
+      "description": "Jeter des paillettes sur un élu pour le ridiculiser.",
+      "risque": "Faible/Modéré",
+      "duree_potentielle_blocage": "Quelques secondes",
+      "consequences_juridiques": "**Contravention de 4e classe (...) pour violences légères** (...) Peut être requalifié en **violence volontaire sans ITT** (...)",
+      "coordonnees_initiales": {
+        "latitude": 47.4764,
+        "longitude": 0.6863
+      }
+    },
+    {
+      "id": 12,
+      "type": "Blocage",
+      "titre": "Colle dans Serrure",
+      "action": "Mettre de la colle à béton, du mastic ou un cure-dent dans la serrure d'une enseigne ou d'un lieu stratégique.",
+      "description": "Mettre de la colle à béton, du mastic ou un cure-dent dans la serrure d'une enseigne ou d'un lieu stratégique.",
+      "risque": "Faible/Modéré",
+      "duree_potentielle_blocage": "Plusieurs heures (...)",
+      "consequences_juridiques": "**Délit de dégradation volontaire du bien d'autrui** (...). Si le dommage est léger (...), **Contravention de 5e classe** (...). Sinon, **Délit** (...)",
+      "coordonnees_initiales": {
+        "latitude": 45.1885,
+        "longitude": 5.7245
+      }
+    },
+    {
+      "id": 36,
+      "type": "Satire",
+      "titre": "Occupation Festive (Concert)",
+      "action": "Occupation festive d’un lieu (concert dans une banque).",
+      "description": "Occupation festive d’un lieu (concert dans une banque).",
+      "risque": "Nul/Modéré",
+      "duree_potentielle_blocage": "30 minutes à 1 heure (...)",
+      "consequences_juridiques": "Si refus de quitter un lieu privé sur demande du propriétaire : **Occupation illicite** (...).",
+      "coordonnees_initiales": {
+        "latitude": 47.3220,
+        "longitude": 5.0415
+      }
+    },
+    {
+      "id": 62,
+      "type": "Perturbation",
+      "titre": "Opération Escargot",
+      "action": "Opération escargot avec des véhicules au ralenti sur autoroute ou chaîne de vélos.",
+      "description": "Opération escargot avec des véhicules au ralenti sur autoroute ou chaîne de vélos.",
+      "risque": "Modéré/Élevé",
+      "duree_potentielle_blocage": "Durée de l'opération (...)",
+      "consequences_juridiques": "**Délit d'entrave volontaire à la circulation** (...)",
+      "coordonnees_initiales": {
+        "latitude": 49.0305,
+        "longitude": 6.1757
+      }
+    },
+    {
+      "id": 85,
+      "type": "Autres",
+      "titre": "Flash Mob",
+      "action": "Organiser une flash mob (bataille de coussin, simple applaudissement).",
+      "description": "Organiser une flash mob (bataille de coussin, simple applaudissement).",
+      "risque": "Nul/Modéré",
+      "duree_potentielle_blocage": "3 à 15 minutes (...)",
+      "consequences_juridiques": "Simple rassemblement. Si non déclaré et gêne l'ordre public : **Manifestation non déclarée** (...).",
+      "coordonnees_initiales": {
+        "latitude": 48.4074,
+        "longitude": 4.0772
+      }
+    },
+    {
+      "id": 32,
+      "type": "Écologie",
+      "titre": "Vélorution",
+      "action": "Organiser une Vélorution (immense balade collective à vélo).",
+      "description": "Organiser une Vélorution (immense balade collective à vélo).",
+      "risque": "Nul/Faible",
+      "duree_potentielle_blocage": "Durée du cortège (...)",
+      "consequences_juridiques": "Si le cortège respecte les feux, aucun risque. Si le groupe bloque la route sans déclaration, risque de **Manifestation non déclarée** (...)",
+      "coordonnees_initiales": {
+        "latitude": 43.1242,
+        "longitude": 5.9280
+      }
+    },
+    {
+      "id": 81,
+      "type": "Autres",
+      "titre": "Faux Avis Google",
+      "action": "Poster des faux avis Google sur le profil de la cible.",
+      "description": "Poster des faux avis Google sur le profil de la cible.",
+      "risque": "Nul/Faible",
+      "duree_potentielle_blocage": "Indéfini (...)",
+      "consequences_juridiques": "Si les avis sont clairement diffamatoires (...) : **Délit de diffamation/injure publique** (...). Si c'est satirique : Nul.",
+      "coordonnees_initiales": {
+        "latitude": 43.5290,
+        "longitude": 6.9406
+      }
+    },
+    {
+      "id": 83,
+      "type": "Autres",
+      "titre": "Projection Lumineuse sur Façade",
+      "action": "Projeter depuis l'extérieur des messages lumineux sur une façade (...).",
+      "description": "Projeter depuis l'extérieur des messages lumineux sur une façade (...).",
+      "risque": "Nul/Faible",
+      "duree_potentielle_blocage": "Durée de la projection (...)",
+      "consequences_juridiques": "Si la façade est privée : **Trouble de jouissance** (...). Si le message est diffamatoire : **Délit de diffamation** (...). Si le message cause un risque (...) : **Mise en danger d'autrui** (...).",
+      "coordonnees_initiales": {
+        "latitude": 48.9718,
+        "longitude": 2.8596
+      }
+    },
+    {
+      "id": 39,
+      "type": "Symbole",
+      "titre": "Manifestation Silencieuse / Scotch",
+      "action": "Se réunir en masse dans le silence ou défiler avec un scotch sur la bouche et des panneaux vierges.",
+      "description": "Se réunir en masse dans le silence ou défiler avec un scotch sur la bouche et des panneaux vierges.",
+      "risque": "Nul/Faible",
+      "duree_potentielle_blocage": "Durée de l'action",
+      "consequences_juridiques": "Manifestation silencieuse non déclarée (Faible), mais tolérée si aucun trouble à l'ordre public.",
+      "coordonnees_initiales": {
+        "latitude": 47.0706,
+        "longitude": 2.3941
+      }
+    },
+    {
+      "id": 92,
+      "coordonnees_initiales": {
+        "latitude": 49.2583,
+        "longitude": 0.3541
+      },
+      "action": "test",
+      "description": "test",
+      "titre": "Action Test",
+      "type": "Symbole",
+      "risque": "Nul",
+      "duree_potentielle_blocage": "2 jours",
+      "consequences_juridiques": "null"
+    }
+  ]
+}

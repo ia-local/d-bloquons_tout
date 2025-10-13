@@ -221,5 +221,33 @@
     "content": "Bonjour ! Comment puis-je vous aider aujourd'hui ? Avez-vous besoin d'un article, d'une description ou d'une idée créative ?",
     "persona": "generateur",
     "timestamp": "2025-10-12T23:50:20.529Z"
+  },
+  {
+    "id": "264ea967-380a-48bb-97ed-e665bbb00f80",
+    "role": "user",
+    "content": "test",
+    "persona": "vous",
+    "timestamp": "2025-10-13T05:50:30.783Z"
+  },
+  {
+    "id": "1daf0d51-eb52-4220-aa92-0d2673619bb3",
+    "role": "ai",
+    "content": "Je suis prêt à vous aider. Qu'est-ce que vous voulez savoir ou faire ?",
+    "persona": "generaliste",
+    "timestamp": "2025-10-13T05:50:31.038Z"
+  },
+  {
+    "id": "44678699-48e5-4dea-8df1-9ac37cfc10ab",
+    "role": "user",
+    "content": "test",
+    "persona": "vous",
+    "timestamp": "2025-10-13T06:41:08.488Z"
+  },
+  {
+    "id": "6bb89179-efee-4a66-8e59-c3a4fd99e5af",
+    "role": "ai",
+    "content": "Je suis prêt à aider ! Qu'est-ce que vous voulez faire ? Posez-moi une question, demandez-moi l'information que vous cherchez ou décidez de discuter sur un sujet précis. Je suis là pour vous aider.",
+    "persona": "generaliste",
+    "timestamp": "2025-10-13T06:41:08.810Z"
   }
 ]

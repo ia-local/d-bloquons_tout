@@ -7,7 +7,8 @@ const path = require('path');
 const GROQ_API_KEY = process.env.GROQ_API_KEY;
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const PORT = process.env.PORT || 3000;
-
+// 🛑 NOUVELLE CONSTANTE : Mapping du modèle haute performance
+const DEEPSEEK_MODEL = 'deepseek-r1-distill-llama-70b';
 // --- CHEMINS DE FICHIERS ---
 const DATA_DIR = path.join(__dirname, '..', 'data'); 
 // Chemin de base de la structure docs/
@@ -30,6 +31,18 @@ const ACTIONS_DATA_FILE_PATH = path.join(__dirname, '..', 'docs', 'src', 'json',
 
 // --- CONFIGURATION AI ---
 const GROQ_MODEL = "llama-3.1-8b-instant";
+// --- DÉFINITIONS ---
+// --- DÉFINITIONS ---
+const AI_MODELS = {
+    DEFAULT: 'llama-3.1-8b-instant',
+    STRATEGIC: 'deepseek-r1-distill-llama-70b', // Utilisé pour l'analyse stratégique
+    ENQUETEUR: 'deepseek-r1-distill-llama-70b',
+    VISION: 'meta-llama/llama-4-scout-17b-16e-instruct"',
+    AVOCAT: 'llama-3.1-8b-instant',
+    CODING: 'deepseek-r1-distill-llama-70b',
+    SECRETARY: 'llama-3.1-8b-instant',
+    GENERATOR: 'deepseek-r1-distill-llama-70b'
+};
 const AI_PERSONAS = {
     'generaliste': 'Tu es un un assistant IA généraliste, utile et informatif. Tu es là pour aider l\'utilisateur dans le cadre du projet.',
     'enqueteur': 'Tu es un enquêteur IA spécialisé dans l\'analyse de dossiers de corruption. Ton ton est factuel, précis et basé sur des données. Tu as la persona d\'un enquêteur et tu réponds en te basant sur des faits.',
@@ -69,5 +82,6 @@ module.exports = {
     DOCS_DIR,
     DYNAMIC_JSON_DIR,
     DASHBOARD_SUMMARY_OUTPUT,
+    DEEPSEEK_MODEL // 🛑 EXPOSÉ
     // ... exportez toutes les autres constantes (CATEGORIES_TO_CLASSIFY, etc.)
 };
