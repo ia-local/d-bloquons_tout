@@ -1,4 +1,4 @@
-// Fichier : routes/telegramRouter.js (VERSION NETTOYÉE ET CORRIGÉE)
+// Fichier : routes/telegramRouter.js (VERSION AVEC MANIFESTE DÉTAILLÉ)
 
 const { Telegraf, Markup } = require('telegraf');
 const { v4: uuidv4 } = require('uuid');
@@ -20,12 +20,13 @@ const WEB_APP_TWA_URL = 'https://t.me/Pi_ia_Pibot/Manifest_910'; // URL TWA (pou
 const WEB_APP_URL = 'https://ia-local.github.io/d-bloquons_tout/'; // URL Web simple pour le bouton URL
 
 const API_BASE_URL = process.env.API_BASE_URL || 'http://localhost:3000/api/beneficiaries'; // Endpoint de l'API Citoyen
+const API_CAISSE_URL = process.env.API_CAISSE_URL || 'http://localhost:3000/api/caisse-manifestation'; // Endpoint de l'API Caisse (Ajouté à l'étape précédente)
 const ORGANIZER_GROUP_ID_CHAT = process.env.ORGANIZER_GROUP_ID_CHAT || "-100123456789"; // ID de chat d'organisateurs
 
 const GROQ_API_KEY = process.env.GROQ_API_KEY;
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const TELEGRAM_API_KEY = process.env.TELEGRAM_API_KEY || '7281441282:AAGA5F0nRyEsBKIfQOGcAjelkE3DA8IWByU';
-const API_CAISSE_URL = process.env.API_CAISSE_URL || 'http://localhost:3000/api/caisse-manifestation';
+
 // 🛑 CONSTANTES DE NAVIGATION ET DE PAGINATION
 const GALLERY_DIR = path.join(__dirname, '..', 'data', 'galerie');
 const IMAGES_PER_PAGE = 4; // Affichage de 4 images par page dans le diaporama
@@ -49,7 +50,7 @@ const bot = new Telegraf(TELEGRAM_API_KEY, {
     telegram: { webhookReply: true }
 });
 let database = {};
-let commands = []; // 👈 AJOUTEZ CETTE LIGNE
+let commands = [];
 // --- FONCTIONS UTILITAIRES DE BASE ---
 async function readJsonFile(filePath, defaultValue = {}) {
     try {
@@ -97,6 +98,19 @@ async function getGroqChatResponse(promptInput, model, systemMessageContent) {
         return 'Une erreur est survenue lors du traitement de votre demande. Veuillez réessayer plus tard.';
     }
 }
+
+// 🛑 NOUVELLE FONCTION : DÉTAIL DU MANIFESTE (I1.1)
+async function getManifesteMarkdown() {
+    return `📜 **Manifeste 910-2025 : Plateforme Citoyenne de Mobilisation**
+\nNotre mouvement est une plateforme citoyenne pour la **Grève Générale du 10 Septembre 2025** et la **Justice Sociale**.
+\n### 🎯 Nos Objectifs Clés :
+\n* **Boycottage Économique :** Mobiliser numériquement pour un boycottage massif des grandes enseignes (Leclerc, Carrefour, Lidl, Intermarché, etc.).
+\n* **Caisse de Soutien :** Financer une caisse de manifestation où 100% des fonds seront réinjectés dans les revenus des citoyens (objectif : +500€ à +5000€).
+\n* **Réforme Économique :** Démontrer l'illégalité des politiques économiques actuelles via un modèle d'économie circulaire.
+\n* **Réforme Politique (RIC) :** Promouvoir le Référendum d'Initiative Citoyenne (RIC) pour la Justice Climatique, Sociale et une nouvelle procédure de Destitution (Art. 68).
+\n\nUtilisez la commande /greve pour les détails pratiques de la mobilisation.`;
+}
+
 async function getDestitutionInfoMarkdown() {
     return `**La Procédure de Destitution : L'Article 68 de la Constitution**
 \nL'Article 68 de la Constitution française prévoit la possibilité de destituer le Président de la République en cas de manquement à ses devoirs manifestement incompatible avec l'exercice de son mandat.
@@ -131,10 +145,9 @@ async function getManifestationInfo() {
   }
 }
 
-// 🛑 NOUVELLE FONCTION : RÉCUPÉRATION DES STATISTIQUES DE LA CAISSE (I1.2)
+// 🛑 FONCTION RÉCUPÉRATION DES STATISTIQUES DE LA CAISSE (I1.2)
 async function getTreasuryStats() {
     try {
-        // L'API_CAISSE_URL est configuré pour pointer vers /api/caisse-manifestation
         const response = await axios.get(API_CAISSE_URL); 
         const caisseStats = response.data;
 
@@ -142,8 +155,7 @@ async function getTreasuryStats() {
             return "⚠️ Le format des données de la caisse est invalide. Vérifiez le serveur API.";
         }
         
-        // Supposons une structure de données: { solde: number, objectif: number, contributeurs: number }
-        const objectif = caisseStats.objectif || 500000; // Objectif par défaut de 500k€
+        const objectif = caisseStats.objectif || 500000;
         const progression = ((caisseStats.solde / objectif) * 100).toFixed(2);
         const soldeFormatted = caisseStats.solde.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
         const objectifFormatted = objectif.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
@@ -373,8 +385,13 @@ bot.action('start_menu', async (ctx) => {
 });
 
 // --- COMMANDES DE BASE ET D'INFO ---
-bot.help((ctx) => ctx.reply('Commandes disponibles: /start, /user, /manifeste, /ric, /destitution, /greve, /topics, /galerie, /app, /web, /imagine, /caricature, /caricature_plainte, /ai_vision, /stats, /help'));
-bot.command('manifeste', (ctx) => { ctx.reply('Le Manifeste du mouvement pour le 10 septembre est le suivant...'); });
+bot.help((ctx) => ctx.reply('Commandes disponibles: /start, /user, /manifeste, /ric, /destitution, /greve, /caisse, /topics, /galerie, /app, /web, /imagine, /caricature, /caricature_plainte, /ai_vision, /stats, /help'));
+
+// 🛑 COMMANDE /MANIFESTE MISE À JOUR (I1.1)
+bot.command('manifeste', async (ctx) => { 
+    await ctx.replyWithMarkdown(await getManifesteMarkdown()); 
+});
+
 bot.command('destitution', async (ctx) => { await ctx.replyWithMarkdown(await getDestitutionInfoMarkdown()); });
 bot.command('ric', async (ctx) => { await ctx.replyWithMarkdown(await getRicInfoMarkdown()); });
 bot.command('greve', async (ctx) => { await ctx.replyWithMarkdown(await getManifestationInfo()); });
@@ -384,7 +401,7 @@ bot.command('stats', async (ctx) => {
     await ctx.reply(statsMessage);
 });
 
-// 🛑 NOUVELLE COMMANDE : /CAISSE (I1.2)
+// 🛑 COMMANDE /CAISSE (Implémentée à l'étape précédente)
 bot.command('caisse', async (ctx) => {
     await ctx.replyWithChatAction('typing');
     await ctx.replyWithMarkdown(await getTreasuryStats());
@@ -791,7 +808,6 @@ bot.on('message', async (ctx) => {
     }
 });
 
-// --- MISE À JOUR DU MENU DES COMMANDES OFFICIELLES ---
 // --- MISE À JOUR DU MENU DES COMMANDES OFFICIELLES ---
 async function setBotCommands() {
      commands = [
