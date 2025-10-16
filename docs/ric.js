@@ -68,21 +68,26 @@ window.loadRICContent = async function() {
         ]);
         
         // Stockage global des données
-        window.RIC_DATA = ricData; 
+        window.RIC_DATA = ricData || {}; 
         window.ACTIVE_RICS = Array.isArray(activeRicsData) ? activeRicsData : []; 
         
-        defineRicFormTemplate(); // 🛑 Définition en ligne du template
+        defineRicFormTemplate();
 
         // --- 1. CONSTRUCTION DU CONTENU HTML ---
         
-        const typeCards = ricData.types.map((type, index) => `
+// CORRECTION I3.2: Vérification de l'existence de l'array 'types'
+        const types = (window.RIC_DATA.types && Array.isArray(window.RIC_DATA.types)) ? window.RIC_DATA.types : [];
+
+        const typeCards = types.map((type, index) => `
             <div class="feature-card ric-card-trigger" data-ric-index="${index}" style="transform: none; background: var(--color-ui-primary); border-color: var(--color-accent-red); color: var(--color-text); cursor: pointer;">
                 <h4 class="font-yellow" style="font-size: 1.1em;">${type.name}</h4>
                 <p style="font-size: 0.9em; margin-top: 5px; color: var(--color-text);">${type.desc}</p>
             </div>
         `).join('');
 
-        const powersHtml = ricData.separation_of_powers.map(p => `
+        const powers = (window.RIC_DATA.separation_of_powers && Array.isArray(window.RIC_DATA.separation_of_powers)) ? window.RIC_DATA.separation_of_powers : [];
+        
+        const powersHtml = powers.map(p => `
             <div class="feature-card" style="background: var(--color-ui-content); padding: 15px; border-left: 5px solid var(--color-accent-yellow);">
                 <i class="${p.icon} font-red" style="font-size: 1.5em;"></i>
                 <h4 class="font-yellow" style="margin-top: 5px;">${p.power}</h4>
@@ -94,7 +99,7 @@ window.loadRICContent = async function() {
         const ricHtml = `
             <div class="content" style="transform: rotate(0.5deg); margin-bottom: 20px;">
                 <h3 class="font-red">🏛️ Qu'est-ce que le RIC ?</h3>
-                <p style="margin-top: 10px;">${ricData.definition}</p>
+<p style="margin-top: 10px;">${window.RIC_DATA.definition || 'Définition non chargée (API non trouvée ou fichier de secours manquant).'} </p>   
                 <p style="margin-top: 15px; font-weight: bold;">Le RIC est notre proposition fondamentale pour restaurer la souveraineté populaire.</p>
                 
                 <a href="${ricData.manifestoLink}" target="_blank" class="btn btn-secondary" style="

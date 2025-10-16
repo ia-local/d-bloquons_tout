@@ -1,9 +1,12 @@
 
 /* --- Styles Conteneur Général (Mobile-First) --- */
 
+/* Assurez-vous que le contenu Telegram ne dépasse pas la largeur */
 .telegram-modal-content {
     /* Marge interne pour respirer sur mobile */
     padding: 10px;
+    width: 100%; /* Assure qu'il utilise toute la largeur du #modal-box */
+    box-sizing: border-box;
 }
 
 .telegram-section-title {

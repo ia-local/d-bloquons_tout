@@ -54,7 +54,7 @@ serveur:
 	@node serveur.js
 
 # La commande 'update' va maintenant synchroniser les données avant de commiter.
-update: build-js
+update:
 	@echo "${update_MSG}"
 	@git add .
 	@git commit -m "update synchronisation et modifications générales"

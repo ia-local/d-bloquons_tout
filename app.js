@@ -83,12 +83,14 @@ app.use('/api', staticDataRouter);          // 📊 Données Statiques (ex: /api
 
 // Montage des routeurs nouvellement créés
 app.use('/api/dashboard', dashboardRouter); // 👈 Monte les routes /api/dashboard/*
+app.use('/api/hq', hqDataRouter);            // 💡 Nouveau : Montage du routeur HQ Data (Tâche I2.2)
 app.use('/api/operator', dashboardRouter);  // 👈 Monte les routes /api/operator/*
+// 🛑 MONTAGE CONSOLIDÉ DES NOUVEAUX ROUTEURS (CORRIGÉ I2.1 et I2.2)
 
-// Note : L'ancienne route /smartContract/api/dashboard-data est gérée par défaut si vous montez
 // Routes d'Intégration et de Qualité des Données
 app.use('/api/data-integration', mapIntegrationRouter); // 👈 Monte les POSTs trigger-real-scraping & validate-and-integrate
 app.use('/api/data-quality', mapIntegrationRouter);      // 👈 Monte le GET video-summary
+
 
 // le routeur sur '/'. Ici, nous allons la monter spécifiquement pour plus de clarté:
 app.use('/smartContract/api', dashboardRouter);

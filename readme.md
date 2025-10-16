@@ -104,6 +104,4 @@
 
 ### 📜 Licence
 
-[cite_start]Ce projet est distribué sous la **Licence MIT**[cite: 1].
-
-</code></pre>
+[cite_start]Ce projet est distribué sous la **Licence GNU**[cite: 1].

@@ -91,6 +91,20 @@ router.post('/affaires/event', async (req, res) => {
 
 
 // --- REFERENDUMS D'INITIATIVE CITOYENNE (RICS) ---
+
+// 🛑 CORRECTION (ITÉRATION 5) : Ajout de la route pour les détails statiques du RIC
+router.get('/ric/data', (req, res) => {
+    // Assumant que les détails statiques sont stockés dans le champ 'ric_details' de la base de données générale
+    res.json(getDatabase().ric_details || {}); 
+});
+
+// 🛑 CORRECTION (ITÉRATION 5) : Ajout de la route pour la liste active (utilisée par le frontend)
+router.get('/ric/active-list', (req, res) => {
+    // getRicsData() retourne la liste de tous les RICs, le frontend s'occupe du filtrage/limitation.
+    res.json(getRicsData()); 
+});
+
+
 router.get('/rics', (req, res) => res.json(getRicsData()));
 
 router.post('/rics', async (req, res) => {

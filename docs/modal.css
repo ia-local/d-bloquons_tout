@@ -10,6 +10,7 @@
     background-color: rgba(0, 0, 0, 0.9); /* Fond très sombre */
     z-index: 2000; /* Assurez-vous d'être au-dessus de tout (header est 1000) */
     display: none; /* Masqué par défaut */
+    position: fixed;
     justify-content: center;
     align-items: center;
     overflow-y: auto;
@@ -33,10 +34,14 @@ body.modal-open {
     position: relative;
     width: 95%; /* Mobile-First: prend presque toute la largeur */
     max-width: 650px; /* Légèrement augmenté pour le formulaire RIC */
+    max-height: 95vh;         /* Limite la hauteur maximale à 95% de la fenêtre */
+    width: 600px;
+    height: 80%;
     box-shadow: 0 5px 25px rgba(245, 38, 57, 0.4); /* Ombre rouge/jaune pour l'impact */
     margin: 20px 0; /* Marge verticale pour scroll sur mobile */
     padding: 20px;
     z-index: 2001;
+    overflow-y: auto;
 }
 
 /* En-tête et titre */

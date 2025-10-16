@@ -46,10 +46,6 @@ window.initializeModalHandling = function() {
         } else {
             modalBox.classList.remove('is-chatbot');
         }
-        
-        if (title.includes("Proposer un nouveau RIC")) {
-            // Logique de formulaire RIC (assurez-vous d'avoir attachRicFormListener)
-        }
     };
 
     window.closeModal = function() {
@@ -59,8 +55,19 @@ window.initializeModalHandling = function() {
         modalContentContainer.innerHTML = '';
     };
     
-    // --- Logique Contenu QG (Simplifiée) ---
-    const getHQDetailContent = (key) => { /* ... Logique de secours ... */ return { title: `Détail de ${key}`, icon: "fas fa-question-circle", content: `<p class='font-red'>Détail pour la clé '${key}' non chargé par modalDashboard.js.</p>` }; };
+    window.openModalWithForm = function(title, formHTML, method, url) {
+        // Logique simplifiée pour les formulaires. Peut être étendue.
+        window.openModal(title, formHTML); 
+        const formElement = modalContentContainer.querySelector('form');
+        if (formElement) {
+             formElement.addEventListener('submit', (e) => {
+                 e.preventDefault();
+                 // Ici, vous ajouteriez la logique de soumission fetch(url, { method, body: ... })
+                 window.closeModal();
+                 window.openModal("Soumission en cours", `<p>Le formulaire pour ${title} sera envoyé à ${url} (Action simulée).</p>`);
+             });
+        }
+    }
 
 
     // --- Logique principale de gestion des actions (handleUserAction) ---
@@ -107,7 +114,9 @@ window.initializeModalHandling = function() {
                 break;
                 
             case 'chronology-detail':
-                title = "Détail Chronologie"; content = `<p>Rendu de l'événement.</p>`;
+                // Placeholders statiques utilisant la valeur passée
+                title = "Détail Chronologie"; 
+                content = `<p>Rendu détaillé de l'événement n°${value}. (Contenu à implémenter)</p>`; 
                 break;
                 
             case 'ric-types':
@@ -133,26 +142,43 @@ window.initializeModalHandling = function() {
                 break;
                 
             case 'ric-detail':
-                title = "Détails RIC"; content = `<p>Rendu détaillé du type de RIC.</p>`;
+                // 🛑 CORRECTION I6.1 : Utilisation des données statiques du RIC pour le détail de type
+                const ricDataStatic = window.RIC_DATA;
+                const ricTypeIndex = parseInt(detailKey, 10);
+                const typeDetail = ricDataStatic.types && ricDataStatic.types[ricTypeIndex];
+                
+                if (typeDetail) {
+                    title = `📋 ${typeDetail.name} (Type de RIC)`;
+                    content = `
+                        <p class="font-yellow" style="font-weight: bold; margin-bottom: 15px;">${typeDetail.desc}</p>
+                        <p>${typeDetail.detail || "Aucun détail supplémentaire n'a été fourni pour ce type de RIC."}</p>
+                        <p style="margin-top: 20px; color: var(--color-accent-red); font-style: italic;">
+                            ${ricDataStatic.conclusion_modal || "La proposition est en cours d'analyse pour l'intégration légale."}
+                        </p>
+                    `;
+                } else {
+                    title = "Erreur de détail RIC";
+                    content = `<p class="font-red">Détail du type de RIC non trouvé à l'index ${detailKey}.</p>`;
+                }
                 break;
                 
             case 'ric-form':
                 title = "🗳️ Proposer un nouveau RIC";
                 content = window.RIC_FORM_TEMPLATE; 
                 break;
+                
             case 'ric-active-detail':
             case 'ric-vote':
                 if (window.handleRicActiveDetail || window.handleRicVote) {
                     window.closeModal();
                     if (action === 'ric-active-detail') window.handleRicActiveDetail(detailKey);
                     if (action === 'ric-vote') window.handleRicVote(detailKey);
-                    return;
+                    return; // 🛑 SORTIE IMMÉDIATE
                 }
                 break;
 
             case 'profile':
             case 'cvnu':
-                const profile = window.AGENT_PROFILE;
                 const nextLevelThresholdXP = window.getNextLevelThreshold ? window.getNextLevelThreshold() : 500; 
                 const progressPercent = Math.min(100, ((profile.experience || 0) / nextLevelThresholdXP) * 100);
 
@@ -188,7 +214,7 @@ window.initializeModalHandling = function() {
                     </div>
                     <div style="margin-top: 20px; text-align: center;"><button class="btn btn-primary">Mettre à jour mon CVNU</button></div>
                 `; 
-                window.openModal(title, content, false);
+                // 🛑 CORRECTION I6.3 : Retrait de l'appel openModal ici.
                 break;
 
             case 'rib':
@@ -203,7 +229,8 @@ window.initializeModalHandling = function() {
                 title = "Erreur d'Action"; content = "<p>Action non reconnue.</p>";
         }
 
-        if (action !== 'logout') {
+        // 🛑 Bloc d'ouverture de modale centralisé (pour tous les cas qui n'ont pas fait 'return')
+        if (action !== 'logout' && title) { 
             window.openModal(title, content, action === 'chatbot');
             if (action === 'chatbot' && window.initializeChatbot) {
                 setTimeout(() => window.initializeChatbot(), 0); 

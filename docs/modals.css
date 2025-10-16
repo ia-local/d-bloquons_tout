@@ -33,11 +33,22 @@
     border: 3px solid var(--color-accent-yellow, #ffd700);
     border-radius: 8px;
     position: relative;
+    
+    /* GESTION DE LA TAILLE ET DU DÉFILEMENT */
     width: 95%; 
-    max-width: 800px; /* Utiliser 800px comme dans dashboard.css */
-    /* ... (Autres styles de padding/box-shadow) ... */
-    margin: 20px 0; /* Garder une marge si le contenu déborde */
+    max-width: 800px; /* Conserve la largeur max de 800px */
+    max-height: 90vh; /* 🛑 LIMITE LA HAUTEUR : Crucial pour le défilement */
+    overflow-y: auto; /* 🛑 ACTIVER LE DÉFILEMENT INTERNE */
+
+    /* AJOUT DES STYLES ESTHÉTIQUES ET DE MARGE/PADDING */
+    padding: 0;             /* On retire le padding du box pour le mettre sur les enfants */
+    margin: 20px 0;         /* Garde une marge autour de la modale */
     z-index: 2001;
+
+    /* 🛑 AJOUT DE LA BOX-SHADOW (Effet néon/glow) */
+    box-shadow: 
+        0 0 10px 5px rgba(255, 215, 0, 0.4), /* Lueur jaune autour */
+        0 8px 20px rgba(0, 0, 0, 0.8);      /* Ombre de profondeur */
 }
 #global-modal.visible {
     display: flex; /* Afficher la modale */

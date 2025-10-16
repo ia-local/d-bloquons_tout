@@ -25,7 +25,7 @@ const ORGANIZER_GROUP_ID_CHAT = process.env.ORGANIZER_GROUP_ID_CHAT || "-1001234
 const GROQ_API_KEY = process.env.GROQ_API_KEY;
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const TELEGRAM_API_KEY = process.env.TELEGRAM_API_KEY || '7281441282:AAGA5F0nRyEsBKIfQOGcAjelkE3DA8IWByU';
-
+const API_CAISSE_URL = process.env.API_CAISSE_URL || 'http://localhost:3000/api/caisse-manifestation';
 // 🛑 CONSTANTES DE NAVIGATION ET DE PAGINATION
 const GALLERY_DIR = path.join(__dirname, '..', 'data', 'galerie');
 const IMAGES_PER_PAGE = 4; // Affichage de 4 images par page dans le diaporama
@@ -130,6 +130,36 @@ async function getManifestationInfo() {
     return "Impossible de récupérer les informations sur la manifestation pour le moment.";
   }
 }
+
+// 🛑 NOUVELLE FONCTION : RÉCUPÉRATION DES STATISTIQUES DE LA CAISSE (I1.2)
+async function getTreasuryStats() {
+    try {
+        // L'API_CAISSE_URL est configuré pour pointer vers /api/caisse-manifestation
+        const response = await axios.get(API_CAISSE_URL); 
+        const caisseStats = response.data;
+
+        if (!caisseStats || typeof caisseStats.solde === 'undefined') {
+            return "⚠️ Le format des données de la caisse est invalide. Vérifiez le serveur API.";
+        }
+        
+        // Supposons une structure de données: { solde: number, objectif: number, contributeurs: number }
+        const objectif = caisseStats.objectif || 500000; // Objectif par défaut de 500k€
+        const progression = ((caisseStats.solde / objectif) * 100).toFixed(2);
+        const soldeFormatted = caisseStats.solde.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
+        const objectifFormatted = objectif.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
+        
+        return `💰 **Statut de la Caisse de Manifestation**\n\n` +
+               `**Solde Actuel :** ${soldeFormatted}\n` +
+               `**Objectif :** ${objectifFormatted}\n` +
+               `**Progression :** ${progression}%\n` +
+               `**Contributeurs :** ${caisseStats.contributeurs?.toLocaleString('fr-FR') || 'N/A'}\n\n` +
+               `*100% des fonds seront réinjectés dans les revenus des citoyens après la grève.*`;
+    } catch (error) {
+        console.error("Erreur lors de la récupération des stats de la caisse:", error.message);
+        return "❌ Impossible de contacter l'API de la caisse. Vérifiez le serveur Express.";
+    }
+}
+
 // Exemple de commande CREATE
 bot.command('addevent', async (ctx) => {
     const text = ctx.message.text.split(' ').slice(1).join(' ');
@@ -352,6 +382,12 @@ bot.command('stats', async (ctx) => {
     const stats = await readJsonFile(STATS_FILE, { totalMessages: 0 });
     const statsMessage = `📊 Statistiques d'utilisation du bot :\nTotal de messages traités : ${stats.totalMessages}`;
     await ctx.reply(statsMessage);
+});
+
+// 🛑 NOUVELLE COMMANDE : /CAISSE (I1.2)
+bot.command('caisse', async (ctx) => {
+    await ctx.replyWithChatAction('typing');
+    await ctx.replyWithMarkdown(await getTreasuryStats());
 });
 
 // --- COMMANDES WEB ET NAVIGATION ---
@@ -756,6 +792,7 @@ bot.on('message', async (ctx) => {
 });
 
 // --- MISE À JOUR DU MENU DES COMMANDES OFFICIELLES ---
+// --- MISE À JOUR DU MENU DES COMMANDES OFFICIELLES ---
 async function setBotCommands() {
      commands = [
         { command: 'start', description: 'Revenir au menu principal.' },
@@ -767,6 +804,7 @@ async function setBotCommands() {
         { command: 'ric', description: 'Tout savoir sur le Référendum d\'Initiative Citoyenne.' },
         { command: 'destitution', description: 'Comprendre la procédure de destitution.' },
         { command: 'greve', description: 'Infos pratiques sur la Grève du 10 Septembre 2025.' },
+        { command: 'caisse', description: 'Afficher le statut de la Caisse de Manifestation.' }, // 👈 NOUVEAU
         { command: 'galerie', description: 'Accéder à la galerie des images générées.' },
         { command: 'imagine', description: 'Générer une image libre via l\'IA.' },
         { command: 'caricature', description: 'Générer une caricature politique via l\'IA.' },

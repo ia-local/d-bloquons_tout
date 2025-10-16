@@ -1,4 +1,4 @@
-// docs/app.js - Logique Principale et Navigation (VERSION FINALE ET ROBUSTE)
+// docs/app.js - Logique Principale et Navigation (VERSION COMPLÈTE ET CORRIGÉE)
 
 // 🛑 Importation de la logique de Gamification depuis le composant dédié
 import { updateProfileUI, grantReward, checkLevelUp, getNextLevelThreshold } from './modalProfile.js';
@@ -9,7 +9,9 @@ window.APP_STATE = {
     LOG_LEVEL: 'warn', 
     IS_DEV: false
 };
-// ... (window.setAppState et expositions globales inchangées) ...
+// ... (window.setAppState inchangé) ...
+
+
 window.setAppState = function(mode) {
     const validModes = ['/dev', '/focus', '/active', '/session'];
     if (!validModes.includes(mode)) {
@@ -49,6 +51,12 @@ window.grantReward = grantReward;
 window.checkLevelUp = checkLevelUp; 
 window.getNextLevelThreshold = getNextLevelThreshold;
 
+
+// GESTIONNAIRE D'ACTIONS PROFIL (Fallback si non défini par modalProfile.js)
+window.handleProfileAction = window.handleProfileAction || function(action) {
+    console.warn(`[PROFILE ACTION FALLBACK] Action de profil '${action}' non gérée. Le module modalProfile.js est manquant.`);
+};
+
 // --- 1. DONNÉES STATIQUES (MAPPAGE API & PROFIL) ---
 window.TELEGRAM_DATA = {
     topicLinks: {
@@ -68,6 +76,7 @@ window.TELEGRAM_DATA = {
         { cmd: '/ric', desc: 'Tout savoir sur le Référendum d\'Initiative Citoyenne.' },
         { cmd: '/destitution', desc: 'Comprendre la procédure de destitution (Art. 68).' },
         { cmd: '/greve', desc: 'Infos pratiques sur la Grève du 10 Septembre 2025.' },
+        { cmd: '/caisse', desc: 'Afficher le statut de la Caisse de Manifestation.' }, // 🛑 AJOUT DE LA COMMANDE
         { cmd: '/imagine [desc]', desc: 'Générer une image libre via l\'IA (Simulé).' },
         { cmd: '/caricature [desc]', desc: 'Générer une caricature politique via l\'IA (Simulé).' },
         { cmd: '/caricature_plainte', desc: 'Caricature automatisée sur la Plainte Pénale.' },
@@ -102,19 +111,25 @@ window.AGENT_PROFILE = {
 };
 
 
-// 🛑 FONCTION DE SECOURS: Tente de charger le JSON local (Correction du chemin relative)
+
+// 🛑 FONCTION DE SECOURS: Tente de charger le JSON local (Correction I3.1)
 async function attemptLocalFallback(originalUrl, originalMethod) {
     let data = null;
     
-    if (originalUrl === 'GET') {
+    // CORRECTION I3.1: Utiliser originalMethod pour vérifier le type de requête
+    const methodToCheck = originalMethod || 'GET'; 
+
+    if (methodToCheck === 'GET') {
         const cleanUrl = originalUrl.includes('?') ? originalUrl.substring(0, originalUrl.indexOf('?')) : originalUrl;
+        
+        // CORRECTION I3.1: Définir fileNameRoot une seule fois, au bon endroit.
         const fileNameRoot = API_TO_FILE_MAP[cleanUrl] || API_TO_FILE_MAP[originalUrl]; 
 
         if (fileNameRoot) {
-            // 🛑 CORRECTION CRITIQUE : Utiliser le chemin relatif "./src/json/" 
             const localPath = `./src/json/${fileNameRoot}.json`; 
             try {
-                const localResponse = await fetch(localPath);
+                // CORRECTION I3.1: Ajout du fetch manquant
+                const localResponse = await fetch(localPath); 
                 
                 if (localResponse.ok) {
                     data = await localResponse.json();
@@ -131,7 +146,6 @@ async function attemptLocalFallback(originalUrl, originalMethod) {
     }
     return { data };
 }
-
 
 // --- 2. FONCTION UTILITAIRE DE RÉCUPÉRATION DE DONNÉES (Fetch Réel - Corrigé) ---
 
@@ -213,15 +227,186 @@ document.addEventListener('DOMContentLoaded', function() {
     const userMenuToggle = document.getElementById('user-menu-toggle');
     const userMenuDropdown = document.getElementById('user-menu-dropdown');
     
+    
+    // 🛑 FONCTION DE ROUTAGE CENTRALISÉE (CONSOLIDÉE)
+    window.handleUserAction = function(action, value = null) {
+        
+        console.log(`[ACTION] Déclenchement de l'action utilisateur: ${action} (Valeur: ${value})`);
+
+        let title = '';
+        let content = '';
+        const profile = window.AGENT_PROFILE || {};
+        const nextLevelThresholdXP = window.getNextLevelThreshold ? window.getNextLevelThreshold() : 500; 
+        const progressPercent = Math.min(100, ((profile.experience || 0) / nextLevelThresholdXP) * 100);
+
+        switch (action) {
+            
+            // --- Cas Délégués à des Modules Spécialisés (Ric Actifs, Dashboard, Chatbot) ---
+            
+            case 'ric-active-detail':
+            case 'ric-vote':
+                if (window.handleRicActiveDetail && window.handleRicVote) {
+                    window.closeModal(); 
+                    if (action === 'ric-active-detail') window.handleRicActiveDetail(value);
+                    if (action === 'ric-vote') window.handleRicVote(value);
+                    return; // 🛑 Le module spécialisé ouvre lui-même la modale
+                }
+                break;
+                
+            case 'dashboard-detail':
+                if (window.handleDashboardDetailAction) {
+                    window.handleDashboardDetailAction(value);
+                    return;
+                }
+                break;
+                
+            case 'chatbot':
+                 if (window.openChatbotModal) {
+                    window.openChatbotModal();
+                    return;
+                }
+                break;
+
+            // --- Cas de Rendu de Contenu (Géré ici) ---
+                
+            case 'telegram-commands':
+                // 🛑 CORRIGÉ : utilise window.TELEGRAM_DATA et les classes CSS pour générer le contenu
+                title = "📞 Réseau Telegram - Commandes & Salons";
+                const topicLinksHTML = Object.entries(window.TELEGRAM_DATA.topicLinks).map(([label, url]) => 
+                     `<li><a href="${url}" target="_blank" class="telegram-topic-link"><span class="topic-label"><i class="fab fa-telegram-plane"></i>${label}</span><i class="fas fa-chevron-right"></i></a></li>`
+                ).join('');
+                const commandsHTML = window.TELEGRAM_DATA.commands.map(cmd => 
+                    `<div class="command-item"><p class="command-name">${cmd.cmd}</p><p class="command-desc">${cmd.desc}</p></div>`
+                ).join('');
+
+                content = `
+                    <div class="telegram-modal-content">
+                        <h4 class="telegram-section-title">Salons de Discussion (Topics)</h4>
+                        <ul class="topic-list">${topicLinksHTML}</ul>
+                        <h4 class="telegram-section-title" style="margin-top: 30px;">Commandes du Bot</h4>
+                        <div class="command-list-grid">${commandsHTML}</div>
+                    </div>
+                `;
+                break;
+                
+            case 'chronology-detail':
+                title = "Détail Chronologie"; 
+                content = `<p>Rendu détaillé de l'événement n°${value}. (Contenu à implémenter)</p>`;
+                break;
+                
+            case 'ric-types':
+                const ricDataAll = window.RIC_DATA;
+                title = ricDataAll.title || "Le Référendum d'Initiative Citoyenne";
+                
+                let typesHTML = (ricDataAll.types || []).map((type, index) => {
+                    return `<div class="ric-type-card" onclick="window.handleUserAction('ric-detail', ${index})">
+                                <h4>${type.name}</h4>
+                                <p>${type.desc}</p>
+                            </div>`;
+                }).join('');
+
+                content = `
+                    <p style="margin-bottom: 25px;">${ricDataAll.definition || 'Description non disponible.'}</p>
+                    <div class="ric-types-grid">
+                        ${typesHTML}
+                    </div>
+                    <div style="margin-top: 30px; text-align: center;">
+                        <a href="${ricDataAll.manifestoLink}" target="_blank" class="btn btn-primary">Lire le Manifeste Complet 📜</a>
+                    </div>
+                `;
+                break;
+
+            case 'ric-detail':
+                const ricDataStatic = window.RIC_DATA;
+                const ricTypeIndex = parseInt(value, 10);
+                const typeDetail = ricDataStatic.types && ricDataStatic.types[ricTypeIndex];
+                
+                if (typeDetail) {
+                    title = `📋 ${typeDetail.name} (Type de RIC)`;
+                    content = `
+                        <p class="font-yellow" style="font-weight: bold; margin-bottom: 15px;">${typeDetail.desc}</p>
+                        <p>${typeDetail.detail || "Aucun détail supplémentaire n'a été fourni pour ce type de RIC."}</p>
+                        <p style="margin-top: 20px; color: var(--color-accent-red); font-style: italic;">
+                            ${ricDataStatic.conclusion_modal || "La proposition est en cours d'analyse pour l'intégration légale."}
+                        </p>
+                    `;
+                } else {
+                    title = "Erreur de détail RIC";
+                    content = `<p class="font-red">Détail du type de RIC non trouvé à l'index ${value}.</p>`;
+                }
+                break;
+
+            case 'ric-form':
+                if (window.openModalWithForm) {
+                    window.openModalWithForm('Soumettre une Initiative RIC', window.RIC_FORM_TEMPLATE, 'POST', '/api/rics/submit');
+                    return;
+                }
+                break;
+
+            // --- Cas de Profil ---
+            case 'profile':
+            case 'cvnu':
+                title = "💼 Mon CV Numérique Citoyen (CVNU)";
+                content = `
+                    <div class="cvnu-detail-modal">
+                        <h3 class="font-red">Statut d'Agent : Niveau ${profile.level || 1}</h3>
+                        <p style="font-weight: bold;">${(profile.utmiCredits || 0).toLocaleString('fr-FR')} UTMi (Charge Agent Value)</p>
+                        
+                        <div class="stat-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px;">
+                            <div class="stat-card">
+                                <h4>Progression Niveau Actuel</h4>
+                                <p>${profile.experience || 0} / ${nextLevelThresholdXP} XP</p>
+                                <div class="progress-bar-cvnu"><div style="width: ${progressPercent}%;"></div></div>
+                            </div>
+                            <div class="stat-card">
+                                <h4>Missions Journalières</h4>
+                                <p style="color: ${!profile.dashboardVeilleCompleted ? 'var(--color-red)' : 'var(--color-green)'}; font-weight: bold;">${!profile.dashboardVeilleCompleted ? 'Veille Économique : Disponible' : 'Veille Économique : Accomplie'}</p>
+                                <p>RIC Soumis : ${profile.ricMissionSubmitted ? 'Oui' : 'Non'}</p>
+                                <p style="font-size: 0.8em; color: var(--color-text-light); margin-top: 5px;">Total Missions Accomplies: ${profile.missionsCompleted || 0}</p>
+                            </div>
+                        </div>
+                        <h4 class="font-yellow" style="margin-top: 25px;">Axes Cognitifs Dominants (via UTMi)</h4>
+                        <p class="font-red">Le système UTMi valorise votre contribution en fonction de la complexité et de l'impact (Analyse, Stratégie, Imagination).</p>
+                        <ul class="axis-list" style="margin-top: 10px;">
+                            <li><i class="fas fa-brain"></i> **Axe Principal :** Stratégie</li>
+                            <li><i class="fas fa-map-pin"></i> **Activité la plus valorisée :** Analyse de Cible (Carte)</li>
+                            <li><i class="fas fa-clock"></i> **Efficacité Temps Réel :** ${profile.energy || 100} / ${profile.maxEnergy || 100} EA</li>
+                        </ul>
+                        <p class="font-red" style="margin-top: 20px;">*Le CVNU est directement valorisé par le calcul UTMi, reflétant la qualité et l'impact de vos contributions.</p>
+                    </div>
+                    <div style="margin-top: 20px; text-align: center;"><button class="btn btn-primary">Mettre à jour mon CVNU</button></div>
+                `; 
+                break;
+
+            case 'rib':
+                title = "💳 RIB & Gestion Fiscale (Simulé)"; content = `<p>Cette section gère vos informations financières.</p>`;
+                break;
+            case 'config':
+                title = "⚙️ Configuration"; content = `<p>Gérez ici vos préférences.</p>`; break;
+            case 'logout':
+                alert("Déconnexion simulée. À bientôt!");
+                return; 
+            default:
+                console.warn(`[ACTION INCONNUE - ERREUR LOGIQUE] Action non gérée: ${action}`);
+                return; // Sortir pour éviter d'ouvrir une modale vide.
+        }
+
+        // Bloc d'ouverture de modale centralisé (pour tous les cas qui ont défini un titre et un contenu.)
+        if (title) { 
+            // window.openModal est défini dans modalGestion.js
+            window.openModal(title, content, action === 'chatbot');
+            if (action === 'chatbot' && window.initializeChatbot) {
+                setTimeout(() => window.initializeChatbot(), 0); 
+            }
+        }
+    }
+    
     // 🛑 Fonction de gestion unifiée des interactions (Cerveau de l'IA)
     window.handleGlobalInteraction = function(context, type, value) {
         
         if (context === 'profile') {
-            if (window.handleUserAction) {
-                window.handleUserAction(value);
-            } else {
-                console.error(`[INTENT] handleUserAction non chargé pour l'action ${value}.`);
-            }
+            // Déléguons l'action à handleUserAction
+            window.handleUserAction(value); 
         
         } else if (context === 'map') {
             if (type === 'action' && window.handleMapAction) {
