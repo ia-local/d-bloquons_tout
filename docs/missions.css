@@ -20,7 +20,12 @@
     gap: 25px;
     margin-top: 25px;
 }
-
+.mission-telegram {
+    width: 100px;
+    height: 64;
+    border-radius: 10% solid rgb(2, 34, 53);
+    background-color: rgb(2, 50, 78);
+}
 .mission-card {
     background-color: var(--color-ui-dark); 
     padding: 20px;
