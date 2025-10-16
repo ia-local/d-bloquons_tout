@@ -21,7 +21,12 @@
     margin-bottom: 10px;
     border-bottom: 2px solid var(--color-accent-red);
 }
-
+.mission-telegram {
+    width: 242px;
+    height: 48px;
+    border-radius: 30px;
+    background-color: rgb(7, 103, 159);
+}
 /* 🛑 Manifeste Header (Section principale) */
 
 .manifesto-header-section {
