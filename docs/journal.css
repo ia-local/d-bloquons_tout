@@ -44,7 +44,7 @@
     padding: 15px;
     
     /* Utilisation du fond sombre principal pour le contraste */
-    background-color: var(--color-background); 
+    background-color: var(--color-accent-red); 
     
     /* Bordure double ligne implicite (visuel fort) */
     border: 1px solid var(--color-ui-border); 

@@ -380,7 +380,7 @@ body[data-theme="light"] .theme-btn {
 /* 🛑 Styles spécifiques Chronologie (Optimisation pour fond Jaune/Orange) */
 .timeline-item {
     /* 🛑 FOND PAR DÉFAUT : Jaune/Orange vif */
-    background:var(--color-ui-content);
+    background:var(--color-accent-red);
     
     transform: rotate(0deg) !important; 
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);

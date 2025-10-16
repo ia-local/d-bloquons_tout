@@ -1,4 +1,4 @@
-/* docs/home.css - Styles de la Page d'Accueil (Mobile-First) */
+/* docs/home.css - Styles de la Page d'Accueil (Final Mobile-First Esthétique) */
 
 /* --- SECTION GÉNÉRALE ET STRUCTURE --- */
 
@@ -6,10 +6,10 @@
     padding: 15px 10px;
 }
 
+/* Base des sections (Fond Gris UI) */
 .content-section {
     margin-bottom: 25px;
     padding: 10px;
-    /* Utilisation des variables globales du thème */
     background-color: var(--color-ui-content);
     border: 1px solid var(--color-ui-border, #444);
     border-radius: 8px;
@@ -22,39 +22,56 @@
     border-bottom: 2px solid var(--color-accent-red);
 }
 
-/* --- SECTION JOURNAL TEASER (Nouvelle structure) --- */
+/* 🛑 Manifeste Header (Section principale) */
+
+.manifesto-header-section {
+    background-color: var(--color-ui-content); 
+    border-left: 5px solid var(--color-accent-yellow); 
+}
+
+.alert {
+    background-color:var(--color-accent-red); 
+}
+/* --- SECTION JOURNAL TEASER (JAUNE FOND / NOIR TEXTE) --- */
 
 .journal-teaser-section {
     padding: 15px;
-    background-color: var(--color-background); /* Contraste avec le content-section */
-    border: 2px solid var(--color-accent-yellow);
-    /* Retrait du text-align: center pour permettre à la liste d'être alignée à gauche */
-    text-align: left !important; 
+    /* FOND JAUNE CLAIR (Post-it style) */
+    background-color: var(--color-accent-yellow); 
+    border: 2px solid var(--color-text-dark); /* Bordure contrastée (Noir) */
+    box-shadow: var(--shadow);
+    text-align: left;
+    
+    /* 🛑 ROTATION DE BASE (Style Post-it) */
+    transform: rotate(0.5deg); 
+    transition: transform 0.3s, box-shadow 0.3s;
+    
+    /* Couleur du texte principal (DOIT être foncé sur fond jaune) */
+    color: var(--color-text-dark); 
 }
 
 #journal-teaser-content {
     margin-top: 15px;
-    /* Assure que l'injection est bien lisible */
 }
 
 .journal-teaser-list {
-    /* Conteneur pour la liste des liens */
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
+/* 🛑 Item du Teaser (Lien) */
 .journal-teaser-item {
     font-size: 0.9em;
-    color: var(--color-text);
+    color: var(--color-text-dark); /* Texte foncé */
     padding: 5px 0;
-    border-bottom: 1px dotted rgba(255, 255, 255, 0.1);
+    border-bottom: 1px dotted rgba(26, 26, 26, 0.2);
     transition: color 0.2s;
     cursor: pointer;
 }
 
 .journal-teaser-item:hover {
-    color: var(--color-accent-yellow);
+    color: var(--color-accent-red); /* Survol en rouge */
 }
 
 .journal-teaser-item i {
@@ -62,7 +79,8 @@
     margin-right: 5px;
 }
 
-/* --- SECTION CHRONOLOGIE / TIMELINE --- */
+
+/* --- SECTION CHRONOLOGIE / TIMELINE (ALTERNANCE AVEC ROTATION) --- */
 
 #chronology-container {
     padding-top: 20px;
@@ -71,23 +89,56 @@
 .timeline-section .timeline-item {
     margin-bottom: 15px;
     padding: 15px;
-    border-left: 5px solid var(--color-accent-red) !important;
+    
+    border: 1px solid var(--color-text-dark); 
+    
     cursor: pointer;
-    box-shadow: var(--shadow);
-    transition: transform 0.2s;
-    background-color: var(--color-background);
-    color: var(--color-text);
+    /* 🛑 ROTATION INITIALE POUR TOUTES LES CARTES */
+    transform: rotate(-1deg); 
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
 }
 
+/* COULEUR DE BASE 1 (ODD): JAUNE - Texte Noir */
+.timeline-section .timeline-item:nth-child(odd) {
+    background-color: var(--color-accent-yellow); 
+    border-left: 5px solid var(--color-accent-red) !important; 
+    color: var(--color-text-dark);
+}
+.timeline-section .timeline-item:nth-child(odd) h4 {
+    color: var(--color-accent-red); 
+}
+
+/* COULEUR DE BASE 2 (EVEN): ROUGE - Texte Blanc */
+.timeline-section .timeline-item:nth-child(even) {
+    background-color: var(--color-accent-red); 
+    border-left: 5px solid var(--color-accent-yellow) !important; 
+    color: var(--color-text); /* BLANC */
+}
+.timeline-section .timeline-item:nth-child(even) h4 {
+    color: var(--color-accent-yellow); /* JAUNE */
+}
+
+
+/* 🛑 SURVOL ET EFFET D'AGRANDISSEMENT/ANNULATION DE ROTATION 🛑 */
 .timeline-section .timeline-item:hover {
-    transform: translateX(5px);
-    border-left-color: var(--color-accent-yellow) !important;
+    /* 🛑 ANNULE LA ROTATION ET APPLIQUE L'EFFET DE DÉPLACEMENT */
+    transform: translateX(5px) rotate(0deg) scale(1.01); 
+    
+    /* Changement de fond au survol vers le GRIS SOMBRE (Uniforme) */
+    background-color: var(--color-ui-primary) !important; 
+    
+    /* Couleur du texte passe au BLANC (Uniforme) */
+    color: var(--color-text) !important; 
+    border-left-color: var(--color-accent-yellow) !important; 
+    box-shadow: 0 6px 15px rgba(0,0,0,0.5);
 }
 
-.timeline-section .timeline-item h4 {
-    color: var(--color-accent-yellow);
-    font-size: 1.1rem;
+/* S'assurer que le texte s'adapte au survol sombre */
+.timeline-section .timeline-item:hover h4,
+.timeline-section .timeline-item:hover p {
+    color: var(--color-text) !important; 
 }
+
 
 /* --- ADAPTATION DESKTOP --- */
 

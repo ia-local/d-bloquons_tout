@@ -1,0 +1,84 @@
+/* docs/css/post-it.css - Styles Mobile-First pour le composant Post-it */
+
+.post-it-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.post-it-card {
+    padding: 20px;
+    min-height: 180px;
+    
+    /* 🛑 TRANSITIONS ET ROTATIONS (Mobile-First) */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    
+    /* Par défaut, applique une rotation légère */
+    transform: rotate(0.5deg); 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    
+    /* Styles de base */
+    border: 1px solid var(--color-text-dark, #1a1a1a);
+    color: var(--color-text-dark, #1a1a1a);
+    font-weight: 600;
+}
+
+/* --- VARIATIONS COULEUR (Basé sur data-color) --- */
+
+.post-it-card[data-color="yellow"] {
+    background-color: var(--color-accent-yellow, #f9e25b);
+    transform: rotate(-1deg);
+}
+
+.post-it-card[data-color="red"] {
+    background-color: var(--color-accent-red, #f52639);
+    color: var(--color-text, #ffffff); /* Texte blanc sur fond rouge */
+    transform: rotate(1.5deg);
+}
+
+.post-it-card[data-color="green"] {
+    /* Utilisation d'une couleur verte non définie pour la simulation de 'success' */
+    background-color: #4CAF50; /* Vert foncé */
+    color: var(--color-text, #ffffff);
+    transform: rotate(-0.8deg);
+}
+
+/* --- EFFETS HOVER --- */
+
+.post-it-card:hover {
+    /* Agrandissement et mise à plat au survol */
+    transform: rotate(0deg) scale(1.05); 
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+}
+
+.post-it-card[data-color="red"]:hover {
+    background-color: #e02031; /* Rouge légèrement plus foncé */
+}
+
+/* --- TYPOGRAPHIE INTERNE --- */
+
+.post-it-title {
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    /* Couleur du titre : contraste avec le fond */
+    color: inherit; 
+    border-bottom: 2px solid;
+}
+
+.post-it-body {
+    font-size: 0.9em;
+    line-height: 1.4;
+}
+
+.post-it-date {
+    display: block;
+    font-size: 0.75rem;
+    margin-top: 10px;
+    font-style: italic;
+    opacity: 0.8;
+}

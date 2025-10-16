@@ -5,6 +5,7 @@ import { updateProfileUI, grantReward, checkLevelUp, getNextLevelThreshold } fro
 // 🛑 Importation des logiques du journal et RIC
 import './journal.js'; 
 import './modalJournal.js'; 
+import './composents/post-it/post-it.js'; 
 import './ric.js';
 
 // --- NOUVEAU: GESTION DES MODES D'ÉTAT GLOBALES ---
