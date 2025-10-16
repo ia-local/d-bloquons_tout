@@ -1,4 +1,4 @@
-// docs/app.js - Logique Principale et Navigation (VERSION COMPLÈTE ET CORRIGÉE)
+// docs/app.js - Logique Principale et Navigation (VERSION COMPLÈTE ET SANS CONFLIT)
 
 // 🛑 Importation de la logique de Gamification depuis le composant dédié
 import { updateProfileUI, grantReward, checkLevelUp, getNextLevelThreshold } from './modalProfile.js';
@@ -270,11 +270,12 @@ document.addEventListener('DOMContentLoaded', function() {
             // --- Cas de Rendu de Contenu (Géré ici) ---
                 
             case 'telegram-commands':
-                // 🛑 CORRIGÉ : utilise window.TELEGRAM_DATA et les classes CSS pour générer le contenu
+                // 🛑 IMPLÉMENTATION FINALE DE LA MODALE TELEGRAM RESPONSIVE
                 title = "📞 Réseau Telegram - Commandes & Salons";
                 const topicLinksHTML = Object.entries(window.TELEGRAM_DATA.topicLinks).map(([label, url]) => 
                      `<li><a href="${url}" target="_blank" class="telegram-topic-link"><span class="topic-label"><i class="fab fa-telegram-plane"></i>${label}</span><i class="fas fa-chevron-right"></i></a></li>`
                 ).join('');
+                // Ajout de la commande /caisse dans la liste des commandes
                 const commandsHTML = window.TELEGRAM_DATA.commands.map(cmd => 
                     `<div class="command-item"><p class="command-name">${cmd.cmd}</p><p class="command-desc">${cmd.desc}</p></div>`
                 ).join('');
