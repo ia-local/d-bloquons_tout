@@ -1,64 +1,319 @@
-# Fichier : api-docs/swagger.yaml
-
 openapi: 3.0.0
 info:
   # Le titre de votre API, visible en haut de la page de documentation
   title: API Plateforme Citoyenne 910
   # La description générale de ce que fait l'API
-  description: |-
+  description: |
     Cette API gère toutes les données de la plateforme de mobilisation citoyenne.
     Elle permet de gérer les actions, les utilisateurs, les données géographiques (via GEE),
     les revendications et d'interagir avec le chatbot IA.
-  version: 1.0.0
+    
+    **NOTE IMPORTANTE :** Les routes montées sur `/smartContract/api/` sont des alias du routeur Dashboard et sont incluses ici.
+  version: 1.0.4
+
+# Base Path
+basePath: /api
+tags:
+  - name: Dashboard
+    description: Métriques temps réel et synthèse des indicateurs QG (routes montées sur /api/dashboard).
+  - name: Quartier Général (HQ)
+    description: Données détaillées pour la gestion interne (routes montées sur /api/hq).
+  - name: SmartContract
+    description: Données financières spécifiques au Smart Contract et au RBU.
+  - name: Utilisateurs & Bénéficiaires
+    description: CRUD et gestion des agents et bénéficiaires CVNU.
+  - name: Chronologie & Média
+    description: Événements, actualités et données des médias.
+  - name: GEE (Google Earth Engine)
+    description: Service de tuilage géographique.
 
 # "paths" est la liste de toutes les URLs (endpoints) de votre API
 paths:
-  # Endpoint pour récupérer la liste des actions
+  
+  # ===============================================
+  # 1. ROUTES DASHBOARD & SMARTCONTRACT (dashboardRouter)
+  # ===============================================
+  
+  /api/dashboard/summary:
+    get:
+      summary: Synthèse des métriques principales (8 cartes).
+      tags: [Dashboard]
+      responses:
+        '200':
+          description: Synthèse des données dashboard.
+          content: { application/json: { schema: { $ref: '#/definitions/DashboardSummary' } } }
+                
+  /api/dashboard/utmi-insights:
+    get:
+      summary: Détails de l'Analyse UTMi et de la taxe IA (Modale).
+      tags: [Dashboard]
+      responses:
+        '200':
+          description: Détails pour la modale UTMi.
+          content: { application/json: { schema: { $ref: '#/definitions/UtmiInsights' } } }
+
+  /api/dashboard/accounting:
+    get:
+      summary: Comptabilité de la Réserve Budgétaire Universelle (RBU).
+      tags: [Dashboard]
+      responses:
+        '200':
+          description: Données financières de la RBU (Modale).
+          content: { application/json: { schema: { $ref: '#/definitions/RbuAccounting' } } }
+
+  /smartContract/api/dashboard-data:
+    get:
+      summary: Données brutes du Smart Contract (Alias du Dashboard).
+      description: Route spécifique pour le Smart Contract, pointant vers les données du dashboard.
+      tags: [SmartContract]
+      responses:
+        '200':
+          description: Données du Smart Contract.
+          content: { application/json: { schema: { $ref: '#/definitions/SmartContractData' } } }
+
+  # ===============================================
+  # 2. ROUTES DONNÉES HQ (hqDataRouter)
+  # ===============================================
+
+  /api/hq/finances:
+    get:
+      summary: Détails de la Caisse Manifeste.
+      tags: [Quartier Général (HQ)]
+      responses:
+        '200': { description: Détails financiers du HQ., content: { application/json: { schema: { $ref: '#/definitions/HqFinances' } } } }
+
+  /api/hq/revendications:
+    get:
+      summary: Détails des RICs et Pétitions en cours de gestion.
+      tags: [Quartier Général (HQ)]
+      responses:
+        '200': { description: Liste des revendications gérées., content: { application/json: { schema: { $ref: '#/definitions/HqRevendications' } } } }
+
+  /api/hq/actions:
+    get:
+      summary: Détails de la Logistique, Boycotts et Plan d'Action.
+      tags: [Quartier Général (HQ)]
+      responses:
+        '200': { description: Données des actions stratégiques., content: { application/json: { schema: { $ref: '#/definitions/HqActions' } } } }
+
+  /api/hq/users:
+    get:
+      summary: Détails des Agents, CVNU et Bénévoles actifs.
+      tags: [Quartier Général (HQ)]
+      responses:
+        '200': { description: Données sur les utilisateurs/agents du HQ., content: { application/json: { schema: { $ref: '#/definitions/HqUsers' } } } }
+
+  # ===============================================
+  # 3. ROUTES GÉNÉRALES ET MODULES (Montées par divers routeurs)
+  # ===============================================
+  
   /api/actions:
     get:
-      # Un résumé court de ce que fait l'endpoint
       summary: Récupère la liste de toutes les actions de mobilisation.
-      # Une description plus détaillée. C'est ici que vous mettez vos "commentaires".
-      description: |
-        Retourne un tableau JSON contenant toutes les actions planifiées ou en cours.
-        Chaque action possède un ID, un titre, une date, un lieu et un type.
-      # Mots-clés pour regrouper les endpoints dans l'interface Swagger
-      tags:
-        - Actions
+      tags: [Actions]
       responses:
-        # Décrit la réponse si tout se passe bien (code 200)
-        '200':
-          description: Une liste d'actions a été retournée avec succès.
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  # Vous pouvez définir ici la structure d'un objet "Action"
-                  type: object
+        '200': { description: Liste d'actions., content: { application/json: { schema: { type: array, items: { $ref: '#/definitions/ActionItem' } } } } }
 
-  # Endpoint pour créer une nouvelle action
   /api/actions/create:
     post:
       summary: Crée une nouvelle action.
-      description: Ajoute une nouvelle action à la base de données. Nécessite une authentification.
-      tags:
-        - Actions
+      tags: [Actions]
       requestBody:
         description: L'objet action à créer.
+        required: true
+        content: { application/json: { schema: { $ref: '#/definitions/ActionItem' } } }
+      responses:
+        '201': { description: Action créée avec succès. }
+          
+  /api/chronology/events:
+    get:
+      summary: Récupère les événements historiques de la plateforme.
+      tags: [Chronologie & Média]
+      responses:
+        '200': { description: Liste des événements chronologiques., content: { application/json: { schema: { type: array, items: { $ref: '#/definitions/ChronologyEvent' } } } } }
+
+  /api/gee/tiles/{layerId}:
+    get:
+      summary: Récupère les tuiles pour le rendu Leaflet d'une couche GEE.
+      tags: [GEE (Google Earth Engine)]
+      parameters:
+        - name: layerId
+          in: path
+          required: true
+          schema: { type: string, example: 'COPERNICUS/S2_SR_HARMONIZED' }
+      responses:
+        '200': { description: Retourne un objet JSON avec l'URL de la tuile et les métadonnées., content: { application/json: { schema: { $ref: '#/definitions/GEETileResponse' } } } }
+
+  /api/chat/history:
+    get:
+      summary: Récupère l'historique de la conversation chatbot.
+      tags: [Chat/IA]
+      responses:
+        '200': { description: Liste des messages., content: { application/json: { schema: { type: array, items: { $ref: '#/definitions/ChatMessage' } } } } }
+                  
+  /api/chat/message:
+    post:
+      summary: Envoie un nouveau message au Chatbot IA.
+      tags: [Chat/IA]
+      requestBody:
+        description: Le message de l'utilisateur.
         required: true
         content:
           application/json:
             schema:
               type: object
               properties:
-                title:
-                  type: string
-                  example: "Blocage du rond-point de la Victoire"
-                date:
-                  type: string
-                  format: date-time
-                  example: "2025-09-10T08:00:00Z"
+                text: { type: string, example: "Explique-moi l'UTMi." }
       responses:
-        '201':
-          description: Action créée avec succès.
+        '200': { description: Réponse de l'IA., content: { application/json: { schema: { $ref: '#/definitions/ChatMessage' } } } }
+
+  # ===============================================
+  # 4. UTILISATEURS & BÉNÉFICIAIRES (Monté sur /api/beneficiaries)
+  # ===============================================
+  
+  /api/beneficiaries/register:
+    post:
+      summary: Enregistre un nouvel utilisateur/bénéficiaire.
+      tags: [Utilisateurs & Bénéficiaires]
+      responses:
+        '201': { description: Bénéficiaire créé. }
+        
+  /api/beneficiaries:
+    get:
+      summary: Récupère la liste de tous les bénéficiaires.
+      tags: [Utilisateurs & Bénéficiaires]
+      responses:
+        '200': { description: Liste des bénéficiaires. }
+
+  # ===============================================
+  # 5. INTEGRATION & QUALITE DES DONNEES (mapIntegrationRouter)
+  # ===============================================
+
+  /api/data-integration/trigger-real-scraping:
+    post:
+      summary: Déclenche une opération de scraping de données en temps réel.
+      tags: [Intégration & Qualité]
+      responses:
+        '202': { description: Opération acceptée. }
+  
+  /api/data-quality/video-summary:
+    get:
+      summary: Récupère le résumé d'une vidéo (pour la veille médiatique).
+      tags: [Intégration & Qualité]
+      responses:
+        '200': { description: Résumé de la vidéo. }
+
+
+# ===============================================
+# DEFINITIONS (Schémas de Données)
+# ===============================================
+definitions:
+  
+  # --- DASHBOARD SCHEMAS ---
+  DashboardSummary:
+    type: object
+    description: Synthèse des 8 métriques du tableau de bord.
+    properties:
+      utmiValue: { type: number, format: float, description: Valeur UTMi actuelle. }
+      manifesteFunds: { type: number, format: float, description: Fonds Caisse Manifeste (en EUR). }
+      ricActiveCount: { type: integer, description: Nombre de RICs actifs. }
+      boycottRate: { type: number, format: float, description: Taux de réussite du boycott (0.0 à 1.0). }
+      totalTransactions: { type: integer, description: Nombre total de flux financiers enregistrés. }
+      activeAlerts: { type: integer, description: Nombre d'alertes financières actives. }
+      caisseSolde: { type: number, format: float, description: Solde actuel de la Caisse Manifeste. }
+      estimatedManifestantCount: { type: integer, description: Estimation du nombre total de manifestants (agrégé). }
+      
+  UtmiInsights:
+    type: object
+    description: Détails de la valorisation UTMi.
+    properties:
+      totalUtmi: { type: number, format: float }
+      totalTaxCollected: { type: number, format: float }
+      aiTaxationRate: { type: number, format: float }
+      lastTaxationDate: { type: string, format: date-time }
+      utmiByModel: { type: array, description: Performance UTMi par modèle IA. }
+
+  RbuAccounting:
+    type: object
+    description: Données comptables de la RBU.
+    properties:
+      TOTAL_REVENUE: { type: number, format: float }
+      TOTAL_EXPENSES: { type: number, format: float }
+      NET_BENEFIT: { type: number, format: float }
+      RBU_ALLOCATION_PER_USER: { type: number, format: float }
+
+  SmartContractData:
+    type: object
+    description: Données du Smart Contract (structure générique).
+    properties:
+      contractId: { type: string }
+      currentStatus: { type: string, enum: [ACTIVE, PAUSED, MIGRATION] }
+      tresorerie: { type: number, format: float }
+      beneficeNetTrimestriel: { type: number, format: float }
+
+  # --- HQ DATA SCHEMAS ---
+  HqFinances:
+    type: object
+    description: Détails de la caisse manifeste.
+    properties:
+      currentBalance: { type: number, format: float }
+      lastDeposit: { type: number, format: float }
+      lastWithdrawal: { type: number, format: float }
+
+  HqRevendications:
+    type: object
+    description: Résumé des revendications en cours.
+    properties:
+      totalRics: { type: integer }
+      pendingPetitions: { type: integer }
+      activeRicsList: { type: array, items: { type: object } }
+
+  HqActions:
+    type: object
+    description: Données de logistique et d'actions.
+    properties:
+      totalBoycotts: { type: integer }
+      activeLogistics: { type: integer }
+      successRate: { type: number, format: float }
+
+  HqUsers:
+    type: object
+    description: Données sur les agents et CVNU.
+    properties:
+      totalAgents: { type: integer }
+      maxLevelAgent: { type: string }
+      scoreMoyen: { type: number, format: float }
+      militantsActifs: { type: integer }
+      
+  # --- MODULES GÉNÉRAUX ---
+  ActionItem:
+    type: object
+    properties:
+      id: { type: string }
+      title: { type: string }
+      date: { type: string, format: date-time }
+      location: { type: string }
+      type: { type: string, enum: [BOYCOTT, RASSEMBLEMENT, LOGISTIQUE] }
+
+  ChronologyEvent:
+    type: object
+    properties:
+      id: { type: string }
+      date: { type: string, format: date }
+      title: { type: string }
+      description: { type: string }
+
+  GEETileResponse:
+    type: object
+    description: Réponse du backend pour l'intégration GEE/Leaflet.
+    properties:
+      mapId: { type: string }
+      token: { type: string }
+      tileUrl: { type: string }
+
+  ChatMessage:
+    type: object
+    properties:
+      sender: { type: string, enum: [user, ai] }
+      text: { type: string }
+      timestamp: { type: string, format: date-time }

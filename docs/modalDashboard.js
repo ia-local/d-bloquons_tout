@@ -1,66 +1,70 @@
-// docs/modalDashboard.js - Logique de la modale d'affichage des détails HQ et UTMi (FINAL)
+// docs/modalDashboard.js - Logique de la modale d'affichage des détails HQ et UTMi (FINAL et COMPLET)
 
 const MODAL_ID = 'global-modal';
 const MODAL_TITLE_ID = 'modal-title';
 const MODAL_CONTENT_ID = 'modal-content-container';
 
 /**
- * Mappe la clé d'API aux informations d'affichage et aux icônes.
+ * Mappe la clé d'API (data-hq-key) aux informations d'affichage et aux endpoints d'API.
+ * Cette structure est essentielle pour le routage des détails profonds.
  */
 const HQ_DETAILS_MAP = {
+    // 🛑 ENDPOINTS QG GÉNÉRIQUES (Utilisent renderHqDetailContent)
     finances: { title: "Détails Financiers & Caisse Manifeste", endpoint: "/api/hq/finances", icon: "fas fa-money-check-alt" },
     revendications: { title: "Revendications & RICs", endpoint: "/api/hq/revendications", icon: "fas fa-gavel" },
     actions: { title: "Logistique & Actions sur le Terrain", endpoint: "/api/hq/actions", icon: "fas fa-truck-moving" },
     users: { title: "Gestion Agents & Manifestants (CVNU)", endpoint: "/api/hq/users", icon: "fas fa-users-cog" },
     
-    // Cartes UTMi et RBU
+    // 🛑 ENDPOINTS SPÉCIFIQUES (Utilisent leurs propres fonctions de rendu)
     utmi_insights: { title: "Valorisation UTMi & Taux de Transformation", endpoint: "/api/dashboard/utmi-insights", icon: "fas fa-chart-area" },
     rbu_accounting: { title: "Comptabilité RBU & Bénéfice Net", endpoint: "/api/dashboard/accounting", icon: "fas fa-balance-scale" } 
 };
 
 /**
- * Gestionnaire d'action principal pour ouvrir la modale et charger les données.
+ * 🛑 GESTIONNAIRE D'ACTION PRINCIPAL POUR LES MODALES DE DÉTAIL DU DASHBOARD (DÉLÉGUÉ PAR app.js)
+ * Ouvre la modale, affiche un spinner, puis charge les données depuis l'API.
+ * @param {string} key - La clé de l'indicateur (ex: 'finances', 'utmi_insights').
  */
 window.handleDashboardDetailAction = async function(key) {
-    const modal = document.getElementById(MODAL_ID);
-    const modalTitle = document.getElementById(MODAL_TITLE_ID);
-    const modalContent = document.getElementById(MODAL_CONTENT_ID);
+    // window.openModal (défini dans modalGestion.js) est la méthode préférée
     const detailConfig = HQ_DETAILS_MAP[key];
 
     if (!detailConfig) {
-        modalTitle.textContent = "Erreur de Configuration";
-        modalContent.innerHTML = `<p>Configuration introuvable pour la clé : ${key}</p>`;
-        modal.style.display = 'block';
+        window.openModal("Erreur de Configuration", `<p>Configuration introuvable pour la clé : ${key}</p>`);
         return;
     }
 
-    modalTitle.textContent = detailConfig.title;
-    modalContent.innerHTML = `<p style="text-align: center;">Chargement des données de ${detailConfig.title}...</p>`;
-    modal.style.display = 'block';
+    // Affichage immédiat du spinner via modalGestion.js
+    const loadingContent = `<p style="text-align: center;"><div class="loading-spinner"></div><br>Chargement des données de ${detailConfig.title}...</p>`;
+    window.openModal(detailConfig.title, loadingContent); 
 
     try {
+        // Appel API asynchrone (window.fetchData est défini dans app.js)
         const data = await window.fetchData(detailConfig.endpoint); 
         
         let contentHTML;
+        // Routage des fonctions de rendu spécialisées
         if (key === 'utmi_insights') {
             contentHTML = renderUtmiInsights(key, data);
         } else if (key === 'rbu_accounting') {
             contentHTML = renderRbuAccounting(key, data);
         } else {
-            // Utilisé pour les 4 cartes de Surveillance de Terrain et les cartes QG génériques
+            // Rendu générique pour les 4 clés QG restantes
             contentHTML = renderHqDetailContent(key, data);
         }
         
-        modalContent.innerHTML = contentHTML;
+        // Mise à jour du contenu après le chargement
+        window.openModal(detailConfig.title, contentHTML);
 
     } catch (error) {
         console.error(`Erreur de chargement des données pour la clé ${key}:`, error);
-        modalContent.innerHTML = `<p class="font-red" style="text-align: center;">❌ Échec du chargement des données pour ${detailConfig.title}. Vérifiez la console.</p>`;
+        window.openModal(detailConfig.title, `<p class="font-red" style="text-align: center;">❌ Échec du chargement des données. Vérifiez la connexion API au serveur.</p>`);
     }
 };
 
 /**
  * Fonction de rendu pour les modales de Surveillance et de Gestion (Liste générique).
+ * Affiche les paires clé/valeur des données brutes de l'API.
  */
 function renderHqDetailContent(key, data) {
     const detailConfig = HQ_DETAILS_MAP[key] || {};
@@ -83,6 +87,7 @@ function renderHqDetailContent(key, data) {
             <p class="detail-note">${note}</p>
             <ul class="detail-list">
                 ${items.map(([label, value]) => {
+                    // Logique de formatage pour les devises et les objets
                     const isCurrency = label.toLowerCase().includes('solde') || label.toLowerCase().includes('montant') || label.toLowerCase().includes('depenses') || label.toLowerCase().includes('tresorerie') || label.toLowerCase().includes('recettes');
                     const formattedValue = (typeof value === 'number') 
                         ? (isCurrency ? value.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' }) : value.toLocaleString('fr-FR'))
@@ -106,10 +111,11 @@ function renderHqDetailContent(key, data) {
 }
 
 /**
- * Fonction de rendu spécifique pour la clé 'utmi_insights'.
+ * 🛑 Fonction de rendu spécifique pour la clé 'utmi_insights'. (COMPLET)
  */
 function renderUtmiInsights(key, data) {
     const detailConfig = HQ_DETAILS_MAP[key];
+    const totalTaxCollected = data.totalTaxCollected || 0;
     const note = "Analyse de la Valorisation UTMi : Taux de transformation sociétale, impact des taxes IA et projection RBU.";
 
     const utmiItems = [
@@ -130,12 +136,10 @@ function renderUtmiInsights(key, data) {
             <li><span class="detail-label">UTMi / Interaction (Moy.)</span><span class="detail-value">${data.averageUtmiPerInteraction?.toFixed(2) || '0.00'}</span></li>
             <li><span class="detail-label">Taux d'Efficacité UTMi/Coût</span><span class="detail-value">${data.totalUtmiPerCostRatio ? data.totalUtmiPerCostRatio.toFixed(2) : 'N/A'}</span></li>
         </ul>
-        <p class="detail-note">Analyse de la rentabilité de l'infrastructure IA et de la valeur unitaire moyenne par interaction.</p>
+        <p class="detail-note">${note}</p>
     `;
     
     // --- 2. DÉTAILS FISCAUX (EN GRILLE) ---
-    // ... (Rendu de la section fiscale en grille de cartes) ...
-
     html += `<h3 class="detail-section-title font-blue" style="margin-top: 25px;"><i class="fas fa-balance-scale"></i> Ventilation Fiscale</h3>`;
     html += `<div class="feature-grid modal-insights-grid">`; 
     
@@ -197,7 +201,7 @@ function renderUtmiInsights(key, data) {
 }
 
 /**
- * Fonction de rendu spécifique pour la clé 'rbu_accounting'.
+ * 🛑 Fonction de rendu spécifique pour la clé 'rbu_accounting'. (COMPLET)
  */
 function renderRbuAccounting(key, data) {
     if (!data || data.TOTAL_REVENUE === undefined) {
@@ -235,7 +239,6 @@ function renderRbuAccounting(key, data) {
     
     return html;
 }
-
 
 document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById(MODAL_ID);

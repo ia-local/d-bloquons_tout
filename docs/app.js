@@ -1,4 +1,4 @@
-// docs/app.js - Logique Principale et Navigation (VERSION COMPLÈTE ET SANS CONFLIT)
+// docs/app.js - Logique Principale et Navigation (VERSION COMPLÈTE ET CORRIGÉE)
 
 // 🛑 Importation de la logique de Gamification depuis le composant dédié
 import { updateProfileUI, grantReward, checkLevelUp, getNextLevelThreshold } from './modalProfile.js';
@@ -270,12 +270,11 @@ document.addEventListener('DOMContentLoaded', function() {
             // --- Cas de Rendu de Contenu (Géré ici) ---
                 
             case 'telegram-commands':
-                // 🛑 IMPLÉMENTATION FINALE DE LA MODALE TELEGRAM RESPONSIVE
+                // 🛑 CORRIGÉ : utilise window.TELEGRAM_DATA et les classes CSS pour générer le contenu
                 title = "📞 Réseau Telegram - Commandes & Salons";
                 const topicLinksHTML = Object.entries(window.TELEGRAM_DATA.topicLinks).map(([label, url]) => 
                      `<li><a href="${url}" target="_blank" class="telegram-topic-link"><span class="topic-label"><i class="fab fa-telegram-plane"></i>${label}</span><i class="fas fa-chevron-right"></i></a></li>`
                 ).join('');
-                // Ajout de la commande /caisse dans la liste des commandes
                 const commandsHTML = window.TELEGRAM_DATA.commands.map(cmd => 
                     `<div class="command-item"><p class="command-name">${cmd.cmd}</p><p class="command-desc">${cmd.desc}</p></div>`
                 ).join('');
@@ -472,6 +471,24 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // --- 3.3 LOGIQUE DE NAVIGATION PRINCIPALE ---
+    
+    // 🛑 NOUVEAU: Fonction de chargement HTML externe
+    const loadExternalHTML = async (fileName, targetElement) => {
+        try {
+            const response = await fetch(fileName); 
+            if (response.ok) {
+                const htmlContent = await response.text();
+                // 🛑 Injection du contenu HTML dans l'élément ciblé
+                targetElement.innerHTML = htmlContent;
+            } else {
+                targetElement.innerHTML = `<p class="font-red">❌ Erreur lors du chargement de ${fileName} (Statut: ${response.status}).</p>`;
+            }
+        } catch (e) {
+             targetElement.innerHTML = `<p class="font-red">❌ Erreur réseau lors du chargement de ${fileName}.</p>`;
+        }
+    };
+
+
     window.showPage = function(pageName) {
         
         // Logique de mise à jour de la classe 'active' pour la navigation
@@ -520,7 +537,11 @@ document.addEventListener('DOMContentLoaded', function() {
             safeRenderCall(window.loadDashboardData);
             if (window.APP_STATE.LOG_LEVEL !== 'warn') console.log("➡️ Accès au **Tableau de Bord Stratégique**.");
         } else if (pageName === 'settings') {
-            safeRenderCall(window.loadMissionsContent); 
+            // 🛑 CORRECTION CRITIQUE: Charger le HTML avant d'appeler le rendu JS
+            loadExternalHTML('missions.html', activePage).then(() => {
+                safeRenderCall(window.loadMissionsContent); 
+            });
+            // Nous n'appelons PAS safeRenderCall ici directement car il doit attendre le fetch.
         } else if (pageName === 'ric') {
             safeRenderCall(window.loadRICContent);
         } else if (pageName === 'home') {

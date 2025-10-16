@@ -1,37 +1,46 @@
-// Fichier : routes/dashboard.js
+// Fichier : routes/dashboard.js (FINAL - Routage Tableau de Bord QG)
 
 const express = require('express');
-const { getDatabase, readJsonFile } = require('../services/data.js');
+// 🛑 IMPORTATION : Nous importons explicitement toutes les fonctions nécessaires de data.js
+const { getDatabase, readJsonFile, getAccountingData } = require('../services/data.js'); 
 const { LOG_FILE_PATH, DATABASE_FILE_PATH } = require('../config/index.js');
-const { calculateDashboardInsights, calculateUtmi } = require('../server_modules/utms_calculator.js');
+// Nous ne conservons que calculateDashboardInsights
+const { calculateDashboardInsights } = require('../server_modules/utms_calculator.js');
 const operator = require('../server_modules/operator.js');
 
 const router = express.Router();
 
-// --- 1. ROUTES D'INSIGHTS ET DE TABLEAU DE BORD ---
-async function fetchStaticDashboardSummary() {
-    // 🛑 Le navigateur demande le fichier directement via l'URL statique
-    const response = await fetch('/data/dashboard_summary.json'); 
-    
-    if (!response.ok) {
-        throw new Error('Échec du chargement du fichier de résumé statique.');
+// ---------------------------------------------------------------------
+// 1. ROUTES D'INSIGHTS ET DE TABLEAU DE BORD (/api/dashboard/*)
+// ---------------------------------------------------------------------
+
+// GET /api/dashboard/accounting (Utilisé pour le détail RBU)
+router.get('/accounting', (req, res) => {
+    // NOTE: getAccountingData doit être implémenté dans le service data.js
+    try {
+        const accountingData = getAccountingData() || { TOTAL_REVENUE: 0, TOTAL_EXPENSES: 0, NET_BENEFIT: 0 };
+        res.json(accountingData);
+    } catch (error) {
+        console.error("Erreur lors de la récupération des données d'accounting:", error);
+        res.status(500).json({ error: 'Échec de la récupération des données de comptabilité.' });
     }
-    return response.json();
-}
-// GET /api/dashboard/summary
+});
+
+// GET /api/dashboard/summary (Synthèse principale pour la première grille)
 router.get('/summary', (req, res) => {
     try {
         const db = getDatabase();
-        // Logique de calcul du résumé (inchangée)
+        
+        // Métriques simples
         const totalTransactions = db.financial_flows?.length ?? 0;
         const activeAlerts = db.financial_flows?.filter(f => f.is_suspicious)?.length ?? 0;
         const caisseSolde = db.caisse_manifestation?.solde ?? 0;
-        
-        // Calcul du nombre de manifestants
+        const monthlyAllocation = 150; // Valeur de base simulée pour le RBU
+
+        // Calcul du nombre de manifestants (Logique complexe maintenue)
         let estimatedManifestantCount = 0;
         if (db.manifestation_points) {
             db.manifestation_points.forEach(point => {
-                // Logique complexe pour agréger les 'count' (maintenue)
                 if (typeof point.count === 'number') { estimatedManifestantCount += point.count; } 
                 else if (typeof point.count === 'string') { const numberMatch = point.count.match(/\d+/); if (numberMatch) { estimatedManifestantCount += parseInt(numberMatch[0]); } else if (point.count.toLowerCase().includes('plusieurs milliers')) { estimatedManifestantCount += 2000; } } 
                 else if (typeof point.count === 'object' && point.count !== null) { for (const key in point.count) { if (typeof point.count[key] === 'number') { estimatedManifestantCount += point.count[key]; } } }
@@ -43,7 +52,7 @@ router.get('/summary', (req, res) => {
             activeAlerts, 
             caisseSolde, 
             estimatedManifestantCount,
-            // ... autres métriques extraites du fichier principal
+            monthlyAllocation, // Ajout de l'allocation mensuelle
             boycottCount: db.boycotts?.length ?? 0,
             ricCount: db.rics?.length ?? 0,
         });
@@ -53,17 +62,17 @@ router.get('/summary', (req, res) => {
 });
 
 
-// GET /api/dashboard/utmi-insights (Nécessite de lire LOG_FILE_PATH)
+// GET /api/dashboard/utmi-insights (Détails UTMi pour la modale)
 router.get('/utmi-insights', async (req, res) => {
     try {
         const db = getDatabase();
-        // Utiliser readJsonFile pour lire les logs, car LOG_FILE_PATH n'est pas géré par getDatabase()
+        // Lit le fichier de logs pour les calculs UTMi
         const logs = await readJsonFile(LOG_FILE_PATH, []); 
         
         const taxSummary = {};
         (db.taxes || []).forEach(tax => { taxSummary[tax.id] = { name: tax.name, utmi_value: 0 }; });
 
-        // Calculs UTMI (Logique de votre ancien fichier)
+        // Calculs UTMi basés sur les logs
         logs.forEach(log => {
             if (log.type === 'FINANCIAL_FLOW' && log.data?.taxAmount) {
                 const taxId = log.data.taxId || 'tax_vat';
@@ -74,6 +83,7 @@ router.get('/utmi-insights', async (req, res) => {
             }
         });
         
+        // Utilise le calculateur externe
         const insights = calculateDashboardInsights(logs, db);
         insights.taxCollectionSummary = taxSummary;
         res.json(insights);
@@ -85,10 +95,11 @@ router.get('/utmi-insights', async (req, res) => {
 
 
 // GET /smartContract/api/dashboard-data (Données spécifiques au Smart Contract)
+// Ce endpoint doit être monté deux fois: /api/dashboard/smartContract-data et /smartContract/api/dashboard-data
 router.get('/smartContract/api/dashboard-data', async (req, res) => {
-    const db = getDatabase(); // Utiliser le getter pour accéder à l'état
+    const db = getDatabase(); 
     
-    // Logique de calcul du Smart Contract (inchangée)
+    // Logique de calcul du Smart Contract (simulée)
     const recettesFiscalesTotales = db.tresorerieCompteCampagne || 0;
     const depenses = db.citoyensSimules?.reduce((sum, citoyen) => sum + (citoyen.allocation || 0), 0) || 0;
     const distributionAllocation = db.citoyensSimules?.reduce((acc, citoyen) => {
@@ -96,6 +107,10 @@ router.get('/smartContract/api/dashboard-data', async (req, res) => {
         acc[tranche] = (acc[tranche] || 0) + 1;
         return acc;
     }, {}) || {};
+    
+    // Métriques utilisées par la grille QG de Gestion pour la carte "Comptabilité RBU"
+    const beneficeNetTrimestriel = recettesFiscalesTotales - depenses;
+    const dividendesUtmi = beneficeNetTrimestriel * 0.1; // 10% du bénéfice net simulé
 
     res.json({
         totalRecettes: recettesFiscalesTotales,
@@ -104,11 +119,16 @@ router.get('/smartContract/api/dashboard-data', async (req, res) => {
         nombreBeneficiaires: db.citoyensSimules?.length || 0,
         distributionAllocation,
         tresorerie: db.tresorerieCompteCampagne || 0,
+        // Métriques supplémentaires pour le frontend:
+        beneficeNetTrimestriel,
+        dividendesUtmi,
     });
 });
 
 
-// --- 2. ROUTES DE L'OPÉRATEUR IA ---
+// ---------------------------------------------------------------------
+// 2. ROUTES DE L'OPÉRATEUR IA (Non modifiées)
+// ---------------------------------------------------------------------
 
 // GET /api/operator/summary
 router.get('/operator/summary', async (req, res) => { 
@@ -135,7 +155,6 @@ router.post('/operator/chat', async (req, res) => {
     const { message } = req.body;
     if (!message) { return res.status(400).json({ error: 'Message manquant.' }); }
     try { 
-        // Assurez-vous que operator.getGroqChatResponse est bien défini (il utilise groq de manière interne)
         const aiResponse = await operator.getGroqChatResponse(message); 
         res.json({ response: aiResponse }); 
     } catch (error) { 

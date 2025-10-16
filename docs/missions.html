@@ -1,0 +1,27 @@
+<!-- docs/missions.html - Structure de la page Missions (CORRIGÉ : Retrait du script local) -->
+
+<div id="missions-page-content">
+    <div class="content-section">
+        <h2 class="font-red">🛡️ Missions Citoyennes & Objectifs Actuels</h2>
+        <p>Devenez un **CVNU de Niveau Supérieur** en accomplissant ces missions. Chaque action validée augmente votre score d'engagement et débloque de nouvelles responsabilités locales.</p>
+        
+        <!-- Le contenu des cartes de mission sera injecté ici par missions.js -->
+        <div class="mission-card-grid" id="mission-cards-container" style="margin-top: 25px;">
+            <!-- Contenu injecté par missions.js -->
+        </div>
+    </div>
+    
+    <div class="content-section" style="margin-top: 40px;">
+        <h2 class="font-yellow">
+        🤖 Bot Telegram - Topics & Commandes -</h2><button class="btn btn-telegram btn-secondary" onclick="window.handleUserAction('telegram-commands')"><i class="fab fa-telegram-plane"></i>Telegram</button>
+        <h2 class="font-red">📞 Réseau Telegram - Liens & Commandes</h2>
+        <p>Votre lien direct vers l'intelligence artificielle pour l'analyse juridique, le codage, et la création de contenu.</p>
+    </div>
+    
+    <div class="content-section" style="margin-top: 40px;">
+        <p>Accès aux outils de coordination décentralisée. Cliquez ci-dessous pour voir la liste complète des commandes et des salons.</p>
+
+    </div>
+</div>
+
+<!-- 🛑 RETRAIT DE LA BALISE SCRIPT : missions.js est désormais appelé uniquement par app.js -->

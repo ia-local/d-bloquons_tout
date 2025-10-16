@@ -1,4 +1,4 @@
-// Fichier : routes/telegramRouter.js (VERSION AVEC MANIFESTE DÉTAILLÉ)
+// Fichier : routes/telegramRouter.js (VERSION AVEC Rendu 8 Tenseurs Sémantiques)
 
 const { Telegraf, Markup } = require('telegraf');
 const { v4: uuidv4 } = require('uuid');
@@ -6,8 +6,8 @@ const path = require('path');
 const fs = require('fs/promises');
 const Groq = require('groq-sdk');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
-const dataService = require('../services/dataService.js'); // 👈 AJOUTEZ CETTE LIGNE
-
+const dataService = require('../services/dataService.js'); 
+// const { generateContextualEmoji } = require('../config/iaSemanticEngine.js'); // 🛑 NOUVEL IMPORT
 const axios = require('axios'); // Nécessaire pour la commande /user
 
 // --- CONSTANTES ET VARIABLES GLOBALES ---
@@ -127,7 +127,7 @@ Le RIC est l'outil essentiel pour redonner le pouvoir aux citoyens. Il se décli
 \n* **RIC Constituant :** Modifier la Constitution.
 \n* **RIC Révocatoire :** Destituer un élu.
 \n\nC'est la garantie que notre voix sera directement entendue et respectée.
-\nNous organisons des sondages réguliers et des débats au sein du bot pour recueillir votre opinion et votre soutien sur le RIC. Utilisez la commande /sondage pour participer !
+\nNous organisons des sondages réguliers et des débats au sein du bot for recueillir votre opinion et votre soutien sur le RIC. Utilisez la commande /sondage pour participer !
 `;
 }
 async function getManifestationInfo() {
@@ -167,7 +167,7 @@ async function getTreasuryStats() {
                `**Contributeurs :** ${caisseStats.contributeurs?.toLocaleString('fr-FR') || 'N/A'}\n\n` +
                `*100% des fonds seront réinjectés dans les revenus des citoyens après la grève.*`;
     } catch (error) {
-        console.error("Erreur lors de la récupération des stats de la caisse:", error.message);
+        console.error('Erreur lors de la récupération des stats de la caisse:', error.message);
         return "❌ Impossible de contacter l'API de la caisse. Vérifiez le serveur Express.";
     }
 }
@@ -385,7 +385,153 @@ bot.action('start_menu', async (ctx) => {
 });
 
 // --- COMMANDES DE BASE ET D'INFO ---
-bot.help((ctx) => ctx.reply('Commandes disponibles: /start, /user, /manifeste, /ric, /destitution, /greve, /caisse, /topics, /galerie, /app, /web, /imagine, /caricature, /caricature_plainte, /ai_vision, /stats, /help'));
+bot.help((ctx) => ctx.reply('Commandes disponibles: /start, /user, /manifeste, /ric, /destitution, /greve, /caisse, /topics, /galerie, /app, /web, /imagine, /caricature, /caricature_plainte, /ai_vision, /stats, /eji /help'));
+
+// Dans la section --- COMMANDES DE BASE ET D'INFO ---
+// 🛑 NOUVELLE COMMANDE /EJI : Logique simple Groq intégrée
+bot.command('eji', async (ctx) => {
+    
+    // ------------------------------------------------------------------
+    // ÉTAPE 1 : ANALYSE DE LA COMMANDE UTILISATEUR & PRÉPARATION
+    // ------------------------------------------------------------------
+    const text = ctx.message.text.split(' ').slice(1).join(' ');
+    if (!text) {
+        return ctx.reply('Usage: /eji [votre texte]. Je vais ajouter des emojis intelligents !');
+    }
+    
+    await ctx.replyWithChatAction('typing');
+    const userText = text;
+    
+    // ------------------------------------------------------------------
+    // ÉTAPE 2 : EXÉCUTION DE L'IA (PROMPT COMBINÉ)
+    // ------------------------------------------------------------------
+    
+    const systemMessage = `
+        Tu es l'assistant de notation sémantique et émotionnelle pour un mouvement citoyen.
+        Ton but est de fournir un résultat compact et directement utilisable pour Telegram.
+        
+        Analyse le texte utilisateur et renvoie OBLIGATOIREMENT une seule ligne au format JSON strict:
+        {"emoji": "[UN_EMOJI_PERTINENT]", "comment": "[COMMENTAIRE_MOTIVANT_EN_FRANCAIS]"}
+        
+        Le commentaire doit être engageant et expliquer le sens de l'emoji sélectionné.
+    `;
+
+    try {
+        const chatCompletion = await groq.chat.completions.create({
+            messages: [
+                { role: 'system', content: systemMessage },
+                { role: 'user', content: `Texte à analyser : "${userText}"` }
+            ],
+            model: 'llama-3.1-8b-instant', 
+            response_format: { type: "json_object" },
+            temperature: 0.3,
+            max_tokens: 300
+        });
+
+        // Tente de parser la réponse JSON
+        const iaResult = JSON.parse(chatCompletion.choices[0].message.content);
+        const { emoji, comment } = iaResult;
+
+        if (!emoji || !comment) {
+            throw new Error("Réponse IA manquante (emoji ou commentaire).");
+        }
+
+        // ------------------------------------------------------------------
+        // ÉTAPE 3 : STRUCTURATION DE LA RÉPONSE POUR TÉLÉGRAM (MARKDOWN)
+        // ------------------------------------------------------------------
+        
+        const finalMessage = `
+${emoji} *Analyse de l'Assistant* ${emoji}
+----------------------------------
+*Input:* \`${userText}\`
+
+*Tenseur Sémantique:* **${emoji}**
+
+*Commentaire de l'IA :*
+${comment}
+`;
+        // Utilisation de Markdown pour les gras/italiques (plus tolérant que HTML pour la structure)
+        ctx.replyWithMarkdown(finalMessage); 
+
+    } catch (error) {
+        console.error('Erreur lors de la génération de l\'analyse EJI:', error);
+        ctx.replyWithMarkdown(`❌ *Erreur EJI:* Échec de l'analyse sémantique. Le service IA a renvoyé une erreur ou une structure JSON non valide. (${error.message.substring(0, 50)}...)`);
+    }
+});
+
+// 🛑 NOUVELLE COMMANDE /EJI : Logique simple Groq intégrée
+bot.command('ia', async (ctx) => {
+    
+    // ------------------------------------------------------------------
+    // ÉTAPE 1 : ANALYSE DE LA COMMANDE UTILISATEUR & PRÉPARATION
+    // ------------------------------------------------------------------
+    const text = ctx.message.text.split(' ').slice(1).join(' ');
+    if (!text) {
+        return ctx.reply('Usage: /eji [votre texte]. Je vais ajouter des emojis intelligents !');
+    }
+    
+    await ctx.replyWithChatAction('typing');
+    const userText = text;
+    
+    // ------------------------------------------------------------------
+    // ÉTAPE 2 : EXÉCUTION DE L'IA (PROMPT COMBINÉ)
+    // ------------------------------------------------------------------
+    
+    const systemMessage = `
+        Tu es l'assistant de notation sémantique et émotionnelle pour un mouvement citoyen.
+        Ton but est de fournir un résultat compact et directement utilisable pour Telegram.
+        
+        Analyse le texte utilisateur et renvoie OBLIGATOIREMENT une seule ligne au format JSON strict:
+        {"emoji": "[UN_EMOJI_PERTINENT]", "comment": "[COMMENTAIRE_MOTIVANT_EN_FRANCAIS]"}
+        
+        Le commentaire doit être engageant et expliquer le sens de l'emoji sélectionné.
+        
+    `;
+
+    try {
+        const chatCompletion = await groq.chat.completions.create({
+            messages: [
+                { role: 'system', content: systemMessage },
+                { role: 'assistant', content: "merci, tu pourras donc repondre naturellement avec des emoji à user" },
+                { role: 'user', content: `Texte à analyser : "${userText}"` }
+            ],
+            model: 'llama-3.1-8b-instant', 
+            response_format: { type: "json_object" },
+            temperature: 0.3,
+            max_tokens: 300
+        });
+
+        // Tente de parser la réponse JSON
+        const iaResult = JSON.parse(chatCompletion.choices[0].message.content);
+        const { emoji, comment } = iaResult;
+
+        if (!emoji || !comment) {
+            throw new Error("Réponse IA manquante (emoji ou commentaire).");
+        }
+
+        // ------------------------------------------------------------------
+        // ÉTAPE 3 : STRUCTURATION DE LA RÉPONSE POUR TÉLÉGRAM (MARKDOWN)
+        // ------------------------------------------------------------------
+        
+        const finalMessage = `
+${emoji} *Hello world* ${emoji}
+----------------------------------
+*Input:* \`${userText}\`
+
+*AI:* **${emoji}**
+
+*Commentaire de l'IA :*
+${comment}
+`;
+        // Utilisation de Markdown pour les gras/italiques (plus tolérant que HTML pour la structure)
+        ctx.replyWithMarkdown(finalMessage); 
+
+    } catch (error) {
+        console.error('Erreur lors de la génération de l\'analyse EJI:', error);
+        ctx.replyWithMarkdown(`❌ *Erreur EJI:* Échec de l'analyse sémantique. Le service IA a renvoyé une erreur ou une structure JSON non valide. (${error.message.substring(0, 50)}...)`);
+    }
+});
+
 
 // 🛑 COMMANDE /MANIFESTE MISE À JOUR (I1.1)
 bot.command('manifeste', async (ctx) => { 
@@ -820,7 +966,7 @@ async function setBotCommands() {
         { command: 'ric', description: 'Tout savoir sur le Référendum d\'Initiative Citoyenne.' },
         { command: 'destitution', description: 'Comprendre la procédure de destitution.' },
         { command: 'greve', description: 'Infos pratiques sur la Grève du 10 Septembre 2025.' },
-        { command: 'caisse', description: 'Afficher le statut de la Caisse de Manifestation.' }, // 👈 NOUVEAU
+        { command: 'caisse', description: 'Afficher le statut de la Caisse de Manifestation.' },
         { command: 'galerie', description: 'Accéder à la galerie des images générées.' },
         { command: 'imagine', description: 'Générer une image libre via l\'IA.' },
         { command: 'caricature', description: 'Générer une caricature politique via l\'IA.' },
@@ -829,6 +975,7 @@ async function setBotCommands() {
         { command: 'sondage', description: 'Créer un nouveau sondage.' },
         { command: 'contact', description: 'Contacter les organisateurs.' },
         { command: 'stats', description: 'Afficher les statistiques du bot.' },
+        { command: 'eji', description: 'Générer des emojis contextuels intelligents.' },
         { command: 'help', description: 'Afficher toutes les commandes.' },
     ];
     

@@ -1,20 +1,27 @@
-// docs/dashboard.js - Contient la logique de chargement et de rendu du Tableau de Bord QG (FINAL)
+// docs/dashboard.js - Contient la logique de chargement et de rendu du Tableau de Bord QG (FINAL et COMMENTÉ)
 
+// Clé et temps de recharge pour la mission journalière (24 heures)
 const LAST_VEILLE_KEY = 'lastDashboardVeilleTimestamp';
-const VEILLE_COOLDOWN_MS = 24 * 60 * 60 * 1000; // 24 heures en millisecondes
+const VEILLE_COOLDOWN_MS = 24 * 60 * 60 * 1000; 
 
 // --- Fonctions Utilitaires de Gamification et Temps ---
 
+/**
+ * Vérifie si la mission de Veille Économique est disponible (après 24h).
+ * Met à jour le statut global window.AGENT_PROFILE.dashboardVeilleCompleted.
+ * @returns {boolean} True si la mission est disponible.
+ */
 function checkVeilleAvailability() {
     const lastTimestamp = parseInt(localStorage.getItem(LAST_VEILLE_KEY) || '0', 10);
     const currentTime = Date.now();
     const isAvailable = (currentTime - lastTimestamp) >= VEILLE_COOLDOWN_MS;
 
     if (window.AGENT_PROFILE) {
+        // Le statut est 'false' si la mission est disponible, 'true' si elle est complétée.
         window.AGENT_PROFILE.dashboardVeilleCompleted = !isAvailable;
     }
     
-    // Logique SMART/DEVOPS pour le temps restant
+    // Logique DEVOPS pour le temps restant (utile pour les logs de débogage)
     const timeRemaining = VEILLE_COOLDOWN_MS - (currentTime - lastTimestamp);
     if (!isAvailable && window.APP_STATE?.LOG_LEVEL !== 'warn') {
         const remainingHours = Math.floor(timeRemaining / (60 * 60 * 1000));
@@ -24,7 +31,12 @@ function checkVeilleAvailability() {
     return isAvailable;
 }
 
+/**
+ * Exécute la récompense de la mission de Veille et met à jour le localStorage.
+ * Déclenche une mise à jour du rendu du Dashboard pour désactiver le bouton.
+ */
 function executeVeilleReward() {
+    // Vérification de la dépendance externe (fournie par modalProfile.js)
     if (typeof window.grantReward !== 'function') {
         console.error("Erreur: La fonction grantReward n'est pas disponible pour la récompense de Veille.");
         return;
@@ -42,50 +54,56 @@ function executeVeilleReward() {
     
     console.log(`🎉 BONUS JOURNALIER : +${XP_VEILLE_DASHBOARD} UTMi et +${ENERGY_GAIN_DASHBOARD} EA pour la Veille Économique. Mise à jour du timestamp.`);
     
+    // Force le rechargement du Dashboard pour refléter le statut "ACCOMPLIE"
     window.loadDashboardData(true);
 }
 
 
 // --- Fonction Principale de Rendu ---
 
+/**
+ * Charge les données du Tableau de Bord QG en appelant 8 endpoints en parallèle.
+ * @param {boolean} [forceReload=false] - Forcer le rechargement même si la grille est déjà chargée.
+ */
 window.loadDashboardData = async function(forceReload = false) {
     const grid = document.getElementById('dashboard-grid');
-    if (!grid) return;
+    if (!grid) return; // Assure que l'élément DOM est présent
 
     const missionAvailable = checkVeilleAvailability();
 
     if (grid.hasLoaded && !forceReload) {
-        return; 
+        return; // Évite un rechargement inutile si la page est déjà rendue.
     }
     
     grid.innerHTML = '<p class="font-yellow">Connexion au Quartier Général de données...</p>';
 
     try {
-        // 🛑 Lancement des requêtes API (8 endpoints pour charger toutes les données HQ/UTMi/SmartContract)
+        // 🛑 Lancement des 8 requêtes API en parallèle via window.fetchData (défini dans app.js)
         const [
-            summaryData, utmiData, smartContractData, pointsData,
-            financesData, revendicationsData, actionsData, usersData
+            summaryData, utmiData, smartContractData, pointsData, // Indicateurs de synthèse
+            financesData, revendicationsData, actionsData, usersData // Données QG détaillées (utilisées dans les cartes QG)
         ] = await Promise.all([
-            window.fetchData('/api/dashboard/summary'),
-            window.fetchData('/api/dashboard/utmi-insights'),
-            window.fetchData('/smartContract/api/dashboard-data'),
-            window.fetchData('/map/data/manifestations'), 
-            window.fetchData('/api/hq/finances'),
-            window.fetchData('/api/hq/revendications'),
-            window.fetchData('/api/hq/actions'),
-            window.fetchData('/api/hq/users')
+            window.fetchData('/api/dashboard/summary'),           // 1. Synthèse générale (compteurs de base)
+            window.fetchData('/api/dashboard/utmi-insights'),     // 2. Données UTMi et taxes
+            window.fetchData('/smartContract/api/dashboard-data'),// 3. Données Smart Contract (Trésorerie/RBU)
+            window.fetchData('/map/data/manifestations'),         // 4. Points de ralliement sur le terrain
+            window.fetchData('/api/hq/finances'),                 // 5. Finances QG (Flux détaillé)
+            window.fetchData('/api/hq/revendications'),           // 6. Revendications QG (RICs)
+            window.fetchData('/api/hq/actions'),                  // 7. Actions QG (Boycotts/Logistique)
+            window.fetchData('/api/hq/users')                     // 8. Utilisateurs QG (Agents/Manifestants)
         ]);
 
-        // 🛑 DÉCLARATION DES VARIABLES HQ (Sécurisée)
+        // 🛑 DÉCLARATION DES VARIABLES HQ (Sécurisée contre les objets vides {})
         const points = pointsData || [];
         const totalPoints = points.length;
-        const sD = summaryData || {};
-        const uD = utmiData || {}; // Données UTMi et fiscales agrégées
+        // On préfère utiliser des noms courts pour la lisibilité dans le HTML
+        const sD = summaryData || {}; 
+        const uD = utmiData || {}; 
         const scD = smartContractData || {};
-        const fD = financesData || {}; // Finances HQ
-        const rD = revendicationsData || {}; // Revendications HQ
-        const aD = actionsData || {}; // Actions HQ
-        const usrD = usersData || {}; // Utilisateurs HQ
+        const fD = financesData || {}; 
+        const rD = revendicationsData || {}; 
+        const aD = actionsData || {}; 
+        const usrD = usersData || {}; 
         
         // Données dérivées du moteur UTMi
         const totalUtmi = uD.totalUtmi || 0;
@@ -116,6 +134,7 @@ window.loadDashboardData = async function(forceReload = false) {
         html += missionCardHTML; 
 
         // --- 🛑 GRILLE PRINCIPALE DE 8 CARTES (Synthèse) 🛑 ---
+        // Cette grille est la première chose que l'utilisateur voit et fournit des liens cliquables.
         
         const allMainMetrics = [
             // --- VALORISATION UTMi/RBU ---
@@ -148,12 +167,14 @@ window.loadDashboardData = async function(forceReload = false) {
         html += '</div>'; // Fin de #main-insights-grid
 
         // --- 🛑 DEUXIÈME GRILLE : QG DE GESTION (5 DÉTAILS APPROFONDIS) 🛑 ---
+        // Cette grille offre des liens pour les modales de détail du Quartier Général.
         
         const qgCards = [
             { title: "Gestion Financière", color: 'var(--color-red)', key: 'finances', metrics: [{ label: "Solde Opérations", value: `${fD.soldeOperations || 0} €` }, { label: "Dépenses Mensuelles", value: `${fD.depensesMensuelles || 0} €` }], desc: "Analyse des flux de trésorerie et alertes budgétaires." },
-            { title: "Opérations de Terrain", color: 'var(--color-yellow)', key: 'actions', metrics: [{ label: "Agents Actifs", value: uD.agentsActifs || 0 }, { label: "Taux de Réussite", value: `${aD.successRate || 0}%` }], desc: "Suivi des logistiques, des boycotts et des réussites sur site." },
+            { title: "Opérations de Terrain", color: 'var(--color-yellow)', key: 'actions', metrics: [{ label: "Agents Actifs", value: usrD.agentsActifs || 0 }, { label: "Taux de Réussite", value: `${aD.successRate || 0}%` }], desc: "Suivi des logistiques, des boycotts et des réussites sur site." },
             { title: "Gestion des Revendications", color: 'var(--color-blue)', key: 'revendications', metrics: [{ label: "RICs Critiques", value: rD.ricsCritiques || 0 }, { label: "Votes Traités", value: rD.votesTraites || 0 }], desc: "Statut des pétitions et l'engagement citoyen." },
-            { title: "Statistiques Agents", color: 'var(--color-red)', key: 'users', metrics: [{ label: "CVNU Moyen", value: uD.cvnuMoyen || 0 }, { label: "Agents Haut Niveau", value: uD.agentsHautNiveau || 0 }], desc: "Données démographiques et performance de l'équipe." },
+            { title: "Statistiques Agents", color: 'var(--color-red)', key: 'users', metrics: [{ label: "CVNU Moyen", value: usrD.cvnuMoyen || 0 }, { label: "Agents Haut Niveau", value: usrD.agentsHautNiveau || 0 }], desc: "Données démographiques et performance de l'équipe." },
+            // NOTE: Le endpoint rbu_accounting est utilisé pour la clé 'rbu_accounting'
             { title: "Comptabilité RBU", color: 'var(--color-green)', key: 'rbu_accounting', metrics: [{ label: "Bénéfice Net (Q)", value: `${scD.beneficeNetTrimestriel || 0} €` }, { label: "Dividendes UTMi", value: `${scD.dividendesUtmi || 0} €` }], desc: "Bilan trimestriel du Réseau de Base Unifié." }
         ];
 
@@ -187,7 +208,7 @@ window.loadDashboardData = async function(forceReload = false) {
                     const key = card.getAttribute('data-hq-key');
                     
                     if (window.handleDashboardDetailAction) {
-                        // Ouvre la modale avec la clé appropriée
+                        // Délègue l'action à modalDashboard.js pour ouvrir la modale de détail.
                         window.handleDashboardDetailAction(key);
                     } else {
                         console.error("handleDashboardDetailAction non défini. (Vérifiez modalDashboard.js)");
@@ -196,7 +217,15 @@ window.loadDashboardData = async function(forceReload = false) {
             });
         };
 
-        // ... (Logique de claimBtn inchangée) ...
+        // 🛑 ATTACHER L'ÉCOUTEUR POUR LE BOUTON DE RÉCOMPENSE
+        const claimBtn = document.getElementById('claim-veille-btn');
+        if (claimBtn) {
+            claimBtn.addEventListener('click', () => {
+                if (missionAvailable) {
+                    executeVeilleReward();
+                }
+            });
+        }
         
         attachDetailListeners(); 
 
