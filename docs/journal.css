@@ -1,0 +1,78 @@
+/* 🛑 CORRECTION 1 : Style des sections du Manifeste (Rendre les cartes plus "JAUNES") 🛑 */
+
+.manifesto-header-section {
+    /* Le manifeste est la section principale d'information */
+    background-color: var(--color-ui-content); 
+    border-left: 5px solid var(--color-accent-yellow); /* Forte accentuation jaune */
+}
+
+/* Règle pour les alertes à l'intérieur du Manifeste (couleur inverse) */
+.manifesto-header-section .alert-info,
+.manifesto-header-section .alert-warning {
+    /* Le style de l'alerte est déjà défini dans styles.css pour avoir un contraste fort */
+    transform: rotate(0.5deg); /* Conserve une légère rotation */
+}
+
+
+/* --- SECTION JOURNAL TEASER (Style noir/jaune) --- */
+
+.journal-teaser-section {
+    padding: 15px;
+    background-color: var(--color-background); /* Utilisation du fond sombre pour démarquer */
+    border: 2px solid var(--color-accent-yellow); /* BORDURE JAUNE forte */
+    text-align: left;
+}
+
+/* Correction des couleurs d'accentuation sur les liens */
+.journal-teaser-item i {
+    color: var(--color-accent-red); /* Icônes en rouge vif */
+    margin-right: 5px;
+}
+.journal-teaser-item:hover {
+    color: var(--color-accent-yellow); /* Survol en jaune */
+}
+
+/* --- SECTION CHRONOLOGIE / TIMELINE --- */
+
+#chronology-container {
+    padding-top: 20px;
+}
+
+/* 🛑 CORRECTION 2 : Style des événements de la Chronologie (Bordures jaunes sur fond sombre) 🛑 */
+.timeline-section .timeline-item {
+    margin-bottom: 15px;
+    padding: 15px;
+    
+    /* Utilisation du fond sombre principal pour le contraste */
+    background-color: var(--color-background); 
+    
+    /* Bordure double ligne implicite (visuel fort) */
+    border: 1px solid var(--color-ui-border); 
+    border-left: 5px solid var(--color-accent-yellow) !important; /* Bordure critique JAUNE */
+    
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+    transition: transform 0.2s, border-left-color 0.2s, background-color 0.2s;
+    color: var(--color-text);
+}
+
+.timeline-section .timeline-item h4 {
+    /* Maintient le titre de l'événement en couleur d'accentuation */
+    color: var(--color-accent-red);
+    font-size: 1.1rem;
+}
+
+.timeline-section .timeline-item:hover {
+    transform: translateX(5px);
+    /* Inversion subtile de la couleur de fond au survol pour feedback */
+    background-color: var(--color-ui-primary); 
+    border-left-color: var(--color-accent-red) !important; /* Passe au rouge pour signaler l'action */
+}
+
+/* --- ADAPTATION DESKTOP --- */
+
+@media (min-width: 768px) {
+    .home-page-container {
+        padding: 20px;
+    }
+}

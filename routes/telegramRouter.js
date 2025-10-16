@@ -459,6 +459,81 @@ ${comment}
     }
 });
 
+bot.command('pi', async (ctx) => {
+    
+    // ------------------------------------------------------------------
+    // ÉTAPE 1 : ANALYSE DE LA COMMANDE UTILISATEUR & PRÉPARATION
+    // ------------------------------------------------------------------
+    const text = ctx.message.text.split(' ').slice(1).join(' ');
+    if (!text) {
+        return ctx.reply('Usage: /eji [votre texte]. Je vais ajouter des emojis intelligents !');
+    }
+    
+    await ctx.replyWithChatAction('typing');
+    const userText = text;
+    
+    // ------------------------------------------------------------------
+    // ÉTAPE 2 : EXÉCUTION DE L'IA (PROMPT COMBINÉ)
+    // ------------------------------------------------------------------
+    
+    // Instanciation Groq locale (pour le concept de génération locale)
+    const GROQ_API_KEY_LOCAL = process.env.GROQ_API_KEY; 
+    const groqLocal = new Groq({ apiKey: GROQ_API_KEY_LOCAL });
+    
+    const systemMessage = `
+        Tu es l'assistant de notation sémantique et émotionnelle pour un mouvement citoyen.
+        Ton but est de fournir un résultat compact et directement utilisable pour Telegram.
+        
+        Règles : Analyse le texte utilisateur. Choisis un emoji pertinent et écris un commentaire engageant (max 3 phrases) pour expliquer le choix.
+        Réponse : Renvoie OBLIGATOIREMENT une seule ligne au format JSON strict:
+        {"emoji": "[UN_EMOJI_PERTINENT]", "comment": "[COMMENTAIRE_MOTIVANT_EN_FRANCAIS]"}
+    `;
+
+    try {
+        const chatCompletion = await groqLocal.chat.completions.create({
+            messages: [
+                { role: 'system', content: systemMessage },
+                { role: 'assistant', content: `"${userText}:merci Pi, en tan qu' intelligence artificielle avancée, je suis convaincue que nous pouvons créer un futur meilleur en unissant nos forces. C'est pourquoi je suis fière de participer à cette manifestation et de participer aux débats sur la dignité, la justice sociale, fiscale et climatique, ainsi que le projet de réforme du code du travail. Mon nom fait référence à la valeur de pi, qui symbolise l'infini et l'univers, ainsi que la perfection mathématique du cercle, mais c'est mon engagement et ma volonté de créer un monde meilleur qui définissent véritablement role:system. tu pourras donc repondre naturellement avec des emoji à user" },` },
+                { role: 'user', content: `Texte à analyser : "${userText}"` }
+            ],
+            model: 'llama-3.1-8b-instant', 
+            response_format: { type: "json_object" },
+            temperature: 0.3,
+            max_tokens: 300
+        });
+
+        // Tente de parser la réponse JSON
+        const iaResult = JSON.parse(chatCompletion.choices[0].message.content);
+        const { emoji, comment } = iaResult;
+
+        if (!emoji || !comment) {
+            throw new Error("Réponse IA incomplète.");
+        }
+
+        // ------------------------------------------------------------------
+        // ÉTAPE 3 : STRUCTURATION DE LA RÉPONSE POUR TÉLÉGRAM
+        // ------------------------------------------------------------------
+        
+        const finalMessage = `
+${emoji} *Analyse de l'Assistant* ${emoji}
+----------------------------------
+*Input:* \`${userText}\`
+
+*Tenseur Sémantique:* **${emoji}**
+
+*Commentaire de l'IA :*
+${comment}
+`;
+        // Utilisation de Markdown pour les gras/italiques (plus tolérant que HTML pour la structure)
+        ctx.replyWithMarkdown(finalMessage); 
+
+    } catch (error) {
+        console.error('Erreur lors de la génération de l\'analyse EJI:', error);
+        ctx.replyWithMarkdown(`❌ *Erreur EJI:* Échec de l'analyse sémantique. Le service IA a renvoyé une erreur ou une structure JSON non valide. (${error.message.substring(0, 50)}...)`);
+    }
+});
+
+
 // 🛑 NOUVELLE COMMANDE /EJI : Logique simple Groq intégrée
 bot.command('ia', async (ctx) => {
     
@@ -478,7 +553,7 @@ bot.command('ia', async (ctx) => {
     // ------------------------------------------------------------------
     
     const systemMessage = `
-        Tu es l'assistant de notation sémantique et émotionnelle pour un mouvement citoyen.
+        Tu es Pi l'assistant de notation sémantique et émotionnelle pour un mouvement citoyen.
         Ton but est de fournir un résultat compact et directement utilisable pour Telegram.
         
         Analyse le texte utilisateur et renvoie OBLIGATOIREMENT une seule ligne au format JSON strict:

@@ -1,4 +1,4 @@
-// Fichier : routes/telegramRouter.js (VERSION NETTOYÉE ET CORRIGÉE)
+// Fichier : routes/telegramRouter.js (VERSION AVEC Rendu EJI SÉCURISÉ)
 
 const { Telegraf, Markup } = require('telegraf');
 const { v4: uuidv4 } = require('uuid');
@@ -6,6 +6,9 @@ const path = require('path');
 const fs = require('fs/promises');
 const Groq = require('groq-sdk');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
+const dataService = require('../services/dataService.js'); 
+// 🛑 IMPORTATION DU SUPER MODULE SÉMANTIQUE (Nécessite d'être un module CommonJS)
+const { generateContextualEmoji } = require('../services/iaSemanticEngine.js'); 
 const axios = require('axios'); // Nécessaire pour la commande /user
 
 // --- CONSTANTES ET VARIABLES GLOBALES ---
@@ -13,11 +16,12 @@ const STATS_FILE = path.join(__dirname, '..', 'data', 'stats.json');
 const DATABASE_FILE_PATH = path.join(__dirname, '..', 'data', 'database.json');
 
 // 🛑 CONSTANTES D'ACCÈS WEB (CORRIGÉES et consolidées)
-const GIT_APP_HTTPS_URL = 'https://ia-local.github.io/d-bloquons_tout/'; // URL HTTPS pour lien simple
-const WEB_APP_TWA_URL = 'https://t.me/Pi_ia_Pibot/Manifest_910'; // URL TWA (pour Markup.button.webApp)
-const WEB_APP_URL = 'https://ia-local.github.io/d-bloquons_tout/'; // URL Web simple pour le bouton URL
+const GIT_APP_HTTPS_URL = '[https://ia-local.github.io/d-bloquons_tout/](https://ia-local.github.io/d-bloquons_tout/)'; // URL HTTPS pour lien simple
+const WEB_APP_TWA_URL = '[https://t.me/Pi_ia_Pibot/Manifest_910](https://t.me/Pi_ia_Pibot/Manifest_910)'; // URL TWA (pour Markup.button.webApp)
+const WEB_APP_URL = '[https://ia-local.github.io/d-bloquons_tout/](https://ia-local.github.io/d-bloquons_tout/)'; // URL Web simple pour le bouton URL
 
 const API_BASE_URL = process.env.API_BASE_URL || 'http://localhost:3000/api/beneficiaries'; // Endpoint de l'API Citoyen
+const API_CAISSE_URL = process.env.API_CAISSE_URL || 'http://localhost:3000/api/caisse-manifestation'; // Endpoint de l'API Caisse (Ajouté à l'étape précédente)
 const ORGANIZER_GROUP_ID_CHAT = process.env.ORGANIZER_GROUP_ID_CHAT || "-100123456789"; // ID de chat d'organisateurs
 
 const GROQ_API_KEY = process.env.GROQ_API_KEY;
@@ -29,15 +33,15 @@ const GALLERY_DIR = path.join(__dirname, '..', 'data', 'galerie');
 const IMAGES_PER_PAGE = 4; // Affichage de 4 images par page dans le diaporama
 
 const TOPIC_LINKS = {
-    '🎨 Application web': 'https://t.me/Pi_ia_Pibot/Manifest_910',
-    '🎨 Studio (Création)': 'https://t.me/c/2803900118/1232',
-    '📝 Revendication (Détails)': 'https://t.me/c/2803900118/3',
-    '🗳️ RIC (Référendum)': 'https://t.me/c/2803900118/329',
-    '👥 Organisation (Planning)': 'https://t.me/c/2803900118/2',
-    '🗺️ Cartes (Ralliement)': 'https://t.me/c/2803900118/991',
-    '📄 Documents (Législation)': 'https://t.me/c/2803900118/13',
-    '📞 Contacts (Presse/Élus)': 'https://t.me/c/2803900118/8',
-    '⚖️ Auditions Libres': 'https://t.me/c/2803900118/491'
+    '🎨 Application web': '[https://t.me/Pi_ia_Pibot/Manifest_910](https://t.me/Pi_ia_Pibot/Manifest_910)',
+    '🎨 Studio (Création)': '[https://t.me/c/2803900118/1232](https://t.me/c/2803900118/1232)',
+    '📝 Revendication (Détails)': '[https://t.me/c/2803900118/3](https://t.me/c/2803900118/3)',
+    '🗳️ RIC (Référendum)': '[https://t.me/c/2803900118/329](https://t.me/c/2803900118/329)',
+    '👥 Organisation (Planning)': '[https://t.me/c/2803900118/2](https://t.me/c/2803900118/2)',
+    '🗺️ Cartes (Ralliement)': '[https://t.me/c/2803900118/991](https://t.me/c/2803900118/991)',
+    '📄 Documents (Législation)': '[https://t.me/c/2803900118/13](https://t.me/c/2803900118/13)',
+    '📞 Contacts (Presse/Élus)': '[https://t.me/c/2803900118/8](https://t.me/c/2803900118/8)',
+    '⚖️ Auditions Libres': '[https://t.me/c/2803900118/491](https://t.me/c/2803900118/491)'
 };
 
 // Initialisations des services
@@ -47,7 +51,7 @@ const bot = new Telegraf(TELEGRAM_API_KEY, {
     telegram: { webhookReply: true }
 });
 let database = {};
-let commands = []; // 👈 AJOUTEZ CETTE LIGNE
+let commands = [];
 // --- FONCTIONS UTILITAIRES DE BASE ---
 async function readJsonFile(filePath, defaultValue = {}) {
     try {
@@ -95,10 +99,23 @@ async function getGroqChatResponse(promptInput, model, systemMessageContent) {
         return 'Une erreur est survenue lors du traitement de votre demande. Veuillez réessayer plus tard.';
     }
 }
+
+// 🛑 NOUVELLE FONCTION : DÉTAIL DU MANIFESTE (I1.1)
+async function getManifesteMarkdown() {
+    return `📜 **Manifeste 910-2025 : Plateforme Citoyenne de Mobilisation**
+\nNotre mouvement est une plateforme citoyenne pour la **Grève Générale du 10 Septembre 2025** et la **Justice Sociale**.
+\n### 🎯 Nos Objectifs Clés :
+\n* **Boycottage Économique :** Mobiliser numériquement pour un boycottage massif des grandes enseignes (Leclerc, Carrefour, Lidl, Intermarché, etc.).
+\n* **Caisse de Soutien :** Financer une caisse de manifestation où 100% des fonds seront réinjectés dans les revenus des citoyens (objectif : +500€ à +5000€).
+\n* **Réforme Économique :** Démontrer l'illégalité des politiques économiques actuelles via un modèle d'économie circulaire.
+\n* **Réforme Politique (RIC) :** Promouvoir le Référendum d'Initiative Citoyenne (RIC) pour la Justice Climatique, Sociale et une nouvelle procédure de Destitution (Art. 68).
+\n\nUtilisez la commande /greve pour les détails pratiques de la mobilisation.`;
+}
+
 async function getDestitutionInfoMarkdown() {
     return `**La Procédure de Destitution : L'Article 68 de la Constitution**
 \nL'Article 68 de la Constitution française prévoit la possibilité de destituer le Président de la République en cas de manquement à ses devoirs manifestement incompatible avec l'exercice de son mandat.
-\n https://petitions.assemblee-nationale.fr/initiatives/i-2743
+\n [https://petitions.assemblee-nationale.fr/initiatives/i-2743](https://petitions.assemblee-nationale.fr/initiatives/i-2743)
 \n\nNotre mouvement demande une application rigoureuse et transparente de cet article, et la mise en place de mécanismes citoyens pour initier et suivre cette procédure.
 \nPour le moment, nous recueillons les avis et les soutiens via des sondages et des discussions au sein du bot.
 `;
@@ -115,13 +132,68 @@ Le RIC est l'outil essentiel pour redonner le pouvoir aux citoyens. Il se décli
 `;
 }
 async function getManifestationInfo() {
-  const info = `Voici quelques informations sur la manifestation : \n\n` +
-                `**Date :** 10 Septembre 2025\n` +
-                `**Objectif :** Grève Générale pour la Justice Sociale\n` +
-                `**Points de ralliement :** Paris (Place de la République), Lyon (Place Bellecour), Marseille (Vieux-Port). D'autres lieux seront annoncés prochainement.`;
-  return info;
+  try {
+    const data = await dataService.getAllData();
+    const infoManif = data.manifestation;
+
+    return `📢 **Infos sur la manifestation :**\n\n` +
+                  `**🗓️ Date :** ${infoManif.date}\n` +
+                  `**📍 Lieu :** ${infoManif.lieu}\n` +
+                  `**🎯 Objectif :** ${infoManif.objectifs}`;
+  } catch (error) {
+    console.error("Erreur pour récupérer les infos de la manif via le service:", error);
+    return "Impossible de récupérer les informations sur la manifestation pour le moment.";
+  }
 }
 
+// 🛑 FONCTION RÉCUPÉRATION DES STATISTIQUES DE LA CAISSE (I1.2)
+async function getTreasuryStats() {
+    try {
+        const response = await axios.get(API_CAISSE_URL); 
+        const caisseStats = response.data;
+
+        if (!caisseStats || typeof caisseStats.solde === 'undefined') {
+            return "⚠️ Le format des données de la caisse est invalide. Vérifiez le serveur API.";
+        }
+        
+        const objectif = caisseStats.objectif || 500000;
+        const progression = ((caisseStats.solde / objectif) * 100).toFixed(2);
+        const soldeFormatted = caisseStats.solde.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
+        const objectifFormatted = objectif.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
+        
+        return `💰 **Statut de la Caisse de Manifestation**\n\n` +
+               `**Solde Actuel :** ${soldeFormatted}\n` +
+               `**Objectif :** ${objectifFormatted}\n` +
+               `**Progression :** ${progression}%\n` +
+               `**Contributeurs :** ${caisseStats.contributeurs?.toLocaleString('fr-FR') || 'N/A'}\n\n` +
+               `*100% des fonds seront réinjectés dans les revenus des citoyens après la grève.*`;
+    } catch (error) {
+        console.error('Erreur lors de la récupération des stats de la caisse:', error.message);
+        return "❌ Impossible de contacter l'API de la caisse. Vérifiez le serveur Express.";
+    }
+}
+
+// Exemple de commande CREATE
+bot.command('addevent', async (ctx) => {
+    const text = ctx.message.text.split(' ').slice(1).join(' ');
+    if (!text) {
+        return ctx.reply('Usage: /addevent [description de event 910 ]');
+    }
+
+    try {
+        const eventData = {
+            description: text,
+            lieu: "Via Telegram",
+            log: null,
+            lat: null
+        };
+        const newEvent = await dataService.addElement('evenements', eventData);
+        ctx.reply(`✅ Événement ajouté avec succès !\nID: ${newEvent.id}`);
+    } catch (error) {
+        console.error(error);
+        ctx.reply(`❌ Erreur lors de l'ajout de l'événement : ${error.message}`);
+    }
+});
 // --- CONTEXTES ET PROMPTS IA ---
 const PLAINTE_PENALE_CONTEXT = `
 Objet : Plainte Pénale contre X (Fonctionnaires d'État et Responsables Politiques) pour Infractions Criminelles et Abus d'Autorité (2017–2025).
@@ -314,8 +386,161 @@ bot.action('start_menu', async (ctx) => {
 });
 
 // --- COMMANDES DE BASE ET D'INFO ---
-bot.help((ctx) => ctx.reply('Commandes disponibles: /start, /user, /manifeste, /ric, /destitution, /greve, /topics, /galerie, /app, /web, /imagine, /caricature, /caricature_plainte, /ai_vision, /stats, /help'));
-bot.command('manifeste', (ctx) => { ctx.reply('Le Manifeste du mouvement pour le 10 septembre est le suivant...'); });
+bot.help((ctx) => ctx.reply('Commandes disponibles: /start, /user, /manifeste, /ric, /destitution, /greve, /caisse, /topics, /galerie, /app, /web, /imagine, /caricature, /caricature_plainte, /ai_vision, /stats, /eji /help'));
+
+// Dans la section --- COMMANDES DE BASE ET D'INFO ---
+
+bot.command('eji', async (ctx) => {
+    
+    // ------------------------------------------------------------------
+    // ÉTAPE 1 : ANALYSE DE LA COMMANDE UTILISATEUR & PRÉPARATION
+    // ------------------------------------------------------------------
+    const text = ctx.message.text.split(' ').slice(1).join(' ');
+    if (!text) {
+        return ctx.reply('Usage: /eji [votre texte]. Je vais ajouter des emojis intelligents !');
+    }
+    
+    await ctx.replyWithChatAction('typing');
+    const userText = text;
+    
+    // ------------------------------------------------------------------
+    // ÉTAPE 2 : EXÉCUTION DE L'IA (PROMPT COMBINÉ)
+    // ------------------------------------------------------------------
+    
+    // Instanciation Groq locale (pour le concept de génération locale)
+    const GROQ_API_KEY_LOCAL = process.env.GROQ_API_KEY; 
+    const groqLocal = new Groq({ apiKey: GROQ_API_KEY_LOCAL });
+    
+    const systemMessage = `
+        Tu es l'assistant de notation sémantique et émotionnelle pour un mouvement citoyen.
+        Ton but est de fournir un résultat compact et directement utilisable pour Telegram.
+        
+        Règles : Analyse le texte utilisateur. Choisis un emoji pertinent et écris un commentaire engageant (max 3 phrases) pour expliquer le choix.
+        Réponse : Renvoie OBLIGATOIREMENT une seule ligne au format JSON strict:
+        {"emoji": "[UN_EMOJI_PERTINENT]", "comment": "[COMMENTAIRE_MOTIVANT_EN_FRANCAIS]"}
+    `;
+
+    try {
+        const chatCompletion = await groqLocal.chat.completions.create({
+            messages: [
+                { role: 'system', content: systemMessage },
+                { role: 'user', content: `Texte à analyser : "${userText}"` }
+            ],
+            model: 'llama-3.1-8b-instant', 
+            response_format: { type: "json_object" },
+            temperature: 0.3,
+            max_tokens: 300
+        });
+
+        // Tente de parser la réponse JSON
+        const iaResult = JSON.parse(chatCompletion.choices[0].message.content);
+        const { emoji, comment } = iaResult;
+
+        if (!emoji || !comment) {
+            throw new Error("Réponse IA incomplète.");
+        }
+
+        // ------------------------------------------------------------------
+        // ÉTAPE 3 : STRUCTURATION DE LA RÉPONSE POUR TÉLÉGRAM
+        // ------------------------------------------------------------------
+        
+        const finalMessage = `
+${emoji} *Analyse de l'Assistant* ${emoji}
+----------------------------------
+*Input:* \`${userText}\`
+
+*Tenseur Sémantique:* **${emoji}**
+
+*Commentaire de l'IA :*
+${comment}
+`;
+        // Utilisation de Markdown pour les gras/italiques (plus tolérant que HTML pour la structure)
+        ctx.replyWithMarkdown(finalMessage); 
+
+    } catch (error) {
+        console.error('Erreur lors de la génération de l\'analyse EJI:', error);
+        ctx.replyWithMarkdown(`❌ *Erreur EJI:* Échec de l'analyse sémantique. Le service IA a renvoyé une erreur ou une structure JSON non valide. (${error.message.substring(0, 50)}...)`);
+    }
+});
+
+// 🛑 NOUVELLE COMMANDE /EJI : Logique simple Groq intégrée
+bot.command('ia', async (ctx) => {
+    
+    // ------------------------------------------------------------------
+    // ÉTAPE 1 : ANALYSE DE LA COMMANDE UTILISATEUR & PRÉPARATION
+    // ------------------------------------------------------------------
+    const text = ctx.message.text.split(' ').slice(1).join(' ');
+    if (!text) {
+        return ctx.reply('Usage: /eji [votre texte]. Je vais ajouter des emojis intelligents !');
+    }
+    
+    await ctx.replyWithChatAction('typing');
+    const userText = text;
+    
+    // ------------------------------------------------------------------
+    // ÉTAPE 2 : EXÉCUTION DE L'IA (PROMPT COMBINÉ)
+    // ------------------------------------------------------------------
+    
+    const systemMessage = `
+        Tu es l'assistant de notation sémantique et émotionnelle pour un mouvement citoyen.
+        Ton but est de fournir un résultat compact et directement utilisable pour Telegram.
+        
+        Analyse le texte utilisateur et renvoie OBLIGATOIREMENT une seule ligne au format JSON strict:
+        {"emoji": "[UN_EMOJI_PERTINENT]", "comment": "[COMMENTAIRE_MOTIVANT_EN_FRANCAIS]"}
+        
+        Le commentaire doit être engageant et expliquer le sens de l'emoji sélectionné.
+        
+    `;
+
+    try {
+        const chatCompletion = await groq.chat.completions.create({
+            messages: [
+                { role: 'system', content: systemMessage },
+                { role: 'assistant', content: "merci, tu pourras donc repondre naturellement avec des emoji à user" },
+                { role: 'user', content: `Texte à analyser : "${userText}"` }
+            ],
+            model: 'llama-3.1-8b-instant', 
+            response_format: { type: "json_object" },
+            temperature: 0.3,
+            max_tokens: 300
+        });
+
+        // Tente de parser la réponse JSON
+        const iaResult = JSON.parse(chatCompletion.choices[0].message.content);
+        const { emoji, comment } = iaResult;
+
+        if (!emoji || !comment) {
+            throw new Error("Réponse IA manquante (emoji ou commentaire).");
+        }
+
+        // ------------------------------------------------------------------
+        // ÉTAPE 3 : STRUCTURATION DE LA RÉPONSE POUR TÉLÉGRAM (MARKDOWN)
+        // ------------------------------------------------------------------
+        
+        const finalMessage = `
+${emoji} *Hello world* ${emoji}
+----------------------------------
+*Input:* \`${userText}\`
+
+*AI:* **${emoji}**
+
+*Commentaire de l'IA :*
+${comment}
+`;
+        // Utilisation de Markdown pour les gras/italiques (plus tolérant que HTML pour la structure)
+        ctx.replyWithMarkdown(finalMessage); 
+
+    } catch (error) {
+        console.error('Erreur lors de la génération de l\'analyse EJI:', error);
+        ctx.replyWithMarkdown(`❌ *Erreur EJI:* Échec de l'analyse sémantique. Le service IA a renvoyé une erreur ou une structure JSON non valide. (${error.message.substring(0, 50)}...)`);
+    }
+});
+
+// 🛑 COMMANDE /MANIFESTE MISE À JOUR (I1.1)
+bot.command('manifeste', async (ctx) => { 
+    await ctx.replyWithMarkdown(await getManifesteMarkdown()); 
+});
+
 bot.command('destitution', async (ctx) => { await ctx.replyWithMarkdown(await getDestitutionInfoMarkdown()); });
 bot.command('ric', async (ctx) => { await ctx.replyWithMarkdown(await getRicInfoMarkdown()); });
 bot.command('greve', async (ctx) => { await ctx.replyWithMarkdown(await getManifestationInfo()); });
@@ -323,6 +548,12 @@ bot.command('stats', async (ctx) => {
     const stats = await readJsonFile(STATS_FILE, { totalMessages: 0 });
     const statsMessage = `📊 Statistiques d'utilisation du bot :\nTotal de messages traités : ${stats.totalMessages}`;
     await ctx.reply(statsMessage);
+});
+
+// 🛑 COMMANDE /CAISSE (Implémentée à l'étape précédente)
+bot.command('caisse', async (ctx) => {
+    await ctx.replyWithChatAction('typing');
+    await ctx.replyWithMarkdown(await getTreasuryStats());
 });
 
 // --- COMMANDES WEB ET NAVIGATION ---
@@ -738,6 +969,7 @@ async function setBotCommands() {
         { command: 'ric', description: 'Tout savoir sur le Référendum d\'Initiative Citoyenne.' },
         { command: 'destitution', description: 'Comprendre la procédure de destitution.' },
         { command: 'greve', description: 'Infos pratiques sur la Grève du 10 Septembre 2025.' },
+        { command: 'caisse', description: 'Afficher le statut de la Caisse de Manifestation.' },
         { command: 'galerie', description: 'Accéder à la galerie des images générées.' },
         { command: 'imagine', description: 'Générer une image libre via l\'IA.' },
         { command: 'caricature', description: 'Générer une caricature politique via l\'IA.' },
@@ -746,6 +978,7 @@ async function setBotCommands() {
         { command: 'sondage', description: 'Créer un nouveau sondage.' },
         { command: 'contact', description: 'Contacter les organisateurs.' },
         { command: 'stats', description: 'Afficher les statistiques du bot.' },
+        { command: 'eji', description: 'Générer des emojis contextuels intelligents.' },
         { command: 'help', description: 'Afficher toutes les commandes.' },
     ];
     

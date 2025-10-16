@@ -2,6 +2,7 @@
 
 const fs = require("fs/promises");
 const path = require('path');
+const journalEntriesData = require('../docs/src/json/journal_entries.json'); 
 // Import de tous les chemins de fichiers nécessaires
 const { 
     DATABASE_FILE_PATH, 
@@ -182,7 +183,24 @@ function getRicsData() { return ricsData; }
 function getBoycottsData() { return boycottsData; }
 function getActionsData() { return actionsData; }
 
+/**
+ * Récupère la liste complète des entrées de journal.
+ * Utilisé par le teaser et la page journal.js.
+ * @returns {Array} Liste des entrées.
+ */
+function getJournalEntries() {
+    return journalEntriesData;
+}
 
+/**
+ * Récupère une entrée de journal par son ID.
+ * Utilisé par modalJournal.js pour l'affichage détaillé.
+ * @param {string} id ID de l'entrée.
+ * @returns {Object|undefined} L'entrée correspondante.
+ */
+function getJournalEntryById(id) {
+    return journalEntriesData.find(entry => entry.id === id);
+}
 // --- 5. EXPORTS DU MODULE ---
 module.exports = {
     // Fonctions d'Initialisation et d'Écriture
@@ -201,7 +219,9 @@ module.exports = {
     getRicsData,
     getBoycottsData,
     getActionsData,
-
+    // Utilitaires de base (si utilisés ailleurs)
+    getJournalEntries,
+    getJournalEntryById,
     // Utilitaires de base (si utilisés ailleurs)
     readJsonFile,
     writeJsonFile

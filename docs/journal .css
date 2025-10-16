@@ -1,0 +1,87 @@
+/* docs/journal.css - Styles de la Page Journal (Mobile-First) */
+
+.journal-page-container {
+    padding: 15px 10px;
+}
+
+/* Filtres (Mobile: Colonne) */
+.journal-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.filter-select, .filter-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--color-accent-yellow);
+    background-color: var(--color-ui-primary);
+    color: var(--color-text);
+    border-radius: 4px;
+}
+
+/* Grille des Entrées */
+.journal-list-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Une seule colonne sur mobile */
+    gap: 20px;
+}
+
+/* Style des cartes de journal */
+.journal-entry-card {
+    background-color: var(--color-ui-content);
+    border: 1px solid var(--color-ui-border, #444);
+    border-left: 5px solid var(--color-accent-red); /* Style d'accentuation */
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: transform 0.2s, border-left-color 0.2s;
+    height: 100%; 
+}
+
+.journal-entry-card:hover {
+    transform: translateY(-3px);
+    border-left-color: var(--color-accent-yellow);
+}
+
+.journal-entry-card h4 {
+    color: var(--color-accent-yellow);
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.journal-entry-card .entry-meta {
+    font-size: 0.85rem;
+    color: #999;
+    margin-bottom: 10px;
+}
+
+/* Styles pour la Modale de Détail (dans #global-modal) */
+
+.journal-detail-container {
+    padding: 0; 
+}
+.entry-meta-detail {
+    font-size: 0.9em;
+    color: #aaa;
+    margin-bottom: 10px;
+}
+.journal-detail-container p {
+    color: var(--color-text);
+}
+
+
+/* Rendu Desktop/Tablette */
+@media (min-width: 600px) {
+    .journal-filters {
+        flex-direction: row;
+        gap: 20px;
+    }
+    .filter-select, .filter-input {
+        flex-grow: 1;
+    }
+    .journal-list-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Deux colonnes ou plus */
+    }
+}

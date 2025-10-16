@@ -1,0 +1,74 @@
+[
+  {
+    "id": "entry-2025-10-15",
+    "title": "Lancement du Moteur Sémantique V5.1",
+    "date": "2025-10-15T14:30:00Z",
+    "category": "IA",
+    "content": "Le Quartier Général a déployé la version 5.1 de l'IA Sémantique Groq. Cette mise à jour intègre les 8 tenseurs pour une analyse fine des communications et une meilleure cohérence des réponses. L'objectif est d'assurer que l'information transmise aux agents (via le Bot Telegram) est la plus précise et motivante possible. L'unité de communication est désormais opérationnelle pour supporter l'étape P3.4.",
+    "sources": "Log Groq-SDK / Documentation interne de l'unité I.A."
+  },
+  {
+    "id": "entry-2025-10-14",
+    "title": "Audit de la Caisse Manifeste",
+    "date": "2025-10-14T09:00:00Z",
+    "category": "FINANCE",
+    "content": "Un audit financier complet a été mené sur le solde de la Caisse de Manifestation. Le solde actuel est stable et prêt pour la première allocation RBU simulée. La transparence reste notre engagement principal : les données brutes sont disponibles sur le Tableau de Bord.",
+    "sources": "Rapport de l'unité Trésorerie QG."
+  },
+  {
+    "id": "entry-2025-10-13",
+    "title": "Préparation de la Veille Active Journalière",
+    "date": "2025-10-13T18:00:00Z",
+    "category": "ACTIVITY",
+    "content": "L'outil de Veille Active a été intégré au Dashboard (bouton de récompense journalière). Les agents sont encouragés à se connecter quotidiennement pour réclamer leur bonus UTMi et Énergie d'Action (EA). Cette activité renforce l'engagement continu de la base citoyenne.",
+    "sources": "Documentation de la Phase P3.1."
+  },
+  {
+    "id": "entry-2025-10-12",
+    "title": "Mise en place de la Grille des 4 Piliers RIC",
+    "date": "2025-10-12T11:00:00Z",
+    "category": "GOVERNANCE",
+    "content": "La page RIC est maintenant capable d'afficher les détails complets de la doctrine (RIC Législatif, Constituant, Abrogatoire, Révocatoire). Cette interface prépare le terrain pour le lancement imminent des premières pétitions citoyennes actives.",
+    "sources": "Développement Frontend (ric.js)."
+  },
+  {
+    "id": "entry-2025-10-10",
+    "title": "Premier Teaser du Boycott National",
+    "date": "2025-10-10T16:00:00Z",
+    "category": "ACTION",
+    "content": "Le premier appel au boycottage des enseignes de grande distribution a été diffusé sur les réseaux sociaux. L'objectif est d'atteindre 500 000 participants. Les premières données de mobilisation sont encourageantes et montrent une forte adhésion dans les régions Ouest et Sud.",
+    "sources": "Rapport de l'unité Logistique et Mobilisation."
+  },
+  {
+    "id": "entry-2025-10-08",
+    "title": "Conflit de Routage GEE Résolu",
+    "date": "2025-10-08T22:00:00Z",
+    "category": "TECH",
+    "content": "Un conflit critique dans le routage Express (404 Not Found) a été résolu, principalement sur les montages asynchrones. Cette correction garantit la stabilité du chargement de la Cartographie Google Earth Engine (GEE).",
+    "sources": "Logs d'erreur serveur (app.js)."
+  },
+  {
+    "id": "entry-2025-10-06",
+    "title": "Déploiement de la Chronologie des Événements",
+    "date": "2025-10-06T13:00:00Z",
+    "category": "ACTIVITY",
+    "content": "La page d'accueil affiche désormais la chronologie complète des événements clés du mouvement (depuis 2017 jusqu'à la Grève 2025). Chaque événement est cliquable et ouvre un détail (Journal ou Modale).",
+    "sources": "Mise à jour Frontend home.js."
+  },
+  {
+    "id": "entry-2025-10-04",
+    "title": "Validation des Tensors ASCII",
+    "date": "2025-10-04T10:00:00Z",
+    "category": "TECH",
+    "content": "Finalisation du module utilitaire ASCII Tensors (`utils/modulleAscii.js`). Tous les caractères de bordure double et simple sont standardisés pour le rendu des interfaces de console et de tableau.",
+    "sources": "Documentation README.md et Fichier utils/ascii.js."
+  },
+  {
+    "id": "entry-2025-10-02",
+    "title": "Initialisation du système CVNU (Niveau 1)",
+    "date": "2025-10-02T16:00:00Z",
+    "category": "REWARD",
+    "content": "Le système de profil Agent (CVNU) est initialisé. Chaque nouvel agent commence au Niveau 1 avec 100 Énergie d'Action (EA) et 0 UTMI. Le système de missions est désormais actif en arrière-plan.",
+    "sources": "Module modalProfile.js."
+  }
+]

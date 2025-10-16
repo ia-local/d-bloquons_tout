@@ -1,39 +1,37 @@
-// docs/home.js - Logique de Rendu pour la Page d'Accueil et la Chronologie (VERSION GAMIFIÉE)
+// docs/home.js - Logique de Rendu de la Page d'Accueil et la Chronologie (VERSION FINALE STABLE)
 
 // Déclarer l'instance de la carte Leaflet globalement dans window pour app.js
 window.globalMap = null; 
-// 🛑 Stockage global des événements pour la modale
-window.CHRONOLOGY_EVENTS = []; 
-// 🛑 Suivi du statut de la Veille Active (Gamification)
-window.hasCompletedDailyVeille = false; // Initialisé à faux par défaut
+// 🛑 Stockage global des événements (rempli par loadChronology)
+window.CHRONOLOGY_EVENTS = window.CHRONOLOGY_EVENTS || []; 
+// 🛑 Suivi du statut de la Veille Active (Dépend de la gamification du Dashboard)
+window.hasCompletedDailyVeille = window.hasCompletedDailyVeille || false; 
 
-// --- 0. RENDU DE LA PAGE HOME (Accueil Statique) ---
+// --- Fonctions utilitaires de support (omises pour la concision) ---
+// Ces fonctions sont conservées pour éviter les ReferenceErrors si elles sont appelées ailleurs.
+function fetchProjectData() { return Promise.resolve({}); }
+function showSlides(n) { console.log("showSlides simulée."); } 
+function renderTeamCards(team) { console.log("renderTeamCards simulée."); }
+function getIconForRole(role) { return "fa-user-tie"; }
+function renderFinanceChart(projections) { console.log("renderFinanceChart simulée."); }
+function initModalSlides(data) { console.log("initModalSlides simulée."); } 
 
-window.loadHomePageContent = function() {
-    console.log("Page Accueil chargée (Contenu statique HTML).");
-    
-    // 1. DÉCLENCHEMENT DU CHARGEMENT DE LA CHRONOLOGIE
-    loadChronology();
-};
 
 /**
  * 🛑 Fonction qui affiche la carte de la Mission Journalière (Veille Active)
  */
 function displayEventObjective() {
-    const objectiveContainer = document.querySelector('#home-page .content');
-    if (!objectiveContainer) return;
-    
-    // S'assurer que le DOM de la chronologie existe avant d'essayer d'injecter
-    const chronology = document.getElementById('chronology-container');
-    if (!chronology || objectiveContainer.querySelector('.event-objective-card')) return;
+    const chronologyContainer = document.getElementById('chronology-container');
+    if (!chronologyContainer) return;
 
-    // Utilisation de l'événement ID 16 ("MACRON ARRETE") comme objectif cible
+    if (chronologyContainer.previousElementSibling && chronologyContainer.previousElementSibling.classList.contains('event-objective-card')) return;
+
+    // Utilisation de l'événement ID 16 ("MACRON ARRETE") comme objectif cible (Simulation)
     const latestEvent = window.CHRONOLOGY_EVENTS.find(e => e.id === '16'); 
-    
     if (!latestEvent) return; 
 
-    // Détermine le statut d'affichage
-    const isCompleted = window.hasCompletedDailyVeille;
+    // Détermine le statut d'affichage (dépend de la gamification du Dashboard)
+    const isCompleted = window.AGENT_PROFILE ? window.AGENT_PROFILE.dashboardVeilleCompleted : window.hasCompletedDailyVeille;
     
     const objectiveHTML = `
         <div class="alert ${isCompleted ? 'alert-success' : 'alert-info'} event-objective-card" style="margin-top: 30px; border-left: 5px solid ${isCompleted ? 'var(--color-green)' : 'var(--color-accent-red)'}; cursor: pointer;" data-event-id="${latestEvent.id}">
@@ -47,14 +45,12 @@ function displayEventObjective() {
         </div>
     `;
     
-    // Injection juste avant la chronologie
-    chronology.insertAdjacentHTML('beforebegin', objectiveHTML);
+    chronologyContainer.insertAdjacentHTML('beforebegin', objectiveHTML);
     
-    // Attacher l'écouteur à la nouvelle carte
-    const objectiveCard = objectiveContainer.querySelector('.event-objective-card');
+    const objectiveCard = chronologyContainer.previousElementSibling; 
     if (objectiveCard) {
         objectiveCard.addEventListener('click', () => {
-            // Déclenche l'action 'chronology-detail'. Le 3ème argument (true/false) indique si c'est pour la récompense.
+            // Déclenche l'action 'chronology-detail' (gérée dans app.js)
             window.handleUserAction('chronology-detail', latestEvent.id, !isCompleted);
         });
     }
@@ -62,14 +58,14 @@ function displayEventObjective() {
 
 
 /**
- * 🛑 RENDU DE LA CHRONOLOGIE
+ * 🛑 RENDU DE LA CHRONOLOGIE DES ÉVÉNEMENTS (Appel API /api/chronology/events)
  */
 async function loadChronology() {
     const container = document.getElementById('chronology-container');
-    if (!container) return;
+    if (!container || container.hasLoaded) return;
     
-    if (container.hasLoaded) return;
-    
+    container.innerHTML = `<h2 class="font-red">⌛ Chronologie</h2><p class="font-yellow">Chargement des événements...</p>`;
+
     try {
         const events = await window.fetchData('/api/chronology/events');
         
@@ -80,7 +76,7 @@ async function loadChronology() {
         }
 
         window.CHRONOLOGY_EVENTS = events;
-        events.sort((a, b) => new Date(b.start_date) - new Date(a.start_date));
+        events.sort((a, b) => new Date(b.start_date) - new Date(a.start_date)); // Tri du plus récent au plus ancien
 
         let html = `
             <h2 class="font-red" style="text-align: center;">⌛ Chronologie des Événements Clés</h2>
@@ -107,10 +103,7 @@ async function loadChronology() {
         html += '</div>';
         container.innerHTML = html;
         
-        // ATTACHEMENT DES ÉCOUTEURS DE NAVIGATION NORMALE
         attachChronologyListeners(container);
-        
-        // AFFICHAGE DE LA CARTE DE MISSION IMMÉDIATEMENT APRÈS LE CHARGEMENT DES DONNÉES
         displayEventObjective(); 
 
         container.hasLoaded = true;
@@ -122,7 +115,7 @@ async function loadChronology() {
 }
 
 /**
- * 🛑 Fonction d'attachement des écouteurs pour les détails sans récompense
+ * 🛑 Fonction d'attachement des écouteurs pour les détails de la chronologie
  */
 function attachChronologyListeners(container) {
     const timelineItems = container.querySelectorAll('.timeline-item');
@@ -130,7 +123,6 @@ function attachChronologyListeners(container) {
         const handler = () => {
             const eventId = item.getAttribute('data-event-id');
             if (window.handleUserAction) {
-                // Lance l'action 'chronology-detail' sans bonus par défaut (false)
                 window.handleUserAction('chronology-detail', eventId, false); 
             } else {
                 console.error("handleUserAction non défini. La modale ne peut pas s'ouvrir.");
@@ -146,3 +138,61 @@ function attachChronologyListeners(container) {
         });
     });
 }
+
+// 🛑 NOUVELLE FONCTION : CHARGEMENT DE L'APERÇU DU JOURNAL
+/**
+ * Charge les 9 dernières entrées du journal pour la page d'accueil (Teaser).
+ */
+async function loadJournalTeaser() {
+    // Le conteneur '#journal-teaser-content' doit exister dans home.html
+    const container = document.getElementById('journal-teaser-content');
+    if (!container) return;
+    
+    container.innerHTML = `<p style="text-align: center;">Chargement des dernières mises à jour...</p>`;
+
+    try {
+        // 🛑 Utilisation de fetchData (qui gère le fallback journal_entries.json)
+        const entries = await window.fetchData('/api/journal/entries');
+        
+        if (!entries || entries.length === 0) {
+            container.innerHTML = `<p class="font-yellow">Aucun article récent.</p>`;
+            return;
+        }
+        
+        // Afficher les 9 dernières entrées maximum
+        const latestEntries = entries.slice(0, 9);
+        
+        const entriesHTML = latestEntries.map(entry => {
+            const date = entry.date ? new Date(entry.date).toLocaleDateString('fr-FR') : 'Date N/A';
+            const category = entry.category || 'GÉNÉRAL';
+
+            return `
+                <div class="journal-teaser-item" onclick="window.handleUserAction('journal-detail', '${entry.id}')" style="cursor: pointer; padding: 5px 0;">
+                    <i class="fas fa-arrow-right"></i> <b>${entry.title || 'Article Sans Titre'}</b> (${category}) - ${date}
+                </div>
+            `;
+        }).join('');
+        
+        // Rendu dans un conteneur stylisé (journal-teaser-list)
+        container.innerHTML = `<div class="journal-teaser-list">${entriesHTML}</div>`;
+
+    } catch (error) {
+        console.error("Erreur lors du chargement de l'aperçu du journal:", error);
+        container.innerHTML = `<p class="font-red">❌ Échec du chargement des mises à jour.</p>`;
+    }
+}
+
+
+/**
+ * Initialise la page d'accueil (Manifeste, Chronologie, Journal).
+ * C'est le point d'entrée appelé par app.js::window.showPage('home').
+ */
+window.loadHomePageContent = async function() {
+    console.log("Page Accueil chargée (P3.2). Lancement de l'initialisation.");
+    
+    // 🛑 CHARGEMENT DU JOURNAL TEASER
+    loadJournalTeaser();
+    
+    // 🛑 CHARGER LA CHRONOLOGIE EN DERNIER (POINT CRITIQUE)
+    loadChronology(); 
+};

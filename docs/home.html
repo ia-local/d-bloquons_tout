@@ -1,0 +1,67 @@
+<!-- docs/home.html - Structure de la Page d'Accueil (Phase P3.2) -->
+
+<div class="home-page-container">
+    
+    <div class="content-section manifesto-header-section">
+        <h2 class="font-red">📣 Accueil & Manifeste du Mouvement</h2>
+        
+        <!-- Contenu Statique du Manifeste -->
+        <div class="alert alert-warning" style="margin-bottom: 30px;">
+            <p>
+                Avec au moins <strong class="font-yellow">500 000 personnes</strong> sur tout le territoire, le mouvement du 10 septembre entre dans l’histoire.
+                Inédit par son ampleur et par sa forme, ce mouvement qui s’est auto-organisé en moins de deux mois s’est répandu partout.
+            </p>
+            <p>
+                Ni les mensonges, ni l’intimidation, ni la répression ne feront ralentir la vague qui s’est levée dans le pays.
+                Les assemblées locales appellent à poursuivre la lutte sous toutes leurs formes.
+            </p>
+            <p>
+                <strong class="font-yellow">Nous avons fait partir Bayrou. Lecornu et Macron attendent leur tour.</strong> D'ici là nous ne rentrerons pas.
+            </p>
+            <p class="font-red" style="font-size: 0.9em;">
+                *: nous avons déjà comptabilisé 428 556 personnes dans 345 communes seulement, et il y a eu au moins 850 actions en France, dont 596 rassemblements et 253 blocages, selon le ministère de l'intérieur.
+            </p>
+            <p style="margin-top: 15px;">
+                <strong class="font-blue">Notre Salon TELEGRAM</strong>
+                <br>
+                <button class="btn btn-telegram btn-secondary" onclick="window.handleUserAction('telegram-commands')"><i class="fab fa-telegram-plane"></i> Accéder aux Topics</button> 
+            </p>
+        </div>
+        
+        <h3 class="font-red" style="margin-top: 30px;">Les raisons de notre colère</h3>
+        <div class="alert alert-info" style="transform: none;">
+            <p>Le plan Bayrou, c’est :</p>
+            <ul style="color: var(--color-text-dark);">
+                <li>Une année blanche sans investissement dans les salaires, les retraites, ni les services publics !</li>
+                <li>3000 postes supprimés, un fonctionnaire sur trois non remplacé !</li>
+                <li>5 milliards retirés à la santé, reste à payer doublé pour les malades !</li>
+                <li>Deux jours fériés supprimés !</li>
+                <li>Six jours de carence en cas d’arrêt maladie !</li>
+                <li>Aucune hausse des aides ni des pensions !</li>
+            </ul>
+        </div>
+        <p>Nous disons <strong class="font-red">NON</strong> et appelons toutes les personnes résidant en France métropolitaine et dans les DOM-TOM à se mobiliser contre ce budget !</p>
+        
+        <div class="alert alert-warning" style="text-align: center; margin-top: 30px;">
+            <p><strong class="font-yellow">NOUS APPELONS CHAQUE DÉPUTÉ À FAIRE SON DEVOIR :</strong></p>
+            <p style="font-size: 1.4em;">VOTER LA MOTION DE CENSURE CONTRE CE PLAN INJUSTE ET DANGEREUX.</p>
+            <p style="font-size: 2em; margin: 10px 0;">⚠️</p>
+        </div>
+    </div>
+    
+    <!-- 🛑 CONTENEUR DYNAMIQUE : Aperçu des articles du Journal 🛑 -->
+    <div class="content-section journal-teaser-section" style="text-align: center;">
+        <h3 class="font-yellow"><i class="fas fa-newspaper"></i> Dernières Mises à Jour du Journal</h3>
+        <!-- Ce conteneur reçoit la liste des articles via loadJournalTeaser() -->
+        <div id="journal-teaser-content">
+            <p>Chargement des mises à jour en cours...</p>
+        </div>
+    </div>
+    
+    <!-- 🛑 POINT D'INJECTION DYNAMIQUE DE LA CHRONOLOGIE (home.js) 🛑 -->
+    <!-- La carte d'objectif (Veille Active) sera injectée juste au-dessus par displayEventObjective() -->
+    <div id="chronology-container" class="content-section timeline-section">
+        <h2 class="font-red">⌛ Chronologie du Mouvement</h2>
+        <p class="font-yellow">Chargement des événements...</p>
+    </div>
+</div>

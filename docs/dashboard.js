@@ -79,24 +79,25 @@ window.loadDashboardData = async function(forceReload = false) {
 
     try {
         // 🛑 Lancement des 8 requêtes API en parallèle via window.fetchData (défini dans app.js)
+        // 🛑 ÉTAPE 1 : Lancement des 8 requêtes API en parallèle 
         const [
-            summaryData, utmiData, smartContractData, pointsData, // Indicateurs de synthèse
-            financesData, revendicationsData, actionsData, usersData // Données QG détaillées (utilisées dans les cartes QG)
+            summaryData, utmiData, smartContractData, pointsData, 
+            financesData, revendicationsData, actionsData, usersData
         ] = await Promise.all([
-            window.fetchData('/api/dashboard/summary'),           // 1. Synthèse générale (compteurs de base)
-            window.fetchData('/api/dashboard/utmi-insights'),     // 2. Données UTMi et taxes
-            window.fetchData('/smartContract/api/dashboard-data'),// 3. Données Smart Contract (Trésorerie/RBU)
-            window.fetchData('/map/data/manifestations'),         // 4. Points de ralliement sur le terrain
-            window.fetchData('/api/hq/finances'),                 // 5. Finances QG (Flux détaillé)
-            window.fetchData('/api/hq/revendications'),           // 6. Revendications QG (RICs)
-            window.fetchData('/api/hq/actions'),                  // 7. Actions QG (Boycotts/Logistique)
-            window.fetchData('/api/hq/users')                     // 8. Utilisateurs QG (Agents/Manifestants)
+            window.fetchData('/api/dashboard/summary'),           // 1. Synthèse générale
+            window.fetchData('/api/dashboard/utmi-insights'),     // 2. Détails UTMi
+            window.fetchData('/smartContract/api/dashboard-data'),// 3. Smart Contract / RBU
+            window.fetchData('/map/data/manifestations'),         // 4. Points de ralliement
+            window.fetchData('/api/hq/finances'),                 // 5. Finances QG
+            window.fetchData('/api/hq/revendications'),           // 6. Revendications QG
+            window.fetchData('/api/hq/actions'),                  // 7. Actions QG
+            window.fetchData('/api/hq/users')               // 8. Utilisateurs QG (Agents/Manifestants)
         ]);
 
         // 🛑 DÉCLARATION DES VARIABLES HQ (Sécurisée contre les objets vides {})
+        // 🛑 ÉTAPE 2 : Sécurisation et assignation des données (utilisant || {})
         const points = pointsData || [];
         const totalPoints = points.length;
-        // On préfère utiliser des noms courts pour la lisibilité dans le HTML
         const sD = summaryData || {}; 
         const uD = utmiData || {}; 
         const scD = smartContractData || {};
@@ -104,11 +105,8 @@ window.loadDashboardData = async function(forceReload = false) {
         const rD = revendicationsData || {}; 
         const aD = actionsData || {}; 
         const usrD = usersData || {}; 
-        
-        // Données dérivées du moteur UTMi
         const totalUtmi = uD.totalUtmi || 0;
-        const totalTaxCollected = uD.totalTaxCollected || 0; 
-        
+        const totalTaxCollected = uD.totalTaxCollected || 0;
         
         // --- RENDU HTML ---
         
@@ -199,6 +197,7 @@ window.loadDashboardData = async function(forceReload = false) {
         grid.hasLoaded = true; 
         
         // 🛑 ATTACHER LES ÉCOUTEURS GLOBALE POUR TOUTES LES 13 CARTES 🛑
+        // 🛑 ÉTAPE 3 : Attachement des écouteurs de clics et de la récompense
         const attachDetailListeners = () => {
             const clickableCards = document.querySelectorAll('.clickable-metric-card, .clickable-hq-card');
             
@@ -206,17 +205,19 @@ window.loadDashboardData = async function(forceReload = false) {
                 card.addEventListener('click', (e) => {
                     e.stopPropagation(); 
                     const key = card.getAttribute('data-hq-key');
-                    
                     if (window.handleDashboardDetailAction) {
-                        // Délègue l'action à modalDashboard.js pour ouvrir la modale de détail.
                         window.handleDashboardDetailAction(key);
                     } else {
                         console.error("handleDashboardDetailAction non défini. (Vérifiez modalDashboard.js)");
                     }
                 });
             });
+            // Attacher l'écouteur de la récompense
+            const claimBtn = document.getElementById('claim-veille-btn');
+            if (claimBtn && missionAvailable) {
+                claimBtn.addEventListener('click', executeVeilleReward);
+            }
         };
-
         // 🛑 ATTACHER L'ÉCOUTEUR POUR LE BOUTON DE RÉCOMPENSE
         const claimBtn = document.getElementById('claim-veille-btn');
         if (claimBtn) {
@@ -226,7 +227,9 @@ window.loadDashboardData = async function(forceReload = false) {
                 }
             });
         }
-        
+        // Rendu final
+        grid.innerHTML = html; // Assume que 'html' contient le rendu complet
+        grid.hasLoaded = true;
         attachDetailListeners(); 
 
     } catch (error) {

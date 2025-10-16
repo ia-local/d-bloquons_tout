@@ -24,6 +24,7 @@ const chronologyRouter = require('./routes/chronologyRouter.js');
 const mediaRouter = require('./routes/mediaRouter.js'); 
 const revendicationsRouter = require('./routes/revendicationsRouter.js');
 const actionsRouter = require('./routes/actionsRouter.js');
+const homeJournalRouter = require('./routes/homeJournalRouter.js');
 // Routeurs récemment créés (extraits du monolithique)
 const geeRouter = require('./services/gee.js').geeRouter;       // 🌍 GEE
 const chatRouter = require('./routes/chat.js');               // 💬 Chatbot

@@ -1,0 +1,98 @@
+/* docs/home.css - Styles de la Page d'Accueil (Mobile-First) */
+
+/* --- SECTION GÉNÉRALE ET STRUCTURE --- */
+
+.home-page-container {
+    padding: 15px 10px;
+}
+
+.content-section {
+    margin-bottom: 25px;
+    padding: 10px;
+    /* Utilisation des variables globales du thème */
+    background-color: var(--color-ui-content);
+    border: 1px solid var(--color-ui-border, #444);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+}
+.content-section h3 {
+    font-size: 1.3rem;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    border-bottom: 2px solid var(--color-accent-red);
+}
+
+/* --- SECTION JOURNAL TEASER (Nouvelle structure) --- */
+
+.journal-teaser-section {
+    padding: 15px;
+    background-color: var(--color-background); /* Contraste avec le content-section */
+    border: 2px solid var(--color-accent-yellow);
+    /* Retrait du text-align: center pour permettre à la liste d'être alignée à gauche */
+    text-align: left !important; 
+}
+
+#journal-teaser-content {
+    margin-top: 15px;
+    /* Assure que l'injection est bien lisible */
+}
+
+.journal-teaser-list {
+    /* Conteneur pour la liste des liens */
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.journal-teaser-item {
+    font-size: 0.9em;
+    color: var(--color-text);
+    padding: 5px 0;
+    border-bottom: 1px dotted rgba(255, 255, 255, 0.1);
+    transition: color 0.2s;
+    cursor: pointer;
+}
+
+.journal-teaser-item:hover {
+    color: var(--color-accent-yellow);
+}
+
+.journal-teaser-item i {
+    color: var(--color-accent-red);
+    margin-right: 5px;
+}
+
+/* --- SECTION CHRONOLOGIE / TIMELINE --- */
+
+#chronology-container {
+    padding-top: 20px;
+}
+
+.timeline-section .timeline-item {
+    margin-bottom: 15px;
+    padding: 15px;
+    border-left: 5px solid var(--color-accent-red) !important;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s;
+    background-color: var(--color-background);
+    color: var(--color-text);
+}
+
+.timeline-section .timeline-item:hover {
+    transform: translateX(5px);
+    border-left-color: var(--color-accent-yellow) !important;
+}
+
+.timeline-section .timeline-item h4 {
+    color: var(--color-accent-yellow);
+    font-size: 1.1rem;
+}
+
+/* --- ADAPTATION DESKTOP --- */
+
+@media (min-width: 768px) {
+    .home-page-container {
+        padding: 20px;
+    }
+}
